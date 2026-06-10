@@ -13,25 +13,11 @@ export function Hero() {
       transition={{ duration: 0.8 }}
       className="mb-20"
     >
-      <div className="flex flex-col items-center gap-12 lg:flex-row lg:items-start">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="flex-shrink-0"
-        >
-          <img
-            src="/placeholder.svg"
-            alt={`${profile.name} 프로필 사진`}
-            className="h-80 w-64 rounded-2xl border border-slate-200 bg-slate-100 object-cover shadow-md"
-          />
-        </motion.div>
-
+      <div className="max-w-4xl">
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="flex-1"
+          transition={{ duration: 0.8, delay: 0.2 }}
         >
           <h1 className="mb-4 text-4xl font-extrabold tracking-tight text-slate-800">
             {profile.name} | {profile.title}

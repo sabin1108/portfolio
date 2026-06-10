@@ -63,7 +63,7 @@ export const portfolio = {
     title: "Front-End Developer",
     headline: "성능 수치로 말하는 프론트엔드 개발자 — React 최적화 · AI 협업 · 풀스택 배포",
     intro:
-      "커밋 시간 36% 단축, 10,000건 데이터에서 60FPS 유지, 소스 코드 중복 81.9% 제거처럼 기능이 동작하는 것에서 멈추지 않고 수치로 개선을 증명합니다. AI를 보조 도구가 아닌 개발 파이프라인의 일부로 통합해 기획부터 배포, 문서화까지 end-to-end로 완성합니다.",
+      "커밋 시간 36% 단축, 10,000건 데이터에서 60FPS 수준 방어, 소스 코드 중복 81.9% 제거처럼 기능이 동작하는 것에서 멈추지 않고 수치로 개선을 증명합니다. AI를 보조 도구가 아닌 개발 파이프라인의 일부로 통합해 기획부터 배포, 문서화까지 end-to-end로 완성합니다.",
     highlights: [
       "Game Sale Info에서 Steam/Epic 할인 조회, 관심 목록, 목표 가격 추적, Supabase Auth/DB, Vercel 배포까지 직접 구축",
       "PhotoMap에서 Zustand selector, 가상화, D3 DOM 직접 조작으로 대량 데이터 렌더링 병목 개선",
@@ -120,7 +120,7 @@ export const portfolio = {
             "유지보수 품질을 감으로 판단하지 않고 dead code, duplication, complexity hotspot을 수치로 확인했습니다.",
           used: ["dead-code", "dupes", "score", "maintainability"],
           result:
-            "소스 중복 668줄 -> 121줄, dead-code 15개 -> 0개, Maintainability 92.1점까지 개선했습니다.",
+            "소스 중복 668줄 -> 121줄, unused file/export 기준 dead code 0%, Maintainability 92.1점까지 개선했습니다.",
         },
       ],
       links: {
@@ -152,7 +152,7 @@ export const portfolio = {
         {
           summary: "Fallow로 죽은 코드와 중복 코드를 추적해 AI 협업 중 생기는 유지보수성 저하를 최소화",
           details:
-            "AI로 빠르게 기능을 확장하면서 생긴 unused export, dead-code, duplicate clone group을 Fallow 지표로 확인했습니다.\n\ndead-code를 15개에서 0개로 줄이고, 소스 중복을 668줄에서 121줄로 낮춰 유지보수 부담을 줄였습니다.",
+            "AI로 빠르게 기능을 확장하면서 생긴 unused export, dead-code, duplicate clone group을 Fallow 지표로 확인했습니다.\n\nunused file/export 기준 dead code를 0%로 낮추고, 소스 중복을 668줄에서 121줄로 낮춰 유지보수 부담을 줄였습니다.",
           before: "Dead/duplicate",
           after: "Cleaned up",
         },
@@ -206,7 +206,7 @@ export const portfolio = {
         validation: [
           "Fallow 실행: 소스 중복 668줄(5.73%) -> 121줄(1.03%)",
           "Fallow 실행: 전체 중복 1,006줄(9.4%) -> 308줄(2.9%)",
-          "Fallow 실행: dead-code 15개 -> 0개",
+          "Fallow 실행: unused file/export 기준 dead code 0%",
           "Maintainability: 91.3점 -> 92.1점(good)",
           "Vitest 21 files / 60 tests passed",
           "Playwright smoke 2 tests passed",
@@ -241,7 +241,7 @@ npx fallow dupes --format json --quiet`,
       summary:
         "EXIF 메타데이터 기반 사진 아카이브에서 대량 이미지 탐색, 2D/3D 지도 시각화, D3 관계 그래프의 렌더링 병목을 개선한 프로젝트",
       role: "프론트엔드 UI/UX 구현, Zustand 상태 구조 개선, 가상화 기반 대량 리스트 최적화, D3/Unity WebGL 시각화 연동",
-      period: "2025.12 ~ 진행 중",
+      period: "2025.12 ~ 2026.04",
       tech: ["React", "TypeScript", "Zustand", "@tanstack/react-virtual", "D3.js", "Unity WebGL"],
       metrics: [
         { label: "Render", value: "36% down" },
@@ -249,10 +249,29 @@ npx fallow dupes --format json --quiet`,
         { label: "Load", value: "50%+ down" },
       ],
       links: {
-        live: "https://photomap-nine.vercel.app/",
         github: "https://github.com/sabin1108/Photomap",
       },
       imageAlt: "PhotoMap 프로젝트 화면",
+      imageGallery: {
+        main: {
+          src: "/2_project/photoproject_1.png",
+          alt: "PhotoMap 메인 화면",
+        },
+        supporting: [
+          {
+            src: "/2_project/photoproject_2.png",
+            alt: "PhotoMap 보조 화면 1",
+          },
+          {
+            src: "/2_project/photoproject_3.png",
+            alt: "PhotoMap 보조 화면 2",
+          },
+          {
+            src: "/2_project/photoproject_4.gif",
+            alt: "PhotoMap 보조 화면 3",
+          },
+        ],
+      },
       achievements: [
         {
           summary: "Context API 전역 리렌더링을 Zustand selector 구독으로 바꿔 커밋 시간 36% 단축",
@@ -271,7 +290,7 @@ npx fallow dupes --format json --quiet`,
         {
           summary: "D3 물리 시뮬레이션은 React state에서 분리해 style.setProperty로 직접 갱신",
           details:
-            "D3 tick 좌표를 React state로 갱신하면 초당 반복되는 물리 계산이 reconciliation을 계속 발생시켰습니다.\n\n노드와 라인은 ref 기반 DOM 접근과 style.setProperty로 직접 갱신해 React 리렌더링 없이 60FPS에 가깝게 유지했습니다.",
+            "D3 tick 좌표를 React state로 갱신하면 초당 반복되는 물리 계산이 reconciliation을 계속 발생시켰습니다.\n\n노드와 라인은 ref 기반 DOM 접근과 style.setProperty로 직접 갱신해 React 리렌더링 없이 60FPS 수준으로 방어했습니다.",
           before: "React state",
           after: "Direct DOM",
         },
@@ -280,9 +299,9 @@ npx fallow dupes --format json --quiet`,
         context:
           "PhotoMap은 사진을 단순 저장하는 대신 EXIF 위치와 촬영 시간을 기반으로 여행 기록을 지도, 타임라인, 앨범, 관계 그래프로 탐색하는 서비스입니다. 핵심 과제는 10,000건 이상 사진을 다루면서도 스크롤과 시각화가 끊기지 않게 유지하는 것이었습니다.",
         role:
-          "3인 팀에서 프론트엔드 화면 구현, 상태 관리 구조, 대량 렌더링 최적화, D3 관계 그래프 UX, Unity WebGL 기반 3D Globe 연동 화면을 담당했습니다.",
+          "3인 팀에서 프론트엔드 화면 구현, 상태 관리 구조, 대량 렌더링 최적화, D3 관계 그래프 UX, Cobe 기반 3D Globe와 Unity WebGL 시각화 연동 화면을 담당했습니다.",
         architecture:
-          "React 화면은 Photo Feed, Map View, Timeline, Albums, Favorites, Spatial Node View로 나누고, 서버 데이터와 UI 상태를 Zustand store에서 관리했습니다. 대량 사진 그리드는 @tanstack/react-virtual과 useGridBreakpoints로 row 단위 가상화했고, D3 물리 시뮬레이션은 useForceSimulation hook과 직접 DOM 갱신으로 React 렌더링 경로에서 분리했습니다.",
+          "React 화면은 Photo Feed, Map View, Timeline, Albums, Favorites, Spatial Node View로 나누고, 서버 데이터와 UI 상태를 Zustand store에서 관리했습니다. 대량 사진 그리드는 @tanstack/react-virtual과 useGridBreakpoints로 row 단위 가상화했고, 각 row 위치는 transform 기반으로 배치했습니다. D3 물리 시뮬레이션은 useForceSimulation hook과 직접 DOM 갱신으로 React 렌더링 경로에서 분리했습니다.",
         keyFeatures: [
           "EXIF 기반 GPS/촬영 시간 추출과 수동 위치 보정",
           "Photo Feed, 2D Map, 3D Globe, Timeline, Albums, Favorites, Spatial Node View",
@@ -290,19 +309,21 @@ npx fallow dupes --format json --quiet`,
           "Zustand selector/useShallow 기반 상태 구독 분리",
           "D3 NodeView 물리 시뮬레이션 직접 DOM 업데이트",
           "PerformanceMonitor로 FPS, DOM nodes, JS heap, 사진 수 실시간 확인",
+          "Admin View mock data 주입으로 1,000건 단위 부하 테스트",
         ],
         challenges: [
-          "5,000건 이상 사진 로드 시 DOM 노드가 급증해 화면이 멈추고 스크롤 FPS가 크게 떨어졌습니다.",
+          "5,000건 이상 사진 로드 시 DOM 노드가 급증해 화면이 멈추고 스크롤 FPS가 크게 떨어졌습니다. Chrome DevTools Performance에서 스크롤 이벤트마다 많은 이미지 카드 리플로우가 발생하는 것을 확인했습니다.",
           "Context API 기반 전역 상태 공유로 인증/사진 상태의 작은 변경도 많은 컴포넌트를 다시 렌더링했습니다.",
           "D3 zoom, hover, tick 좌표를 React state로 관리하면 매 프레임 reconciliation 비용이 발생했습니다.",
           "FE, DB, Unity 담당이 나뉘어 있어 브리지 로직과 화면 구조에 대한 공통 이해가 필요했습니다.",
         ],
         solutions: [
           "PhotoFeed와 AlbumsView에 @tanstack/react-virtual을 적용해 화면에 보이는 row만 DOM에 유지했습니다.",
-          "useGridBreakpoints hook으로 viewport별 column/gap을 계산해 가상화 그리드와 반응형 레이아웃을 함께 맞췄습니다.",
-          "Zustand selector와 useShallow로 필요한 상태만 구독하게 바꿔 불필요한 리렌더링을 줄였습니다.",
-          "D3 이벤트와 tick 갱신은 ref, style.setProperty, setAttribute를 사용해 React state 갱신 없이 처리했습니다.",
+          "useGridBreakpoints hook으로 viewport별 column/gap을 계산하고 row 높이와 좌표를 산출해 transform: translateY()로 배치했습니다.",
+          "Redux보다 초기 설정과 보일러플레이트가 작은 Zustand를 선택했고, selector와 useShallow로 필요한 상태만 구독하게 바꿨습니다.",
+          "D3 이벤트와 tick 갱신은 ref, style.setProperty, setAttribute를 사용해 React state 갱신 없이 처리했습니다. line DOM에는 id와 animationKey를 붙여 뷰 전환 후 이전 요소와 충돌하지 않게 분리했습니다.",
           "Promise.all로 독립적인 초기 데이터 요청을 병렬화해 waterfall 대기 시간을 줄였습니다.",
+          "Framer Motion 반복 애니메이션은 CSS animate-in으로 바꾸고, UploadPhotoItem/Input/Popover는 React.memo와 props 비교로 재렌더링 범위를 좁혔습니다.",
         ],
         validation: [
           "React Profiler: 커밋 시간 9.7ms -> 6.2ms",
@@ -311,6 +332,8 @@ npx fallow dupes --format json --quiet`,
           "D3 NodeView 렌더링 370회 -> 25회 수준으로 감소",
           "GlobeView max commit 69.9ms -> 26.6ms",
           "초기 데이터 로딩 Promise.all 전환 후 50% 이상 단축",
+          "Chrome DevTools Performance/Network와 Admin View mock data로 개선 전후를 재측정",
+          "스크롤 구간에서 60FPS 수준으로 방어되는지 PerformanceMonitor로 확인",
         ],
         result:
           "사진 수가 늘어나도 탐색 흐름이 끊기지 않도록 렌더링 범위를 줄이고, 지도/그래프 시각화는 React state와 분리했습니다. 결과적으로 PhotoMap을 단순 갤러리가 아니라 대량 사진을 다루는 인터랙티브 공간 아카이브로 정리할 수 있었습니다.",
@@ -318,15 +341,24 @@ npx fallow dupes --format json --quiet`,
           "React Profiler와 PerformanceMonitor로 병목을 확인한 뒤 Zustand selector, virtual grid, D3 direct DOM update, Promise.all 병렬 처리 순서로 개선했습니다.",
         operationalEvidence: [
           "PerformanceMonitor에서 FPS, DOM nodes, JS heap, 사진 수를 실시간으로 보며 부하 테스트를 진행했습니다.",
+          "Chrome DevTools Performance 탭으로 스크롤 중 main thread 점유와 layout/recalculate style 비용을 확인했습니다.",
+          "Chrome DevTools Network 탭으로 초기 데이터 요청 waterfall을 확인하고 Promise.all 전환 효과를 비교했습니다.",
           "Admin View에서 mock photo data를 주입해 1,000건 단위로 부하를 늘리고 가상화 효과를 확인했습니다.",
           "Framer Motion 기반 반복 애니메이션은 CSS animate-in으로 전환해 대량 카드 렌더링 비용을 줄였습니다.",
           "UploadPhotoItem, Input, Popover는 React.memo와 props 비교로 개별 사진 수정 시 전체 업로드 목록이 다시 그려지는 문제를 줄였습니다.",
         ],
         codeHighlight: {
-          title: "Windowing 적용 예시",
+          title: "Row 가상화 배치 예시",
           code: `const renderRow = ({ index, style }) => (
-  <div style={style}>
-    <Image src={photos[index].url} loading="lazy" />
+  <div
+    style={{
+      ...style,
+      transform: \`translateY(\${virtualRows[index].start}px)\`,
+    }}
+  >
+    {rowPhotos.map((photo) => (
+      <Image key={photo.id} src={photo.url} loading="lazy" />
+    ))}
   </div>
 );`,
         },
@@ -335,81 +367,111 @@ npx fallow dupes --format json --quiet`,
     {
       title: "AIChatBot",
       summary:
-        "학사 정보 접근성 개선을 위한 한경국립대 지능형 챗봇과 AI 응답 UX 개선 프로젝트",
-      role: "채팅 UI 구현, 응답 파서, 상태 동기화, Next.js API Routes Proxy Layer 설계",
-      period: "2025.09 ~ 2025.11",
-      tech: ["Next.js", "Proxy API", "Blob API", "Regex"],
+        "학사 정보 접근성 개선을 위한 지능형 챗봇입니다. AI 응답을 읽기 쉬운 채팅 UX로 정리하고, 대화 저장·탭 동기화·내보내기를 클라이언트 중심으로 처리했습니다.",
+      role: "프론트엔드 전반 담당, 채팅 UI/UX 설계 및 구현, Regex 응답 파싱, Blob API 내보내기, useLocalStorage 탭 동기화, Next.js API Routes Proxy Layer 설계",
+      period: "2025.09.10 ~ 2025.11.14",
+      tech: ["Next.js", "TypeScript", "React-Markdown", "Tailwind CSS", "Blob API", "useLocalStorage"],
       metrics: [
         { label: "URL noise", value: "90% down" },
         { label: "UI code", value: "30% down" },
-        { label: "Export load", value: "0 server" },
+        { label: "Export", value: "0 server" },
       ],
       links: {
         github: "https://github.com/sabin1108/graduation-project",
       },
       imageAlt: "AIChatBot 프로젝트 화면",
+      imageGallery: {
+        main: {
+          src: "/3_project/aichat_1.png",
+          alt: "AIChatBot 메인 화면",
+        },
+        supporting: [
+          {
+            src: "/3_project/aichat_2.png",
+            alt: "AIChatBot 보조 화면 1",
+          },
+          {
+            src: "/3_project/aichat_3.png",
+            alt: "AIChatBot 보조 화면 2",
+          },
+          {
+            src: "/3_project/aichat_4.gif",
+            alt: "AIChatBot 보조 화면 3",
+          },
+        ],
+      },
       achievements: [
         {
-          summary: "Regex 파싱 파이프라인으로 AI 응답 속 URL 노출과 불필요한 텍스트 노이즈를 최대 90% 감소",
+          summary: "Regex 응답 파싱으로 긴 URL과 비정형 학사 정보를 읽기 쉬운 메시지 구조로 정리",
           details:
-            "Regex 파이프라인으로 AI 응답 내 URL 텍스트를 정리해 시각적 노이즈를 줄였습니다.",
-          before: "URL 노출",
-          after: "90% 감소",
+            "외부 API 응답은 긴 URL, 줄바꿈 없는 학식/공지 데이터, 비정형 텍스트가 섞여 출력됐습니다.\n\n렌더링 직전 Regex 파싱 파이프라인으로 URL을 링크 형태로 치환하고 날짜/키워드 패턴에 맞춰 개행과 구분을 적용해 URL 텍스트 노출을 최대 90% 줄였습니다.",
+          before: "Raw response",
+          after: "Parsed message",
         },
         {
-          summary: "Next.js API Routes Proxy Layer에서 외부 응답을 정규화해 UI 조건 분기와 코드량 30% 절감",
+          summary: "Next.js API Routes Proxy Layer로 외부 API 응답을 단일 JSON 구조로 정규화",
           details:
-            "Next.js API Routes Proxy Layer에서 외부 데이터를 정규화해 UI 코드의 조건 분기와 결합도를 줄였습니다.",
-          before: "직접 정규화",
+            "외부 API가 JSON과 비정형 텍스트를 혼용해 반환하면서 UI 컴포넌트에 split, regex, 날짜 필드 보정 로직이 섞였습니다.\n\nProxy Layer에서 출처별 응답과 날짜 필드명을 단일 JSON 구조로 정규화해 UI 코드량을 약 30% 줄이고 API 스펙 변경 지점을 한 곳으로 모았습니다.",
+          before: "UI coupling",
           after: "Proxy Layer",
         },
         {
-          summary: "Blob API로 저장 파일 생성을 클라이언트에서 처리해 서버 통신 없이 내보내기 구현",
+          summary: "Blob API와 useLocalStorage로 서버 저장 없이 대화 내역 유지·탭 동기화·내보내기 구현",
           details:
-            "대화 내보내기를 클라이언트 직렬화로 처리해 서버 통신 없이 파일을 생성하고 탭 간 실시간 동기화를 유지했습니다.",
-          before: "서버 처리",
-          after: "클라이언트 처리",
+            "로그인이 없는 구조라 서버에 사용자 대화 내역을 저장하지 않고 편의 기능을 제공해야 했습니다.\n\nlocalStorage로 새로고침 후 대화 내역을 복원하고 storage 이벤트로 탭 간 상태를 맞췄습니다. 내보내기는 Blob 객체, URL.createObjectURL, 동적 앵커 트리거로 서버 통신 없이 처리했습니다.",
+          before: "Session-only",
+          after: "Local export",
         },
       ],
       details: {
         context:
-          "학사 정보 접근성을 높이기 위한 지능형 챗봇입니다. AI 응답을 단순 텍스트로 보여주는 데서 그치지 않고, 링크와 긴 응답을 읽기 쉬운 형태로 정리하는 채팅 UX를 목표로 했습니다.",
+          "학식, 공지사항, 통학, 일정처럼 여러 메뉴에 흩어진 학사 정보를 모바일에서도 쉽게 묻고 확인할 수 있게 만든 지능형 챗봇입니다. AI 응답을 단순 텍스트로 보여주는 데서 그치지 않고, 비정형 응답을 읽기 쉬운 메시지로 정리하고 사용자가 대화 내역을 직접 관리할 수 있게 하는 데 집중했습니다.",
         role:
-          "채팅 인터페이스, Regex 응답 파싱 로직, Blob API 내보내기, 탭 간 상태 유지 방식, 외부 API 프록시 통신 구조를 설계하고 구현했습니다.",
+          "2인 팀에서 프론트엔드 전반을 맡았습니다. 채팅 인터페이스 설계와 구현, Regex 응답 파싱 로직, Blob API 대화 내보내기, useLocalStorage 기반 탭 간 상태 유지, Next.js API Routes Proxy Layer 구조를 설계하고 구현했습니다.",
         architecture:
-          "Next.js 기반 UI와 API Routes Proxy Layer를 사용했습니다. 클라이언트는 메시지 렌더링, Blob API 내보내기, 탭 동기화를 담당하고, 외부 데이터 정규화는 프록시 계층에서 처리했습니다.",
+          "Next.js 기반 UI와 API Routes Proxy Layer로 구성했습니다. 클라이언트는 메시지 렌더링, Blob API 내보내기, localStorage 복원과 storage 이벤트 기반 탭 동기화를 담당했습니다. 외부 API 데이터 정규화는 프록시 계층에서 처리해 UI 컴포넌트가 외부 데이터 형식에 직접 의존하지 않도록 분리했습니다.",
         keyFeatures: [
-          "학사 정보 질의응답 채팅 UI",
-          "Regex 기반 URL/응답 텍스트 정리",
-          "Blob API 기반 대화 내보내기",
-          "탭 간 실시간 상태 동기화",
-          "Next.js API Routes Proxy Layer",
+          "학사 정보(학식, 공지사항, 통학, 일정) 질의응답 채팅 UI",
+          "Regex 기반 URL 치환과 응답 텍스트 구조화 파이프라인",
+          "React-Markdown 기반 메시지 렌더링",
+          "Blob API 기반 대화 내역 내보내기",
+          "useLocalStorage와 storage 이벤트 기반 탭 간 상태 동기화",
+          "Next.js API Routes Proxy Layer 기반 외부 데이터 JSON 정규화",
         ],
         challenges: [
-          "AI 응답 형식이 일정하지 않아 URL 텍스트와 긴 문장이 메시지 가독성을 떨어뜨렸습니다.",
-          "여러 탭에서 같은 대화 상태를 유지해야 했습니다.",
-          "외부 데이터 형식이 UI 코드에 직접 노출되면 컴포넌트 결합도가 높아졌습니다.",
+          "외부 API의 AI 응답 형식이 일정하지 않아 긴 URL, 줄바꿈 없는 학식/공지 데이터, 비정형 텍스트가 메시지 가독성을 떨어뜨렸습니다.",
+          "로그인 없는 구조에서 서버에 사용자 대화 내역을 저장하지 않고도 새로고침 복원, 탭 간 동기화, 파일 내보내기를 제공해야 했습니다.",
+          "외부 API가 JSON과 비정형 텍스트를 혼용해 반환해 UI 코드 안에 split, regex, 날짜 필드 보정 로직이 섞일 위험이 있었습니다.",
         ],
         solutions: [
-          "Regex 기반 파이프라인으로 URL 텍스트 노출을 줄이고 메시지 노이즈를 제거했습니다.",
-          "Blob API 클라이언트 직렬화로 서버 통신 없이 대화 내보내기를 처리했습니다.",
-          "Proxy Layer에서 외부 데이터를 정규화해 UI 코드량과 결합도를 줄였습니다.",
+          "렌더링 직전 Regex 파이프라인을 적용해 긴 URL을 링크 형태로 치환하고 날짜/키워드 패턴에 맞춰 개행과 구분을 적용했습니다.",
+          "Blob API, URL.createObjectURL, 동적 앵커 트리거로 대화 내역 파일을 클라이언트에서 생성해 서버 통신 없이 내보내기를 처리했습니다.",
+          "useLocalStorage hook으로 localStorage 복원과 React 상태 업데이트를 묶고, storage 이벤트를 구독해 다른 탭의 변경을 반영했습니다.",
+          "Next.js API Routes Proxy Layer에서 JSON/비정형 텍스트 응답과 출처별 날짜 필드명을 단일 JSON 구조로 정규화했습니다.",
         ],
         validation: [
           "URL 텍스트 노출 최대 90% 감소 확인",
           "UI 코드량 약 30% 절감",
           "Blob API 내보내기 서버 통신 없이 동작 확인",
-          "대한전자공학회 2025 하계 학술대회 발표",
+          "storage 이벤트 기반 탭 동기화가 별도 서버 통신 없이 동작하는 것 확인",
+          "대한전자공학회 2025 하계종합학술대회 포스터/논문 발표",
+          "BRIGHT MAKERS EXPO 2025 캡스톤디자인 경진대회 우수상",
         ],
         result:
-          "AI 응답을 사용자가 읽고 다시 활용하기 쉬운 채팅 인터페이스로 개선했고, 학사 정보 접근성 개선 프로젝트로 BRIGHT MAKERS EXPO 우수상을 받았습니다.",
+          "AI 응답을 사용자가 읽고 다시 활용하기 쉬운 채팅 인터페이스로 개선했습니다. 서버에 대화 내역을 저장하지 않는 구조에서 클라이언트 자원만으로 대화 유지, 탭 동기화, 파일 내보내기를 처리했고, 프록시 계층으로 외부 API 의존도를 UI에서 분리했습니다.",
         codeHighlight: {
-          title: "응답 파서 예시",
-          code: `const parseMessage = (text) => {
-  const codeBlockRegex = /\`\`\`([\\s\\S]*?)\`\`\`/g;
-  return text.replace(codeBlockRegex, (match, code) => {
-    return highlight(code);
-  });
+          title: "Blob API 내보내기 예시",
+          code: `const exportChat = (messages) => {
+  const text = messages
+    .map((message) => \`\${message.role}: \${message.content}\`)
+    .join("\\n\\n");
+  const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "chat-history.txt";
+  link.click();
+  URL.revokeObjectURL(url);
 };`,
         },
       },

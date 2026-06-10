@@ -3,7 +3,6 @@ import { TechStack } from "./components/TechStack";
 import { Projects } from "./components/Projects";
 import { Timeline } from "./components/Timeline";
 import { Education } from "./components/Education";
-import { Contact } from "./components/Contact";
 
 export default function App() {
   return (
@@ -14,7 +13,6 @@ export default function App() {
         <Projects />
         <Timeline />
         <Education />
-        <Contact />
       </div>
     </main>
   );

@@ -38,13 +38,15 @@ export function Education() {
           {education.description}
         </p>
 
-        <div className="flex flex-wrap gap-2">
-          {education.certificates.map((certificate) => (
-            <Badge key={certificate} variant="secondary" className="bg-slate-100 text-slate-700">
-              {certificate}
-            </Badge>
-          ))}
-        </div>
+        {education.certificates.length > 0 ? (
+          <div className="flex flex-wrap gap-2">
+            {education.certificates.map((certificate) => (
+              <Badge key={certificate} variant="secondary" className="bg-slate-100 text-slate-700">
+                {certificate}
+              </Badge>
+            ))}
+          </div>
+        ) : null}
       </Card>
     </motion.section>
   );
