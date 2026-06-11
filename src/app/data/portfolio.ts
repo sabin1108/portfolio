@@ -67,16 +67,11 @@ export const portfolio = {
     highlights: [
       "Game Sale Info에서 Steam/Epic 할인 조회, 관심 목록, 목표 가격 추적, Supabase Auth/DB, Vercel 배포까지 직접 구축",
       "PhotoMap에서 Zustand selector, 가상화, D3 DOM 직접 조작으로 대량 데이터 렌더링 병목 개선",
-      "PRD, 이슈 분할, 핸드오프, 정적 분석, smoke test를 AI agent workflow로 연결",
+      "PRD, 이슈 분할, 하네스 기반 역할 분리, 핸드오프, 정적 분석, smoke test를 AI agent workflow로 연결",
     ],
     contacts: {
       email: "minsabin1108@gmail.com",
       github: "https://github.com/sabin1108",
-    },
-    resume: {
-      enabled: false,
-      label: "Resume PDF 준비 중",
-      href: "/files/minsabin-resume.pdf",
     },
   },
   techStack: ["JavaScript", "React", "TypeScript", "GitHub", "Slack", "Notion"],
@@ -84,14 +79,14 @@ export const portfolio = {
     {
       title: "Game-information-platform",
       summary:
-        "Steam/Epic 할인 정보 조회, 관심 목록, 목표 가격 추적, 배포 검증까지 직접 구축한 Next.js 게임 할인 정보 추적 서비스",
+        "Steam/Epic 할인 정보 조회, 관심 목록, 목표 가격 추적, Vercel 배포 완료 후 기능 개선과 품질 정리를 이어가는 Next.js 게임 할인 정보 추적 서비스",
       role: "프론트엔드 구현, Supabase Auth/DB 연동, AI-assisted workflow 설계, 정적 분석 기반 품질 개선, Vercel production 배포/검증",
       period: "2026",
       tech: ["Next.js", "React", "TypeScript", "Supabase", "Vitest", "Playwright"],
       metrics: [
         { label: "Duplication", value: "81.9% down" },
-        { label: "Dead-code", value: "15 -> 0" },
-        { label: "Maintainability", value: "92.1 good" },
+        { label: "Unused file/export", value: "15 -> 0" },
+        { label: "Fallow health", value: "84.7 / B" },
       ],
       workflowTerms: [
         {
@@ -117,10 +112,10 @@ export const portfolio = {
         {
           label: "Fallow",
           purpose:
-            "유지보수 품질을 감으로 판단하지 않고 dead code, duplication, complexity hotspot을 수치로 확인했습니다.",
+            "유지보수 품질을 감으로 판단하지 않고 unused file/export, duplication, complexity hotspot을 수치로 확인했습니다.",
           used: ["dead-code", "dupes", "score", "maintainability"],
           result:
-            "소스 중복 668줄 -> 121줄, unused file/export 기준 dead code 0%, Maintainability 92.1점까지 개선했습니다.",
+            "소스 중복 668줄 -> 121줄, unused file/export 기준 dead-code 15개 -> 0개로 정리했습니다. 당시 Fallow maintainability 지표는 91.3점 -> 92.1점으로 개선했고, 현재 Fallow health score는 84.7 / B입니다.",
         },
       ],
       links: {
@@ -150,9 +145,9 @@ export const portfolio = {
       },
       achievements: [
         {
-          summary: "Fallow로 죽은 코드와 중복 코드를 추적해 AI 협업 중 생기는 유지보수성 저하를 최소화",
+          summary: "Fallow로 unused file/export와 중복 코드를 추적해 AI 협업 중 생기는 유지보수성 저하를 최소화",
           details:
-            "AI로 빠르게 기능을 확장하면서 생긴 unused export, dead-code, duplicate clone group을 Fallow 지표로 확인했습니다.\n\nunused file/export 기준 dead code를 0%로 낮추고, 소스 중복을 668줄에서 121줄로 낮춰 유지보수 부담을 줄였습니다.",
+            "AI로 빠르게 기능을 확장하면서 생긴 unused file/export와 duplicate clone group을 Fallow 지표로 확인했습니다.\n\nunused file/export 기준 dead-code를 15개에서 0개로 낮추고, 소스 중복을 668줄에서 121줄로 낮춰 유지보수 부담을 줄였습니다. 현재 Fallow 기준 unused dev dependency 1건은 별도 관리 대상으로 남겨 두었습니다.",
           before: "Dead/duplicate",
           after: "Cleaned up",
         },
@@ -190,7 +185,7 @@ export const portfolio = {
           "관심 목록 추가 후 redirect 제거, 카드 인라인 3초 피드백 적용",
           "삭제 후 재추가 시 archived row 복구",
           "handoff로 issue 상태, 검증 결과, secret 처리 규칙을 세션 간 유지",
-          "Fallow로 dead code, duplication, maintainability, hotspot 측정",
+          "Fallow로 unused file/export, duplication, maintainability, hotspot 측정",
           "CI/CD, smoke test, Supabase Auth/DB, Vercel production 배포",
         ],
         challenges: [
@@ -206,8 +201,9 @@ export const portfolio = {
         validation: [
           "Fallow 실행: 소스 중복 668줄(5.73%) -> 121줄(1.03%)",
           "Fallow 실행: 전체 중복 1,006줄(9.4%) -> 308줄(2.9%)",
-          "Fallow 실행: unused file/export 기준 dead code 0%",
-          "Maintainability: 91.3점 -> 92.1점(good)",
+          "Fallow 실행: unused file/export 기준 dead-code 15개 -> 0개",
+          "당시 Fallow maintainability 지표: 91.3점 -> 92.1점(good)",
+          "현재 Fallow health score: 84.7 / B, unused dev dependency 1건 별도 관리",
           "Vitest 21 files / 60 tests passed",
           "Playwright smoke 2 tests passed",
           "typecheck, lint, build, Vercel production 배포까지 확인",
@@ -226,7 +222,7 @@ export const portfolio = {
           "검색/할인/인기 API에는 process-local cache, stale fallback, rate limit을 넣어 외부 API 실패와 반복 호출에 대비했습니다.",
           "관심목록 추가는 redirect 없이 카드 안에서 created, duplicate, restored, failed 상태를 보여주게 바꿨습니다.",
           "Next production build에서 shared 102 kB, home 108 kB, deals 109 kB first load JS를 기록했습니다.",
-          "Sentry, Web Vitals, API latency 경로를 연결해 오류와 성능 문제를 확인할 수 있게 했습니다.",
+          "Sentry, Web Vitals, API latency 수집 경로를 구현해 오류와 성능 문제를 확인할 수 있게 했습니다.",
         ],
         codeHighlight: {
           title: "Fallow 품질 측정 명령",

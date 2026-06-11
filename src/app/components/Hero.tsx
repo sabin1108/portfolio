@@ -1,7 +1,6 @@
 import { motion } from "motion/react";
-import { CheckCircle2, Download, Github, Mail } from "lucide-react";
+import { CheckCircle2, Github, Mail } from "lucide-react";
 import { portfolio } from "../data/portfolio";
-import { Button } from "./ui/button";
 
 export function Hero() {
   const { profile } = portfolio;
@@ -57,24 +56,6 @@ export function Hero() {
 
           <p className="mb-6 leading-relaxed text-slate-600">{profile.intro}</p>
 
-          <Button
-            asChild={profile.resume.enabled}
-            disabled={!profile.resume.enabled}
-            variant="outline"
-            className="border-slate-300 text-slate-700"
-          >
-            {profile.resume.enabled ? (
-              <a href={profile.resume.href} download>
-                <Download className="mr-2 h-4 w-4" />
-                이력서 PDF
-              </a>
-            ) : (
-              <span>
-                <Download className="mr-2 h-4 w-4" />
-                {profile.resume.label}
-              </span>
-            )}
-          </Button>
         </motion.div>
       </div>
     </motion.section>

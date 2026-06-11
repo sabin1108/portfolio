@@ -19,19 +19,13 @@ export function Education() {
       </h2>
 
       <Card className="border-slate-200 bg-white p-8 shadow-sm">
-        <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div className="mb-6">
           <div>
             <h3 className="mb-2 text-[1.25rem] font-semibold leading-tight text-slate-800">
               {education.school}
             </h3>
             <p className="text-[0.9375rem] text-slate-600">{education.degree}</p>
           </div>
-          <Badge
-            variant="secondary"
-            className="w-fit bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700"
-          >
-            공개 정보만 요약
-          </Badge>
         </div>
 
         <p className="mb-5 text-[0.9375rem] leading-relaxed text-slate-600">

@@ -34,15 +34,15 @@ const fallowMetrics = [
     after: "308줄 (2.9%)",
     accent: true,
   },
-  { label: "Dead-code 항목", before: "15개", after: "0개", accent: true },
-  { label: "Maintainability", before: "91.3점", after: "92.1점", accent: true },
+  { label: "Unused file/export", before: "15개", after: "0개", accent: true },
+  { label: "Fallow health", before: "현재", after: "84.7 / B", accent: true },
 ] as const;
 
 const aiSkillCards = [
   {
     name: "fallow",
-    role: "정적 분석 자동화, dead-code·중복 측정, 리팩터링 근거 수치화",
-    result: "소스 중복 81.9% 감소, Dead-code 100% 제거",
+    role: "정적 분석 자동화, unused file/export·중복 측정, 리팩터링 근거 수치화",
+    result: "소스 중복 81.9% 감소, unused file/export 기준 15개 -> 0개",
   },
   {
     name: "hand-off",
@@ -162,7 +162,7 @@ function WorkflowTermItem({ term }: { term: WorkflowTerm }) {
         {label === "fallow" ? (
           <div className="rounded-lg bg-white p-5">
             <h4 className="mb-5 text-sm font-semibold text-slate-800">
-              Fallow 코드 품질 지표 - 사용 전 -&gt; 최종
+              Fallow 코드 품질 지표 - 사용 전 -&gt; 확인 기준
             </h4>
             <div className="space-y-0">
               {fallowMetrics.map((metric) => (
@@ -184,7 +184,7 @@ function WorkflowTermItem({ term }: { term: WorkflowTerm }) {
               ))}
             </div>
             <p className="mt-4 text-[0.6875rem] leading-relaxed text-slate-500">
-              소스 중복은 테스트 파일 제외 기준 / 전체 중복은 프로젝트 전체(테스트 포함) 기준
+              소스 중복은 테스트 파일 제외 기준 / 전체 중복은 프로젝트 전체(테스트 포함) 기준 / unused dev dependency 1건은 별도 관리
             </p>
           </div>
         ) : label === "ai skill" ? (
