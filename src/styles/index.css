@@ -1,3 +1,94 @@
 @import './fonts.css';
 @import './tailwind.css';
 @import './theme.css';
+
+@media print {
+  @page {
+    size: A4;
+    margin: 8mm;
+  }
+
+  body {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .resume-sheet {
+    font-size: 10.8px;
+    line-height: 1.4;
+  }
+
+  .resume-header {
+    margin-bottom: 10px !important;
+    padding-bottom: 10px !important;
+  }
+
+  .resume-header h1 {
+    font-size: 24px !important;
+    line-height: 1.1 !important;
+  }
+
+  .resume-header p {
+    line-height: 1.45 !important;
+  }
+
+  .resume-section {
+    break-inside: auto !important;
+    margin-bottom: 12px !important;
+  }
+
+  .resume-section h2 {
+    margin-bottom: 8px !important;
+    padding-bottom: 4px !important;
+    font-size: 11px !important;
+  }
+
+  .resume-section h3 {
+    font-size: 11px !important;
+  }
+
+  .resume-section p,
+  .resume-section li {
+    font-size: 10.6px !important;
+    line-height: 1.42 !important;
+  }
+
+  .resume-section ul {
+    row-gap: 3px !important;
+  }
+
+  .resume-projects {
+    row-gap: 10px !important;
+  }
+
+  .resume-activities {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+
+  .resume-activities-section {
+    break-before: page !important;
+    page-break-before: always !important;
+  }
+
+  .resume-activity-card {
+    break-inside: auto !important;
+    padding: 8px !important;
+  }
+
+  .resume-activity-card .mt-4 {
+    margin-top: 6px !important;
+  }
+
+  .resume-activity-card a {
+    min-height: 0 !important;
+    height: 26px !important;
+    padding: 0 8px !important;
+    font-size: 10px !important;
+  }
+
+  .rounded-lg {
+    border-radius: 4px !important;
+  }
+}

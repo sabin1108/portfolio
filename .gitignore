@@ -9,3 +9,6 @@ dist
 .next/
 .env*.local
 .DS_Store
+
+# Private local photo files
+public/photo/

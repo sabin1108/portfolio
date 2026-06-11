@@ -57,6 +57,11 @@ export type Project = {
   };
 };
 
+export type ResumeSection = {
+  title: string;
+  items: string[];
+};
+
 export const portfolio = {
   profile: {
     name: "민사빈",
@@ -509,8 +514,97 @@ npx fallow dupes --format json --quiet`,
   education: {
     school: "한경국립대학교",
     degree: "소프트웨어융합학과",
-    description:
-      "프론트엔드, AI 협업, 웹 서비스 배포를 중심으로 제품형 프로젝트를 수행했습니다. GPA 3.87 / 4.5.",
-    certificates: [],
+    status: "졸업",
+    period: "2020.03 ~ 2026.02",
+    gpa: "3.87 / 4.5",
+    certificates: [
+      {
+        name: "정보처리기사",
+        issuer: "한국산업인력공단",
+        date: "2025.09.12",
+      },
+    ],
+  },
+  resume: {
+    summary:
+      "React/TypeScript 기반 프론트엔드 개발자입니다. 대량 데이터 렌더링 최적화, 외부 API 응답 정규화, Supabase 기반 서비스 구현, Vercel 배포 검증까지 제품 흐름 전체를 다룹니다. AI 도구는 코드 생성에만 쓰지 않고 PRD, 이슈 분할, 정적 분석, handoff, smoke test로 이어지는 작업 파이프라인에 통합했습니다.",
+    coreSkills: [
+      {
+        title: "Frontend",
+        items: ["React", "TypeScript", "JavaScript"],
+      },
+    ] satisfies ResumeSection[],
+    projectHighlights: [
+      {
+        title: "Game-information-platform",
+        period: "2026.05 ~ 2026.06",
+        github: "https://github.com/sabin1108/Game-information-platform",
+        teamRole: "개인 프로젝트 | 프론트엔드, Supabase 연동, 배포/검증 담당",
+        techTags: ["Next.js", "TypeScript", "Supabase"],
+        bullets: [
+          "Steam/Epic 할인 조회, 관심 목록, 목표 가격 추적, Supabase Auth/DB, Vercel production 배포 연결",
+          "Fallow 기준 소스 중복 668줄 -> 121줄, unused file/export 15개 -> 0개 정리",
+          "AI Skill을 grill-me(요구사항 검증) -> to-prd(PRD 작성) -> to-issues(GitHub issue 분해) -> handoff(세션 인수인계) 순서로 구성, Harness로 product/frontend/QA 관점 분리",
+          "Vitest, Playwright smoke test, typecheck, build 기반 주요 사용자 흐름 및 배포 전 동작 검증",
+        ],
+      },
+      {
+        title: "PhotoMap",
+        period: "2025.12 ~ 2026.04",
+        github: "https://github.com/sabin1108/Photomap",
+        teamRole: "3인 협업 | 프론트엔드, 상태 구조, 렌더링 최적화, D3 시각화 담당",
+        techTags: ["React", "Zustand", "D3.js"],
+        bullets: [
+          "10,000건 사진 목록 row 기반 가상화 적용, DOM 노드 200개 미만 유지",
+          "Context API 전역 리렌더링을 Zustand selector/useShallow 구조로 전환, commit 시간 9.7ms -> 6.2ms 개선",
+          "D3 tick 좌표 갱신을 React state에서 분리, ref/style.setProperty 기반 렌더링 병목 개선",
+        ],
+      },
+      {
+        title: "AIChatBot",
+        period: "2025.09.10 ~ 2025.11.14",
+        github: "https://github.com/sabin1108/graduation-project",
+        teamRole: "2인 협업 | 프론트엔드, 채팅 UI, 응답 파싱, API 응답 정규화 담당",
+        techTags: ["Next.js", "React-Markdown", "Blob API"],
+        bullets: [
+          "학사 정보 챗봇 프론트엔드 전반, 채팅 UI, Regex 응답 파싱, React-Markdown 렌더링 담당",
+          "Next.js API Routes Proxy Layer에서 외부 API 응답을 단일 JSON 구조로 정규화, UI 코드량 약 30% 절감",
+          "Blob API와 useLocalStorage 기반 서버 저장 없는 대화 복원, 탭 동기화, 파일 내보내기 구현",
+        ],
+      },
+    ],
+    activityGroups: [
+      {
+        title: "BRIGHT MAKERS EXPO 2025 캡스톤디자인 경진대회 우수상",
+        venue: "한경국립대학교",
+        items: [
+          "제17회 캡스톤디자인 경진대회 팀 캔버스 참가, 학사 정보 접근성 개선 AI ChatBot 서비스 발표",
+          "공지, 학식, 일정처럼 흩어진 정보를 채팅 흐름으로 연결해 필요한 정보를 빠르게 찾는 문제 해결 방향 제시",
+          "프론트엔드 UI, 응답 가독성 개선, 대화 내역 관리 기능을 실제 사용 흐름으로 구현한 점을 성과로 인정",
+        ],
+      },
+      {
+        title: "생성형 AI 기반 포트폴리오 요약 플랫폼",
+        venue: "대한전자공학회 투고 및 심사 완료",
+        href: "/files/thesis/generative-ai-portfolio-summary-platform.pdf",
+        linkLabel: "논문 PDF",
+        items: [
+          "AI 스트리밍 구조 적용, 평균 TTFT 18,279ms -> 607ms 개선 및 체감 대기시간 약 96.7% 단축 성능 평가",
+          "컴포넌트·라우트 분리로 관리자 대시보드 LoC 231줄 -> 172줄 감소, 구조적 가독성 약 40%+ 개선 근거 정리",
+          "생성형 AI 요약, 지식 기반 검증, DB 저장, 시각화 흐름을 분리한 AI 활용 및 유지보수 가능 아키텍처 중심 구성",
+        ],
+      },
+      {
+        title: "학교 정보 접근성 향상을 위한 대화형 질의응답 시스템",
+        venue: "대한전자공학회 2025 하계종합학술대회 포스터/논문 발표",
+        href: "/files/thesis/interactive-campus-qa-system.pdf",
+        linkLabel: "논문 PDF",
+        items: [
+          "학사 정보 접근성 개선을 위해 공지, 일정, 행정 정보를 질의응답 흐름으로 연결하는 사용자 흐름 설계",
+          "AI 응답 직접 노출 대신 응답 파싱, 링크 정리, 메시지 구조화 적용으로 URL 텍스트 노출 최대 90% 절감",
+          "외부 데이터와 UI 결합도 완화를 위한 응답 정규화 계층 구성, UI 코드량 약 30% 절감 관점 정리",
+        ],
+      },
+    ],
   },
 } as const;

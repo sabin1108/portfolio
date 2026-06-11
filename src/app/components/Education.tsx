@@ -5,6 +5,10 @@ import { Card } from "./ui/card";
 
 export function Education() {
   const { education } = portfolio;
+  const educationDescription =
+    "description" in education
+      ? education.description
+      : `${education.status} (GPA ${education.gpa}) (${education.period})`;
 
   return (
     <motion.section
@@ -29,16 +33,27 @@ export function Education() {
         </div>
 
         <p className="mb-5 text-[0.9375rem] leading-relaxed text-slate-600">
-          {education.description}
+          {educationDescription}
         </p>
 
         {education.certificates.length > 0 ? (
           <div className="flex flex-wrap gap-2">
-            {education.certificates.map((certificate) => (
-              <Badge key={certificate} variant="secondary" className="bg-slate-100 text-slate-700">
-                {certificate}
-              </Badge>
-            ))}
+            {education.certificates.map((certificate) => {
+              const certificateLabel =
+                typeof certificate === "string"
+                  ? certificate
+                  : `${certificate.name} | ${certificate.issuer} (${certificate.date})`;
+
+              return (
+                <Badge
+                  key={certificateLabel}
+                  variant="secondary"
+                  className="bg-slate-100 text-slate-700"
+                >
+                  {certificateLabel}
+                </Badge>
+              );
+            })}
           </div>
         ) : null}
       </Card>
