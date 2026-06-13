@@ -608,3 +608,113 @@ npx fallow dupes --format json --quiet`,
     ],
   },
 } as const;
+
+export const portfolioEn = {
+  profile: {
+    name: "Sabin Min",
+    title: "Front-End Developer",
+    headline: "Metrics-driven Front-End Developer — React Optimization · AI Collaboration · Full-stack Deployment",
+    intro:
+      "I prove improvements through metrics rather than just making things work—such as reducing commit time by 36%, maintaining ~60FPS rendering on 10,000 items, and removing 81.9% of source code duplication. I integrate AI as a core component of the development pipeline rather than just an assistant, achieving end-to-end delivery from planning to deployment and documentation.",
+    contacts: {
+      email: "minsabin1108@gmail.com",
+      github: "https://github.com/sabin1108",
+    },
+  },
+  education: {
+    school: "Hankyong National University",
+    degree: "Department of Software Convergence",
+    status: "Graduated",
+    period: "2020.03 ~ 2026.02",
+    gpa: "3.87 / 4.5",
+    certificates: [
+      {
+        name: "Engineer Information Processing",
+        issuer: "Human Resources Development Service of Korea",
+        date: "2025.09.12",
+      },
+    ],
+  },
+  resume: {
+    summary:
+      "React/TypeScript-focused Front-End Developer. I handle the entire product lifecycle including high-volume data rendering optimization, external API response normalization, Supabase-based service integration, and Vercel production deployment/verification. I integrate AI tools into the development pipeline—from PRD, issue breakdown, static analysis, handoff, to smoke tests—rather than using it solely for code generation.",
+    coreSkills: [
+      {
+        title: "Frontend",
+        items: ["React", "TypeScript", "JavaScript"],
+      },
+    ] satisfies ResumeSection[],
+    projectHighlights: [
+      {
+        title: "Game-information-platform",
+        period: "2026.05 ~ 2026.06",
+        github: "https://github.com/sabin1108/Game-information-platform",
+        teamRole: "Personal Project | Frontend, Supabase Integration, Deployment & Verification",
+        techTags: ["Next.js", "TypeScript", "Supabase"],
+        bullets: [
+          "Built Steam/Epic game discount lookup, wishlist, target price tracking, Supabase Auth/DB integration, and Vercel production deployment.",
+          "Refactored code to reduce duplication from 668 lines to 121 lines and eliminated dead code (unused files/exports) from 15 to 0 based on Fallow metrics.",
+          "Structured AI agent workflows: grill-me (req verification) -> to-prd (PRD creation) -> to-issues (GitHub issue slicing) -> handoff (session transition), separating product/frontend/QA concerns with Harness.",
+          "Validated key user flows and deployment readiness using Vitest, Playwright smoke tests, TypeScript checks, and builds.",
+        ],
+      },
+      {
+        title: "PhotoMap",
+        period: "2025.12 ~ 2026.04",
+        github: "https://github.com/sabin1108/Photomap",
+        teamRole: "Team of 3 | Frontend, State Architecture, Rendering Optimization, D3 Visualization",
+        techTags: ["React", "Zustand", "D3.js"],
+        bullets: [
+          "Implemented list virtualization for 10,000+ photo items, keeping active DOM nodes under 200.",
+          "Migrated Context API global re-renders to Zustand selector/useShallow structure, improving commit duration from 9.7ms to 6.2ms.",
+          "Decoupled D3 tick coordinate updates from React state, resolving rendering bottlenecks using refs and direct style.setProperty updates.",
+        ],
+      },
+      {
+        title: "AIChatBot",
+        period: "2025.09.10 ~ 2025.11.14",
+        github: "https://github.com/sabin1108/graduation-project",
+        teamRole: "Team of 2 | Frontend, Chat UI, Response Parsing, API Response Normalization",
+        techTags: ["Next.js", "React-Markdown", "Blob API"],
+        bullets: [
+          "Designed and implemented chat interfaces, regex response parsing, and React-Markdown rendering for campus QA bot.",
+          "Normalized external API responses into a single JSON structure using Next.js API Routes Proxy Layer, reducing UI code by ~30%.",
+          "Implemented client-side conversation restoration, tab synchronization, and file export using Blob API and useLocalStorage without server dependency.",
+        ],
+      },
+    ],
+    activityGroups: [
+      {
+        title: "BRIGHT MAKERS EXPO 2025 Capstone Design Competition - Excellence Award",
+        venue: "Hankyong National University",
+        items: [
+          "Participated in the 17th Capstone Design Competition (Team Canvas), presenting an AI ChatBot service to improve access to campus information.",
+          "Proposed a user experience that aggregates scattered information like notices, menus, and schedules into a chat flow for rapid discovery.",
+          "Recognized for implementing UI/UX enhancements, readability optimizations, and conversation exports within an actual production flow.",
+        ],
+      },
+      {
+        title: "Generative AI-Based Portfolio Summary Platform",
+        venue: "IEIE (Under Review)",
+        href: "/files/thesis/generative-ai-portfolio-summary-platform.pdf",
+        linkLabel: "Research Paper PDF",
+        items: [
+          "Applied AI streaming responses, reducing average TTFT from 18,279ms to 607ms, and improving perceived wait times by ~96.7%.",
+          "Refactored components and routing to reduce admin dashboard lines of code from 231 to 172, achieving a 40%+ structural readability improvement.",
+          "Designed a maintainable architecture separating generative AI summaries, knowledge validation, DB storage, and visualization flows.",
+        ],
+      },
+      {
+        title: "Conversational QA System for Enhancing Campus Information Accessibility",
+        venue: "IEIE 2025 Summer Conference Poster/Paper Presentation",
+        href: "/files/thesis/interactive-campus-qa-system.pdf",
+        linkLabel: "Research Paper PDF",
+        items: [
+          "Designed user flows linking notices, schedules, and administrative info into conversational QA loops.",
+          "Reduced raw URL text display by up to 90% through response parsing, link extraction, and structured messaging.",
+          "Established a normalization layer to decouple external APIs from UI components, reducing UI code by ~30%.",
+        ],
+      },
+    ],
+  },
+} as const;

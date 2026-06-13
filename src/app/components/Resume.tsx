@@ -1,11 +1,17 @@
-﻿import { ExternalLink, FileText, Github, Mail, Printer } from "lucide-react";
-import { portfolio } from "../data/portfolio";
+import { ExternalLink, FileText, Github, Mail, Printer } from "lucide-react";
+import { portfolio, portfolioEn } from "../data/portfolio";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 
-function ResumeHeader() {
-  const { profile } = portfolio;
-
+function ResumeHeader({
+  profile,
+  summary,
+  isEn,
+}: {
+  profile: typeof portfolio.profile;
+  summary: string;
+  isEn: boolean;
+}) {
   return (
     <header className="resume-header mb-8 border-b border-slate-200 pb-6">
       <div className="mb-5 flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
@@ -22,16 +28,28 @@ function ResumeHeader() {
         </div>
 
         <div className="print:hidden flex flex-wrap gap-2">
+          {/* Language Switcher */}
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => {
+              window.location.pathname = isEn ? "/resume" : "/resume/en";
+            }}
+            className="border-slate-300 text-slate-700 hover:bg-slate-50"
+          >
+            {isEn ? "한글 이력서" : "English Resume"}
+          </Button>
+
           <Button
             type="button"
             onClick={() => window.print()}
             className="bg-indigo-600 text-white hover:bg-indigo-700"
           >
             <Printer className="mr-2 h-4 w-4" />
-            PDF 저장
+            {isEn ? "Save PDF" : "PDF 저장"}
           </Button>
           <Button asChild variant="outline" className="border-slate-300 text-slate-700">
-            <a href="/" aria-label="포트폴리오로 이동">
+            <a href="/" aria-label={isEn ? "Go to portfolio" : "포트폴리오로 이동"}>
               <ExternalLink className="mr-2 h-4 w-4" />
               Portfolio
             </a>
@@ -56,10 +74,11 @@ function ResumeHeader() {
           <Github className="h-4 w-4" />
           github.com/sabin1108
         </a>
+
       </div>
 
       <p className="max-w-4xl text-[0.95rem] leading-relaxed text-slate-700">
-        {portfolio.resume.summary}
+        {summary}
       </p>
     </header>
   );
@@ -85,12 +104,14 @@ function Section({
 }
 
 export function Resume() {
-  const { resume, education } = portfolio;
+  const isEn = window.location.pathname === "/resume/en" || window.location.pathname === "/resume-en";
+  const data = isEn ? portfolioEn : portfolio;
+  const { resume, education, profile } = data;
 
   return (
     <main className="min-h-screen bg-slate-100 px-4 py-8 print:bg-white print:px-0 print:py-0">
       <article className="resume-sheet mx-auto max-w-5xl bg-white px-6 py-8 shadow-sm print:max-w-none print:px-0 print:py-0 print:shadow-none sm:px-10">
-        <ResumeHeader />
+        <ResumeHeader profile={profile} summary={resume.summary} isEn={isEn} />
 
         <Section title="Core Skills">
           <div className="grid gap-4 sm:grid-cols-2">
@@ -179,9 +200,13 @@ export function Resume() {
                   <Button
                     asChild
                     variant="outline"
-                    className="mt-4 border-slate-300 text-slate-700 hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-600"
+                    className="print:hidden mt-4 border-slate-300 text-slate-700 hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-600"
                   >
-                    <a href={group.href} target="_blank" rel="noreferrer">
+                    <a
+                      href={group.href.startsWith("http") ? group.href : `${window.location.origin}${group.href}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       <FileText className="mr-2 h-4 w-4" />
                       {group.linkLabel}
                       <ExternalLink className="ml-2 h-4 w-4" />

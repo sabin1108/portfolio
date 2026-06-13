@@ -5,12 +5,12 @@ import { Timeline } from "./components/Timeline";
 import { Education } from "./components/Education";
 import { Resume } from "./components/Resume";
 
-function TopNav({ showResumeLink = false }: { showResumeLink?: boolean }) {
+function TopNav({ showResumeLink = false, isEn = false }: { showResumeLink?: boolean; isEn?: boolean }) {
   return (
     <nav className="print:hidden sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3 sm:px-8">
         <a href="/" className="text-sm font-bold text-slate-900">
-          민사빈
+          {isEn ? "Sabin Min" : "민사빈"}
         </a>
         <div className="flex items-center gap-2">
           <a
@@ -34,12 +34,16 @@ function TopNav({ showResumeLink = false }: { showResumeLink?: boolean }) {
 }
 
 export default function App() {
-  const isResumePage = window.location.pathname === "/resume";
+  const isResumePage =
+    window.location.pathname === "/resume" ||
+    window.location.pathname === "/resume/en" ||
+    window.location.pathname === "/resume-en";
+  const isEn = window.location.pathname === "/resume/en" || window.location.pathname === "/resume-en";
 
   if (isResumePage) {
     return (
       <>
-        <TopNav />
+        <TopNav isEn={isEn} />
         <Resume />
       </>
     );
