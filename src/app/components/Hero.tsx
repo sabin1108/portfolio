@@ -1,9 +1,11 @@
 import { motion } from "motion/react";
 import { CheckCircle2, Github, Mail } from "lucide-react";
-import { portfolio } from "../data/portfolio";
+import { portfolio, portfolioEn } from "../data/portfolio";
 
 export function Hero() {
-  const { profile } = portfolio;
+  const isEn = window.location.pathname === "/en" || window.location.pathname === "/resume/en" || window.location.pathname === "/resume-en";
+  const data = isEn ? portfolioEn : portfolio;
+  const { profile } = data;
 
   return (
     <motion.section

@@ -1,10 +1,12 @@
 import { motion } from "motion/react";
-import { portfolio } from "../data/portfolio";
+import { portfolio, portfolioEn } from "../data/portfolio";
 import { Badge } from "./ui/badge";
 import { Card } from "./ui/card";
 
 export function Education() {
-  const { education } = portfolio;
+  const isEn = window.location.pathname === "/en" || window.location.pathname === "/resume/en" || window.location.pathname === "/resume-en";
+  const data = isEn ? portfolioEn : portfolio;
+  const { education } = data;
   const educationDescription =
     "description" in education
       ? education.description

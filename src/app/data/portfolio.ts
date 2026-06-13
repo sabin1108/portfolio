@@ -616,11 +616,435 @@ export const portfolioEn = {
     headline: "Metrics-driven Front-End Developer — React Optimization · AI Collaboration · Full-stack Deployment",
     intro:
       "I prove improvements through metrics rather than just making things work—such as reducing commit time by 36%, maintaining ~60FPS rendering on 10,000 items, and removing 81.9% of source code duplication. I integrate AI as a core component of the development pipeline rather than just an assistant, achieving end-to-end delivery from planning to deployment and documentation.",
+    highlights: [
+      "Built 'Game Sale Info' service from scratch: Steam/Epic discount lookup, wishlist, target price tracking, Supabase Auth/DB, and Vercel deployment.",
+      "Optimized large-scale data rendering bottlenecks in 'PhotoMap' via Zustand selectors, list virtualization, and direct D3 DOM manipulation.",
+      "Established AI agent workflows connecting PRD, issue slicing, harness-based role separation, handoff documents, static analysis, and smoke tests.",
+    ],
     contacts: {
       email: "minsabin1108@gmail.com",
       github: "https://github.com/sabin1108",
     },
   },
+  techStack: ["JavaScript", "React", "TypeScript", "GitHub", "Slack", "Notion"],
+  projects: [
+    {
+      title: "Game-information-platform",
+      summary:
+        "Next.js game information tracking service providing discount lookups for Steam/Epic games, wishlists, and target price tracking, with ongoing performance and quality refactoring post Vercel production deployment.",
+      role: "Implemented frontend UI/UX, integrated Supabase Auth/DB, designed AI-assisted workflow, resolved quality issues based on static analysis, and deployed/verified on Vercel production environment.",
+      period: "2026",
+      tech: ["Next.js", "React", "TypeScript", "Supabase", "Vitest", "Playwright"],
+      metrics: [
+        { label: "Duplication", value: "81.9% down" },
+        { label: "Unused file/export", value: "15 -> 0" },
+        { label: "Fallow health", value: "84.7 / B" },
+      ],
+      workflowTerms: [
+        {
+          label: "AI Skill",
+          purpose:
+            "Utilized AI as development pipeline tools tailored to each stage—from planning and analysis to cleanup and verification—rather than just a code assistant.",
+          used: ["grill-me", "to-prd", "to-issues", "handoff", "caveman"],
+          result:
+            "Translated ambiguous ideas into specifications and repeatedly implemented them by slicing the PRD into GitHub issues.",
+        },
+        {
+          label: "Harness",
+          purpose:
+            "Development methodology to independently verify feature scope, data contracts, UX, and QA perspectives across long dev sessions.",
+          used: [
+            "5 project agents",
+            "5 guardrail skills",
+            "game-deal-harness-orchestrator",
+          ],
+          result:
+            "Achievements are detailed below, structured around real-world development flows.",
+        },
+        {
+          label: "Fallow",
+          purpose:
+            "Avoided subjective estimation of maintainability; quantified unused files/exports, duplication, and complexity hotspots.",
+          used: ["dead-code", "dupes", "score", "maintainability"],
+          result:
+            "Reduced source duplication from 668 to 121 lines and dead code from 15 to 0. Improved Fallow maintainability score from 91.3 to 92.1, with a current Fallow health score of 84.7 / B.",
+        },
+      ],
+      links: {
+        live: "https://www.gamesaleinfo.site",
+        github: "https://github.com/sabin1108/Game-information-platform",
+      },
+      imageAlt: "Game-information-platform project screenshot",
+      imageGallery: {
+        main: {
+          src: "/1_project/gameinfo_1.png",
+          alt: "Game-information-platform main screen",
+        },
+        supporting: [
+          {
+            src: "/1_project/gameinfo_2.png",
+            alt: "Game-information-platform sub screen 1",
+          },
+          {
+            src: "/1_project/gameinfo_3.png",
+            alt: "Game-information-platform sub screen 2",
+          },
+          {
+            src: "/1_project/gameinfo_4.png",
+            alt: "Game-information-platform sub screen 3",
+          },
+        ],
+      },
+      achievements: [
+        {
+          summary: "Minimized maintainability degradation from AI collaboration by tracking unused files/exports and duplication with Fallow",
+          details:
+            "Tracked unused files/exports and duplicate clone groups generated during rapid AI-driven feature extension.\n\nReduced dead code from 15 to 0 and source code duplication from 668 to 121 lines, lowering overall maintenance overhead. Kept one unused dev dependency for separate tracking.",
+          before: "Dead/duplicate",
+          after: "Cleaned up",
+        },
+        {
+          summary: "Separated product, data, frontend, and QA perspectives via Harness to prevent details from slipping during long dev sessions",
+          details:
+            "Configured 5 project-specific agents and 5 guardrail skills to review functionality, API contracts, UX, and test scopes.\n\nUsed handoff documents to preserve issue states and validation criteria across separate coding sessions.",
+          before: "Mixed concerns",
+          after: "Role separation",
+        },
+        {
+          summary: "Constrained AI discount insights to price snapshot evidence and verified outputs with CI and Fallow metrics",
+          details:
+            "Restricted the AI to evidence-only prompts using stored price snapshots and review evidence to prevent hallucinated prices or discounts.\n\nLogged model names, run states, failure causes, and evidence JSON to enable traceability.",
+          before: "AI free-form",
+          after: "Evidence-first",
+        },
+        {
+          summary: "Structured PRD-to-issue-to-implementation flows with AI Skills",
+          details:
+            "Utilized grill-me, to-prd, to-issues, and handoff to decompose large requirements into actionable GitHub issues with clear validation criteria.",
+          before: "Large roadmap",
+          after: "Issue-based",
+        },
+      ],
+      details: {
+        context:
+          "Game Sale Info is a Next.js service that tracks Steam/Epic discounts, wishlists, and target prices. We focused on building the entire product loop—user flows, authentication/DB state, feedback loops, deployment verification, and code quality metrics.",
+        role:
+          "Designed and implemented the frontend, Supabase Auth/DB integrations, Vercel production deployment, smoke tests, and AI-assisted workflows. Connected PRD, issue slicing, handoffs, static analysis, and verification evidence.",
+        architecture:
+          "Built on Next.js App Router and Supabase, integrated with Codex/Harness workflow frameworks. Synchronized DB states with UI feedback for wishlist toggles, undo actions, and price tracking. Leveraged Fallow for quality metrics and refactoring targets.",
+        keyFeatures: [
+          "Steam/Epic discount lookup, wishlist, and target price tracking",
+          "Removed redirects on wishlist additions, utilizing inline 3-second UI feedback cards",
+          "Restored archived DB rows when re-adding deleted items",
+          "Preserved issue states, verification results, and secret handling rules across sessions via handoff docs",
+          "Monitored unused code, duplication, maintainability, and complexity hotspots using Fallow",
+          "CI/CD integration, smoke tests, Supabase Auth/DB, and Vercel production deployment",
+        ],
+        challenges: [
+          "Risk of losing context across sessions due to mixed scopes across auth, Supabase, external APIs, and CI.",
+          "AI assistants generating code while missing tests, documentation, portfolio evidence, or data contracts.",
+          "Accumulating dead code and duplication from rapid feature expansion, requiring quantified maintainability targets.",
+        ],
+        solutions: [
+          "Created role-based agents and skills inside Harness to isolate product, data, frontend, QA, and portfolio perspectives.",
+          "Sliced large requirements into GitHub issues via to-prd/to-issues, and left detailed handoff notes for next sessions.",
+          "Refactored duplication and dead code targets guided by Fallow, logging before-and-after metrics.",
+        ],
+        validation: [
+          "Fallow: Source code duplication 668 lines (5.73%) -> 121 lines (1.03%)",
+          "Fallow: Overall project duplication 1,006 lines (9.4%) -> 308 lines (2.9%)",
+          "Fallow: Dead code (unused files/exports) 15 -> 0",
+          "Fallow maintainability score: Improved from 91.3 to 92.1 (Good)",
+          "Current Fallow health score: 84.7 / B, tracking 1 unused dev dependency separately",
+          "Passed 60 tests across 21 files in Vitest",
+          "Passed 2 Playwright smoke tests",
+          "Verified TypeScript checks, linting, production builds, and Vercel deployment",
+        ],
+        result:
+          "Leveraged AI as an active project pipeline rather than just a code generator. Preserved operational evidence across issues, handoffs, smoke tests, Fallow metrics, and production deployments for verifiable portfolio outcomes.",
+        process:
+          "Idea/Feedback -> grill-me specs -> to-prd docs -> to-issues slicing -> handoff context -> Fallow analysis -> Coding/Verification/Deployment -> Portfolio documentation.",
+        aiTraceability: [
+          "Restricted AI summary inputs to stored price snapshots and reviews to prevent hallucination. Embedded prompt contracts in tests.",
+          "Logged run states, models, errors, and timestamps to ai_insight_runs for debugging.",
+          "Saved original source evidence JSON next to summaries in ai_game_insights to allow verification.",
+          "Exposed status, duration, and cache headers in API routes with structured logging.",
+        ],
+        operationalEvidence: [
+          "Added process-local caching, stale fallbacks, and rate limiting to search/discount/popular API routes.",
+          "Enhanced wishlist interactions to render inline created, duplicate, restored, or failed states without redirects.",
+          "Recorded Next production build first-load JS: shared 102 kB, home 108 kB, deals 109 kB.",
+          "Integrated Sentry, Web Vitals, and latency collectors for real-time error and performance analysis.",
+        ],
+        codeHighlight: {
+          title: "Fallow quality check commands",
+          code: `npx fallow --format json --quiet --score
+npx fallow dead-code --format json --quiet
+npx fallow dupes --format json --quiet`,
+        },
+      },
+    },
+    {
+      title: "PhotoMap",
+      summary:
+        "A project that resolved rendering bottlenecks in high-volume image browsing, 2D/3D map visualization, and D3 relationship graphs on an EXIF metadata-based photo archive.",
+      role: "Implemented Frontend UI/UX, optimized global state architecture in Zustand, implemented list virtualization for large datasets, and integrated D3/Unity WebGL visualizations.",
+      period: "2025.12 ~ 2026.04",
+      tech: ["React", "TypeScript", "Zustand", "@tanstack/react-virtual", "D3.js", "Unity WebGL"],
+      metrics: [
+        { label: "Render", value: "36% down" },
+        { label: "DOM", value: "<200" },
+        { label: "Load", value: "50%+ down" },
+      ],
+      links: {
+        github: "https://github.com/sabin1108/Photomap",
+      },
+      imageAlt: "PhotoMap project screenshot",
+      imageGallery: {
+        main: {
+          src: "/2_project/photoproject_1.png",
+          alt: "PhotoMap main screenshot",
+        },
+        supporting: [
+          {
+            src: "/2_project/photoproject_2.png",
+            alt: "PhotoMap supporting screenshot 1",
+          },
+          {
+            src: "/2_project/photoproject_3.png",
+            alt: "PhotoMap supporting screenshot 2",
+          },
+          {
+            src: "/2_project/photoproject_4.gif",
+            alt: "PhotoMap supporting preview",
+          },
+        ],
+      },
+      achievements: [
+        {
+          summary: "Reduced React commit duration by 36% by migrating Context API global re-renders to Zustand selector subscriptions",
+          details:
+            "Sharing state via Context API caused over 70 components to re-render for minor state changes. By adopting Zustand selectors with the useShallow pattern to subscribe only to required slices, we reduced the React Profiler commit duration from 9.7ms to 6.2ms.",
+          before: "9.7ms",
+          after: "6.2ms",
+        },
+        {
+          summary: "Restricted DOM nodes to under 200 for 10,000+ photos using @tanstack/react-virtual",
+          details:
+            "The previous grid mapping approach caused freezes and a massive surge in DOM nodes when loading more than 5,000 items. By applying a row-based virtualizer and useGridBreakpoints, we rendered only visible rows, keeping the active DOM node count below 200.",
+          before: "Full render",
+          after: "Virtual grid",
+        },
+        {
+          summary: "Decoupled D3 physics simulation updates from React state, updating positions directly via style.setProperty",
+          details:
+            "Updating D3 node coordinates through React state triggered continuous reconciliation for sub-second physics calculations. By updating nodes/lines directly using ref-based DOM manipulation and style.setProperty, we maintained rendering performance at ~60FPS without React re-renders.",
+          before: "React state",
+          after: "Direct DOM",
+        },
+      ],
+      details: {
+        context:
+          "PhotoMap is a service that plots travel memories onto maps, timelines, albums, and relationship graphs using EXIF locations and timestamps. The key challenge was keeping scrolling and interactive visualizations smooth while handling over 10,000 photos.",
+        role:
+          "Responsible for frontend UI implementation, state management architecture, rendering optimization, D3 relationship graph UX, and integrating Cobe-based 3D Globe and Unity WebGL visualization views.",
+        architecture:
+          "Organized the UI into Photo Feed, Map View, Timeline, Albums, Favorites, and Spatial Node View, managing server data and UI state in a unified Zustand store. Row-based virtualization via @tanstack/react-virtual and useGridBreakpoints handled high-volume photo grids, arranging rows with transform properties. Decoupled D3 physics simulation from React re-renders via a custom useForceSimulation hook and direct DOM styling.",
+        keyFeatures: [
+          "GPS/timestamp extraction from EXIF and manual position adjustment",
+          "Photo Feed, 2D Map, 3D Globe, Timeline, Albums, Favorites, Spatial Node View",
+          "Row-based virtualized grid for PhotoFeed and AlbumsView",
+          "State subscription segregation using Zustand selectors and useShallow",
+          "Direct DOM updates for D3 NodeView physics simulation",
+          "PerformanceMonitor for real-time tracking of FPS, DOM nodes, JS heap, and loaded photo counts",
+          "Load testing in increments of 1,000 items via Admin View mock data injection",
+        ],
+        challenges: [
+          "Loading 5,000+ photos caused severe screen freezing and scroll FPS drops due to a surge in DOM nodes. Chrome DevTools Performance showed excessive image card reflows on scroll.",
+          "Sharing authentication and photo states via Context API triggered unnecessary re-renders in unrelated components on small state changes.",
+          "Managing D3 zoom, hover, and tick coordinates inside React state led to high reconciliation costs every frame.",
+          "Collaborating across frontend, database, and Unity roles required a shared API contract and common understanding of bridge logic.",
+        ],
+        solutions: [
+          "Applied @tanstack/react-virtual to PhotoFeed and AlbumsView to retain only visible rows in the DOM.",
+          "Calculated viewport-specific columns/gaps and computed row heights/coordinates via useGridBreakpoints hook, positioning them using transform: translateY().",
+          "Chose Zustand over Redux for its minimal boilerplate, using selectors and useShallow to subscribe only to necessary slices of state.",
+          "Updated D3 events and ticks directly via refs, style.setProperty, and setAttribute to bypass React reconciliation. Isolated line elements using ids and animationKeys to prevent collisions between view transitions.",
+          "Parallelized independent initial data requests using Promise.all to minimize waterfall loading delays.",
+          "Replaced Framer Motion loop animations with pure CSS keyframes, and wrapped UploadPhotoItem/Input/Popover in React.memo with custom props comparison to narrow re-rendering scopes.",
+        ],
+        validation: [
+          "React Profiler: commit duration reduced from 9.7ms to 6.2ms",
+          "Maintained under 200 DOM nodes when loading 10,000 photos",
+          "Mitigated initial mount latency of 1,132ms for 5,000 photos using row-based virtualization",
+          "Reduced D3 NodeView rendering cycles from 370 to 25",
+          "Reduced GlobeView maximum commit duration from 69.9ms to 26.6ms",
+          "Cut initial data loading times by 50%+ after converting to parallel Promise.all queries",
+          "Verified improvements using Chrome DevTools Performance/Network panels and Admin View mock data load tests",
+          "Ensured scroll stability at ~60FPS using the real-time PerformanceMonitor overlay",
+        ],
+        result:
+          "Reduced the active rendering surface area as photo counts scaled and isolated map/graph updates from React state. This transformed PhotoMap from a simple gallery into a highly performant and interactive spatial archive for high-volume photos.",
+        process:
+          "Identified bottlenecks via React Profiler and PerformanceMonitor, then resolved them sequentially through Zustand selectors, virtual grids, direct D3 DOM updates, and parallel Promise.all processing.",
+        operationalEvidence: [
+          "Conducted stress tests while monitoring live FPS, DOM node counts, JS heap sizes, and image loads inside PerformanceMonitor.",
+          "Analyzed main thread blockages, layouts, and style recalculation costs during scrolls using Chrome DevTools Performance.",
+          "Inspected initial request waterfall structures using Chrome DevTools Network to confirm the gains of Promise.all.",
+          "Simulated heavy loads in increments of 1,000 items by injecting mock photo datasets via the Admin View to verify virtualization.",
+          "Substituted Framer Motion loop animations with CSS keyframe animations to save CPU overhead on large card arrays.",
+          "Utilized React.memo on components like UploadPhotoItem, Input, and Popover to avoid re-rendering the entire upload queue when editing individual items.",
+        ],
+        codeHighlight: {
+          title: "Row virtualization positioning example",
+          code: `const renderRow = ({ index, style }) => (
+  <div
+    style={{
+      ...style,
+      transform: \`translateY(\${virtualRows[index].start}px)\`,
+    }}
+  >
+    {rowPhotos.map((photo) => (
+      <Image key={photo.id} src={photo.url} loading="lazy" />
+    ))}
+  </div>
+);`,
+        },
+      },
+    },
+    {
+      title: "AIChatBot",
+      summary:
+        "An intelligent campus QA chatbot improving student access to university details. It structures unstructured responses, restores conversations, synchronizes tabs, and exports chats entirely client-side.",
+      role: "Frontend implementation, designed and implemented chat UI/UX, regex response parsing, Blob API export features, local storage tab sync, and Next.js API Routes Proxy Layer architecture.",
+      period: "2025.09.10 ~ 2025.11.14",
+      tech: ["Next.js", "TypeScript", "React-Markdown", "Tailwind CSS", "Blob API", "useLocalStorage"],
+      metrics: [
+        { label: "URL noise", value: "90% down" },
+        { label: "UI code", value: "30% down" },
+        { label: "Export", value: "0 server" },
+      ],
+      links: {
+        github: "https://github.com/sabin1108/graduation-project",
+      },
+      imageAlt: "AIChatBot project screenshot",
+      imageGallery: {
+        main: {
+          src: "/3_project/aichat_1.png",
+          alt: "AIChatBot main screenshot",
+        },
+        supporting: [
+          {
+            src: "/3_project/aichat_2.png",
+            alt: "AIChatBot supporting screenshot 1",
+          },
+          {
+            src: "/3_project/aichat_3.png",
+            alt: "AIChatBot supporting screenshot 2",
+          },
+          {
+            src: "/3_project/aichat_4.gif",
+            alt: "AIChatBot layout preview",
+          },
+        ],
+      },
+      achievements: [
+        {
+          summary: "Substituted long URLs and unstructured texts with structured messaging layouts via regex parsing pipelines, reducing text clutter by 90%",
+          details:
+            "Raw API responses contained long URLs and unstructured lists that hindered legibility. By implementing a pre-render regex parsing pipeline, we converted URLs into clean links and structured schedules into readable lists.",
+          before: "Raw response",
+          after: "Parsed message",
+        },
+        {
+          summary: "Normalized external API responses into a single JSON schema via Next.js API Routes Proxy Layer, reducing UI code by 30%",
+          details:
+            "External APIs returned unstructured JSON and raw text, causing split/regex logic to leak into UI components. Normalizing fields and models in the proxy layer decoupled UI code and centralized API specification changes.",
+          before: "UI coupling",
+          after: "Proxy Layer",
+        },
+        {
+          summary: "Implemented client-side conversation state recovery, tab synchronization, and file export using Blob API and local storage",
+          details:
+            "Since the application does not have user authentication, we had to offer history recovery and sync client-side. We utilized local storage and storage events to sync tabs, and Blob objects with dynamic anchor elements to handle exports without server roundtrips.",
+          before: "Session-only",
+          after: "Local export",
+        },
+      ],
+      details: {
+        context:
+          "AIChatBot is a mobile-responsive chatbot that aggregates campus information (meals, notices, schedules, transit) into a central conversational interface. The focus was on optimizing unstructured AI responses and enabling client-side data management without authentication.",
+        role:
+          "Worked as the frontend developer in a team of two. Designed and implemented the chat interface, regex response parsing, Blob API-based exports, useLocalStorage-based tab synchronization, and Next.js API Routes Proxy Layer.",
+        architecture:
+          "Built using Next.js for both frontend views and API Routes proxy layers. Clients handled messaging states, Blob exports, and storage-event-driven tab sync. The proxy layer normalized third-party responses, keeping UI views decoupled from raw external schemas.",
+        keyFeatures: [
+          "Campus info (notices, menus, transit, schedules) query/response interface",
+          "Regex-based URL replacements and text formatting pipeline",
+          "React-Markdown formatting for AI message bubbles",
+          "Client-side export of chats using Blob API and dynamic anchor links",
+          "useLocalStorage and storage event listener tab state sync",
+          "JSON response normalization layer inside Next.js API Routes",
+        ],
+        challenges: [
+          "Inconsistent response formats from the raw AI API containing long unformatted text blocks and links degraded UI presentation.",
+          "Delivering persistent session recovery, multi-tab sync, and chat history exports without a backend user account system.",
+          "Directly importing raw third-party models into UI components created tight coupling, threatening UI stability if API specifications changed.",
+        ],
+        solutions: [
+          "Applied a pre-render regex pipeline that parsed text blocks into Markdown lists and converted URLs into anchor tags.",
+          "Used Blob objects, URL.createObjectURL, and dynamic trigger links to generate and download chat files entirely client-side.",
+          "Bound localStorage updates with React states via custom hooks, subscribing to storage events to immediately reflect updates across other open tabs.",
+          "Established Next.js API Routes to proxy calls, parsing and restructuring incoming schemas into a single normalized JSON layout before client dispatch.",
+        ],
+        validation: [
+          "Reduced raw URL text display by up to 90%",
+          "Reduced UI component lines of code by ~30%",
+          "Validated instant client-side chat exports without server roundtrips",
+          "Verified multi-tab synchronization without database queries",
+          "Presented poster/paper at the IEIE 2025 Summer Conference",
+          "Awarded Excellence Prize at the BRIGHT MAKERS EXPO 2025 Capstone Design Competition",
+        ],
+        result:
+          "Transformed raw AI responses into clean, readable conversational bubble feeds. Empowered users to export and synchronize chat logs entirely on the client, isolating external API formats through a dedicated proxy middleware layer.",
+        process:
+          "Drafted user ideas, validated requirements with the team, structured data schemas via PRD/issues, implemented client features, normalized proxy responses, and documented the validation outcomes.",
+      },
+    },
+  ] satisfies Project[],
+  activities: [
+    {
+      date: "2025.04",
+      title: "BRIGHT MAKERS EXPO Capstone Design Competition - Excellence Award",
+      description:
+        "Presented our Hankyong National University AI ChatBot project improving accessibility to campus resources.",
+    },
+    {
+      date: "2025.06",
+      title: "Poster/Paper Presentation at the IEIE Summer Conference",
+      description:
+        "Co-authored and presented a research paper on the conversational Q&A system for campus information integration.",
+      pdf: {
+        label: "Research Paper PDF",
+        href: "/files/thesis/interactive-campus-qa-system.pdf",
+      },
+    },
+    {
+      date: "2026.05",
+      title: "Generative AI-Based Portfolio Summary Platform",
+      description:
+        "Co-authored a research paper proposing a platform that summarizes candidate portfolios to help recruiters quickly verify skills. Submitted and reviewed by the Institute of Electronics and Information Engineers (IEIE).",
+      pdf: {
+        label: "Research Paper PDF",
+        href: "/files/thesis/generative-ai-portfolio-summary-platform.pdf",
+      },
+    },
+    {
+      date: "2025.09.12",
+      title: "Engineer Information Processing",
+      description: "Obtained national technical qualification certificate issued by the Human Resources Development Service of Korea.",
+    },
+  ],
   education: {
     school: "Hankyong National University",
     degree: "Department of Software Convergence",
