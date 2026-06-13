@@ -1,4 +1,4 @@
-import { ExternalLink, FileText, Github, Mail, Printer } from "lucide-react";
+import { ExternalLink, FileText, Github, Globe, Mail, Printer } from "lucide-react";
 import { portfolio, portfolioEn } from "../data/portfolio";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
@@ -74,7 +74,17 @@ function ResumeHeader({
           <Github className="h-4 w-4" />
           github.com/sabin1108
         </a>
-
+        {isEn && (
+          <a
+            href="https://binportfolio.site/"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1.5 hover:text-indigo-600"
+          >
+            <Globe className="h-4 w-4" />
+            binportfolio.site
+          </a>
+        )}
       </div>
 
       <p className="max-w-4xl text-[0.95rem] leading-relaxed text-slate-700">
@@ -200,7 +210,7 @@ export function Resume() {
                   <Button
                     asChild
                     variant="outline"
-                    className="print:hidden mt-4 border-slate-300 text-slate-700 hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-600"
+                    className="mt-4 border-slate-300 text-slate-700 hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-600"
                   >
                     <a
                       href={group.href.startsWith("http") ? group.href : `${window.location.origin}${group.href}`}
