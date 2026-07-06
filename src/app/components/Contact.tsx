@@ -21,9 +21,6 @@ export function Contact() {
             <h2 className="mb-2 text-[1.5rem] font-semibold tracking-tight text-slate-800">
               Contact
             </h2>
-            <p className="text-[0.9375rem] leading-relaxed text-slate-600">
-              웹에는 이메일과 GitHub만 공개합니다.
-            </p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Button asChild className="bg-indigo-600 text-white hover:bg-indigo-700">

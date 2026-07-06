@@ -1,13 +1,10 @@
 import { motion } from "motion/react";
 import { ExternalLink, FileText } from "lucide-react";
-import { portfolio, portfolioEn } from "../data/portfolio";
+import { portfolio } from "../data/portfolio";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 
 export function Timeline() {
-  const isEn = window.location.pathname === "/en" || window.location.pathname === "/resume/en" || window.location.pathname === "/resume-en";
-  const data = isEn ? portfolioEn : portfolio;
-
   return (
     <motion.section
       initial={false}
@@ -21,7 +18,7 @@ export function Timeline() {
       </h2>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        {data.activities.map((activity, idx) => (
+        {portfolio.activities.map((activity, idx) => (
           <motion.div
             key={activity.title}
             initial={false}

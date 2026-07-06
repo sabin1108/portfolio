@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, ExternalLink, Github, X } from "lucide-react";
-import { portfolio, portfolioEn, type Project } from "../data/portfolio";
+import { portfolio, type Project } from "../data/portfolio";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import {
@@ -38,22 +38,7 @@ const fallowMetrics = [
   { label: "Fallow health", before: "현재", after: "84.7 / B", accent: true },
 ] as const;
 
-const fallowMetricsEn = [
-  {
-    label: "Source code duplication",
-    before: "668 lines (5.73%)",
-    after: "121 lines (1.03%)",
-    accent: true,
-  },
-  {
-    label: "Overall duplication",
-    before: "1,006 lines (9.4%)",
-    after: "308 lines (2.9%)",
-    accent: true,
-  },
-  { label: "Unused file/export", before: "15 items", after: "0 items", accent: true },
-  { label: "Fallow health", before: "Current", after: "84.7 / B", accent: true },
-] as const;
+
 
 const aiSkillCards = [
   {
@@ -88,38 +73,7 @@ const aiSkillCards = [
   },
 ] as const;
 
-const aiSkillCardsEn = [
-  {
-    name: "fallow",
-    role: "Automated static analysis, unused file/export & duplication measurement, refactoring metric quantification",
-    result: "81.9% reduction in duplication, unused file/export from 15 to 0",
-  },
-  {
-    name: "hand-off",
-    role: "Maintaining context across long dev sessions, reviewing and inheriting handoff docs from previous agents",
-    result: "Ensure session continuity in multi-agent workflow",
-  },
-  {
-    name: "grill-me",
-    role: "In-depth requirements analysis, edge case exploration, translating vague product ideas into concrete dev specs",
-    result: "Pre-emptive mitigation of potential bugs/issues",
-  },
-  {
-    name: "to-prd / to-issues",
-    role: "Idea to PRD translation, automated slicing into GitHub issues, milestone configuration",
-    result: "Consistent flow from product design to issue tickets",
-  },
-  {
-    name: "caveman",
-    role: "Ultra-compressed status reporting, token conservation",
-    result: "High-density communication focused on key metrics",
-  },
-  {
-    name: "Playwright",
-    role: "E2E smoke tests, production build verification, mobile safe-area validation",
-    result: "Automation of manual post-deployment checks",
-  },
-] as const;
+
 
 function AchievementItem({
   achievement,
@@ -189,9 +143,8 @@ function AchievementItem({
 
 function WorkflowTermItem({ term }: { term: WorkflowTerm }) {
   const label = term.label.toLowerCase();
-  const isEn = window.location.pathname === "/en" || window.location.pathname === "/resume/en" || window.location.pathname === "/resume-en";
-  const metrics = isEn ? fallowMetricsEn : fallowMetrics;
-  const cards = isEn ? aiSkillCardsEn : aiSkillCards;
+  const metrics = fallowMetrics;
+  const cards = aiSkillCards;
 
   return (
     <HoverCard openDelay={100} closeDelay={100}>
@@ -305,14 +258,10 @@ function WorkflowTermItem({ term }: { term: WorkflowTerm }) {
 }
 
 function WorkflowTerms({ terms }: { terms: readonly WorkflowTerm[] }) {
-  const isEn = window.location.pathname === "/en" || window.location.pathname === "/resume/en" || window.location.pathname === "/resume-en";
-
   return (
     <div className="mb-5 rounded-lg border border-blue-100 bg-blue-50/50 p-4">
       <p className="mb-3 text-sm leading-relaxed text-slate-600">
-        {isEn
-          ? "Hover over key terms to see which skills were used, why, and what results were achieved."
-          : "주요 단어에 마우스를 올리면 어떤 스킬을 왜 썼고, 어떤 성과가 있었는지 볼 수 있습니다."}
+        주요 단어에 마우스를 올리면 어떤 스킬을 왜 썼고, 어떤 성과가 있었는지 볼 수 있습니다.
       </p>
       <div className="flex flex-wrap gap-x-4 gap-y-2">
         {terms.map((term) => (
@@ -496,7 +445,6 @@ function DetailList({ title, items }: { title: string; items: readonly string[] 
 }
 
 function ProjectDetailsBody({ project }: { project: Project }) {
-  const isEn = window.location.pathname === "/en" || window.location.pathname === "/resume/en" || window.location.pathname === "/resume-en";
 
   return (
     <div className="space-y-6">
@@ -520,12 +468,12 @@ function ProjectDetailsBody({ project }: { project: Project }) {
       <DetailList title="Key Features" items={project.details.keyFeatures} />
       <DetailList title="Challenges" items={project.details.challenges} />
       <DetailList title="Solutions" items={project.details.solutions} />
-      <DetailList title={isEn ? "Validation Logs" : "검증 기록"} items={project.details.validation} />
+      <DetailList title="검증 기록" items={project.details.validation} />
       {project.details.aiTraceability ? (
-        <DetailList title={isEn ? "AI Traceability" : "AI 작업 추적"} items={project.details.aiTraceability} />
+        <DetailList title="AI 작업 추적" items={project.details.aiTraceability} />
       ) : null}
       {project.details.operationalEvidence ? (
-        <DetailList title={isEn ? "Operational Evidence" : "운영 확인"} items={project.details.operationalEvidence} />
+        <DetailList title="운영 확인" items={project.details.operationalEvidence} />
       ) : null}
 
       {project.details.process ? (
@@ -547,8 +495,6 @@ function ProjectDetailsBody({ project }: { project: Project }) {
 }
 
 function ProjectDetails({ project }: { project: Project }) {
-  const isEn = window.location.pathname === "/en" || window.location.pathname === "/resume/en" || window.location.pathname === "/resume-en";
-
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -563,7 +509,7 @@ function ProjectDetails({ project }: { project: Project }) {
         <SheetHeader>
           <SheetTitle className="text-slate-800">{project.title}</SheetTitle>
           <SheetDescription className="text-slate-500">
-            {isEn ? "Detailed compilation of context, implementation details, validation, and outcomes." : "문제, 구현, 검증, 결과를 자세히 정리했습니다."}
+            문제, 구현, 검증, 결과를 자세히 정리했습니다.
           </SheetDescription>
         </SheetHeader>
 
@@ -736,9 +682,6 @@ function ProjectCard({
 }
 
 export function Projects() {
-  const isEn = window.location.pathname === "/en" || window.location.pathname === "/resume/en" || window.location.pathname === "/resume-en";
-  const data = isEn ? portfolioEn : portfolio;
-
   return (
     <motion.section
       initial={false}
@@ -748,11 +691,11 @@ export function Projects() {
       className="mb-20"
     >
       <h2 className="mb-12 text-[1.75rem] font-semibold tracking-tight text-slate-800">
-        {isEn ? "Featured Projects" : "Featured Projects"}
+        Featured Projects
       </h2>
 
       <div className="space-y-14">
-        {data.projects.map((project, idx) => (
+        {portfolio.projects.map((project, idx) => (
           <ProjectCard key={project.title} project={project} index={idx} />
         ))}
       </div>

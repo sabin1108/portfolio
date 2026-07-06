@@ -1,57 +1,59 @@
-import { ExternalLink, FileText, Github, Globe, Mail, Printer } from "lucide-react";
-import { portfolio, portfolioEn } from "../data/portfolio";
+import { useState, useEffect } from "react";
+import { ExternalLink, FileText, Github, Globe, Mail, Printer, Lock, Key } from "lucide-react";
+import { resumeData, RESUME_PASSCODE } from "../data/resume";
+import { resumeEliceData } from "../data/resume_elice";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 
 function ResumeHeader({
   profile,
   summary,
-  isEn,
 }: {
-  profile: typeof portfolio.profile;
+  profile: typeof resumeData.profile;
   summary: string;
-  isEn: boolean;
 }) {
   return (
     <header className="resume-header mb-8 border-b border-slate-200 pb-6">
       <div className="mb-5 flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+          {profile.image && (
+            <div className="h-52 w-44 shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-slate-50 shadow-sm print:h-52 print:w-44">
+              <img
+                src={profile.image}
+                alt={profile.name}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          )}
           <div>
             <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-indigo-600">
-              Resume
+              이력서
             </p>
             <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
               {profile.name}
             </h1>
-            <p className="mt-2 text-lg font-semibold text-slate-700">{profile.title}</p>
+            <div className="mt-2 flex items-center gap-2">
+              <span className="text-lg font-semibold text-slate-700">{profile.title}</span>
+              <Badge variant="secondary" className="bg-indigo-50 text-indigo-700 border border-indigo-200 text-xs font-semibold py-0.5 px-2">
+                신입
+              </Badge>
+            </div>
           </div>
         </div>
 
         <div className="print:hidden flex flex-wrap gap-2">
-          {/* Language Switcher */}
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => {
-              window.location.pathname = isEn ? "/resume" : "/resume/en";
-            }}
-            className="border-slate-300 text-slate-700 hover:bg-slate-50"
-          >
-            {isEn ? "한글 이력서" : "English Resume"}
-          </Button>
-
           <Button
             type="button"
             onClick={() => window.print()}
             className="bg-indigo-600 text-white hover:bg-indigo-700"
           >
             <Printer className="mr-2 h-4 w-4" />
-            {isEn ? "Save PDF" : "PDF 저장"}
+            PDF 저장
           </Button>
           <Button asChild variant="outline" className="border-slate-300 text-slate-700">
-            <a href="/" aria-label={isEn ? "Go to portfolio" : "포트폴리오로 이동"}>
+            <a href="/" aria-label="포트폴리오로 이동">
               <ExternalLink className="mr-2 h-4 w-4" />
-              Portfolio
+              포트폴리오
             </a>
           </Button>
         </div>
@@ -74,22 +76,20 @@ function ResumeHeader({
           <Github className="h-4 w-4" />
           github.com/sabin1108
         </a>
-        {isEn && (
-          <a
-            href="https://binportfolio.site/"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1.5 hover:text-indigo-600"
-          >
-            <Globe className="h-4 w-4" />
-            binportfolio.site
-          </a>
-        )}
+        <a
+          href="https://binportfolio.site/"
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-1.5 hover:text-indigo-600"
+        >
+          <Globe className="h-4 w-4" />
+          binportfolio.site
+        </a>
       </div>
 
-      <p className="max-w-4xl text-[0.95rem] leading-relaxed text-slate-700">
+      <div className="max-w-4xl text-[0.95rem] leading-relaxed text-slate-700 whitespace-pre-line space-y-3">
         {summary}
-      </p>
+      </div>
     </header>
   );
 }
@@ -114,35 +114,148 @@ function Section({
 }
 
 export function Resume() {
-  const isEn = window.location.pathname === "/resume/en" || window.location.pathname === "/resume-en";
-  const data = isEn ? portfolioEn : portfolio;
-  const { resume, education, profile } = data;
+  const [authorized, setAuthorized] = useState<boolean>(false);
+  const [inputKey, setInputKey] = useState<string>("");
+  const [errorMsg, setErrorMsg] = useState<string>("");
+
+  useEffect(() => {
+    // 1. Check URL query param '?key=...'
+    const params = new URLSearchParams(window.location.search);
+    const urlKey = params.get("key");
+    if (urlKey === RESUME_PASSCODE) {
+      setAuthorized(true);
+      sessionStorage.setItem("resume_auth_key", urlKey);
+      return;
+    }
+
+    // 2. Check sessionStorage
+    const savedKey = sessionStorage.getItem("resume_auth_key");
+    if (savedKey === RESUME_PASSCODE) {
+      setAuthorized(true);
+    }
+  }, []);
+
+  const handleVerify = (e: React.FormEvent) => {
+    e.preventDefault();
+    const cleanKey = inputKey.trim();
+    if (cleanKey === RESUME_PASSCODE) {
+      setAuthorized(true);
+      sessionStorage.setItem("resume_auth_key", cleanKey);
+      setErrorMsg("");
+    } else {
+      setErrorMsg("올바르지 않은 비밀번호입니다. 다시 입력해주세요.");
+    }
+  };
+
+  const currentPath = window.location.pathname;
+  const isElicePath = currentPath.includes("elice_a3b2c");
+  const activeResumeData = isElicePath ? resumeEliceData : resumeData;
+
+  const { summary, coreSkills, projectHighlights, activityGroups, education, profile } = activeResumeData;
+
+  if (!authorized && !isElicePath) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-slate-100 px-4 py-8">
+        <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-lg">
+          <div className="mb-6 text-center">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-indigo-50 text-indigo-600">
+              <Lock className="h-7 w-7" />
+            </div>
+            <h2 className="text-xl font-bold tracking-tight text-slate-900">비공개 이력서</h2>
+            <p className="mt-2 text-sm text-slate-500">
+              이 이력서는 비공개 설정되어 있습니다. <br />
+              비밀번호를 입력하여 잠금을 해제해주세요.
+            </p>
+          </div>
+
+          <form onSubmit={handleVerify} className="space-y-4">
+            <div>
+              <label htmlFor="auth-key" className="sr-only">
+                비밀번호
+              </label>
+              <div className="relative">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                  <Key className="h-5 w-5 text-slate-400" />
+                </div>
+                <input
+                  type="password"
+                  id="auth-key"
+                  value={inputKey}
+                  onChange={(e) => setInputKey(e.target.value)}
+                  placeholder="비밀번호를 입력하세요"
+                  className="block w-full rounded-lg border border-slate-300 bg-slate-50 py-2.5 pl-10 pr-3 text-sm text-slate-900 focus:border-indigo-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                />
+              </div>
+              {errorMsg && (
+                <p className="mt-2 text-xs font-medium text-red-500">{errorMsg}</p>
+              )}
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full bg-indigo-600 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+              잠금 해제
+            </Button>
+          </form>
+
+          <div className="mt-6 border-t border-slate-100 pt-4 text-center">
+            <a href="/" className="text-xs font-medium text-slate-500 hover:text-indigo-600 transition-colors">
+              포트폴리오 홈으로 돌아가기
+            </a>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-slate-100 px-4 py-8 print:bg-white print:px-0 print:py-0">
       <article className="resume-sheet mx-auto max-w-5xl bg-white px-6 py-8 shadow-sm print:max-w-none print:px-0 print:py-0 print:shadow-none sm:px-10">
-        <ResumeHeader profile={profile} summary={resume.summary} isEn={isEn} />
+        <ResumeHeader profile={profile} summary={summary} />
 
-        <Section title="Core Skills">
-          <div className="grid gap-4 sm:grid-cols-2">
-            {resume.coreSkills.map((group) => (
-              <div key={group.title} className="rounded-lg border border-slate-200 p-4 print:p-3">
-                <h3 className="mb-3 text-sm font-semibold text-slate-800">{group.title}</h3>
-                <div className="flex flex-wrap gap-2">
-                  {group.items.map((item) => (
-                    <Badge key={item} variant="secondary" className="bg-slate-100 text-slate-700">
-                      {item}
-                    </Badge>
-                  ))}
+        {activeResumeData.motivation && (
+          <Section title="지원 동기">
+            <div className="max-w-4xl text-[0.95rem] leading-relaxed text-slate-700 whitespace-pre-line">
+              {activeResumeData.motivation}
+            </div>
+          </Section>
+        )}
+
+        <Section title="기술 스택">
+          <div className="text-[0.925rem] leading-relaxed text-slate-700 space-y-2 pl-1">
+            {coreSkills.map((group) => {
+              const isSubTools = group.title.startsWith("Tools - ");
+              if (isSubTools) return null;
+
+              if (group.title === "Tools") {
+                const subGroups = coreSkills.filter(g => g.title.startsWith("Tools - "));
+                return (
+                  <div key="Tools" className="mt-2">
+                    <span className="font-bold text-slate-800">• Tools:</span>
+                    <ul className="pl-6 mt-1 space-y-1.5 list-disc text-slate-600">
+                      {subGroups.map(sub => (
+                        <li key={sub.title}>
+                          <span className="font-semibold text-slate-700">{sub.title.replace("Tools - ", "")}</span>: {sub.items.join(", ")}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                );
+              }
+
+              return (
+                <div key={group.title}>
+                  <span className="font-bold text-slate-800">• {group.title}</span>: {group.items.join(", ")}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </Section>
 
-        <Section title="Projects">
+        <Section title="프로젝트">
           <div className="resume-projects space-y-6">
-            {resume.projectHighlights.map((project) => (
+            {projectHighlights.map((project) => (
               <div key={project.title} className="break-inside-avoid">
                 <div className="mb-2 flex flex-wrap items-baseline justify-between gap-2">
                   <div className="flex flex-wrap items-center gap-2">
@@ -154,7 +267,7 @@ export function Resume() {
                       className="print:hidden inline-flex items-center gap-1 rounded-md border border-slate-300 px-2 py-1 text-xs font-semibold text-slate-600 hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-600"
                     >
                       <Github className="h-3.5 w-3.5" />
-                      GitHub
+                      GitHub 바로가기
                     </a>
                   </div>
                   <span className="text-sm font-medium text-slate-500">{project.period}</span>
@@ -172,29 +285,58 @@ export function Resume() {
                     </span>
                   ))}
                 </div>
-                <ul className="space-y-1.5">
-                  {project.bullets.map((bullet) => (
-                    <li key={bullet} className="flex gap-2 text-[0.92rem] leading-relaxed text-slate-700">
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-500" />
-                      <span>{bullet}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="mt-2.5 text-[0.875rem] text-slate-700 leading-relaxed space-y-2.5">
+                  <div className="text-slate-600">
+                    <span className="font-bold text-slate-900">프로젝트 설명: </span>{project.description}
+                  </div>
+                  <div className="text-slate-600">
+                    <span className="font-bold text-slate-900">핵심 역할: </span>{project.keyRoles}
+                  </div>
+                  
+                  {project.troubleshoot && project.troubleshoot.length > 0 && (
+                    <div className="space-y-1">
+                      <div className="font-bold text-slate-900">주요 이슈 및 해결:</div>
+                      <ul className="pl-4 mt-1 space-y-2 list-disc text-slate-600">
+                        {project.troubleshoot.map((t, i) => (
+                          <li key={i} className="text-[0.85rem] leading-normal">
+                            <span className="font-semibold text-slate-800">이슈: </span>{t.issue}
+                            <div className="mt-1 text-indigo-700 font-medium pl-3 border-l border-indigo-100">
+                              <span className="font-semibold text-indigo-800">해결: </span>{t.resolution}
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {project.achievements && project.achievements.length > 0 && (
+                    <div className="space-y-1">
+                      <div className="font-bold text-slate-900">성과:</div>
+                      <ul className="pl-4 mt-1 space-y-1 list-disc text-slate-600">
+                        {project.achievements.map((a, i) => (
+                          <li key={i} className="text-[0.85rem] leading-normal">
+                            {a}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
               </div>
             ))}
           </div>
         </Section>
 
-        <Section title="Activities" className="resume-activities-section">
+        <Section title="활동 및 수상" className="resume-activities-section">
           <div className="resume-activities space-y-4">
-            {resume.activityGroups.map((group) => (
+            {activityGroups.map((group) => (
               <article
                 key={`${group.title}-${group.items[0]}`}
                 className="resume-activity-card break-inside-avoid rounded-lg border border-slate-200 bg-white p-5"
               >
                 <div className="mb-3">
                   <h3 className="text-base font-bold text-slate-900">{group.title}</h3>
-                  {"venue" in group ? (
+                  {group.venue ? (
                     <p className="mt-1 text-sm font-medium text-indigo-700">{group.venue}</p>
                   ) : null}
                 </div>
@@ -206,7 +348,7 @@ export function Resume() {
                     </li>
                   ))}
                 </ul>
-                {"href" in group ? (
+                {group.href && group.linkLabel ? (
                   <Button
                     asChild
                     variant="outline"
@@ -228,7 +370,7 @@ export function Resume() {
           </div>
         </Section>
 
-        <Section title="Education & Certifications">
+        <Section title="학력 및 자격증">
           <h3 className="text-base font-bold text-slate-900">{education.school}</h3>
           <p className="mt-1 text-sm text-slate-600">{education.degree}</p>
           <p className="mt-2 text-sm leading-relaxed text-slate-700">
@@ -249,5 +391,3 @@ export function Resume() {
     </main>
   );
 }
-
-

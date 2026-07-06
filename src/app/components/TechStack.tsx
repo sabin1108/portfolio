@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { Blocks, Code2, Github, Layers, MessageSquare, NotebookTabs } from "lucide-react";
-import { portfolio, portfolioEn } from "../data/portfolio";
+import { portfolio } from "../data/portfolio";
 import { Card } from "./ui/card";
 
 const icons = {
@@ -13,8 +13,6 @@ const icons = {
 };
 
 export function TechStack() {
-  const isEn = window.location.pathname === "/en" || window.location.pathname === "/resume/en" || window.location.pathname === "/resume-en";
-  const data = isEn ? portfolioEn : portfolio;
   return (
     <motion.section
       initial={false}
@@ -28,7 +26,7 @@ export function TechStack() {
       </h2>
 
       <div className="flex flex-wrap gap-4">
-        {data.techStack.map((tech) => {
+        {portfolio.techStack.map((tech) => {
           const Icon = icons[tech] ?? Code2;
 
           return (

@@ -1,11 +1,9 @@
 import { motion } from "motion/react";
 import { CheckCircle2, Github, Mail } from "lucide-react";
-import { portfolio, portfolioEn } from "../data/portfolio";
+import { portfolio } from "../data/portfolio";
 
 export function Hero() {
-  const isEn = window.location.pathname === "/en" || window.location.pathname === "/resume/en" || window.location.pathname === "/resume-en";
-  const data = isEn ? portfolioEn : portfolio;
-  const { profile } = data;
+  const { profile } = portfolio;
 
   return (
     <motion.section
@@ -20,9 +18,16 @@ export function Hero() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <h1 className="mb-4 text-4xl font-extrabold tracking-tight text-slate-800">
-            {profile.name} | {profile.title}
-          </h1>
+          <div className="mb-4 flex flex-wrap items-baseline gap-2.5">
+            <h1 className="text-4xl font-extrabold tracking-tight text-slate-800">
+              {profile.name}
+            </h1>
+            <span className="text-xl font-semibold text-slate-600">|</span>
+            <span className="text-xl font-semibold text-slate-600">{profile.title}</span>
+            <span className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-0.5 text-xs font-semibold text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
+              신입
+            </span>
+          </div>
 
           <div className="mb-6 flex flex-wrap items-center gap-4 text-sm text-slate-500">
             <a
