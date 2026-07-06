@@ -168,7 +168,7 @@ function WorkflowTermItem({ term }: { term: WorkflowTerm }) {
         {label === "fallow" ? (
           <div className="rounded-lg bg-white p-5">
             <h4 className="mb-5 text-sm font-semibold text-slate-800">
-              {isEn ? "Fallow Code Quality Metrics - Before -> After" : "Fallow 코드 품질 지표 - 사용 전 -> 확인 기준"}
+              {"Fallow 코드 품질 지표 - 사용 전 -> 확인 기준"}
             </h4>
             <div className="space-y-0">
               {metrics.map((metric) => (
@@ -190,20 +190,16 @@ function WorkflowTermItem({ term }: { term: WorkflowTerm }) {
               ))}
             </div>
             <p className="mt-4 text-[0.6875rem] leading-relaxed text-slate-500">
-              {isEn
-                ? "Source duplication excludes test files / Overall duplication includes all files / 1 unused dev dependency is managed separately."
-                : "소스 중복은 테스트 파일 제외 기준 / 전체 중복은 프로젝트 전체(테스트 포함) 기준 / unused dev dependency 1건은 별도 관리"}
+              소스 중복은 테스트 파일 제외 기준 / 전체 중복은 프로젝트 전체(테스트 포함) 기준 / unused dev dependency 1건은 별도 관리
             </p>
           </div>
         ) : label === "ai skill" ? (
           <div className="rounded-lg bg-white p-5">
             <p className="mb-2 text-xs font-semibold text-slate-500">
-              {isEn ? "AI Collaboration Workflows" : "AI 협업 워크플로우"}
+              AI 협업 워크플로우
             </p>
             <p className="mb-5 text-sm font-semibold leading-relaxed text-slate-700">
-              {isEn
-                ? "Integrating AI as a core component of the dev pipeline rather than a simple code generator - structuring tools for planning, analysis, documentation, and verification."
-                : "AI를 단순 코드 생성 도구가 아닌 개발 파이프라인 일부로 통합 - 기획·분석·정리·검증까지 각 단계에 맞는 tool을 직접 구성해 사용"}
+              AI를 단순 코드 생성 도구가 아닌 개발 파이프라인 일부로 통합 - 기획·분석·정리·검증까지 각 단계에 맞는 tool을 직접 구성해 사용
             </p>
             <div className="grid gap-3 md:grid-cols-2">
               {cards.map((card) => (
