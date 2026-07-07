@@ -1,277 +1,28 @@
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, ExternalLink, Github, X } from "lucide-react";
+import { useState } from "react";
+import {
+  CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
+  ExternalLink,
+  Github,
+  Image as ImageIcon,
+  Network,
+  Table2,
+  X,
+} from "lucide-react";
 import { portfolio, type Project } from "../data/portfolio";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-import {
-  HoverCard,
-  HoverCardTrigger,
-  HoverCardContent,
-} from "./ui/hover-card";
-import {
-  Sheet,
-  SheetTrigger,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from "./ui/sheet";
 
-type Achievement = Project["achievements"][number];
-type WorkflowTerm = NonNullable<Project["workflowTerms"]>[number];
+type PortfolioProject = Project;
+type GalleryImage = PortfolioProject["imageGallery"]["main"];
 
-const fallowMetrics = [
-  {
-    label: "소스 중복 lines",
-    before: "668줄 (5.73%)",
-    after: "121줄 (1.03%)",
-    accent: true,
-  },
-  {
-    label: "전체 중복 (프로젝트 기준)",
-    before: "1,006줄 (9.4%)",
-    after: "308줄 (2.9%)",
-    accent: true,
-  },
-  { label: "Unused file/export", before: "15개", after: "0개", accent: true },
-  { label: "Fallow health", before: "현재", after: "84.7 / B", accent: true },
-] as const;
-
-
-
-const aiSkillCards = [
-  {
-    name: "fallow",
-    role: "정적 분석 자동화, unused file/export·중복 측정, 리팩터링 근거 수치화",
-    result: "소스 중복 81.9% 감소, unused file/export 기준 15개 -> 0개",
-  },
-  {
-    name: "hand-off",
-    role: "장기 개발 맥락 유지, 이전 agent 인수인계서 확인 및 이어받기",
-    result: "멀티 세션 개발 컨텍스트 연속성 확보",
-  },
-  {
-    name: "grill-me",
-    role: "요구사항 심층 분석, 엣지케이스 탐색, 모호한 기획 -> 개발 스펙 구체화",
-    result: "구현 전 잠재 이슈 사전 제거",
-  },
-  {
-    name: "to-prd / to-issues",
-    role: "아이디어 -> PRD -> GitHub 이슈 자동 분할, 마일스톤 설정",
-    result: "기획부터 티켓까지 일관된 흐름",
-  },
-  {
-    name: "caveman",
-    role: "긴 세션 진행 상황·분석 결과 압축 보고, 토큰 절약",
-    result: "핵심 지표 중심 커뮤니케이션",
-  },
-  {
-    name: "Playwright",
-    role: "E2E smoke test, production build 검증, 모바일 safe-area 동작 확인",
-    result: "배포 후 수동 검증 자동화",
-  },
-] as const;
-
-
-
-function AchievementItem({
-  achievement,
-  open,
-  onOpen,
-}: {
-  achievement: Achievement;
-  open: boolean;
-  onOpen: () => void;
-}) {
-  return (
-    <li>
-      <button
-        type="button"
-        onClick={onOpen}
-        onMouseEnter={onOpen}
-        className="flex w-full gap-3 text-left text-[0.875rem] leading-relaxed text-slate-600 transition-colors hover:text-indigo-600"
-      >
-        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-400" />
-        <span className="border-b border-dashed border-slate-300 transition-colors hover:border-indigo-400">
-          {achievement.summary}
-        </span>
-      </button>
-      <AnimatePresence>
-        {open ? (
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: -4,
-              height: 0,
-              marginTop: 0,
-              paddingTop: 0,
-              paddingBottom: 0,
-              borderWidth: 0,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-              height: "auto",
-              marginTop: 8,
-              paddingTop: 12,
-              paddingBottom: 12,
-              borderWidth: 1,
-              transition: { duration: 0.24, ease: "easeInOut" },
-            }}
-            exit={{
-              opacity: 0,
-              y: 10,
-              height: 0,
-              marginTop: 0,
-              paddingTop: 0,
-              paddingBottom: 0,
-              borderWidth: 0,
-              transition: { duration: 0.55, ease: "easeInOut" },
-            }}
-            className="ml-4 overflow-hidden rounded-lg border-slate-200 bg-slate-50 px-3"
-          >
-            <p className="whitespace-pre-line text-sm leading-relaxed text-slate-600">
-              {achievement.details}
-            </p>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
-    </li>
-  );
-}
-
-function WorkflowTermItem({ term }: { term: WorkflowTerm }) {
-  const label = term.label.toLowerCase();
-  const metrics = fallowMetrics;
-  const cards = aiSkillCards;
-
-  return (
-    <HoverCard openDelay={100} closeDelay={100}>
-      <HoverCardTrigger asChild>
-        <button
-          type="button"
-          className="cursor-help border-b border-blue-400 text-sm font-semibold text-blue-600 transition-colors hover:border-blue-600 hover:text-blue-700"
-        >
-          {term.label}
-        </button>
-      </HoverCardTrigger>
-      <HoverCardContent
-        side={label === "ai skill" ? "bottom" : "top"}
-        align="start"
-        className={
-          label === "fallow" || label === "ai skill"
-            ? "w-[min(92vw,46rem)] border-slate-200 bg-white p-0 text-slate-800 shadow-xl"
-            : "w-80 border-blue-100 bg-white shadow-lg"
-        }
-      >
-        {label === "fallow" ? (
-          <div className="rounded-lg bg-white p-5">
-            <h4 className="mb-5 text-sm font-semibold text-slate-800">
-              {"Fallow 코드 품질 지표 - 사용 전 -> 확인 기준"}
-            </h4>
-            <div className="space-y-0">
-              {metrics.map((metric) => (
-                <div
-                  key={metric.label}
-                  className="grid grid-cols-[1fr_auto_auto_auto] items-center gap-x-4 border-b border-slate-200 py-2 text-xs last:border-b-0"
-                >
-                  <span className="font-medium text-slate-700">{metric.label}</span>
-                  <span className="text-right text-slate-500">{metric.before}</span>
-                  <span className="text-slate-400">-&gt;</span>
-                  <span
-                    className={`text-right font-semibold ${
-                      metric.accent ? "text-emerald-600" : "text-slate-600"
-                    }`}
-                  >
-                    {metric.after}
-                  </span>
-                </div>
-              ))}
-            </div>
-            <p className="mt-4 text-[0.6875rem] leading-relaxed text-slate-500">
-              소스 중복은 테스트 파일 제외 기준 / 전체 중복은 프로젝트 전체(테스트 포함) 기준 / unused dev dependency 1건은 별도 관리
-            </p>
-          </div>
-        ) : label === "ai skill" ? (
-          <div className="rounded-lg bg-white p-5">
-            <p className="mb-2 text-xs font-semibold text-slate-500">
-              AI 협업 워크플로우
-            </p>
-            <p className="mb-5 text-sm font-semibold leading-relaxed text-slate-700">
-              AI를 단순 코드 생성 도구가 아닌 개발 파이프라인 일부로 통합 - 기획·분석·정리·검증까지 각 단계에 맞는 tool을 직접 구성해 사용
-            </p>
-            <div className="grid gap-3 md:grid-cols-2">
-              {cards.map((card) => (
-                <div key={card.name} className="rounded-md border border-slate-200 bg-slate-50 p-4">
-                  <p className="mb-2">
-                    <span className="inline-flex rounded-md border border-slate-200 bg-white/80 px-2 py-1 font-mono text-xs font-semibold text-slate-950 shadow-sm backdrop-blur-sm">
-                      {card.name}
-                    </span>
-                  </p>
-                  <p className="text-xs leading-relaxed text-slate-600">{card.role}</p>
-                  <p className="mt-3 text-xs font-semibold leading-relaxed text-emerald-600">
-                    {card.result}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            <div>
-              <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-blue-600">
-                Why
-              </p>
-              <p className="text-sm leading-relaxed text-slate-600">{term.purpose}</p>
-            </div>
-            <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-blue-600">
-                Used
-              </p>
-              <div className="flex flex-wrap gap-1.5">
-                {term.used.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <div className="rounded-md bg-emerald-50 p-3">
-              <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-emerald-600">
-                Result
-              </p>
-              <p className="text-sm leading-relaxed text-emerald-800">{term.result}</p>
-            </div>
-          </div>
-        )}
-      </HoverCardContent>
-    </HoverCard>
-  );
-}
-
-function WorkflowTerms({ terms }: { terms: readonly WorkflowTerm[] }) {
-  return (
-    <div className="mb-5 rounded-lg border border-blue-100 bg-blue-50/50 p-4">
-      <p className="mb-3 text-sm leading-relaxed text-slate-600">
-        주요 단어에 마우스를 올리면 어떤 스킬을 왜 썼고, 어떤 성과가 있었는지 볼 수 있습니다.
-      </p>
-      <div className="flex flex-wrap gap-x-4 gap-y-2">
-        {terms.map((term) => (
-          <WorkflowTermItem key={term.label} term={term} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function ProjectVisual({ project }: { project: Project }) {
-  const galleryImages = project.imageGallery
-    ? [project.imageGallery.main, ...project.imageGallery.supporting]
-    : [];
+function ProjectGallery({ project }: { project: PortfolioProject }) {
+  const galleryImages: GalleryImage[] = [
+    project.imageGallery.main,
+    ...project.imageGallery.supporting,
+  ];
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const selectedImage =
     selectedImageIndex === null ? null : galleryImages[selectedImageIndex];
@@ -290,393 +41,556 @@ function ProjectVisual({ project }: { project: Project }) {
     );
   };
 
-  if (project.imageGallery) {
-    return (
-      <>
-        <div className="grid h-full grid-cols-[minmax(0,1fr)_minmax(5.5rem,32%)] gap-2 bg-white p-2 sm:gap-3 sm:p-3">
-          <button
-            type="button"
-            onClick={() => setSelectedImageIndex(0)}
-            className="group overflow-hidden rounded-lg border border-slate-200 bg-white shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
-            aria-label={`${project.imageGallery.main.alt} 확대`}
-          >
-            <img
-              src={project.imageGallery.main.src}
-              alt={project.imageGallery.main.alt}
-              className="h-full w-full cursor-zoom-in object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-            />
-          </button>
-          <div className="grid min-h-0 grid-rows-3 gap-2 sm:gap-3">
-            {project.imageGallery.supporting.map((image, imageIndex) => (
-              <button
-                key={image.src}
-                type="button"
-                onClick={() => setSelectedImageIndex(imageIndex + 1)}
-                className="group min-h-0 overflow-hidden rounded-md border border-slate-200 bg-white shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                aria-label={`${image.alt} 확대`}
-              >
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="h-full w-full cursor-zoom-in object-cover transition-transform duration-300 group-hover:scale-[1.04]"
-                />
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <AnimatePresence>
-          {selectedImage ? (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[70] flex items-center justify-center bg-white/95 p-4 backdrop-blur-sm sm:p-8"
-              role="dialog"
-              aria-modal="true"
-              aria-label="Project image preview"
-              onClick={() => setSelectedImageIndex(null)}
-            >
-              <button
-                type="button"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  setSelectedImageIndex(null);
-                }}
-                className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-md transition-colors hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                aria-label="닫기"
-              >
-                <X className="h-5 w-5" strokeWidth={2} />
-              </button>
-
-              <button
-                type="button"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  showPreviousImage();
-                }}
-                className="absolute left-4 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-md transition-colors hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                aria-label="이전 이미지"
-              >
-                <ChevronLeft className="h-6 w-6" strokeWidth={2} />
-              </button>
-
-              <motion.img
-                key={selectedImage.src}
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                transition={{ duration: 0.18 }}
-                src={selectedImage.src}
-                alt={selectedImage.alt}
-                onClick={(event) => event.stopPropagation()}
-                className="max-h-[86vh] max-w-[86vw] rounded-lg border border-slate-200 bg-white object-contain shadow-2xl"
-              />
-
-              <button
-                type="button"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  showNextImage();
-                }}
-                className="absolute right-4 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-md transition-colors hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                aria-label="다음 이미지"
-              >
-                <ChevronRight className="h-6 w-6" strokeWidth={2} />
-              </button>
-
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 shadow-md">
-                {selectedImageIndex + 1} / {galleryImages.length}
-              </div>
-            </motion.div>
-          ) : null}
-        </AnimatePresence>
-      </>
-    );
-  }
-
-  if (project.image) {
-    return (
-      <img
-        src={project.image}
-        alt={project.imageAlt}
-        className="h-full w-full object-cover"
-      />
-    );
-  }
-
   return (
-    <div className="flex h-full flex-col justify-between bg-slate-900 p-6 text-white">
-      <div>
-        <div className="mb-3 h-2 w-20 rounded-full bg-indigo-400" />
-        <div className="mb-2 h-3 w-40 rounded-full bg-white/70" />
-        <div className="h-3 w-28 rounded-full bg-white/30" />
-      </div>
-      <div className="grid grid-cols-3 gap-3">
-        {project.metrics.map((metric) => (
-          <div key={metric.label} className="rounded-lg bg-white/10 p-3">
-            <div className="mb-2 h-2 w-10 rounded-full bg-white/40" />
-            <div className="h-2 w-16 rounded-full bg-indigo-300" />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function DetailList({ title, items }: { title: string; items: readonly string[] }) {
-  return (
-    <div>
-      <h4 className="mb-2 text-sm font-semibold text-slate-800">{title}</h4>
-      <ul className="space-y-2">
-        {items.map((item) => (
-          <li key={item} className="flex gap-2 text-sm leading-relaxed text-slate-600">
-            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-400" />
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-function ProjectDetailsBody({ project }: { project: Project }) {
-
-  return (
-    <div className="space-y-6">
-      <div>
-        <h4 className="mb-2 text-sm font-semibold text-slate-800">Context</h4>
-        <p className="text-sm leading-relaxed text-slate-600">{project.details.context}</p>
-      </div>
-
-      <div>
-        <h4 className="mb-2 text-sm font-semibold text-slate-800">Role</h4>
-        <p className="text-sm leading-relaxed text-slate-600">{project.details.role}</p>
-      </div>
-
-      <div>
-        <h4 className="mb-2 text-sm font-semibold text-slate-800">Architecture</h4>
-        <p className="text-sm leading-relaxed text-slate-600">
-          {project.details.architecture}
-        </p>
-      </div>
-
-      <DetailList title="Key Features" items={project.details.keyFeatures} />
-      <DetailList title="Challenges" items={project.details.challenges} />
-      <DetailList title="Solutions" items={project.details.solutions} />
-      <DetailList title="검증 기록" items={project.details.validation} />
-      {project.details.aiTraceability ? (
-        <DetailList title="AI 작업 추적" items={project.details.aiTraceability} />
-      ) : null}
-      {project.details.operationalEvidence ? (
-        <DetailList title="운영 확인" items={project.details.operationalEvidence} />
-      ) : null}
-
-      {project.details.process ? (
-        <div className="rounded-lg border border-indigo-100 bg-indigo-50 p-4">
-          <h4 className="mb-2 text-sm font-semibold text-indigo-900">Process</h4>
-          <p className="text-sm leading-relaxed text-indigo-900/80">
-            {project.details.process}
-          </p>
-        </div>
-      ) : null}
-
-      <div>
-        <h4 className="mb-2 text-sm font-semibold text-slate-800">Result</h4>
-        <p className="text-sm leading-relaxed text-slate-600">{project.details.result}</p>
-      </div>
-
-    </div>
-  );
-}
-
-function ProjectDetails({ project }: { project: Project }) {
-  return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button
-          variant="outline"
-          className="border-slate-300 text-slate-500 hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-600"
+    <>
+      <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_8rem]">
+        <button
+          type="button"
+          onClick={() => setSelectedImageIndex(0)}
+          className="group aspect-[16/9] overflow-hidden rounded-lg border border-slate-200 bg-slate-100 text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          aria-label={`${project.imageGallery.main.alt} 확대`}
         >
-          Technical Details
-        </Button>
-      </SheetTrigger>
-      <SheetContent className="w-full overflow-y-auto sm:max-w-2xl">
-        <SheetHeader>
-          <SheetTitle className="text-slate-800">{project.title}</SheetTitle>
-          <SheetDescription className="text-slate-500">
-            문제, 구현, 검증, 결과를 자세히 정리했습니다.
-          </SheetDescription>
-        </SheetHeader>
+          <img
+            src={project.imageGallery.main.src}
+            alt={project.imageGallery.main.alt}
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+          />
+        </button>
 
-        <div className="mt-6 px-4 pb-8">
-          <ProjectDetailsBody project={project} />
+        <div className="grid grid-cols-3 gap-3 lg:grid-cols-1">
+          {project.imageGallery.supporting.map((image, imageIndex) => (
+            <button
+              key={image.src}
+              type="button"
+              onClick={() => setSelectedImageIndex(imageIndex + 1)}
+              className="group aspect-[16/10] overflow-hidden rounded-md border border-slate-200 bg-slate-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 lg:aspect-auto"
+              aria-label={`${image.alt} 확대`}
+            >
+              <img
+                src={image.src}
+                alt={image.alt}
+                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.04]"
+              />
+            </button>
+          ))}
         </div>
-      </SheetContent>
-    </Sheet>
+      </div>
+
+      <AnimatePresence>
+        {selectedImage ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[70] flex items-center justify-center bg-white/95 p-4 backdrop-blur-sm sm:p-8"
+            role="dialog"
+            aria-modal="true"
+            aria-label="프로젝트 이미지 미리보기"
+            onClick={() => setSelectedImageIndex(null)}
+          >
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                setSelectedImageIndex(null);
+              }}
+              className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-md transition-colors hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              aria-label="닫기"
+            >
+              <X className="h-5 w-5" />
+            </button>
+
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                showPreviousImage();
+              }}
+              className="absolute left-4 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-md transition-colors hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              aria-label="이전 이미지"
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </button>
+
+            <motion.img
+              key={selectedImage.src}
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              transition={{ duration: 0.18 }}
+              src={selectedImage.src}
+              alt={selectedImage.alt}
+              onClick={(event) => event.stopPropagation()}
+              className="max-h-[86vh] max-w-[86vw] rounded-lg border border-slate-200 bg-white object-contain shadow-2xl"
+            />
+
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                showNextImage();
+              }}
+              className="absolute right-4 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-md transition-colors hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              aria-label="다음 이미지"
+            >
+              <ChevronRight className="h-6 w-6" />
+            </button>
+
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 shadow-md">
+              {(selectedImageIndex ?? 0) + 1} / {galleryImages.length}
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    </>
   );
 }
 
-function ProjectCard({
-  project,
-  index,
-}: {
-  project: Project;
-  index: number;
-}) {
-  const isReversed = index % 2 === 1;
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [openAchievementIndexes, setOpenAchievementIndexes] = useState<number[]>([]);
-
-  const openAllAchievements = () => {
-    setOpenAchievementIndexes(
-      project.achievements.slice(0, 3).map((_, achievementIndex) => achievementIndex),
-    );
-  };
-
-  useEffect(() => {
-    if (openAchievementIndexes.length === 0) {
-      return;
-    }
-
-    const closeAchievementsOnOutsideClick = (event: PointerEvent) => {
-      if (
-        event.target instanceof Node &&
-        !cardRef.current?.contains(event.target)
-      ) {
-        setOpenAchievementIndexes([]);
-      }
-    };
-
-    document.addEventListener("pointerdown", closeAchievementsOnOutsideClick);
-
-    return () => {
-      document.removeEventListener("pointerdown", closeAchievementsOnOutsideClick);
-    };
-  }, [openAchievementIndexes.length]);
+function MetricGrid({ project }: { project: PortfolioProject }) {
+  if (!project.metrics.length) {
+    return null;
+  }
 
   return (
-    <motion.div
-      ref={cardRef}
+    <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+      {project.metrics.map((metric) => (
+        <div key={metric.label} className="rounded-lg border border-slate-200 bg-white p-4">
+          <p className="text-xs font-semibold text-slate-500">{metric.label}</p>
+          <p className="mt-1 text-lg font-bold tracking-tight text-slate-900">
+            {metric.value}
+          </p>
+          <p className="mt-2 text-xs leading-relaxed text-slate-500">{metric.basis}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+function MetricTable({ project }: { project: PortfolioProject }) {
+  if (!project.metricRows?.length) {
+    return null;
+  }
+
+  const isPhotoMap = project.title === "PhotoMap";
+  const isGameInfo = project.title === "Game Information Platform";
+  const hidesBasis = isPhotoMap || isGameInfo;
+
+  return (
+    <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="mb-4 flex items-center gap-2">
+        <Table2 className="h-4 w-4 text-blue-600" />
+        <h4 className="text-base font-semibold text-slate-900">
+          {isPhotoMap
+            ? "지표 표(React Profiler 활용)"
+            : isGameInfo
+              ? "지표 표(fallow 스킬 활용)"
+              : "지표 표"}
+        </h4>
+      </div>
+
+      <div className="overflow-x-auto">
+        <table className={`w-full ${hidesBasis ? "min-w-[640px]" : "min-w-[760px]"} border-collapse text-left text-sm`}>
+          <thead>
+            <tr className="border-b border-slate-200 bg-slate-50 text-xs font-semibold uppercase text-slate-500">
+              <th scope="col" className="px-4 py-3">지표</th>
+              <th scope="col" className="px-4 py-3">이전</th>
+              <th scope="col" className="px-4 py-3">이후</th>
+              {!hidesBasis ? <th scope="col" className="px-4 py-3">근거</th> : null}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100">
+            {project.metricRows.map((row) => (
+              <tr key={row.metric} className="align-top">
+                <th scope="row" className="w-56 whitespace-nowrap px-4 py-3 font-semibold text-slate-900">
+                  {row.metric}
+                </th>
+                <td className="whitespace-nowrap px-4 py-3 text-slate-600">{row.before}</td>
+                <td className="whitespace-nowrap px-4 py-3 font-semibold text-slate-900">{row.after}</td>
+                {!hidesBasis ? <td className="px-4 py-3 text-slate-500">{row.basis}</td> : null}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
+type FlowNode = {
+  id: string;
+  title: string;
+  subtitle: string;
+  x: number;
+  y: number;
+  w: number;
+  tone: string;
+};
+
+type FlowEdge = {
+  from: string;
+  to: string;
+  label: string;
+  labelX: number;
+  labelY: number;
+  via?: "down" | "up";
+  fromOffsetY?: number;
+  toOffsetY?: number;
+  startX?: number;
+  startY?: number;
+  endX?: number;
+  endY?: number;
+};
+
+type ArchitectureFlow = {
+  height: number;
+  nodes: FlowNode[];
+  edges: FlowEdge[];
+  groups?: { title: string; x: number; y: number; w: number; h: number }[];
+};
+
+const diagramWidth = 1120;
+
+const architectureFlows: Record<string, ArchitectureFlow> = {
+  PhotoMap: {
+    height: 520,
+    groups: [
+      { title: "브라우저 화면", x: 24, y: 24, w: 725, h: 450 },
+      { title: "데이터와 시각화", x: 775, y: 72, w: 315, h: 360 },
+    ],
+    nodes: [
+      { id: "user", title: "사용자", subtitle: "사진 탐색, 업로드", x: 70, y: 165, w: 135, tone: "border-slate-300 bg-white" },
+      { id: "ui", title: "탐색 화면", subtitle: "지도, 앨범, 타임라인", x: 280, y: 95, w: 185, tone: "border-sky-300 bg-sky-50" },
+      { id: "upload", title: "업로드 처리", subtitle: "위치와 촬영 시간 추출", x: 280, y: 320, w: 185, tone: "border-cyan-300 bg-cyan-50" },
+      { id: "state", title: "상태 관리", subtitle: "사진, 필터, 선택 상태", x: 545, y: 205, w: 185, tone: "border-emerald-300 bg-emerald-50" },
+      { id: "database", title: "사진 데이터베이스", subtitle: "사진 정보와 메타데이터", x: 835, y: 125, w: 175, tone: "border-violet-300 bg-violet-50" },
+      { id: "runtime", title: "시각화 런타임", subtitle: "지도와 관계 그래프 연동", x: 835, y: 315, w: 175, tone: "border-indigo-300 bg-indigo-50" },
+      { id: "render", title: "렌더링 최적화", subtitle: "보이는 사진만 렌더링", x: 545, y: 390, w: 185, tone: "border-amber-300 bg-amber-50" },
+    ],
+    edges: [
+      { from: "user", to: "ui", label: "탐색", labelX: 220, labelY: 130 },
+      { from: "user", to: "upload", label: "업로드", labelX: 215, labelY: 315 },
+      { from: "ui", to: "state", label: "화면 상태", labelX: 485, labelY: 150 },
+      { from: "upload", to: "state", label: "사진 정보", labelX: 485, labelY: 310 },
+      { from: "state", to: "database", label: "저장/조회", labelX: 745, labelY: 170 },
+      { from: "state", to: "runtime", label: "시각화 데이터", labelX: 735, labelY: 295 },
+      { from: "state", to: "render", label: "렌더링 대상", labelX: 585, labelY: 330, via: "down" },
+    ],
+  },
+  "Game Information Platform": {
+    height: 570,
+    groups: [
+      { title: "프론트엔드", x: 24, y: 24, w: 725, h: 500 },
+      { title: "서버 경계와 외부 서비스", x: 775, y: 60, w: 315, h: 470 },
+    ],
+    nodes: [
+      { id: "user", title: "사용자", subtitle: "검색, 관심 등록", x: 70, y: 165, w: 135, tone: "border-slate-300 bg-white" },
+      { id: "ui", title: "게임 화면", subtitle: "검색, 할인, 관심 목록", x: 280, y: 95, w: 185, tone: "border-sky-300 bg-sky-50" },
+      { id: "state", title: "화면 상태", subtitle: "관심 상품, 목표 가격", x: 280, y: 320, w: 185, tone: "border-emerald-300 bg-emerald-50" },
+      { id: "domain", title: "응답 정규화", subtitle: "상점별 데이터를 공통 형태로 변환", x: 545, y: 205, w: 185, tone: "border-amber-300 bg-amber-50" },
+      { id: "route", title: "서버 요청 경계", subtitle: "캐시, 호출 제한, 장애 완충", x: 835, y: 115, w: 175, tone: "border-violet-300 bg-violet-50" },
+      { id: "supabase", title: "사용자 저장소", subtitle: "인증, 관심 목록, 가격 기록", x: 835, y: 315, w: 175, tone: "border-indigo-300 bg-indigo-50" },
+      { id: "apis", title: "게임 외부 API", subtitle: "상점 가격과 게임 정보", x: 835, y: 455, w: 175, tone: "border-rose-300 bg-rose-50" },
+    ],
+    edges: [
+      { from: "user", to: "ui", label: "검색", labelX: 220, labelY: 130 },
+      { from: "user", to: "state", label: "관심 등록", labelX: 215, labelY: 315 },
+      { from: "ui", to: "domain", label: "요청", labelX: 485, labelY: 150 },
+      { from: "state", to: "domain", label: "가격 조건", labelX: 485, labelY: 310 },
+      { from: "domain", to: "route", label: "정규화 요청", labelX: 740, labelY: 165 },
+      { from: "route", to: "apis", label: "외부 조회", labelX: 900, labelY: 390, via: "down" },
+      { from: "state", to: "supabase", label: "저장", labelX: 630, labelY: 375 },
+      { from: "route", to: "supabase", label: "가격 기록", labelX: 900, labelY: 255 },
+    ],
+  },
+  "AI ChatBot": {
+    height: 560,
+    groups: [
+      { title: "브라우저 화면", x: 24, y: 24, w: 725, h: 500 },
+      { title: "백엔드 경계", x: 775, y: 72, w: 315, h: 400 },
+    ],
+    nodes: [
+      { id: "user", title: "사용자", subtitle: "질문 입력", x: 70, y: 165, w: 135, tone: "border-slate-300 bg-white" },
+      { id: "chat", title: "채팅 화면", subtitle: "메시지, 사이드바, 일정", x: 280, y: 95, w: 185, tone: "border-sky-300 bg-sky-50" },
+      { id: "local", title: "로컬 저장", subtitle: "대화 복원, 탭 동기화", x: 280, y: 320, w: 185, tone: "border-emerald-300 bg-emerald-50" },
+      { id: "renderer", title: "메시지 렌더링", subtitle: "긴 링크와 마크다운 처리", x: 545, y: 195, w: 185, tone: "border-amber-300 bg-amber-50" },
+      { id: "api", title: "서버 요청 경계", subtitle: "채팅, 공지 요청 전달", x: 835, y: 125, w: 175, tone: "border-violet-300 bg-violet-50" },
+      { id: "backend", title: "학교 정보 서버", subtitle: "공지, 식단, 학사 정보", x: 835, y: 315, w: 175, tone: "border-indigo-300 bg-indigo-50" },
+      { id: "export", title: "대화 내보내기", subtitle: "서버 전송 없이 파일 생성", x: 545, y: 410, w: 185, tone: "border-rose-300 bg-rose-50" },
+    ],
+    edges: [
+      { from: "user", to: "chat", label: "질문", labelX: 220, labelY: 130 },
+      { from: "chat", to: "local", label: "저장", labelX: 330, labelY: 245 },
+      { from: "local", to: "renderer", label: "복원", labelX: 485, labelY: 310 },
+      { from: "chat", to: "renderer", label: "표시", labelX: 485, labelY: 150 },
+      { from: "renderer", to: "api", label: "요청", labelX: 745, labelY: 170 },
+      { from: "api", to: "backend", label: "전달", labelX: 900, labelY: 255, via: "down" },
+      { from: "local", to: "export", label: "파일 생성", labelX: 490, labelY: 430 },
+    ],
+  },
+};
+
+function toPercent(value: number) {
+  return `${(value / diagramWidth) * 100}%`;
+}
+
+function getNodeCenter(node: FlowNode) {
+  return { x: node.x + node.w / 2, y: node.y + 42 };
+}
+
+function getNodeEdgePoint(node: FlowNode, target: FlowNode, offsetY = 0) {
+  const center = getNodeCenter(node);
+  const targetCenter = getNodeCenter(target);
+  const dx = targetCenter.x - center.x;
+  const dy = targetCenter.y - center.y;
+
+  if (Math.abs(dx) >= Math.abs(dy)) {
+    return { x: dx >= 0 ? node.x + node.w : node.x, y: center.y + offsetY };
+  }
+
+  return { x: center.x, y: dy >= 0 ? node.y + 84 + offsetY : node.y + offsetY };
+}
+
+function getEdgePath(edge: FlowEdge, nodes: FlowNode[]) {
+  const from = nodes.find((node) => node.id === edge.from);
+  const to = nodes.find((node) => node.id === edge.to);
+
+  if (!from || !to) {
+    return "";
+  }
+
+  const start = edge.startX !== undefined && edge.startY !== undefined
+    ? { x: edge.startX, y: edge.startY }
+    : getNodeEdgePoint(from, to, edge.fromOffsetY ?? 0);
+  const end = edge.endX !== undefined && edge.endY !== undefined
+    ? { x: edge.endX, y: edge.endY }
+    : getNodeEdgePoint(to, from, edge.toOffsetY ?? 0);
+  const offset = edge.via === "down" ? 42 : edge.via === "up" ? -22 : 0;
+  const midX = (start.x + end.x) / 2;
+  const midY = (start.y + end.y) / 2 + offset;
+
+  return `M ${start.x} ${start.y} C ${midX} ${start.y}, ${midX} ${midY}, ${end.x} ${end.y}`;
+}
+
+function ArchitectureDiagram({ project }: { project: PortfolioProject }) {
+  const diagram = architectureFlows[project.title];
+
+  if (!diagram) {
+    return null;
+  }
+
+  return (
+    <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="mb-5 flex items-center gap-2">
+        <Network className="h-4 w-4 text-slate-700" />
+        <h4 className="text-base font-semibold text-slate-900">아키텍처 흐름도</h4>
+      </div>
+
+      <div className="overflow-hidden rounded-lg border border-slate-200 bg-white p-4">
+        <div className="relative w-full" style={{ height: diagram.height }}>
+          <svg
+            className="pointer-events-none absolute inset-0 z-20 h-full w-full"
+            viewBox={`0 0 ${diagramWidth} ${diagram.height}`}
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <defs>
+              <marker id={`arrow-${project.title}`} markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+                <path d="M0,0 L0,6 L8,3 z" fill="#475569" />
+              </marker>
+            </defs>
+            {diagram.edges.map((edge) => (
+              <path
+                key={`${edge.from}-${edge.to}`}
+                d={getEdgePath(edge, diagram.nodes)}
+                fill="none"
+                stroke="#475569"
+                strokeWidth="1.45"
+                markerEnd={`url(#arrow-${project.title})`}
+              />
+            ))}
+          </svg>
+
+          {diagram.groups?.map((group) => (
+            <div
+              key={group.title}
+              className="absolute z-0 rounded-xl border border-slate-200 bg-slate-50/60"
+              style={{ left: toPercent(group.x), top: group.y, width: toPercent(group.w), height: group.h }}
+            >
+              <span className="absolute left-3 top-3 z-40 rounded-md bg-white/85 px-2 py-1 text-[0.66rem] font-bold uppercase tracking-wide text-slate-600 shadow-sm">
+                {group.title}
+              </span>
+            </div>
+          ))}
+
+          {diagram.edges.map((edge) => (
+            <span
+              key={`${edge.from}-${edge.to}-label`}
+              className="absolute z-40 rounded-full border border-slate-200 bg-white px-1.5 py-0.5 text-[0.62rem] font-semibold leading-none text-slate-600 shadow-sm"
+              style={{ left: toPercent(edge.labelX), top: edge.labelY }}
+            >
+              {edge.label}
+            </span>
+          ))}
+
+          {diagram.nodes.map((node) => (
+            <article
+              key={node.id}
+              className={`absolute z-30 rounded-lg border p-3 shadow-sm ${node.tone}`}
+              style={{ left: toPercent(node.x), top: node.y, width: toPercent(node.w) }}
+            >
+              <h5 className="break-keep text-sm font-bold leading-snug text-slate-950">{node.title}</h5>
+              <p className="mt-1 break-keep text-xs leading-relaxed text-slate-600">{node.subtitle}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+function CaseStudyGrid({ project }: { project: PortfolioProject }) {
+  return (
+    <div className="space-y-4">
+      {project.caseStudies.map((caseStudy, index) => {
+        const rows = [
+          { label: "이슈", value: caseStudy.issue },
+          { label: "문제 원인", value: caseStudy.cause },
+          { label: "해결", value: caseStudy.resolution },
+          { label: "성과", value: caseStudy.result },
+        ] as const;
+
+        return (
+          <article key={caseStudy.title} className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="mb-5 flex flex-wrap items-center gap-3">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-slate-900 text-sm font-bold text-white">
+                {index + 1}
+              </span>
+              <h4 className="text-base font-semibold text-slate-900">{caseStudy.title}</h4>
+            </div>
+
+            <div className="divide-y divide-slate-200 rounded-lg border border-slate-200">
+              {rows.map((row, rowIndex) => (
+                <section
+                  key={row.label}
+                  className="grid gap-3 px-4 py-4 md:grid-cols-[7.5rem_minmax(0,1fr)]"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-slate-50 text-xs font-bold text-slate-700">
+                      {rowIndex + 1}
+                    </span>
+                    <p className="text-xs font-semibold uppercase text-slate-500">
+                      {row.label}
+                    </p>
+                  </div>
+                  <p className="text-sm leading-relaxed text-slate-700">{row.value}</p>
+                </section>
+              ))}
+            </div>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              {caseStudy.evidence.map((item) => (
+                <span
+                  key={item}
+                  className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-blue-600" />
+                  {item}
+                </span>
+              ))}
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  );
+}
+function ProjectSection({ project, index }: { project: PortfolioProject; index: number }) {
+  return (
+    <motion.article
       initial={false}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.7, delay: index * 0.15 }}
-      className="flex min-h-[calc(100vh-7rem)] scroll-mt-8 items-center rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"
+      transition={{ duration: 0.5, delay: index * 0.08 }}
+      className="border-t border-slate-200 py-12 first:border-t-0 first:pt-0"
     >
-      <div
-        className="grid w-full items-center gap-8 lg:grid-cols-[1.05fr_1fr] lg:gap-12"
-      >
-        <div className={`relative ${isReversed ? "lg:order-2" : ""}`}>
-          <div className="relative pb-6">
-            <div className="aspect-[16/10] overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
-              <ProjectVisual project={project} />
-            </div>
-
-            <div
-              className={`absolute -bottom-3 ${
-                isReversed ? "left-4" : "right-4"
-              } flex max-w-[calc(100%-2rem)] flex-wrap justify-end gap-2`}
-            >
-              {project.metrics.map((metric, idx) => (
-                <motion.div
-                  key={metric.label}
-                  initial={false}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.4 + idx * 0.1 }}
-                >
-                  <Badge
-                    variant="secondary"
-                    className="flex w-[5.75rem] flex-col items-center gap-0.5 border border-slate-200 bg-white px-2 py-1.5 text-center shadow-md"
-                  >
-                    <span className="text-[0.6875rem] font-semibold leading-none text-slate-800">
-                      {metric.value}
-                    </span>
-                    <span className="text-[0.625rem] leading-none text-slate-500">
-                      {metric.label}
-                    </span>
-                  </Badge>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className={`flex flex-col justify-center pt-4 lg:pt-0 ${isReversed ? "lg:order-1" : ""}`}>
+      <div className="mb-8 grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
+        <div>
           <div className="mb-3 flex flex-wrap items-center gap-2">
-            <h3 className="text-[1.5rem] font-semibold leading-tight text-slate-800">
-              {project.title}
-            </h3>
-            <Badge variant="secondary" className="bg-indigo-50 text-indigo-700">
+            <Badge variant="secondary" className="bg-slate-100 text-slate-700">
               {project.period}
+            </Badge>
+            <Badge variant="secondary" className="bg-blue-50 text-blue-700">
+              {project.team}
             </Badge>
           </div>
 
-          <p className="mb-3 text-[0.9375rem] leading-relaxed text-slate-600">
+          <h3 className="text-2xl font-bold tracking-tight text-slate-900">
+            {project.title}
+          </h3>
+          <p className="mt-2 text-base font-semibold text-slate-600">
+            {project.subtitle}
+          </p>
+          <p className="mt-5 text-sm leading-relaxed text-slate-600">
             {project.summary}
           </p>
-          <p className="mb-5 text-[0.875rem] leading-relaxed text-slate-500">
-            <span className="font-semibold text-slate-700">Role: </span>
-            {project.role}
-          </p>
 
-          {project.workflowTerms ? <WorkflowTerms terms={project.workflowTerms} /> : null}
+          <div className="mt-4 space-y-4">
+            <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                담당부분
+              </p>
+              <ul className="mt-3 space-y-2">
+                {project.responsibilities.map((item) => (
+                  <li key={item} className="flex gap-2 text-sm leading-relaxed text-slate-600">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
 
-          <div className="mb-5 flex flex-wrap gap-2">
+          <div className="mt-5 flex flex-wrap gap-2">
             {project.tech.map((tech) => (
-              <Badge
-                key={tech}
-                variant="secondary"
-                className="border-transparent bg-slate-100 text-xs text-slate-700"
-              >
+              <Badge key={tech} variant="secondary" className="bg-white text-slate-700 ring-1 ring-slate-200">
                 {tech}
               </Badge>
             ))}
           </div>
 
-          <ul className="mb-6 space-y-2.5">
-            {project.achievements.slice(0, 3).map((achievement, achievementIndex) => (
-              <AchievementItem
-                key={achievement.summary}
-                achievement={achievement}
-                open={openAchievementIndexes.includes(achievementIndex)}
-                onOpen={openAllAchievements}
-              />
-            ))}
-          </ul>
-
-          <div className="flex flex-wrap gap-3">
+          <div className="mt-6 flex flex-wrap gap-3">
             {project.links.live ? (
-              <Button asChild className="bg-indigo-600 text-white hover:bg-indigo-700">
+              <Button asChild className="bg-blue-700 text-white hover:bg-blue-800">
                 <a href={project.links.live} target="_blank" rel="noreferrer">
-                  View Live
-                  <ExternalLink className="ml-2 h-4 w-4" strokeWidth={2} />
+                  서비스
+                  <ExternalLink className="ml-2 h-4 w-4" />
                 </a>
               </Button>
             ) : null}
-
-            {project.links.github ? (
-              <Button
-                asChild
-                variant="outline"
-                className="border-slate-300 text-slate-700 hover:bg-slate-100"
-              >
-                <a href={project.links.github} target="_blank" rel="noreferrer">
-                  <Github className="mr-2 h-4 w-4" strokeWidth={2} />
-                  GitHub
-                </a>
-              </Button>
-            ) : null}
-
-            <ProjectDetails project={project} />
+            <Button asChild variant="outline" className="border-slate-300 bg-white text-slate-700 hover:bg-slate-50">
+              <a href={project.links.github} target="_blank" rel="noreferrer">
+                GitHub
+                <Github className="ml-2 h-4 w-4" />
+              </a>
+            </Button>
           </div>
         </div>
+
+        <div>
+          <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-900">
+            <ImageIcon className="h-4 w-4 text-blue-600" />
+            실제 화면 자료
+          </div>
+          <ProjectGallery project={project} />
+        </div>
       </div>
-    </motion.div>
+
+      <div className="space-y-6">
+        <MetricGrid project={project} />
+        <ArchitectureDiagram project={project} />
+        <CaseStudyGrid project={project} />
+        <MetricTable project={project} />
+      </div>
+    </motion.article>
   );
 }
-
 export function Projects() {
   return (
     <motion.section
@@ -686,13 +600,16 @@ export function Projects() {
       transition={{ duration: 0.6 }}
       className="mb-20"
     >
-      <h2 className="mb-12 text-[1.75rem] font-semibold tracking-tight text-slate-800">
-        Featured Projects
-      </h2>
+      <div className="mb-10">
+        <p className="text-sm font-semibold text-blue-700">Portfolio</p>
+        <h2 className="text-[1.75rem] font-semibold tracking-tight text-slate-900">
+          프로젝트 상세
+        </h2>
+      </div>
 
-      <div className="space-y-14">
-        {portfolio.projects.map((project, idx) => (
-          <ProjectCard key={project.title} project={project} index={idx} />
+      <div>
+        {portfolio.projects.map((project, index) => (
+          <ProjectSection key={project.title} project={project} index={index} />
         ))}
       </div>
     </motion.section>

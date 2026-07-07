@@ -1,16 +1,5 @@
 import { motion } from "motion/react";
-import { Blocks, Code2, Github, Layers, MessageSquare, NotebookTabs } from "lucide-react";
 import { portfolio } from "../data/portfolio";
-import { Card } from "./ui/card";
-
-const icons = {
-  JavaScript: Code2,
-  React: Layers,
-  TypeScript: Blocks,
-  GitHub: Github,
-  Slack: MessageSquare,
-  Notion: NotebookTabs,
-};
 
 export function TechStack() {
   return (
@@ -21,26 +10,32 @@ export function TechStack() {
       transition={{ duration: 0.6 }}
       className="mb-20"
     >
-      <h2 className="mb-8 text-[1.75rem] font-semibold tracking-tight text-slate-800">
-        Tech Stack
-      </h2>
+      <div className="mb-8">
+        <p className="text-sm font-semibold text-slate-500">핵심 역량</p>
+        <h2 className="text-[1.75rem] font-semibold tracking-tight text-slate-900">
+          기술 스택
+        </h2>
+      </div>
 
-      <div className="flex flex-wrap gap-4">
-        {portfolio.techStack.map((tech) => {
-          const Icon = icons[tech] ?? Code2;
-
-          return (
-            <Card
-              key={tech}
-              className="flex items-center gap-3 border-slate-200 bg-white px-5 py-3 shadow-sm transition-shadow hover:shadow-md"
-            >
-              <Icon className="h-5 w-5 text-slate-600" strokeWidth={2} />
-              <span className="text-[0.9375rem] font-medium text-slate-700">
-                {tech}
-              </span>
-            </Card>
-          );
-        })}
+      <div className="grid gap-4 md:grid-cols-3">
+        {portfolio.capabilityGroups.map((group) => (
+          <section
+            key={group.title}
+            className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm"
+          >
+            <h3 className="mb-3 text-sm font-semibold text-slate-900">{group.title}</h3>
+            <div className="flex flex-wrap gap-2">
+              {group.items.map((item) => (
+                <span
+                  key={item}
+                  className="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          </section>
+        ))}
       </div>
     </motion.section>
   );

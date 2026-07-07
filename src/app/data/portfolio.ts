@@ -1,525 +1,337 @@
-export type SkillGroup = {
+export type Metric = {
+  label: string;
+  value: string;
+  basis: string;
+};
+
+export type MetricRow = {
+  metric: string;
+  before: string;
+  after: string;
+  basis: string;
+};
+
+export type ArchitectureColumn = {
   title: string;
-  items: string[];
+  nodes: {
+    label: string;
+    detail: string;
+  }[];
+};
+
+export type CaseStudy = {
+  title: string;
+  issue: string;
+  cause: string;
+  resolution: string;
+  result: string;
+  evidence: string[];
 };
 
 export type Project = {
   title: string;
-  summary: string;
-  role: string;
+  subtitle: string;
   period: string;
+  team: string;
+  summary: string;
+  responsibilities: string[];
   tech: string[];
-  metrics: { label: string; value: string }[];
-  workflowTerms?: {
-    label: string;
-    purpose: string;
-    used: string[];
-    result: string;
-  }[];
   links: {
     live?: string;
-    github?: string;
+    github: string;
   };
-  image?: string;
-  imageGallery?: {
-    main: {
-      src: string;
-      alt: string;
-    };
-    supporting: {
-      src: string;
-      alt: string;
-    }[];
+  imageGallery: {
+    main: { src: string; alt: string };
+    supporting: { src: string; alt: string }[];
   };
-  imageAlt: string;
-  achievements: {
-    summary: string;
-    details: string;
-    before: string;
-    after: string;
-  }[];
-  details: {
-    context: string;
-    role: string;
-    architecture: string;
-    keyFeatures: string[];
-    challenges: string[];
-    solutions: string[];
-    validation: string[];
-    result: string;
-    process?: string;
-    aiTraceability?: string[];
-    operationalEvidence?: string[];
-    codeHighlight?: {
-      title: string;
-      code: string;
-    };
+  metrics: Metric[];
+  metricRows?: MetricRow[];
+  architecture: {
+    title: string;
+    description: string;
+    columns: ArchitectureColumn[];
+    flow: string[];
   };
+  caseStudies: CaseStudy[];
 };
 
-
+export type Activity = {
+  date: string;
+  title: string;
+  description: string;
+  pdf?: { label: string; href: string };
+};
 
 export const portfolio = {
   profile: {
     name: "민사빈",
     title: "Front-End Developer",
-    headline: "성능 수치로 말하는 프론트엔드 개발자 — React 최적화 · AI 협업 · 풀스택 배포",
-    intro:
-      "커밋 시간 36% 단축, 10,000건 데이터에서 60FPS 수준 방어, 소스 코드 중복 81.9% 제거처럼 기능이 동작하는 것에서 멈추지 않고 수치로 개선을 증명합니다. AI를 보조 도구가 아닌 개발 파이프라인의 일부로 통합해 기획부터 배포, 문서화까지 end-to-end로 완성합니다.",
+    headline:
+      "호기심으로 넓게 탐구하고, 지표와 판단으로 엄격하게 적용하는 프론트엔드 엔지니어입니다.",
     highlights: [
-      "Game Sale Info에서 Steam/Epic 할인 조회, 관심 목록, 목표 가격 추적, Supabase Auth/DB, Vercel 배포까지 직접 구축",
-      "PhotoMap에서 Zustand selector, 가상화, D3 DOM 직접 조작으로 대량 데이터 렌더링 병목 개선",
-      "PRD, 이슈 분할, 하네스 기반 역할 분리, 핸드오프, 정적 분석, smoke test를 AI agent workflow로 연결",
+      "Game Information Platform에서 외부 게임 API 응답 차이를 Adapter/Normalizer 계층으로 흡수하고, 가격 계산과 캐시 장애 대응을 분리했습니다.",
+      "PhotoMap에서 Context API 기반 전역 리렌더링을 Zustand selector 구조로 바꾸고, 가상화와 D3 DOM 직접 갱신으로 대량 사진 렌더링 병목을 줄였습니다.",
+      "AI ChatBot에서 외부 백엔드 응답을 Next.js API Routes proxy로 감싸고, ReactMarkdown, localStorage, Blob API로 채팅 UX를 구성했습니다.",
     ],
     contacts: {
       email: "minsabin1108@gmail.com",
       github: "https://github.com/sabin1108",
     },
   },
-  techStack: ["JavaScript", "React", "TypeScript", "GitHub", "Slack", "Notion"],
+  capabilityGroups: [
+    { title: "프론트엔드", items: ["React", "TypeScript", "Next.js"] },
+    { title: "상태·데이터", items: ["Zustand", "Supabase", "API Adapter"] },
+    { title: "품질", items: ["Vitest", "Playwright"] },
+  ],
+
   projects: [
     {
-      title: "Game-information-platform",
+      title: "Game Information Platform",
+      subtitle: "Steam/Epic 게임 할인 조회와 관심 상품 가격 추적 서비스",
+      period: "2026.05 - 2026.06",
+      team: "개인 프로젝트",
       summary:
-        "Steam/Epic 할인 정보 조회, 관심 목록, 목표 가격 추적, Vercel 배포 완료 후 기능 개선과 품질 정리를 이어가는 Next.js 게임 할인 정보 추적 서비스",
-      role: "프론트엔드 구현, Supabase Auth/DB 연동, AI-assisted workflow 설계, 정적 분석 기반 품질 개선, Vercel production 배포/검증",
-      period: "2026",
+        "Steam/Epic 게임 할인 정보, 신작, 관심 목록, 목표 가격 추적을 제공하는 Next.js 서비스입니다. 핵심 과제는 외부 API 응답 차이를 UI에서 직접 처리하지 않도록 정규화 계층을 두고, API 장애나 0원 가격 데이터가 사용자 화면에 잘못 표시되지 않게 방어하는 것이었습니다.",
+      responsibilities: [
+        "서비스 전체 프론트엔드 설계와 구현",
+        "Supabase Auth/DB 연동과 관심 상품, 목표 가격 추적 UX 구현",
+        "Steam/Epic/ITAD API 응답을 Adapter/Normalizer 계층으로 정규화",
+        "가격 계산, 0원/null 방어 로직, stale cache와 rate limit 처리",
+        "Vitest와 Playwright 기반 테스트 및 배포 검증 흐름 정리",
+      ],
       tech: ["Next.js", "React", "TypeScript", "Supabase", "Vitest", "Playwright"],
-      metrics: [
-        { label: "Duplication", value: "81.9% down" },
-        { label: "Unused file/export", value: "15 -> 0" },
-        { label: "Fallow health", value: "84.7 / B" },
-      ],
-      workflowTerms: [
-        {
-          label: "AI Skill",
-          purpose:
-            "AI를 코드 작성 보조가 아니라 기획, 분석, 정리, 검증까지 각 단계에 맞는 개발 파이프라인 도구로 사용했습니다.",
-          used: ["grill-me", "to-prd", "to-issues", "handoff", "caveman"],
-          result:
-            "모호한 요구사항을 개발 스펙으로 구체화하고, PRD를 GitHub issue 단위로 분할해 반복 구현했습니다.",
-        },
-        {
-          label: "Harness",
-          purpose:
-            "긴 개발 세션에서 기능 범위, 데이터 계약, UX, QA 관점을 따로 점검하기 위한 작업 운영 방식입니다.",
-          used: [
-            "5 project agents",
-            "5 guardrail skills",
-            "game-deal-harness-orchestrator",
-          ],
-          result:
-            "세부 성과는 아래 핵심 성과 항목에서 실제 작업 흐름 중심으로 설명했습니다.",
-        },
-        {
-          label: "Fallow",
-          purpose:
-            "유지보수 품질을 감으로 판단하지 않고 unused file/export, duplication, complexity hotspot을 수치로 확인했습니다.",
-          used: ["dead-code", "dupes", "score", "maintainability"],
-          result:
-            "소스 중복 668줄 -> 121줄, unused file/export 기준 dead-code 15개 -> 0개로 정리했습니다. 당시 Fallow maintainability 지표는 91.3점 -> 92.1점으로 개선했고, 현재 Fallow health score는 84.7 / B입니다.",
-        },
-      ],
       links: {
         live: "https://www.gamesaleinfo.site",
         github: "https://github.com/sabin1108/Game-information-platform",
       },
-      imageAlt: "Game-information-platform 프로젝트 화면",
       imageGallery: {
-        main: {
-          src: "/1_project/gameinfo_1.png",
-          alt: "Game-information-platform 메인 화면",
-        },
+        main: { src: "/1_project/gameinfo_1.png", alt: "Game Information Platform 메인 화면" },
         supporting: [
-          {
-            src: "/1_project/gameinfo_2.png",
-            alt: "Game-information-platform 보조 화면 1",
-          },
-          {
-            src: "/1_project/gameinfo_3.png",
-            alt: "Game-information-platform 보조 화면 2",
-          },
-          {
-            src: "/1_project/gameinfo_4.png",
-            alt: "Game-information-platform 보조 화면 3",
-          },
+          { src: "/1_project/gameinfo_2.png", alt: "게임 할인 목록 화면" },
+          { src: "/1_project/gameinfo_3.png", alt: "관심 목록 화면" },
+          { src: "/1_project/gameinfo_4.png", alt: "게임 상세 또는 보조 화면" },
         ],
       },
-      achievements: [
+      metrics: [],
+      metricRows: [
+        { metric: "미사용 파일", before: "1개", after: "0개", basis: "fallow 사용전 코드.md / fallow 최종 지표.md" },
+        { metric: "미사용 export", before: "11개", after: "0개", basis: "fallow 사용전 코드.md / fallow 최종 지표.md" },
+        { metric: "중복 코드 비율", before: "1,006줄 (9.4%)", after: "308줄 (2.9%)", basis: "Fallow duplication report" },
+        { metric: "유지보수성 점수", before: "91.3 (good)", after: "92.1 (good)", basis: "Fallow complexity metrics" },
+      ],
+      architecture: {
+        title: "외부 게임 API 정규화와 장애 완충 구조",
+        description:
+          "UI가 Steam, Epic, ITAD 응답 포맷을 직접 알지 않도록 Adapter/Normalizer를 두고, 캐시와 rate limit을 API route 경계에 배치했습니다.",
+        columns: [
+          { title: "Client", nodes: [{ label: "Search / Deals", detail: "검색, 할인 피드, 신작 목록" }, { label: "Watchlist", detail: "관심 상품, 목표 가격, 상태 피드백" }] },
+          { title: "Next.js Route", nodes: [{ label: "API Routes", detail: "외부 API 호출 경계" }, { label: "View Model", detail: "UI가 쓰는 표시 데이터 구성" }] },
+          { title: "Domain Layer", nodes: [{ label: "Adapter / Normalizer", detail: "ITAD 응답을 GameSummary/StoreProduct로 변환" }, { label: "Price Guard", detail: "0원/null 가격을 best price 후보에서 제외" }] },
+          { title: "Persistence / Guard", nodes: [{ label: "Supabase", detail: "auth, profiles, watchlist, price_snapshots" }, { label: "Stale Cache", detail: "fresh TTL 이후 stale fallback" }, { label: "Rate Limit", detail: "fixed-window 요청 제한" }] },
+        ],
+        flow: [
+          "사용자가 검색, 할인 피드, 관심 목록 화면에서 데이터를 요청합니다.",
+          "Next.js route가 외부 API 호출을 담당하고, normalizer가 응답 차이를 공통 모델로 변환합니다.",
+          "가격 계산과 watchlist 상태는 view model로 가공되어 UI에 전달되고, Supabase에는 사용자 상태와 가격 snapshot이 저장됩니다.",
+        ],
+      },
+      caseStudies: [
         {
-          summary: "Fallow로 unused file/export와 중복 코드를 추적해 AI 협업 중 생기는 유지보수성 저하를 최소화",
-          details:
-            "AI로 빠르게 기능을 확장하면서 생긴 unused file/export와 duplicate clone group을 Fallow 지표로 확인했습니다.\n\nunused file/export 기준 dead-code를 15개에서 0개로 낮추고, 소스 중복을 668줄에서 121줄로 낮춰 유지보수 부담을 줄였습니다. 현재 Fallow 기준 unused dev dependency 1건은 별도 관리 대상으로 남겨 두었습니다.",
-          before: "Dead/duplicate",
-          after: "Cleaned up",
+          title: "외부 API 응답 포맷 차이로 인한 UI 결합 제거",
+          issue: "검색, 할인 피드, 관심 목록을 같은 카드 UI로 묶는 과정에서 Steam/Epic/ITAD 응답의 필드명과 누락 방식이 서로 달라, 화면 컴포넌트가 API별 예외를 직접 알게 되는 결합 문제를 발견했습니다.",
+          cause: "외부 API 응답을 화면에 바로 연결해보니 같은 게임 정보라도 식별자는 app id, slug, plain id처럼 다르게 들어오고, 가격/할인/이미지/상점 링크도 서비스마다 필드명과 결측 규칙이 달랐습니다. 이 차이를 카드, 상세, 관심 목록 컴포넌트에서 각각 처리하면 API 응답 하나가 바뀔 때 여러 UI 파일을 동시에 고쳐야 하고, 테스트도 화면 조합마다 반복해야 하는 구조가 됩니다.",
+          resolution: "API 호출 결과와 UI layer 사이에 Adapter/Normalizer 계층을 두고, GameSummary와 StoreProduct 같은 공통 도메인 모델로 변환했습니다. store priority, dedupe, steam app id 추출도 한곳으로 모았습니다.",
+          result: "UI는 정규화된 view model만 소비하게 되어 검색 결과, 할인 목록, 상세 화면, 관심 목록이 외부 API 포맷을 직접 알 필요가 없어졌습니다. 이후 API 응답 차이는 normalizer 계층에서 흡수하고, 화면 컴포넌트는 동일한 데이터 계약을 기준으로 렌더링하게 되어 수정 범위와 중복 분기 위험을 줄였습니다.",
+          evidence: ["itad-normalizers.ts", "commit f313957", "commit b90c474"],
         },
         {
-          summary: "Harness로 product·data·frontend·QA 관점을 분리해 긴 개발 세션의 누락 방지",
-          details:
-            "프로젝트 전용 agent 5개와 guardrail skill 5개를 구성해 기능 범위, API 계약, UX, 테스트 관점을 나눠 점검했습니다.\n\nhandoff 문서로 세션이 바뀌어도 issue 상태와 검증 기준을 이어가게 만들었습니다.",
-          before: "관점 혼재",
-          after: "역할 분리",
+          title: "0원/null 가격 데이터가 할인/목표가로 오판되는 문제 해결",
+          issue: "가격 비교 로직을 테스트하던 중 미출시, 가격 미정, 데이터 미제공 게임의 0/null 값이 정상 최저가 후보로 들어가 100% 할인이나 목표가 도달처럼 오판될 수 있는 문제를 발견했습니다.",
+          cause: "외부 가격 API에서 0, null, 미제공 값은 실제 무료 배포가 아니라 가격 미정이나 데이터 결측을 뜻할 수 있습니다. 그런데 best price 계산이 숫자 여부만 보고 후보를 고르면 결측값이 최저가로 채택되고, 사용자는 구매 가능한 할인 가격이나 목표가 알림으로 오해할 수 있습니다. 특히 관심 목록의 목표 가격 판단과 할인율 배지처럼 사용자의 구매 판단에 직접 연결되는 UI에서 위험이 컸습니다.",
+          resolution: "game-score.ts에서 currentPriceCents가 0보다 큰 가격만 best price 후보로 사용하고, 후보가 없으면 목표 가격 매칭을 false로 처리했습니다.",
+          result: "가격 판단을 보수적으로 바꾸면서 결측 가격이 최저가나 목표가 달성 상태로 표시되는 경로를 차단했습니다. 사용자는 실제 구매 가능한 가격 후보가 있을 때만 할인/목표가 정보를 보게 되었고, 테스트로 0/null 가격이 best price 후보에서 제외되는 흐름을 확인했습니다.",
+          evidence: ["game-score.ts", "tests/game-score.test.ts", "멘토링 PDF Game 사례"],
         },
         {
-          summary: "AI 할인 인사이트는 price snapshot evidence만 입력으로 사용하게 제한하고 CI·Fallow 지표로 검증 증거화",
-          details:
-            "AI가 가격이나 할인율을 지어내지 못하도록 evidence-only prompt가 저장된 price snapshot과 review evidence만 사용하게 제한했습니다.\n\nAI job의 실행 상태, 모델명, 실패 원인과 생성 결과의 evidence JSON을 저장해 결과를 추적할 수 있게 했습니다.",
-          before: "AI free-form",
-          after: "Evidence-first",
+          title: "외부 API 장애와 호출 한도 초과 대응",
+          issue: "검색/할인/인기 같은 공개 route를 점검하면서 외부 가격 API timeout, 호출 한도 초과, 반복 새로고침이 그대로 500 오류나 빈 화면으로 이어질 수 있는 안정성 문제를 발견했습니다.",
+          cause: "가격 정보 화면은 사용자가 페이지를 열 때마다 외부 API 응답성에 묶입니다. 공개 API route가 query/filter/country/store 조합별 캐시 없이 매번 외부 요청을 보내면 반복 호출에 취약하고, timeout이나 rate limit이 발생했을 때 기존 캐시가 있어도 route 실패로 끝납니다. 그 결과 사용자는 일부 데이터 소스 장애를 서비스 전체 장애처럼 경험하게 됩니다.",
+          resolution: "fresh TTL 이후에도 일정 시간 stale 데이터를 유지하는 cache 모듈과 fixed-window rate limit을 route 경계에 추가했습니다.",
+          result: "외부 API가 느리거나 실패해도 fresh TTL 이후의 stale 데이터를 반환할 수 있어 검색/할인 화면이 바로 500 오류로 무너지지 않게 됐습니다. 반복 호출은 서버 route에서 429와 retry metadata로 제어해 외부 API 한도 초과 위험을 줄였고, cache hit, stale fallback, rate limit 케이스를 route 테스트로 검증했습니다.",
+          evidence: ["stale-cache.ts", "rate-limit.ts", "commit 19468b7", "commit 4297605"],
         },
         {
-          summary: "AI Skill로 PRD-이슈-구현-검증 흐름 구조화",
-          details:
-            "grill-me, to-prd, to-issues, handoff를 사용해 큰 요구사항을 실행 가능한 GitHub issue와 검증 기준으로 나눴습니다.",
-          before: "큰 로드맵",
-          after: "이슈 단위",
+          title: "Fallow 지표 기반 dead code와 중복 코드 정리",
+          issue: "기능 개발 이후 Fallow 정적 분석을 돌리며 unused file/export, 테스트 중복, 타입 반복 코드가 남아 있고 일부 API route와 테스트 파일이 복잡도 hotspot으로 커진 것을 발견했습니다.",
+          cause: "검색, 할인, watchlist, AI insight, route 테스트를 빠르게 붙이면서 임시 wrapper와 중복 테스트 셋업이 남았습니다. Fallow 리포트에서 unused files 1개, unused exports 11개, 중복 코드 1,006줄(9.4%), deals/search/jobs 테스트와 API route hotspot이 드러났습니다. 런타임 오류는 아니지만 변경 시 잘못된 의존성을 남기고 테스트 수정 범위를 넓히는 유지보수 비용으로 이어질 수 있었습니다.",
+          resolution: "로컬 성능지표 문서의 Fallow 사용 전/후/최종 지표를 기준으로 unused files/exports, duplication, maintainability를 추적하고 정리 우선순위를 정했습니다.",
+          result: "unused files 1개와 unused exports 11개를 0으로 정리했고, 중복 코드는 1,006줄(9.4%)에서 308줄(2.9%)로 낮췄습니다. maintainability는 91.3에서 92.1로 개선됐고, deals/search/jobs 테스트와 API route hotspot을 명확히 파악해 이후 리팩터링 우선순위를 수치 기반으로 잡을 수 있게 됐습니다.",
+          evidence: ["fallow 사용전 코드.md", "fallow 최종 지표.md", "portfolio-frontend-resume-content.md"],
         },
       ],
-      details: {
-        context:
-          "Game Sale Info는 Steam/Epic 할인 정보를 조회하고 관심 목록과 목표 가격을 추적하는 Next.js 서비스입니다. 단순 구현보다 실제 사용 흐름, 인증/DB, UX 피드백, 배포 검증, 코드 품질 지표까지 end-to-end로 연결하는 데 집중했습니다.",
-        role:
-          "프론트엔드 구현과 함께 Supabase Auth/DB, Vercel production 배포, smoke test, AI-assisted workflow를 설계했습니다. PRD, issue slicing, handoff, 정적 분석, 검증 증거를 작업 흐름에 연결했습니다.",
-        architecture:
-          "Next.js App Router와 Supabase 기반 서비스 위에 Codex/Harness 작업 체계를 붙였습니다. 관심 목록 추가, 삭제 후 복구, 목표 가격 추적 같은 사용자 흐름은 DB 상태와 UI 피드백을 함께 맞췄고, Fallow는 코드 품질 측정과 리팩터링 target 선정에 사용했습니다.",
-        keyFeatures: [
-          "Steam/Epic 할인 정보 조회와 관심 목록 목표 가격 추적",
-          "관심 목록 추가 후 redirect 제거, 카드 인라인 3초 피드백 적용",
-          "삭제 후 재추가 시 archived row 복구",
-          "handoff로 issue 상태, 검증 결과, secret 처리 규칙을 세션 간 유지",
-          "Fallow로 unused file/export, duplication, maintainability, hotspot 측정",
-          "CI/CD, smoke test, Supabase Auth/DB, Vercel production 배포",
-        ],
-        challenges: [
-          "auth, Supabase, 외부 API, 관심 목록 UX, CI가 섞여 매 세션마다 맥락 손실 위험이 있었습니다.",
-          "AI가 기능 구현만 보고 테스트, 문서, 포트폴리오 증거, 데이터 계약을 놓칠 수 있었습니다.",
-          "기능 추가 후 dead-code와 duplication이 쌓여 유지보수 품질을 수치로 확인할 필요가 있었습니다.",
-        ],
-        solutions: [
-          "Harness로 역할별 agent/skill을 만들어 product, data, frontend, QA, portfolio 관점을 분리했습니다.",
-          "to-prd/to-issues로 큰 요구사항을 GitHub issue 단위로 나누고, handoff로 다음 세션 기준을 남겼습니다.",
-          "Fallow 분석 결과를 기준으로 소스 중복과 dead-code를 줄이고 개선 전후 지표를 남겼습니다.",
-        ],
-        validation: [
-          "Fallow 실행: 소스 중복 668줄(5.73%) -> 121줄(1.03%)",
-          "Fallow 실행: 전체 중복 1,006줄(9.4%) -> 308줄(2.9%)",
-          "Fallow 실행: unused file/export 기준 dead-code 15개 -> 0개",
-          "당시 Fallow maintainability 지표: 91.3점 -> 92.1점(good)",
-          "현재 Fallow health score: 84.7 / B, unused dev dependency 1건 별도 관리",
-          "Vitest 21 files / 60 tests passed",
-          "Playwright smoke 2 tests passed",
-          "typecheck, lint, build, Vercel production 배포까지 확인",
-        ],
-        result:
-          "AI를 단순 코드 생성 도구가 아니라 프로젝트 운영 체계로 사용했습니다. 결과를 issue, handoff, smoke test, Fallow 지표, production 배포 증거로 남겨 포트폴리오에서 설명 가능한 성과로 만들었습니다.",
-        process:
-          "아이디어/피드백 -> grill-me 요구사항 검증 -> to-prd 문서화 -> to-issues 이슈 분할 -> handoff 맥락 유지 -> fallow 품질 측정 -> 구현/검증/배포 -> 포트폴리오 evidence 정리 흐름으로 진행했습니다.",
-        aiTraceability: [
-          "AI 요약 입력은 저장된 price snapshot과 review evidence로 제한했습니다. 가격, 할인율, 날짜를 새로 만들지 못하게 prompt 계약을 테스트에 남겼습니다.",
-          "ai_insight_runs에는 실행 상태, model_name, error_message, 시작/완료 시각을 남겨 실패 지점을 다시 볼 수 있게 했습니다.",
-          "ai_game_insights에는 summary와 evidence JSON을 같이 저장해 화면에 나온 문장을 원본 근거와 대조할 수 있게 했습니다.",
-          "API route는 status, duration, cache 상태를 header와 structured log로 남겼습니다.",
-        ],
-        operationalEvidence: [
-          "검색/할인/인기 API에는 process-local cache, stale fallback, rate limit을 넣어 외부 API 실패와 반복 호출에 대비했습니다.",
-          "관심목록 추가는 redirect 없이 카드 안에서 created, duplicate, restored, failed 상태를 보여주게 바꿨습니다.",
-          "Next production build에서 shared 102 kB, home 108 kB, deals 109 kB first load JS를 기록했습니다.",
-          "Sentry, Web Vitals, API latency 수집 경로를 구현해 오류와 성능 문제를 확인할 수 있게 했습니다.",
-        ],
-        codeHighlight: {
-          title: "Fallow 품질 측정 명령",
-          code: `npx fallow --format json --quiet --score
-npx fallow dead-code --format json --quiet
-npx fallow dupes --format json --quiet`,
-        },
-      },
     },
     {
       title: "PhotoMap",
+      subtitle: "대량 사진 데이터를 지도, 앨범, 타임라인, 노드 그래프로 탐색하는 서비스",
+      period: "2025.12 - 2026.04",
+      team: "3인 팀 / Frontend 담당",
       summary:
-        "EXIF 메타데이터 기반 사진 아카이브에서 대량 이미지 탐색, 2D/3D 지도 시각화, D3 관계 그래프의 렌더링 병목을 개선한 프로젝트",
-      role: "프론트엔드 UI/UX 구현, Zustand 상태 구조 개선, 가상화 기반 대량 리스트 최적화, D3/Unity WebGL 시각화 연동",
-      period: "2025.12 ~ 2026.04",
-      tech: ["React", "TypeScript", "Zustand", "@tanstack/react-virtual", "D3.js", "Unity WebGL"],
-      metrics: [
-        { label: "Render", value: "36% down" },
-        { label: "DOM", value: "<200" },
-        { label: "Load", value: "50%+ down" },
+        "EXIF 위치와 촬영 시간을 기반으로 사진을 지도, 앨범, 타임라인, 관계 그래프로 탐색하는 서비스입니다. 초기 요청 병렬화, 전역 상태 분리, D3 시뮬레이션 분리, 가상화로 대량 사진에서도 화면이 버티는 구조로 정리했습니다.",
+
+      responsibilities: [
+        "EXIF 메타데이터를 읽어 사진, 위치, 시간 데이터를 화면에서 바로 쓸 수 있게 정리",
+        "Zustand selector로 사진, 필터, 선택 상태를 분리하고 전역 리렌더링 범위를 축소",
+        "대량 사진 구간을 row 가상화로 바꾸고 D3 tick 업데이트를 React state 밖으로 분리",
+        "지도, 앨범, 타임라인, 관계 그래프 화면을 같은 데이터 흐름으로 연결",
+        "Supabase 데이터 연동과 Unity WebGL 지도 화면 통합",
       ],
-      links: {
-        github: "https://github.com/sabin1108/Photomap",
-      },
-      imageAlt: "PhotoMap 프로젝트 화면",
+      tech: ["React", "TypeScript", "Zustand", "Supabase", "D3.js", "@tanstack/react-virtual"],
+      links: { github: "https://github.com/sabin1108/Photomap" },
       imageGallery: {
-        main: {
-          src: "/2_project/photoproject_1.png",
-          alt: "PhotoMap 메인 화면",
-        },
+        main: { src: "/2_project/photoproject_1.png", alt: "PhotoMap 메인 화면" },
         supporting: [
-          {
-            src: "/2_project/photoproject_2.png",
-            alt: "PhotoMap 보조 화면 1",
-          },
-          {
-            src: "/2_project/photoproject_3.png",
-            alt: "PhotoMap 보조 화면 2",
-          },
-          {
-            src: "/2_project/photoproject_4.gif",
-            alt: "PhotoMap 보조 화면 3",
-          },
+          { src: "/2_project/photoproject_2.png", alt: "PhotoMap 사진 탐색 화면" },
+          { src: "/2_project/photoproject_3.png", alt: "PhotoMap 앨범 또는 보조 화면" },
+          { src: "/2_project/photoproject_4.gif", alt: "PhotoMap 인터랙션 GIF" },
         ],
       },
-      achievements: [
+      metrics: [],
+      metricRows: [
+        { metric: "D3 NodeView 렌더링 수", before: "370회", after: "25회", basis: "React Profiler / performance_optimization_final_report.md" },
+        { metric: "Framer Motion 렌더링 수", before: "2,142회", after: "0회", basis: "React Profiler / performance_optimization_final_report.md" },
+        { metric: "GlobeView Max Commit", before: "69.9ms", after: "26.6ms", basis: "React Profiler / performance_optimization_final_report.md" },
+        { metric: "이미지/UI 컴포넌트 폭주", before: "16,030회", after: "불필요 렌더링 제거", basis: "React Profiler / performance_optimization_final_report.md" },
+      ],
+      architecture: {
+        title: "브라우저에서 사진을 탐색하는 흐름",
+        description: "",
+        columns: [],
+        flow: [],
+      },
+      caseStudies: [
         {
-          summary: "Context API 전역 리렌더링을 Zustand selector 구독으로 바꿔 커밋 시간 36% 단축",
-          details:
-            "Context API 기반 상태 공유로 작은 상태 변경에도 70개 이상 컴포넌트가 함께 리렌더링되는 문제가 있었습니다.\n\nZustand selector와 useShallow 패턴으로 필요한 slice만 구독하게 바꿔 React Profiler 기준 커밋 시간을 9.7ms에서 6.2ms로 낮췄습니다.",
-          before: "9.7ms",
-          after: "6.2ms",
+          title: "초기 데이터 요청을 병렬화해 진입 지연 완화",
+          issue: "초기 진입 흐름을 확인하던 중 카테고리, 사진 목록, 사용자 상태 요청이 순서대로 실행되어 지도와 앨범 화면이 필요한 데이터 일부를 갖고도 렌더링을 기다리는 지연 문제를 발견했습니다.",
+          cause: "초기 화면에서 필요한 사진 목록, 카테고리, 사용자 상태 요청은 서로 의존성이 낮았는데도 같은 초기화 함수 안에서 순차적으로 `await` 처리됐습니다. 이 구조에서는 앞 요청이 끝나기 전까지 다음 요청이 시작되지 않아 network waterfall이 생깁니다. 또한 지도와 앨범처럼 일부 데이터만 먼저 있어도 skeleton이나 부분 렌더링이 가능한 화면까지 모든 응답 완료를 기다리게 되어 체감 진입 시간이 길어졌습니다.",
+          resolution: "초기화 단계에서 `Promise.all`로 묶어 동시에 요청하고, 공통 상태는 먼저 store에 적재한 뒤 화면은 준비되는 즉시 그리도록 정리했습니다.",
+          result: "초기 진입 시 서로 독립적인 요청이 동시에 시작되도록 바뀌어 network waterfall이 줄었고, 사진 목록과 앨범/지도에 필요한 공통 상태를 먼저 채울 수 있게 됐습니다. 사용자는 모든 데이터 응답이 끝날 때까지 빈 화면을 보는 대신 준비된 화면부터 확인할 수 있는 흐름으로 개선됐습니다.",
+          evidence: ["performance_optimization_final_report.md", "frontend_technical_architecture.md"],
         },
         {
-          summary: "@tanstack/react-virtual로 10,000건 사진 목록의 DOM 노드를 200개 미만으로 제한",
-          details:
-            "기존 grid + map 구조는 5,000건 이상 로드 시 화면이 멈추고 DOM 노드가 급격히 늘어났습니다.\n\nrow 기반 virtualizer와 useGridBreakpoints를 적용해 보이는 row만 렌더링했고, 10,000건 기준 DOM 노드를 200개 미만으로 유지했습니다.",
-          before: "Full render",
-          after: "Virtual grid",
+          title: "Context API 전역 리렌더링을 Zustand selector로 축소",
+          issue: "React Profiler 확인 중 즐겨찾기, 태그, 업로드 입력처럼 작은 상태 변경만으로 지도, 앨범, 타임라인, 업로드 화면까지 넓게 다시 그려지는 전역 리렌더링 문제를 발견했습니다.",
+          cause: "사진 목록, 선택 사진, 필터, 즐겨찾기, 업로드 입력 상태가 큰 context value나 새 객체를 반환하는 selector에 묶여 있었습니다. React Context는 value 참조가 바뀌면 구독 하위 트리를 넓게 다시 평가하고, selector가 매번 새 배열/객체를 반환하면 얕은 비교도 실패합니다. 그 결과 실제로는 한 사진의 제목이나 즐겨찾기만 바뀌어도 관련 없는 지도, 앨범, 타임라인이 렌더링 후보가 됐습니다.",
+          resolution: "상태를 store로 분리하고 `useShallow` selector로 필요한 slice만 구독하게 바꿔, 화면별 반응 범위를 잘라냈습니다.",
+          result: "상태 변경이 관련 화면 안에서 끝나도록 구독 범위가 좁아졌고, 즐겨찾기나 태그 변경이 지도, 앨범, 타임라인 전체를 다시 그리는 흐름을 줄였습니다. store slice와 `useShallow` selector를 기준으로 렌더링 책임이 분리되어 이후 기능 추가 시에도 상태 변경의 영향 범위를 더 예측하기 쉬워졌습니다.",
+          evidence: ["frontend_technical_architecture.md", "performance_optimization_final_report.md"],
         },
         {
-          summary: "D3 물리 시뮬레이션은 React state에서 분리해 style.setProperty로 직접 갱신",
-          details:
-            "D3 tick 좌표를 React state로 갱신하면 초당 반복되는 물리 계산이 reconciliation을 계속 발생시켰습니다.\n\n노드와 라인은 ref 기반 DOM 접근과 style.setProperty로 직접 갱신해 React 리렌더링 없이 60FPS 수준으로 방어했습니다.",
-          before: "React state",
-          after: "Direct DOM",
+          title: "D3 tick 업데이트를 React state에서 분리",
+          issue: "NodeView에서 마우스를 움직이거나 zoom을 조작할 때마다 좌표 변경이 React state로 올라가 전체 SVG 트리가 다시 계산되고, React Profiler 기준 D3 NodeView 렌더링이 370회까지 증가하는 병목을 발견했습니다.",
+          cause: "D3 force simulation의 tick 좌표와 zoom/mouse 이벤트는 초당 여러 번 갱신됩니다. 이 좌표를 React state에 올리면 tick마다 reconciliation과 SVG diff가 발생하고, 노드 위치처럼 DOM 속성만 바꿔도 되는 작업이 React 렌더링 루프에 포함됩니다. 마우스 이동, zoom, force tick이 한꺼번에 누적되면서 그래프 이동이 끊기고 전체 SVG가 흔들리는 증상이 나타났습니다.",
+          resolution: "시뮬레이션은 custom hook으로 분리하고, tick에서는 ref와 DOM 속성을 직접 갱신해 React는 구조 변경에만 집중하게 했습니다.",
+          result: "노드 그래프 상호작용이 React 렌더링 루프에서 분리되어 마우스 이동과 zoom 중에도 SVG 전체가 반복 계산되는 현상이 줄었습니다. React Profiler 기준 D3 NodeView 렌더링 수는 370회에서 25회로 낮아졌고, 좌표 갱신은 ref와 DOM 속성 변경으로 처리해 그래프 조작이 더 안정적으로 보이게 됐습니다.",
+          evidence: ["frontend_technical_architecture.md", "performance_optimization_final_report.md"],
+        },
+        {
+          title: "가상화와 메모이제이션으로 5,000장 부하 방어",
+          issue: "부하 테스트로 사진 수를 늘리며 확인한 결과 5,000장 구간에서 첫 mount가 1.13초까지 늘고, 10,000장 기준 DOM 노드가 약 40,000개까지 증가해 스크롤이 사실상 멈추는 문제를 발견했습니다.",
+          cause: "기존 구조는 `filteredAlbums.map()`처럼 전체 목록을 기준으로 카드를 DOM에 유지했습니다. 화면에 보이지 않는 카드도 이미지 로딩, hover/transition, motion 진입 애니메이션 비용을 계속 갖고 있었고, 가상화 중 요소가 재생성될 때 애니메이션도 반복됐습니다. 사진 수가 늘어날수록 DOM 노드, 이미지 요소, 애니메이션 계산이 선형으로 증가해 스크롤 FPS와 메모리 사용량이 함께 악화됐습니다.",
+          resolution: "row 가상화로 보이는 구간만 DOM에 두고, 불필요한 motion 연산은 CSS 전환으로 바꾸며 이미지 카드를 메모이제이션했습니다.",
+          result: "row 가상화 적용 후 10,000장 기준 DOM을 약 200개 수준으로 유지할 수 있게 되어 대량 사진에서도 브라우저가 감당해야 하는 노드 수가 고정됐습니다. 5,000장 first mount 지연은 1.13초 수준의 화면 멈춤에서 1프레임 단위 렌더링을 목표로 하는 구조로 바뀌었고, motion 기반 반복 애니메이션 비용도 제거했습니다.",
+          evidence: ["virtualization_changes.md", "performance_optimization_final_report.md"],
         },
       ],
-      details: {
-        context:
-          "PhotoMap은 사진을 단순 저장하는 대신 EXIF 위치와 촬영 시간을 기반으로 여행 기록을 지도, 타임라인, 앨범, 관계 그래프로 탐색하는 서비스입니다. 핵심 과제는 10,000건 이상 사진을 다루면서도 스크롤과 시각화가 끊기지 않게 유지하는 것이었습니다.",
-        role:
-          "3인 팀에서 프론트엔드 화면 구현, 상태 관리 구조, 대량 렌더링 최적화, D3 관계 그래프 UX, Cobe 기반 3D Globe와 Unity WebGL 시각화 연동 화면을 담당했습니다.",
-        architecture:
-          "React 화면은 Photo Feed, Map View, Timeline, Albums, Favorites, Spatial Node View로 나누고, 서버 데이터와 UI 상태를 Zustand store에서 관리했습니다. 대량 사진 그리드는 @tanstack/react-virtual과 useGridBreakpoints로 row 단위 가상화했고, 각 row 위치는 transform 기반으로 배치했습니다. D3 물리 시뮬레이션은 useForceSimulation hook과 직접 DOM 갱신으로 React 렌더링 경로에서 분리했습니다.",
-        keyFeatures: [
-          "EXIF 기반 GPS/촬영 시간 추출과 수동 위치 보정",
-          "Photo Feed, 2D Map, 3D Globe, Timeline, Albums, Favorites, Spatial Node View",
-          "PhotoFeed와 AlbumsView의 row 기반 virtualized grid",
-          "Zustand selector/useShallow 기반 상태 구독 분리",
-          "D3 NodeView 물리 시뮬레이션 직접 DOM 업데이트",
-          "PerformanceMonitor로 FPS, DOM nodes, JS heap, 사진 수 실시간 확인",
-          "Admin View mock data 주입으로 1,000건 단위 부하 테스트",
-        ],
-        challenges: [
-          "5,000건 이상 사진 로드 시 DOM 노드가 급증해 화면이 멈추고 스크롤 FPS가 크게 떨어졌습니다. Chrome DevTools Performance에서 스크롤 이벤트마다 많은 이미지 카드 리플로우가 발생하는 것을 확인했습니다.",
-          "Context API 기반 전역 상태 공유로 인증/사진 상태의 작은 변경도 많은 컴포넌트를 다시 렌더링했습니다.",
-          "D3 zoom, hover, tick 좌표를 React state로 관리하면 매 프레임 reconciliation 비용이 발생했습니다.",
-          "FE, DB, Unity 담당이 나뉘어 있어 브리지 로직과 화면 구조에 대한 공통 이해가 필요했습니다.",
-        ],
-        solutions: [
-          "PhotoFeed와 AlbumsView에 @tanstack/react-virtual을 적용해 화면에 보이는 row만 DOM에 유지했습니다.",
-          "useGridBreakpoints hook으로 viewport별 column/gap을 계산하고 row 높이와 좌표를 산출해 transform: translateY()로 배치했습니다.",
-          "Redux보다 초기 설정과 보일러플레이트가 작은 Zustand를 선택했고, selector와 useShallow로 필요한 상태만 구독하게 바꿨습니다.",
-          "D3 이벤트와 tick 갱신은 ref, style.setProperty, setAttribute를 사용해 React state 갱신 없이 처리했습니다. line DOM에는 id와 animationKey를 붙여 뷰 전환 후 이전 요소와 충돌하지 않게 분리했습니다.",
-          "Promise.all로 독립적인 초기 데이터 요청을 병렬화해 waterfall 대기 시간을 줄였습니다.",
-          "Framer Motion 반복 애니메이션은 CSS animate-in으로 바꾸고, UploadPhotoItem/Input/Popover는 React.memo와 props 비교로 재렌더링 범위를 좁혔습니다.",
-        ],
-        validation: [
-          "React Profiler: 커밋 시간 9.7ms -> 6.2ms",
-          "10,000건 사진 로드 시 DOM nodes 200개 미만 유지",
-          "5,000건 first mount 지연 1,132ms 수준 문제를 row 가상화로 완화",
-          "D3 NodeView 렌더링 370회 -> 25회 수준으로 감소",
-          "GlobeView max commit 69.9ms -> 26.6ms",
-          "초기 데이터 로딩 Promise.all 전환 후 50% 이상 단축",
-          "Chrome DevTools Performance/Network와 Admin View mock data로 개선 전후를 재측정",
-          "스크롤 구간에서 60FPS 수준으로 방어되는지 PerformanceMonitor로 확인",
-        ],
-        result:
-          "사진 수가 늘어나도 탐색 흐름이 끊기지 않도록 렌더링 범위를 줄이고, 지도/그래프 시각화는 React state와 분리했습니다. 결과적으로 PhotoMap을 단순 갤러리가 아니라 대량 사진을 다루는 인터랙티브 공간 아카이브로 정리할 수 있었습니다.",
-        process:
-          "React Profiler와 PerformanceMonitor로 병목을 확인한 뒤 Zustand selector, virtual grid, D3 direct DOM update, Promise.all 병렬 처리 순서로 개선했습니다.",
-        operationalEvidence: [
-          "PerformanceMonitor에서 FPS, DOM nodes, JS heap, 사진 수를 실시간으로 보며 부하 테스트를 진행했습니다.",
-          "Chrome DevTools Performance 탭으로 스크롤 중 main thread 점유와 layout/recalculate style 비용을 확인했습니다.",
-          "Chrome DevTools Network 탭으로 초기 데이터 요청 waterfall을 확인하고 Promise.all 전환 효과를 비교했습니다.",
-          "Admin View에서 mock photo data를 주입해 1,000건 단위로 부하를 늘리고 가상화 효과를 확인했습니다.",
-          "Framer Motion 기반 반복 애니메이션은 CSS animate-in으로 전환해 대량 카드 렌더링 비용을 줄였습니다.",
-          "UploadPhotoItem, Input, Popover는 React.memo와 props 비교로 개별 사진 수정 시 전체 업로드 목록이 다시 그려지는 문제를 줄였습니다.",
-        ],
-        codeHighlight: {
-          title: "Row 가상화 배치 예시",
-          code: `const renderRow = ({ index, style }) => (
-  <div
-    style={{
-      ...style,
-      transform: \`translateY(\${virtualRows[index].start}px)\`,
-    }}
-  >
-    {rowPhotos.map((photo) => (
-      <Image key={photo.id} src={photo.url} loading="lazy" />
-    ))}
-  </div>
-);`,
-        },
-      },
     },
     {
-      title: "AIChatBot",
+      title: "AI ChatBot",
+      subtitle: "학교 정보를 묻고 확인하는 Next.js 챗봇 UI",
+      period: "2025.09 - 2025.11",
+      team: "2인 팀 / Frontend 담당",
       summary:
-        "학사 정보 접근성 개선을 위한 지능형 챗봇입니다. AI 응답을 읽기 쉬운 채팅 UX로 정리하고, 대화 저장·탭 동기화·내보내기를 클라이언트 중심으로 처리했습니다.",
-      role: "프론트엔드 전반 담당, 채팅 UI/UX 설계 및 구현, Regex 응답 파싱, Blob API 내보내기, useLocalStorage 탭 동기화, Next.js API Routes Proxy Layer 설계",
-      period: "2025.09.10 ~ 2025.11.14",
-      tech: ["Next.js", "TypeScript", "React-Markdown", "Tailwind CSS", "Blob API", "useLocalStorage"],
-      metrics: [
-        { label: "URL noise", value: "90% down" },
-        { label: "UI code", value: "30% down" },
-        { label: "Export", value: "0 server" },
+        "학식, 공지, 학사 일정 같은 학교 정보를 대화형 UI에서 확인하는 졸업 프로젝트입니다. 핵심 과제는 외부 백엔드 응답을 읽기 쉬운 메시지로 바꾸고, 로그인 없는 구조에서 채팅 기록 저장과 내보내기를 클라이언트 중심으로 처리하는 것이었습니다.",
+      responsibilities: [
+        "채팅 UI, 사이드바, 캘린더, 가이드 화면 구현",
+        "ReactMarkdown 기반 메시지 렌더링과 긴 URL/비정형 응답 표시 개선",
+        "Next.js API route로 외부 백엔드 호출 경계 분리",
+        "localStorage 기반 대화 내역 저장, 복원, 탭 동기화 처리",
+        "Blob API를 활용한 대화 내역 txt 내보내기 구현",
       ],
-      links: {
-        github: "https://github.com/sabin1108/graduation-project",
-      },
-      imageAlt: "AIChatBot 프로젝트 화면",
+      tech: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+      links: { github: "https://github.com/sabin1108/graduation-project" },
       imageGallery: {
-        main: {
-          src: "/3_project/aichat_1.png",
-          alt: "AIChatBot 메인 화면",
-        },
+        main: { src: "/3_project/aichat_1.png", alt: "AI ChatBot 메인 화면" },
         supporting: [
-          {
-            src: "/3_project/aichat_2.png",
-            alt: "AIChatBot 보조 화면 1",
-          },
-          {
-            src: "/3_project/aichat_3.png",
-            alt: "AIChatBot 보조 화면 2",
-          },
-          {
-            src: "/3_project/aichat_4.gif",
-            alt: "AIChatBot 보조 화면 3",
-          },
+          { src: "/3_project/aichat_2.png", alt: "AI ChatBot 채팅 화면" },
+          { src: "/3_project/aichat_3.png", alt: "AI ChatBot 보조 화면" },
+          { src: "/3_project/aichat_4.gif", alt: "AI ChatBot 인터랙션 GIF" },
         ],
       },
-      achievements: [
+      metrics: [],
+      architecture: {
+        title: "챗봇 UI와 외부 백엔드 경계 분리 구조",
+        description:
+          "메시지 렌더링, 로컬 저장, 파일 내보내기, 외부 API 호출을 각각 분리해 UI 컴포넌트가 백엔드 응답 포맷에 직접 묶이지 않게 했습니다.",
+        columns: [
+          { title: "Client UI", nodes: [{ label: "Chat Interface", detail: "질문 입력, 메시지 목록, 자동 스크롤" }, { label: "Sidebar / Calendar", detail: "새 채팅, 빠른 링크, 학사 일정" }] },
+          { title: "Client Logic", nodes: [{ label: "ReactMarkdown", detail: "링크, 목록, markdown 응답 렌더링" }, { label: "useChatHistory", detail: "채팅 목록/활성 채팅 관리" }, { label: "Blob Export", detail: "대화 내역 txt 다운로드" }] },
+          { title: "Next.js Boundary", nodes: [{ label: "API Routes Proxy", detail: "/api/chat, /api/notice" }, { label: "getNotice action", detail: "공지/식단 데이터를 UI용으로 전달" }] },
+          { title: "External Backend", nodes: [{ label: "Spring/API Server", detail: "팀 백엔드 영역" }, { label: "Crawler / DB / AI", detail: "README 기준 백엔드 구성" }] },
+        ],
+        flow: [
+          "사용자가 채팅 UI에서 질문을 입력합니다.",
+          "Client는 내부 Next.js API route를 호출하고, route가 외부 백엔드 API로 전달합니다.",
+          "응답은 ReactMarkdown으로 렌더링되고, 채팅 기록은 localStorage에 저장되며 Blob으로 내보낼 수 있습니다.",
+        ],
+      },
+      caseStudies: [
         {
-          summary: "Regex 응답 파싱으로 긴 URL과 비정형 학사 정보를 읽기 쉬운 메시지 구조로 정리",
-          details:
-            "외부 API 응답은 긴 URL, 줄바꿈 없는 학식/공지 데이터, 비정형 텍스트가 섞여 출력됐습니다.\n\n렌더링 직전 Regex 파싱 파이프라인으로 URL을 링크 형태로 치환하고 날짜/키워드 패턴에 맞춰 개행과 구분을 적용해 URL 텍스트 노출을 최대 90% 줄였습니다.",
-          before: "Raw response",
-          after: "Parsed message",
+          title: "긴 URL과 비정형 응답으로 인한 모바일 UI 깨짐 완화",
+          issue: "실제 학교 공지/학식/일정 응답을 채팅 말풍선에 넣어보면서 긴 URL과 줄바꿈 없는 비정형 텍스트가 모바일 viewport를 밀어내고, 핵심 정보가 한 덩어리로 보여 가독성이 떨어지는 문제를 발견했습니다.",
+          cause: "외부 API의 AI 응답은 JSON처럼 일정한 구조가 아니라 일반 문장, 긴 URL, 날짜, 목록, markdown 비슷한 텍스트가 섞여 들어왔습니다. 단순 문자열로 출력하면 브라우저가 긴 URL을 적절히 줄바꿈하지 못하고, 학식/공지 데이터가 줄바꿈 없이 붙어 사용자가 날짜와 링크를 구분하기 어려웠습니다. 포트폴리오 자료 기준 URL 텍스트 노출을 줄여야 할 정도로 시각적 노이즈가 컸습니다.",
+          resolution: "ReactMarkdown과 remark-gfm을 사용해 메시지를 렌더링하고, URL은 markdown link 형태로 변환했습니다. 링크 요소에는 줄바꿈 가능한 스타일을 적용했습니다.",
+          result: "공지 링크와 긴 답변을 채팅 말풍선 안에서 읽기 쉬운 문단과 링크 형태로 보여줄 수 있게 됐습니다. 긴 URL 텍스트 노출을 줄이고 날짜/목록 구조를 살리면서 모바일 viewport에서 가로 스크롤이나 말풍선 깨짐이 줄었고, 사용자가 필요한 공지 링크와 핵심 정보를 더 빠르게 찾을 수 있게 됐습니다.",
+          evidence: ["enhanced-chat-interface.tsx", "ReactMarkdown", "commit b43617a"],
         },
         {
-          summary: "Next.js API Routes Proxy Layer로 외부 API 응답을 단일 JSON 구조로 정규화",
-          details:
-            "외부 API가 JSON과 비정형 텍스트를 혼용해 반환하면서 UI 컴포넌트에 split, regex, 날짜 필드 보정 로직이 섞였습니다.\n\nProxy Layer에서 출처별 응답과 날짜 필드명을 단일 JSON 구조로 정규화해 UI 코드량을 약 30% 줄이고 API 스펙 변경 지점을 한 곳으로 모았습니다.",
-          before: "UI coupling",
-          after: "Proxy Layer",
+          title: "외부 API 응답 처리 로직을 UI에서 분리",
+          issue: "채팅, 공지, 식단 API를 연결하면서 외부 백엔드 응답이 JSON과 비정형 텍스트를 혼용하고 날짜 필드명도 달라, split/regex/예외 처리가 UI 컴포넌트 안으로 번지는 문제를 발견했습니다.",
+          cause: "채팅 UI가 백엔드 endpoint, notice category, 날짜 필드명, 응답 전처리 방식을 직접 알면 화면 컴포넌트가 데이터 호출과 표시 책임을 동시에 갖게 됩니다. 외부 API가 새 응답 형식을 추가하거나 필드명을 바꾸면 입력 폼, 메시지 목록, 공지 표시 컴포넌트까지 수정 범위가 퍼지고, 화면별 문자열 처리 로직이 중복될 수 있었습니다.",
+          resolution: "Next.js API Routes를 proxy layer로 두고, chat route와 notice route에서 외부 API 호출을 담당하게 했습니다. UI는 내부 route와 action만 호출합니다.",
+          result: "외부 API 경계가 Next.js route 파일로 모이면서 UI 컴포넌트의 책임이 메시지 표시와 사용자 상호작용으로 줄었습니다. 백엔드 endpoint나 날짜 필드명, 응답 포맷이 바뀌어도 proxy layer에서 먼저 흡수할 수 있어 채팅 입력, 메시지 목록, 공지 표시 컴포넌트의 수정 범위가 작아졌습니다.",
+          evidence: ["app/api/chat/route.ts", "app/api/notice/route.ts", "app/actions/get-notice.ts"],
         },
         {
-          summary: "Blob API와 useLocalStorage로 서버 저장 없이 대화 내역 유지·탭 동기화·내보내기 구현",
-          details:
-            "로그인이 없는 구조라 서버에 사용자 대화 내역을 저장하지 않고 편의 기능을 제공해야 했습니다.\n\nlocalStorage로 새로고침 후 대화 내역을 복원하고 storage 이벤트로 탭 간 상태를 맞췄습니다. 내보내기는 Blob 객체, URL.createObjectURL, 동적 앵커 트리거로 서버 통신 없이 처리했습니다.",
-          before: "Session-only",
-          after: "Local export",
+          title: "로그인 없는 로컬 채팅 기록 저장과 탭 동기화",
+          issue: "로그인 없이 사용하는 구조에서 새로고침하면 대화가 사라질 수 있고, 여러 탭을 열어 한쪽에서 채팅을 추가/삭제했을 때 다른 탭의 채팅 목록과 활성 대화가 어긋나는 상태 불일치 문제를 발견했습니다.",
+          cause: "로그인 없이 서버 DB를 쓰지 않으면 채팅 기록은 브라우저 localStorage에만 남습니다. localStorage 자체는 탭 사이에 공유되지만 각 탭의 React state는 독립적으로 유지되므로, 한 탭에서 채팅을 추가하거나 삭제해도 다른 탭은 기존 메모리 상태를 계속 보여줍니다. storage 이벤트를 구독하지 않으면 저장소와 화면 상태가 새로고침 전까지 어긋날 수 있었습니다.",
+          resolution: "useLocalStorage hook에서 localStorage 읽기/쓰기를 감싸고, storage 이벤트를 구독해 다른 탭의 변경을 현재 탭 상태에 반영했습니다.",
+          result: "서버 저장 없이도 새로고침 후 채팅 목록과 활성 채팅을 복원할 수 있게 됐고, storage 이벤트를 통해 다른 탭의 변경을 현재 탭 상태에 반영했습니다. 로그인 없는 구조를 유지하면서도 사용자가 여러 탭을 열었을 때 대화 목록이 어긋나는 위험을 줄였습니다.",
+          evidence: ["use-chat-history.ts", "use-local-storage.ts", "storage event"],
+        },
+        {
+          title: "대화 내역 내보내기 시 서버 전송 제거",
+          issue: "대화 내역 내보내기 기능을 설계하면서 이미 브라우저에 있는 사용자 대화를 txt 파일 생성을 위해 서버로 다시 보내면 불필요한 개인정보 노출 경로와 서버 저장 책임이 생기는 문제를 발견했습니다.",
+          cause: "대화 내용은 이미 브라우저 메모리와 localStorage에 존재하는 사용자 데이터입니다. 단순 txt 파일 생성을 위해 이를 서버로 전송하면 개인정보가 네트워크를 한 번 더 지나가고, 서버 로그/저장 여부/삭제 책임까지 고려해야 합니다. 로그인 없는 가벼운 챗봇 UX라는 기능 성격에 비해 데이터 흐름과 운영 부담이 과해지는 구조였습니다.",
+          resolution: "브라우저 Blob API와 URL.createObjectURL을 사용해 클라이언트 메모리에서 txt 파일을 만들고, 다운로드 후 revokeObjectURL로 URL을 해제했습니다.",
+          result: "대화 내역 내보내기를 서버 저장/전송 없이 브라우저 메모리에서 완결했습니다. Blob과 URL.createObjectURL로 txt 파일을 만들고 다운로드 후 revokeObjectURL로 해제해, 개인정보가 네트워크를 다시 지나가지 않으며 별도 서버 저장소나 삭제 정책 없이 기능을 제공할 수 있게 됐습니다.",
+          evidence: ["enhanced-chat-interface.tsx", "Blob", "URL.createObjectURL", "URL.revokeObjectURL"],
         },
       ],
-      details: {
-        context:
-          "학식, 공지사항, 통학, 일정처럼 여러 메뉴에 흩어진 학사 정보를 모바일에서도 쉽게 묻고 확인할 수 있게 만든 지능형 챗봇입니다. AI 응답을 단순 텍스트로 보여주는 데서 그치지 않고, 비정형 응답을 읽기 쉬운 메시지로 정리하고 사용자가 대화 내역을 직접 관리할 수 있게 하는 데 집중했습니다.",
-        role:
-          "2인 팀에서 프론트엔드 전반을 맡았습니다. 채팅 인터페이스 설계와 구현, Regex 응답 파싱 로직, Blob API 대화 내보내기, useLocalStorage 기반 탭 간 상태 유지, Next.js API Routes Proxy Layer 구조를 설계하고 구현했습니다.",
-        architecture:
-          "Next.js 기반 UI와 API Routes Proxy Layer로 구성했습니다. 클라이언트는 메시지 렌더링, Blob API 내보내기, localStorage 복원과 storage 이벤트 기반 탭 동기화를 담당했습니다. 외부 API 데이터 정규화는 프록시 계층에서 처리해 UI 컴포넌트가 외부 데이터 형식에 직접 의존하지 않도록 분리했습니다.",
-        keyFeatures: [
-          "학사 정보(학식, 공지사항, 통학, 일정) 질의응답 채팅 UI",
-          "Regex 기반 URL 치환과 응답 텍스트 구조화 파이프라인",
-          "React-Markdown 기반 메시지 렌더링",
-          "Blob API 기반 대화 내역 내보내기",
-          "useLocalStorage와 storage 이벤트 기반 탭 간 상태 동기화",
-          "Next.js API Routes Proxy Layer 기반 외부 데이터 JSON 정규화",
-        ],
-        challenges: [
-          "외부 API의 AI 응답 형식이 일정하지 않아 긴 URL, 줄바꿈 없는 학식/공지 데이터, 비정형 텍스트가 메시지 가독성을 떨어뜨렸습니다.",
-          "로그인 없는 구조에서 서버에 사용자 대화 내역을 저장하지 않고도 새로고침 복원, 탭 간 동기화, 파일 내보내기를 제공해야 했습니다.",
-          "외부 API가 JSON과 비정형 텍스트를 혼용해 반환해 UI 코드 안에 split, regex, 날짜 필드 보정 로직이 섞일 위험이 있었습니다.",
-        ],
-        solutions: [
-          "렌더링 직전 Regex 파이프라인을 적용해 긴 URL을 링크 형태로 치환하고 날짜/키워드 패턴에 맞춰 개행과 구분을 적용했습니다.",
-          "Blob API, URL.createObjectURL, 동적 앵커 트리거로 대화 내역 파일을 클라이언트에서 생성해 서버 통신 없이 내보내기를 처리했습니다.",
-          "useLocalStorage hook으로 localStorage 복원과 React 상태 업데이트를 묶고, storage 이벤트를 구독해 다른 탭의 변경을 반영했습니다.",
-          "Next.js API Routes Proxy Layer에서 JSON/비정형 텍스트 응답과 출처별 날짜 필드명을 단일 JSON 구조로 정규화했습니다.",
-        ],
-        validation: [
-          "URL 텍스트 노출 최대 90% 감소 확인",
-          "UI 코드량 약 30% 절감",
-          "Blob API 내보내기 서버 통신 없이 동작 확인",
-          "storage 이벤트 기반 탭 동기화가 별도 서버 통신 없이 동작하는 것 확인",
-          "대한전자공학회 2025 하계종합학술대회 포스터/논문 발표",
-          "BRIGHT MAKERS EXPO 2025 캡스톤디자인 경진대회 우수상",
-        ],
-        result:
-          "AI 응답을 사용자가 읽고 다시 활용하기 쉬운 채팅 인터페이스로 개선했습니다. 서버에 대화 내역을 저장하지 않는 구조에서 클라이언트 자원만으로 대화 유지, 탭 동기화, 파일 내보내기를 처리했고, 프록시 계층으로 외부 API 의존도를 UI에서 분리했습니다.",
-        codeHighlight: {
-          title: "Blob API 내보내기 예시",
-          code: `const exportChat = (messages) => {
-  const text = messages
-    .map((message) => \`\${message.role}: \${message.content}\`)
-    .join("\\n\\n");
-  const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "chat-history.txt";
-  link.click();
-  URL.revokeObjectURL(url);
-};`,
-        },
-      },
     },
   ] satisfies Project[],
   activities: [
-    {
-      date: "2025.04",
-      title: "BRIGHT MAKERS EXPO 캡스톤디자인 경진대회 우수상",
-      description:
-        "한경국립대학교 AI ChatBot 프로젝트로 학사 정보 접근성 개선 서비스를 발표했습니다.",
-    },
-    {
-      date: "2025.06",
-      title: "대한전자공학회 하계종합학술대회 발표",
-      description:
-        "학교 공지, 학사 일정, 행정 정보를 챗봇으로 묻고 답할 수 있게 만든 질의응답 시스템 논문입니다. 포스터/논문 형태로 발표했습니다.",
-      pdf: {
-        label: "논문 PDF",
-        href: "/files/thesis/interactive-campus-qa-system.pdf",
-      },
-    },
-    {
-      date: "2026.05",
-      title: "생성형 AI 기반 포트폴리오 요약 플랫폼",
-      description:
-        "지원자의 프로젝트 자료를 생성형 AI로 요약해 평가자가 핵심 역량과 근거를 빠르게 확인하도록 돕는 플랫폼 논문입니다. 대한전자공학회에 투고했고 심사까지 완료된 XGLAB 랩실 연구 성과입니다.",
-      pdf: {
-        label: "논문 PDF",
-        href: "/files/thesis/generative-ai-portfolio-summary-platform.pdf",
-      },
-    },
-    {
-      date: "2025.09.12",
-      title: "정보처리기사",
-      description: "한국산업인력공단 주관 국가기술자격을 취득했습니다.",
-    },
-  ],
+    { date: "2025.04", title: "BRIGHT MAKERS EXPO 캡스톤디자인 경진대회", description: "AI ChatBot 프로젝트로 학교 정보 접근성 개선 서비스를 발표했습니다." },
+    { date: "2025.06", title: "학교 정보 접근성 향상을 위한 대화형 질의응답 시스템", description: "학교 공지, 학식, 학사 일정 정보를 질의응답 흐름으로 연결한 졸업 프로젝트 기반 논문입니다.", pdf: { label: "논문 PDF", href: "/files/thesis/interactive-campus-qa-system.pdf" } },
+    { date: "2026.05", title: "생성형 AI 기반 포트폴리오 요약 플랫폼", description: "지원자의 프로젝트 자료를 생성형 AI로 요약하고 평가자가 핵심 역량과 근거를 빠르게 확인하도록 돕는 플랫폼 논문입니다.", pdf: { label: "논문 PDF", href: "/files/thesis/generative-ai-portfolio-summary-platform.pdf" } },
+    { date: "2025.09.12", title: "정보처리기사", description: "한국산업인력공단 주관 국가기술자격을 취득했습니다." },
+  ] satisfies Activity[],
   education: {
     school: "한경국립대학교",
     degree: "소프트웨어융합학과",
     status: "졸업",
-    period: "2020.03 ~ 2026.02",
+    period: "2020.03 - 2026.02",
     gpa: "3.87 / 4.5",
-    certificates: [
-      {
-        name: "정보처리기사",
-        issuer: "한국산업인력공단",
-        date: "2025.09.12",
-      },
-    ],
+    certificates: [{ name: "정보처리기사", issuer: "한국산업인력공단", date: "2025.09.12" }],
   },
 } as const;

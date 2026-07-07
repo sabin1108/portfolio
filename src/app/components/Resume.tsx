@@ -59,7 +59,7 @@ function ResumeHeader({
         </div>
       </div>
 
-      <div className="mb-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-600">
+      <div className="mb-5 flex flex-wrap gap-x-5 gap-y-2 text-[0.95rem] text-slate-600">
         <a
           href={`mailto:${profile.contacts.email}`}
           className="inline-flex items-center gap-1.5 hover:text-indigo-600"
@@ -87,7 +87,7 @@ function ResumeHeader({
         </a>
       </div>
 
-      <div className="max-w-4xl text-[0.95rem] leading-relaxed text-slate-700 whitespace-pre-line space-y-3">
+      <div className="max-w-4xl text-[1.025rem] leading-relaxed text-slate-700 whitespace-pre-line space-y-3">
         {summary}
       </div>
     </header>
@@ -105,7 +105,7 @@ function Section({
 }) {
   return (
     <section className={`resume-section mb-8 break-inside-avoid ${className}`}>
-      <h2 className="mb-4 border-b border-slate-200 pb-2 text-[1.05rem] font-bold uppercase tracking-wide text-slate-900">
+      <h2 className="mb-4 border-b border-slate-200 pb-2 text-[1.2rem] font-bold uppercase tracking-wide text-slate-900">
         {title}
       </h2>
       {children}
@@ -223,7 +223,7 @@ export function Resume() {
         )}
 
         <Section title="기술 스택">
-          <div className="text-[0.925rem] leading-relaxed text-slate-700 space-y-2 pl-1">
+          <div className="text-[0.975rem] leading-relaxed text-slate-700 space-y-2.5 pl-1">
             {coreSkills.map((group) => {
               const isSubTools = group.title.startsWith("Tools - ");
               if (isSubTools) return null;
@@ -259,7 +259,7 @@ export function Resume() {
               <div key={project.title} className="break-inside-avoid">
                 <div className="mb-2 flex flex-wrap items-baseline justify-between gap-2">
                   <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="text-base font-bold text-slate-900">{project.title}</h3>
+                    <h3 className="text-[1.125rem] font-bold text-slate-900">{project.title}</h3>
                     <a
                       href={project.github}
                       target="_blank"
@@ -270,22 +270,22 @@ export function Resume() {
                       GitHub 바로가기
                     </a>
                   </div>
-                  <span className="text-sm font-medium text-slate-500">{project.period}</span>
+                  <span className="text-[0.95rem] font-medium text-slate-500">{project.period}</span>
                 </div>
-                <p className="mb-2 text-[0.8rem] font-medium leading-relaxed text-indigo-700">
+                <p className="mb-2 text-[0.875rem] font-semibold leading-relaxed text-indigo-700">
                   {project.teamRole}
                 </p>
                 <div className="mb-2 flex flex-wrap gap-1.5">
                   {project.techTags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-md bg-slate-100 px-2 py-0.5 text-[0.7rem] font-semibold text-slate-600"
+                      className="rounded-md bg-slate-100 px-2 py-0.5 text-[0.775rem] font-semibold text-slate-600"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
-                <div className="mt-2.5 text-[0.875rem] text-slate-700 leading-relaxed space-y-2.5">
+                <div className="mt-2.5 text-[0.95rem] text-slate-700 leading-relaxed space-y-3">
                   <div className="text-slate-600">
                     <span className="font-bold text-slate-900">프로젝트 설명: </span>{project.description}
                   </div>
@@ -293,30 +293,34 @@ export function Resume() {
                     <span className="font-bold text-slate-900">핵심 역할: </span>{project.keyRoles}
                   </div>
                   
-                  {project.troubleshoot && project.troubleshoot.length > 0 && (
-                    <div className="space-y-1">
-                      <div className="font-bold text-slate-900">주요 이슈 및 해결:</div>
-                      <ul className="pl-4 mt-1 space-y-2 list-disc text-slate-600">
-                        {project.troubleshoot.map((t, i) => (
-                          <li key={i} className="text-[0.85rem] leading-normal">
-                            <span className="font-semibold text-slate-800">이슈: </span>{t.issue}
-                            <div className="mt-1 text-indigo-700 font-medium pl-3 border-l border-indigo-100">
-                              <span className="font-semibold text-indigo-800">해결: </span>{t.resolution}
-                            </div>
-                          </li>
+                  {project.issues && project.issues.length > 0 && (
+                    <div className="mt-4 space-y-1">
+                      <div className="font-bold text-slate-900 text-[1rem] project-subheading">이슈</div>
+                      <ul className="list-disc pl-5 mt-1 space-y-1.5 text-slate-600 text-[0.95rem] leading-relaxed">
+                        {project.issues.map((issue, idx) => (
+                          <li key={idx}>{issue}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {project.resolutions && project.resolutions.length > 0 && (
+                    <div className="mt-4 space-y-1">
+                      <div className="font-bold text-slate-900 text-[1rem] project-subheading">해결</div>
+                      <ul className="list-disc pl-5 mt-1 space-y-1.5 text-slate-600 text-[0.95rem] leading-relaxed">
+                        {project.resolutions.map((res, idx) => (
+                          <li key={idx}>{res}</li>
                         ))}
                       </ul>
                     </div>
                   )}
 
                   {project.achievements && project.achievements.length > 0 && (
-                    <div className="space-y-1">
-                      <div className="font-bold text-slate-900">성과:</div>
-                      <ul className="pl-4 mt-1 space-y-1 list-disc text-slate-600">
-                        {project.achievements.map((a, i) => (
-                          <li key={i} className="text-[0.85rem] leading-normal">
-                            {a}
-                          </li>
+                    <div className="mt-4 space-y-1">
+                      <div className="font-bold text-slate-900 text-[1rem] project-subheading">성과</div>
+                      <ul className="list-disc pl-5 mt-1 space-y-1.5 text-slate-600 text-[0.95rem] leading-relaxed">
+                        {project.achievements.map((ach, idx) => (
+                          <li key={idx}>{ach}</li>
                         ))}
                       </ul>
                     </div>
@@ -335,14 +339,14 @@ export function Resume() {
                 className="resume-activity-card break-inside-avoid rounded-lg border border-slate-200 bg-white p-5"
               >
                 <div className="mb-3">
-                  <h3 className="text-base font-bold text-slate-900">{group.title}</h3>
+                  <h3 className="text-[1.05rem] font-bold text-slate-900">{group.title}</h3>
                   {group.venue ? (
-                    <p className="mt-1 text-sm font-medium text-indigo-700">{group.venue}</p>
+                    <p className="mt-1 text-[0.925rem] font-medium text-indigo-700">{group.venue}</p>
                   ) : null}
                 </div>
                 <ul className="space-y-1.5">
                   {group.items.map((activity) => (
-                    <li key={activity} className="flex gap-2 text-[0.92rem] leading-relaxed text-slate-700">
+                    <li key={activity} className="flex gap-2 text-[0.975rem] leading-relaxed text-slate-700">
                       <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-500" />
                       <span>{activity}</span>
                     </li>
@@ -371,14 +375,14 @@ export function Resume() {
         </Section>
 
         <Section title="학력 및 자격증">
-          <h3 className="text-base font-bold text-slate-900">{education.school}</h3>
-          <p className="mt-1 text-sm text-slate-600">{education.degree}</p>
-          <p className="mt-2 text-sm leading-relaxed text-slate-700">
+          <h3 className="text-[1.05rem] font-bold text-slate-900">{education.school}</h3>
+          <p className="mt-1 text-[0.95rem] text-slate-600">{education.degree}</p>
+          <p className="mt-2 text-[0.95rem] leading-relaxed text-slate-700">
             {education.status} (GPA {education.gpa}) ({education.period})
           </p>
           <div className="mt-4 space-y-1">
             {education.certificates.map((certificate) => (
-              <p key={certificate.name} className="text-sm leading-relaxed text-slate-700">
+              <p key={certificate.name} className="text-[0.95rem] leading-relaxed text-slate-700">
                 <span className="font-semibold text-slate-900">{certificate.name}</span>
                 <span className="text-slate-500"> | </span>
                 {certificate.issuer}

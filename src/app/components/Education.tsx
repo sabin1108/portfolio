@@ -7,7 +7,7 @@ export function Education() {
   const { education } = portfolio;
   const educationDescription =
     "description" in education
-      ? education.description
+      ? (education as { description: string }).description
       : `${education.status} (GPA ${education.gpa}) (${education.period})`;
 
   return (
