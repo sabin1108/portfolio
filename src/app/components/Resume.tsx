@@ -269,6 +269,17 @@ export function Resume() {
                       <Github className="h-3.5 w-3.5" />
                       GitHub 바로가기
                     </a>
+                    {project.live && (
+                      <a
+                        href={project.live}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="print:hidden inline-flex items-center gap-1 rounded-md border border-indigo-300 bg-indigo-50 px-2 py-1 text-xs font-semibold text-indigo-700 hover:border-indigo-400 hover:bg-indigo-100"
+                      >
+                        <ExternalLink className="h-3.5 w-3.5" />
+                        서비스 바로가기
+                      </a>
+                    )}
                   </div>
                   <span className="text-[0.95rem] font-medium text-slate-500">{project.period}</span>
                 </div>
