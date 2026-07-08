@@ -68,21 +68,11 @@ export const portfolio = {
     title: "Front-End Developer",
     headline:
       "호기심으로 넓게 탐구하고, 지표와 판단으로 엄격하게 적용하는 프론트엔드 엔지니어입니다.",
-    highlights: [
-      "Game Information Platform에서 외부 게임 API 응답 차이를 Adapter/Normalizer 계층으로 흡수하고, 가격 계산과 캐시 장애 대응을 분리했습니다.",
-      "PhotoMap에서 Context API 기반 전역 리렌더링을 Zustand selector 구조로 바꾸고, 가상화와 D3 DOM 직접 갱신으로 대량 사진 렌더링 병목을 줄였습니다.",
-      "AI ChatBot에서 외부 백엔드 응답을 Next.js API Routes proxy로 감싸고, ReactMarkdown, localStorage, Blob API로 채팅 UX를 구성했습니다.",
-    ],
     contacts: {
       email: "minsabin1108@gmail.com",
       github: "https://github.com/sabin1108",
     },
   },
-  capabilityGroups: [
-    { title: "프론트엔드", items: ["React", "TypeScript", "Next.js"] },
-    { title: "상태·데이터", items: ["Zustand", "Supabase", "API Adapter"] },
-    { title: "품질", items: ["Vitest", "Playwright"] },
-  ],
 
   projects: [
     {
@@ -199,6 +189,9 @@ export const portfolio = {
       metricRows: [
         { metric: "D3 NodeView 렌더링 수", before: "370회", after: "25회", basis: "React Profiler / performance_optimization_final_report.md" },
         { metric: "Framer Motion 렌더링 수", before: "2,142회", after: "0회", basis: "React Profiler / performance_optimization_final_report.md" },
+        { metric: "상태 변경 리렌더링 범위", before: "70여 개", after: "5개 이하", basis: "React Profiler / PhotoMap 포트폴리오 콘텐츠.md" },
+        { metric: "렌더링 커밋 시간", before: "9.7ms", after: "6.2ms", basis: "React Profiler / PhotoMap 포트폴리오 콘텐츠.md" },
+        { metric: "대량 사진 스크롤", before: "프리징 발생", after: "60FPS 안정 유지", basis: "PerformanceMonitor / PhotoMap 포트폴리오 콘텐츠.md" },
         { metric: "GlobeView Max Commit", before: "69.9ms", after: "26.6ms", basis: "React Profiler / performance_optimization_final_report.md" },
         { metric: "이미지/UI 컴포넌트 폭주", before: "16,030회", after: "불필요 렌더링 제거", basis: "React Profiler / performance_optimization_final_report.md" },
       ],

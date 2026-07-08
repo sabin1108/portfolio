@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { CheckCircle2, Github, Mail } from "lucide-react";
+import { Github, Mail } from "lucide-react";
 import { portfolio } from "../data/portfolio";
 
 export function Hero() {
@@ -10,7 +10,7 @@ export function Hero() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="mb-20"
+      className="mb-12"
     >
       <div className="max-w-4xl">
         <div className="mb-4 flex flex-wrap items-center gap-3">
@@ -42,15 +42,6 @@ export function Hero() {
             GitHub
           </a>
         </div>
-
-        <ul className="space-y-3 text-base leading-relaxed text-slate-600">
-          {profile.highlights.map((item) => (
-            <li key={item} className="flex gap-3">
-              <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-blue-600" />
-              <span className="break-keep">{item}</span>
-            </li>
-          ))}
-        </ul>
       </div>
     </motion.section>
   );

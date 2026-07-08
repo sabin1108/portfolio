@@ -317,12 +317,12 @@ const architectureFlows: Record<string, ArchitectureFlow> = {
     ],
     edges: [
       { from: "user", to: "chat", label: "질문", labelX: 220, labelY: 130 },
-      { from: "chat", to: "local", label: "저장", labelX: 330, labelY: 245 },
-      { from: "local", to: "renderer", label: "복원", labelX: 485, labelY: 310 },
-      { from: "chat", to: "renderer", label: "표시", labelX: 485, labelY: 150 },
-      { from: "renderer", to: "api", label: "요청", labelX: 745, labelY: 170 },
-      { from: "api", to: "backend", label: "전달", labelX: 900, labelY: 255, via: "down" },
-      { from: "local", to: "export", label: "파일 생성", labelX: 490, labelY: 430 },
+      { from: "chat", to: "local", label: "저장", labelX: 330, labelY: 262, startX: 372, startY: 154, endX: 372, endY: 346 },
+      { from: "local", to: "renderer", label: "복원", labelX: 492, labelY: 338 },
+      { from: "chat", to: "renderer", label: "표시", labelX: 492, labelY: 174 },
+      { from: "renderer", to: "api", label: "요청", labelX: 748, labelY: 205, startX: 716, startY: 236, endX: 849, endY: 166 },
+      { from: "api", to: "backend", label: "전달", labelX: 915, labelY: 255, startX: 922, startY: 184, endX: 922, endY: 329 },
+      { from: "local", to: "export", label: "파일 생성", labelX: 492, labelY: 386 },
     ],
   },
 };
