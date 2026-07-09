@@ -5,7 +5,7 @@
 @media print {
   @page {
     size: A4;
-    margin: 12mm 10mm;
+    margin: 10mm 9mm;
   }
 
   body {
@@ -13,18 +13,66 @@
     -webkit-print-color-adjust: exact;
     background-color: #ffffff !important;
   }
+  .portfolio-page {
+    background: #ffffff !important;
+  }
+
+  .portfolio-sheet {
+    max-width: none !important;
+    padding: 0 !important;
+  }
+
+  .portfolio-sheet section {
+    margin-bottom: 14px !important;
+    break-inside: avoid !important;
+  }
+
+  .portfolio-sheet h1 {
+    font-size: 28px !important;
+    line-height: 1.2 !important;
+  }
+
+  .portfolio-sheet h2 {
+    margin-bottom: 10px !important;
+    font-size: 18px !important;
+    line-height: 1.25 !important;
+  }
+
+  .portfolio-sheet h3 {
+    font-size: 14px !important;
+    line-height: 1.35 !important;
+  }
+
+  .portfolio-sheet p,
+  .portfolio-sheet li,
+  .portfolio-sheet span {
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+  }
+
+  .portfolio-sheet img,
+  .portfolio-sheet button,
+  .portfolio-sheet a[target="_blank"] svg {
+    break-inside: avoid !important;
+  }
+
+  .portfolio-sheet .shadow-sm,
+  .portfolio-sheet .shadow-md,
+  .portfolio-sheet .shadow-lg {
+    box-shadow: none !important;
+  }
 
   .resume-sheet {
-    font-size: 13px;
-    line-height: 1.5;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
     padding: 0 !important;
     box-shadow: none !important;
     border: none !important;
   }
 
   .resume-header {
-    margin-bottom: 16px !important;
-    padding-bottom: 14px !important;
+    margin-bottom: 14px !important;
+    padding-bottom: 12px !important;
     border-bottom: 1.5px solid #e2e8f0 !important;
   }
 
@@ -34,13 +82,13 @@
   }
 
   .resume-header p {
-    font-size: 13.5px !important;
+    font-size: 13.2px !important;
     line-height: 1.5 !important;
   }
 
   .resume-section {
     break-inside: auto !important;
-    margin-bottom: 18px !important;
+    margin-bottom: 14px !important;
   }
 
   .resume-section h2 {
@@ -56,11 +104,168 @@
   }
 
   .resume-section p,
-  .resume-section li,
-  .resume-section div,
-  .resume-section span {
-    font-size: 12.5px !important;
+  .resume-section li {
+    font-size: 13.2px !important;
     line-height: 1.5 !important;
+  }
+
+  .resume-copy,
+  .resume-copy div,
+  .resume-copy span,
+  .resume-copy li {
+    font-size: 13.2px !important;
+    line-height: 1.5 !important;
+  }
+
+  .resume-motivation-copy,
+  .resume-motivation-copy div,
+  .resume-motivation-copy span {
+    font-size: 13.2px !important;
+    line-height: 1.5 !important;
+  }
+
+
+  .resume-header > div:first-child {
+    margin-bottom: 8px !important;
+    gap: 12px !important;
+  }
+
+  .resume-header > div:nth-child(2) {
+    margin-bottom: 8px !important;
+    gap: 8px 16px !important;
+  }
+
+  .resume-header .h-52 {
+    height: 152px !important;
+  }
+
+  .resume-header .w-44 {
+    width: 128px !important;
+  }
+
+  .resume-header .whitespace-pre-line {
+    max-width: none !important;
+    columns: auto !important;
+    column-gap: normal !important;
+    text-align: left !important;
+  }
+
+  .resume-motivation-section {
+    margin-bottom: 12px !important;
+  }
+
+  .resume-skills-section {
+    margin-bottom: 10px !important;
+    break-inside: avoid !important;
+  }
+
+  .resume-skills-copy {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    column-gap: 18px !important;
+    row-gap: 3px !important;
+    padding-left: 0 !important;
+  }
+
+  .resume-skills-copy > div {
+    margin: 0 !important;
+    break-inside: avoid !important;
+  }
+
+  .resume-skills-copy ul {
+    margin-top: 2px !important;
+    padding-left: 14px !important;
+    row-gap: 1px !important;
+  }
+
+  .resume-skills-copy li {
+    margin-bottom: 1px !important;
+  }
+
+  .resume-motivation-copy {
+    max-width: none !important;
+    columns: auto !important;
+    column-gap: normal !important;
+    font-size: 13.2px !important;
+    line-height: 1.48 !important;
+  }
+
+  .resume-skills-copy {
+    display: block !important;
+    padding-left: 0 !important;
+  }
+
+  .resume-skills-copy > div {
+    margin-bottom: 3px !important;
+  }
+
+  .resume-first-page-grid {
+    display: block !important;
+    margin-bottom: 10px !important;
+  }
+
+  .resume-first-page-grid .resume-section {
+    margin-bottom: 10px !important;
+    break-inside: avoid !important;
+  }
+
+  .resume-first-page-grid .resume-section h2 {
+    margin-bottom: 7px !important;
+    padding-bottom: 4px !important;
+  }
+
+  .resume-motivation-section {
+    margin-bottom: 10px !important;
+  }
+
+  .resume-motivation-copy {
+    max-width: none !important;
+    columns: auto !important;
+    column-gap: normal !important;
+    font-size: 13.2px !important;
+    line-height: 1.48 !important;
+  }
+
+  .resume-skills-section {
+    margin-bottom: 8px !important;
+    break-inside: avoid !important;
+  }
+
+  .resume-skills-copy {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    column-gap: 18px !important;
+    row-gap: 2px !important;
+    padding-left: 0 !important;
+  }
+
+  .resume-skills-copy > div {
+    margin: 0 !important;
+    break-inside: avoid !important;
+  }
+
+  .resume-skills-copy ul {
+    margin-top: 2px !important;
+    padding-left: 14px !important;
+    row-gap: 1px !important;
+  }
+
+  .resume-skills-copy li {
+    margin-bottom: 1px !important;
+  }
+  .resume-projects-section {
+    break-before: page !important;
+    page-break-before: always !important;
+  }
+
+  .resume-skills-section {
+    break-inside: avoid !important;
+  }
+
+  .resume-projects-section h2,
+  .resume-project-first {
+    break-after: avoid !important;
+    break-inside: avoid !important;
   }
 
   .resume-section .project-subheading {
@@ -74,7 +279,16 @@
     row-gap: 4px !important;
   }
 
-  .resume-projects {
+
+  .resume-project {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .resume-project + .resume-project {
+    break-before: page !important;
+    page-break-before: always !important;
+  }  .resume-projects {
     row-gap: 16px !important;
   }
 
@@ -104,6 +318,27 @@
     height: 28px !important;
     padding: 0 10px !important;
     font-size: 11px !important;
+  }
+
+
+  .resume-sheet :where(p, li, div, span, a) {
+    font-size: 13.2px !important;
+    line-height: 1.5 !important;
+  }
+
+  .resume-section h2 {
+    font-size: 16px !important;
+    line-height: 1.3 !important;
+  }
+
+  .resume-section h3 {
+    font-size: 14.5px !important;
+    line-height: 1.3 !important;
+  }
+
+  .resume-section .project-subheading {
+    font-size: 13.8px !important;
+    line-height: 1.3 !important;
   }
 
   .rounded-lg {

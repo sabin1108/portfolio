@@ -214,49 +214,52 @@ export function Resume() {
       <article className="resume-sheet mx-auto max-w-5xl bg-white px-6 py-8 shadow-sm print:max-w-none print:px-0 print:py-0 print:shadow-none sm:px-10">
         <ResumeHeader profile={profile} summary={summary} />
 
-        {activeResumeData.motivation && (
-          <Section title="지원 동기">
-            <div className="max-w-4xl text-[0.95rem] leading-relaxed text-slate-700 whitespace-pre-line">
-              {activeResumeData.motivation}
+        <div className="resume-first-page-grid">
+          {activeResumeData.motivation && (
+            <Section title="지원 동기" className="resume-motivation-section">
+              <div className="resume-copy resume-motivation-copy max-w-4xl text-[0.95rem] leading-relaxed text-slate-700 whitespace-pre-line">
+                {activeResumeData.motivation}
+              </div>
+            </Section>
+          )}
+
+          <Section title="기술 스택" className="resume-skills-section">
+            <div className="resume-copy resume-skills-copy text-[0.975rem] leading-relaxed text-slate-700 space-y-2.5 pl-1">
+              <div className="resume-primary-skills">
+                {coreSkills
+                  .filter((group) => group.items.length > 0 && !group.title.startsWith("Tools - "))
+                  .map((group) => (
+                    <div key={group.title}>
+                      <span className="font-bold text-slate-800">• {group.title}</span>: {group.items.join(", ")}
+                    </div>
+                  ))}
+              </div>
+
+              <div className="resume-tool-skills">
+                <span className="font-bold text-slate-800">• Tools:</span>
+                <ul className="pl-6 mt-1 space-y-1.5 list-disc text-slate-600">
+                  {coreSkills
+                    .filter((group) => group.title.startsWith("Tools - "))
+                    .map((sub) => (
+                      <li key={sub.title}>
+                        <span className="font-semibold text-slate-700">{sub.title.replace("Tools - ", "")}</span>: {sub.items.join(", ")}
+                      </li>
+                    ))}
+                </ul>
+              </div>
             </div>
           </Section>
-        )}
+        </div>
 
-        <Section title="기술 스택">
-          <div className="text-[0.975rem] leading-relaxed text-slate-700 space-y-2.5 pl-1">
-            {coreSkills.map((group) => {
-              const isSubTools = group.title.startsWith("Tools - ");
-              if (isSubTools) return null;
-
-              if (group.title === "Tools") {
-                const subGroups = coreSkills.filter(g => g.title.startsWith("Tools - "));
-                return (
-                  <div key="Tools" className="mt-2">
-                    <span className="font-bold text-slate-800">• Tools:</span>
-                    <ul className="pl-6 mt-1 space-y-1.5 list-disc text-slate-600">
-                      {subGroups.map(sub => (
-                        <li key={sub.title}>
-                          <span className="font-semibold text-slate-700">{sub.title.replace("Tools - ", "")}</span>: {sub.items.join(", ")}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                );
-              }
-
-              return (
-                <div key={group.title}>
-                  <span className="font-bold text-slate-800">• {group.title}</span>: {group.items.join(", ")}
-                </div>
-              );
-            })}
-          </div>
-        </Section>
-
-        <Section title="프로젝트">
+        <Section title="프로젝트" className="resume-projects-section">
           <div className="resume-projects space-y-6">
-            {projectHighlights.map((project) => (
-              <div key={project.title} className="break-inside-avoid">
+            {projectHighlights.map((project, projectIndex) => (
+              <div
+                key={project.title}
+                className={`resume-project break-inside-avoid ${
+                  projectIndex === 0 ? "resume-project-first" : ""
+                }`}
+              >
                 <div className="mb-2 flex flex-wrap items-baseline justify-between gap-2">
                   <div className="flex flex-wrap items-center gap-2">
                     <h3 className="text-[1.125rem] font-bold text-slate-900">{project.title}</h3>
