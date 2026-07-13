@@ -135,12 +135,17 @@
     gap: 8px 16px !important;
   }
 
+  .resume-header .resume-profile-photo {
+    width: 150px !important;
+    height: 190px !important;
+  }
+
   .resume-header .h-52 {
-    height: 152px !important;
+    height: 190px !important;
   }
 
   .resume-header .w-44 {
-    width: 128px !important;
+    width: 150px !important;
   }
 
   .resume-header .whitespace-pre-line {

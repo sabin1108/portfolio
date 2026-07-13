@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { ExternalLink, FileText, Github, Globe, Mail, Printer, Lock, Key } from "lucide-react";
 import { resumeData, RESUME_PASSCODE } from "../data/resume";
 import { resumeEliceData } from "../data/resume_elice";
+import { resumeNexonData } from "../data/resume_nexon";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 
@@ -17,7 +18,7 @@ function ResumeHeader({
       <div className="mb-5 flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
           {profile.image && (
-            <div className="h-52 w-44 shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-slate-50 shadow-sm print:h-52 print:w-44">
+            <div className="resume-profile-photo h-52 w-44 shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-slate-50 shadow-sm print:h-52 print:w-44">
               <img
                 src={profile.image}
                 alt={profile.name}
@@ -149,11 +150,12 @@ export function Resume() {
 
   const currentPath = window.location.pathname;
   const isElicePath = currentPath.includes("elice_a3b2c");
-  const activeResumeData = isElicePath ? resumeEliceData : resumeData;
+  const isNexonPath = currentPath.includes("nexon_web_frontend");
+  const activeResumeData = isNexonPath ? resumeNexonData : isElicePath ? resumeEliceData : resumeData;
 
   const { summary, coreSkills, projectHighlights, activityGroups, education, profile } = activeResumeData;
 
-  if (!authorized && !isElicePath) {
+  if (!authorized && !isElicePath && !isNexonPath) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-slate-100 px-4 py-8">
         <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-lg">

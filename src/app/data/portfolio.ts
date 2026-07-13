@@ -184,9 +184,10 @@ export const portfolio = {
         "대량 사진 구간을 row 가상화로 바꾸고 D3 tick 업데이트를 React state 밖으로 분리",
         "지도, 앨범, 타임라인, 관계 그래프 화면을 같은 데이터 흐름으로 연결",
         "Supabase 데이터 연동과 Unity WebGL 지도 화면 통합",
+        "cobe 기반 canvas globe와 Unity WebGL iframe/postMessage 흐름의 렌더링 수명 주기 분리",
         "BE 2명과 데이터 흐름을 맞추며 FE 상태 구조와 렌더링 책임 분리",
       ],
-      tech: ["React", "TypeScript", "Zustand", "Supabase", "D3.js", "@tanstack/react-virtual"],
+      tech: ["React", "TypeScript", "Zustand", "Supabase", "D3.js", "@tanstack/react-virtual", "Unity WebGL", "Canvas", "cobe"],
       links: {
         live: "https://photomap-three.vercel.app/",
         github: "https://github.com/sabin1108/Photomap",
@@ -216,6 +217,14 @@ export const portfolio = {
         flow: [],
       },
       caseStudies: [
+        {
+          title: "WebGL 지도와 canvas globe 렌더링 수명 주기 분리",
+          issue: "지도 화면에서는 React UI, Mapbox, Unity WebGL iframe, cobe canvas globe가 함께 동작해, 화면 전환이나 필터 변경 때 렌더링 책임이 섞이면 WebGL 런타임과 React 상태가 서로 영향을 주는 문제가 생길 수 있었습니다.",
+          cause: "WebGL 기반 화면은 React 컴포넌트처럼 렌더마다 새로 계산되면 비용이 크고, iframe 내부 Unity 런타임이나 canvas renderer는 별도 수명 주기를 가집니다. React 상태 변경을 그대로 WebGL 렌더링 루프와 연결하면 지도 마커, 사진 데이터, globe marker 갱신이 한 흐름에 묶이고, 언마운트 후에도 이벤트 리스너나 렌더러 인스턴스가 남을 위험이 있었습니다.",
+          resolution: "Unity WebGL 지도는 iframe으로 분리하고 postMessage/SendMessage로 필요한 사진·위치 데이터만 전달했습니다. cobe 기반 GlobeView는 useMemo로 marker 데이터를 계산하고, mapSamples를 20,000에서 12,000으로 낮췄으며, contain: layout paint size와 globe.destroy() cleanup으로 canvas 렌더러의 영향 범위와 수명 주기를 명확히 했습니다.",
+          result: "React 상태 변경과 WebGL/canvas 렌더링 책임을 분리해 지도·글로브 화면을 별도 런타임처럼 관리할 수 있게 됐습니다. 화면 전환 시 renderer cleanup 경로가 생겼고, WebGL 보조 뷰는 React 전체 리렌더링 최적화와 별개로 샘플링·레이아웃 격리·메시지 브릿지를 기준으로 성능 병목을 설명할 수 있게 됐습니다.",
+          evidence: ["Map2DView.tsx", "public/unity-map/mapbox.html", "GlobeView.tsx", "Frontend/vercel.json"],
+        },
         {
           title: "가상화와 메모이제이션으로 5,000장 부하 방어",
           issue: "부하 테스트로 사진 수를 늘리며 확인한 결과 5,000장 구간에서 첫 mount가 1.13초까지 늘고, 10,000장 기준 DOM 노드가 약 40,000개까지 증가해 스크롤이 사실상 멈추는 문제를 발견했습니다.",
@@ -248,6 +257,7 @@ export const portfolio = {
           result: "초기 진입 시 서로 독립적인 요청이 동시에 시작되도록 바뀌어 network waterfall이 줄었고, 사진 목록과 앨범/지도에 필요한 공통 상태를 먼저 채울 수 있게 됐습니다. 사용자는 모든 데이터 응답이 끝날 때까지 빈 화면을 보는 대신 준비된 화면부터 확인할 수 있는 흐름으로 개선됐습니다.",
           evidence: ["performance_optimization_final_report.md", "frontend_technical_architecture.md"],
         },
+
         {
           title: "백엔드 데이터 흐름과 FE 상태 경계 정리",
           issue: "3인 협업에서 백엔드가 제공하는 사진·위치·카테고리 데이터를 여러 화면이 동시에 사용하면서, 화면별 상태 처리 방식이 달라지면 팀 전체 수정 범위가 커질 수 있는 문제가 있었습니다.",

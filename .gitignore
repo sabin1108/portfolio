@@ -12,3 +12,7 @@ dist
 
 # Private local photo files
 public/photo/
+
+# Private local resume URL index
+src/app/data/private_resume_links.ts
+
