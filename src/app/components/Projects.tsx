@@ -173,6 +173,12 @@ function MetricTable({ project }: { project: PortfolioProject }) {
   const isPhotoMap = project.title === "PhotoMap";
   const isGameInfo = project.title === "Game Information Platform";
   const hidesBasis = isPhotoMap || isGameInfo;
+  const hasCategories = project.metricRows.some((row) => row.category);
+  const groupedRows = project.metricRows.reduce<Record<string, typeof project.metricRows>>((groups, row) => {
+    const category = row.category ?? "기타";
+    groups[category] = [...(groups[category] ?? []), row];
+    return groups;
+  }, {});
 
   return (
     <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
@@ -180,37 +186,71 @@ function MetricTable({ project }: { project: PortfolioProject }) {
         <Table2 className="h-4 w-4 text-blue-600" />
         <h4 className="text-base font-semibold text-slate-900">
           {isPhotoMap
-            ? "지표 표(React Profiler 활용)"
+            ? "지표 표(측정 도구별 분류)"
             : isGameInfo
               ? "지표 표(fallow 스킬 활용)"
               : "지표 표"}
         </h4>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className={`w-full ${hidesBasis ? "min-w-[640px]" : "min-w-[760px]"} border-collapse text-left text-sm`}>
-          <thead>
-            <tr className="border-b border-slate-200 bg-slate-50 text-xs font-semibold uppercase text-slate-500">
-              <th scope="col" className="px-4 py-3">지표</th>
-              <th scope="col" className="px-4 py-3">이전</th>
-              <th scope="col" className="px-4 py-3">이후</th>
-              {!hidesBasis ? <th scope="col" className="px-4 py-3">근거</th> : null}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100">
-            {project.metricRows.map((row) => (
-              <tr key={row.metric} className="align-top">
-                <th scope="row" className="w-56 whitespace-nowrap px-4 py-3 font-semibold text-slate-900">
-                  {row.metric}
-                </th>
-                <td className="whitespace-nowrap px-4 py-3 text-slate-600">{row.before}</td>
-                <td className="whitespace-nowrap px-4 py-3 font-semibold text-slate-900">{row.after}</td>
-                {!hidesBasis ? <td className="px-4 py-3 text-slate-500">{row.basis}</td> : null}
+      {hasCategories ? (
+        <div className="grid gap-4 lg:grid-cols-2">
+          {Object.entries(groupedRows).map(([category, rows]) => (
+            <div key={category} className="overflow-hidden rounded-md border border-slate-200">
+              <h5 className="border-b border-slate-200 bg-slate-50 px-4 py-2 text-xs font-bold uppercase tracking-wide text-slate-500">
+                {category}
+              </h5>
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[420px] border-collapse text-left text-sm sm:min-w-0">
+                  <thead>
+                    <tr className="border-b border-slate-200 text-xs font-semibold uppercase text-slate-500">
+                      <th scope="col" className="px-4 py-3">지표</th>
+                      <th scope="col" className="px-4 py-3">이전</th>
+                      <th scope="col" className="px-4 py-3">이후</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {rows.map((row) => (
+                      <tr key={row.metric} className="align-top">
+                        <th scope="row" className="w-40 px-4 py-3 font-semibold text-slate-900">
+                          {row.metric}
+                        </th>
+                        <td className="px-4 py-3 text-slate-600">{row.before}</td>
+                        <td className="px-4 py-3 font-semibold text-slate-900">{row.after}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className={`w-full ${hidesBasis ? "min-w-[640px]" : "min-w-[760px]"} border-collapse text-left text-sm`}>
+            <thead>
+              <tr className="border-b border-slate-200 bg-slate-50 text-xs font-semibold uppercase text-slate-500">
+                <th scope="col" className="px-4 py-3">지표</th>
+                <th scope="col" className="px-4 py-3">이전</th>
+                <th scope="col" className="px-4 py-3">이후</th>
+                {!hidesBasis ? <th scope="col" className="px-4 py-3">근거</th> : null}
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {project.metricRows.map((row) => (
+                <tr key={row.metric} className="align-top">
+                  <th scope="row" className="w-56 whitespace-nowrap px-4 py-3 font-semibold text-slate-900">
+                    {row.metric}
+                  </th>
+                  <td className="whitespace-nowrap px-4 py-3 text-slate-600">{row.before}</td>
+                  <td className="whitespace-nowrap px-4 py-3 font-semibold text-slate-900">{row.after}</td>
+                  {!hidesBasis ? <td className="px-4 py-3 text-slate-500">{row.basis}</td> : null}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </section>
   );
 }

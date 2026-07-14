@@ -9,6 +9,7 @@ export type MetricRow = {
   before: string;
   after: string;
   basis: string;
+  category?: string;
 };
 
 export type ArchitectureColumn = {
@@ -202,13 +203,17 @@ export const portfolio = {
       },
       metrics: [],
       metricRows: [
-        { metric: "D3 NodeView 렌더링 수", before: "370회", after: "25회", basis: "React Profiler / performance_optimization_final_report.md" },
-        { metric: "Framer Motion 렌더링 수", before: "2,142회", after: "0회", basis: "React Profiler / performance_optimization_final_report.md" },
-        { metric: "상태 변경 리렌더링 범위", before: "70여 개", after: "5개 이하", basis: "React Profiler / PhotoMap 포트폴리오 콘텐츠.md" },
-        { metric: "렌더링 커밋 시간", before: "9.7ms", after: "6.2ms", basis: "React Profiler / PhotoMap 포트폴리오 콘텐츠.md" },
-        { metric: "대량 사진 스크롤", before: "프리징 발생", after: "60FPS 안정 유지", basis: "PerformanceMonitor / PhotoMap 포트폴리오 콘텐츠.md" },
-        { metric: "GlobeView Max Commit", before: "69.9ms", after: "26.6ms", basis: "React Profiler / performance_optimization_final_report.md" },
-        { metric: "이미지/UI 컴포넌트 폭주", before: "16,030회", after: "불필요 렌더링 제거", basis: "React Profiler / performance_optimization_final_report.md" },
+        { category: "Lighthouse / 전송", metric: "Performance", before: "50점", after: "77점", basis: "2026-07-14-nexon-webgl-transform-lighthouse-analysis.md" },
+        { category: "Lighthouse / 전송", metric: "LCP", before: "63,804ms", after: "4,150ms", basis: "Lighthouse / Supabase image transform 적용 전후" },
+        { category: "Lighthouse / 전송", metric: "초기 payload", before: "12,586KiB", after: "381KiB", basis: "Lighthouse / image delivery audit" },
+        { category: "React Profiler", metric: "상태 변경 범위", before: "70여 개", after: "5개 이하", basis: "React Profiler / PhotoMap 포트폴리오 콘텐츠.md" },
+        { category: "React Profiler", metric: "커밋 시간", before: "9.7ms", after: "6.2ms", basis: "React Profiler / PhotoMap 포트폴리오 콘텐츠.md" },
+        { category: "React Profiler", metric: "UI 렌더 폭주", before: "16,030회", after: "불필요 렌더 제거", basis: "React Profiler / performance_optimization_final_report.md" },
+        { category: "대량 UI / D3", metric: "D3 NodeView", before: "370회", after: "25회", basis: "React Profiler / performance_optimization_final_report.md" },
+        { category: "대량 UI / D3", metric: "Framer Motion", before: "2,142회", after: "0회", basis: "React Profiler / performance_optimization_final_report.md" },
+        { category: "대량 UI / D3", metric: "사진 스크롤", before: "프리징 발생", after: "프레임 저하 완화", basis: "PerformanceMonitor / PhotoMap 포트폴리오 콘텐츠.md" },
+        { category: "WebGL / canvas", metric: "GlobeView Commit", before: "69.9ms", after: "26.6ms", basis: "React Profiler / performance_optimization_final_report.md" },
+        { category: "WebGL / canvas", metric: "Frame probe", before: "측정 없음", after: "frame budget 기록", basis: "issue-nexon-webgl-after-dev-frame-budget.json" },
       ],
       architecture: {
         title: "브라우저에서 사진을 탐색하는 흐름",
@@ -221,9 +226,17 @@ export const portfolio = {
           title: "WebGL 지도와 canvas globe 렌더링 수명 주기 분리",
           issue: "지도 화면에서는 React UI, Mapbox, Unity WebGL iframe, cobe canvas globe가 함께 동작해, 화면 전환이나 필터 변경 때 렌더링 책임이 섞이면 WebGL 런타임과 React 상태가 서로 영향을 주는 문제가 생길 수 있었습니다.",
           cause: "WebGL 기반 화면은 React 컴포넌트처럼 렌더마다 새로 계산되면 비용이 크고, iframe 내부 Unity 런타임이나 canvas renderer는 별도 수명 주기를 가집니다. React 상태 변경을 그대로 WebGL 렌더링 루프와 연결하면 지도 마커, 사진 데이터, globe marker 갱신이 한 흐름에 묶이고, 언마운트 후에도 이벤트 리스너나 렌더러 인스턴스가 남을 위험이 있었습니다.",
-          resolution: "Unity WebGL 지도는 iframe으로 분리하고 postMessage/SendMessage로 필요한 사진·위치 데이터만 전달했습니다. cobe 기반 GlobeView는 useMemo로 marker 데이터를 계산하고, mapSamples를 20,000에서 12,000으로 낮췄으며, contain: layout paint size와 globe.destroy() cleanup으로 canvas 렌더러의 영향 범위와 수명 주기를 명확히 했습니다.",
-          result: "React 상태 변경과 WebGL/canvas 렌더링 책임을 분리해 지도·글로브 화면을 별도 런타임처럼 관리할 수 있게 됐습니다. 화면 전환 시 renderer cleanup 경로가 생겼고, WebGL 보조 뷰는 React 전체 리렌더링 최적화와 별개로 샘플링·레이아웃 격리·메시지 브릿지를 기준으로 성능 병목을 설명할 수 있게 됐습니다.",
-          evidence: ["Map2DView.tsx", "public/unity-map/mapbox.html", "GlobeView.tsx", "Frontend/vercel.json"],
+          resolution: "Unity WebGL 지도는 iframe으로 분리하고 postMessage/SendMessage로 필요한 사진·위치 데이터만 전달했습니다. cobe 기반 GlobeView는 idle mount, marker memoization, contain: layout paint size, globe.destroy() cleanup으로 canvas 렌더러의 영향 범위와 수명 주기를 명확히 했습니다. frame budget probe를 추가해 canvas 렌더링 비용을 React commit 비용과 따로 기록할 수 있게 했습니다.",
+          result: "React 상태 변경과 WebGL/canvas 렌더링 책임을 분리해 지도·글로브 화면을 별도 런타임처럼 관리할 수 있게 됐습니다. 화면 전환 시 renderer cleanup 경로가 생겼고, WebGL 보조 뷰는 React 전체 리렌더링 최적화와 별개로 샘플링·레이아웃 격리·메시지 브릿지를 기준으로 성능 병목을 설명할 수 있게 됐습니다. frame budget 기록도 생겨 이후 WebGL/canvas FPS 개선 작업을 같은 기준으로 비교할 수 있게 됐습니다.",
+          evidence: ["Map2DView.tsx", "public/unity-map/mapbox.html", "GlobeView.tsx", "issue-nexon-webgl-after-dev-frame-budget.json"],
+        },
+        {
+          title: "이미지 전송량 병목을 Supabase transform으로 축소",
+          issue: "public home의 사진 preview 카드가 원본 1920px급 이미지를 그대로 요청하면서, WebGL/canvas 최적화와 무관하게 Lighthouse LCP와 전체 payload가 이미지 전송량에 묶이는 병목을 발견했습니다.",
+          cause: "카드 영역에는 작은 preview만 필요했지만 브라우저는 큰 원본 이미지를 내려받고 있었습니다. 이 구조에서는 React 렌더링이나 canvas mount를 조정해도 네트워크 payload와 LCP resource 비용이 먼저 점수를 깎고, 사용자는 첫 화면에서 이미지 다운로드가 끝날 때까지 긴 대기 시간을 경험합니다.",
+          resolution: "Supabase Storage image transform fallback을 만들어 카드 preview는 320px급 URL을 우선 사용하게 했고, 상단 카드만 eager/high priority로 두고 나머지는 lazy/async로 낮췄습니다. Lighthouse raw JSON을 before/after로 저장하고 분석 문서를 `E:\\memory\\photomap\\characteristic`에 남겼습니다.",
+          result: "Lighthouse Performance score는 50점에서 77점으로 올랐고, LCP는 63,804ms에서 4,150ms로 낮아졌으며, 초기 payload는 12,586KiB에서 381KiB로 줄었습니다. 병목이 React micro-optimization이 아니라 이미지 전송 경로에 있음을 지표로 분리해 설명할 수 있게 됐습니다.",
+          evidence: ["imageUrl.ts", "PhotoFeed.tsx", "2026-07-14-nexon-webgl-transform-lighthouse-analysis.md"],
         },
         {
           title: "가상화와 메모이제이션으로 5,000장 부하 방어",
@@ -312,6 +325,14 @@ export const portfolio = {
       },
       caseStudies: [
         {
+          title: "학식 접근성 문제에서 웹 챗봇 방향으로 전환",
+          issue: "초기 논의에서 학식 확인 흐름이 앱, 식단 메뉴, 홈페이지로 나뉘어 있어 사용자가 원하는 정보를 확인하기까지 여러 단계를 거쳐야 하는 문제가 드러났습니다. 카카오톡 챗봇은 접근성이 높지만 전시와 기능 확장에는 한계가 있었고, 웹페이지형 챗봇은 UI 완성도와 기능 확장에 유리했습니다.",
+          cause: "교내 정보는 학식, 학사 일정, 장학 공지, 일반 공지처럼 출처와 사용 방식이 달랐고, 초기 조사 과정에서 중앙 제공 Open API 여부도 명확하지 않았습니다. 단순히 학식만 답하는 챗봇이면 접근성은 높지만 프로젝트 완성도와 전시 설명력이 약해질 수 있었고, 여러 정보를 다루려면 사용자가 어떤 질문을 어떻게 입력해야 하는지 안내하는 UI가 필요했습니다.",
+          resolution: "카카오톡 챗봇과 웹페이지형 챗봇을 비교한 뒤, 전시 가능성과 기능 확장성을 고려해 웹 기반 챗봇 UI로 방향을 잡았습니다. 학사 일정, 학식 메뉴, 빠른 링크, 월/날짜 기반 공지 조회 예시를 사용 안내에 정리하고, 프론트엔드는 사용자가 질문 흐름을 이해할 수 있는 채팅 UI와 보조 화면을 구성했습니다.",
+          result: "학식 앱에서 여러 단계를 거치던 문제를 채팅 흐름으로 줄이는 방향을 잡았고, 학식뿐 아니라 학사 일정, 공지, 빠른 링크까지 포함하는 학교 정보 접근성 개선 서비스로 확장했습니다.",
+          evidence: ["Talk_2025.12.10 20_53-1.txt", "enhanced-chat-interface.tsx", "학교 정보 접근성 향상을 위한 대화형 질의응답 시스템.pdf"],
+        },
+        {
           title: "긴 URL과 비정형 응답으로 인한 모바일 UI 깨짐 완화",
           issue: "실제 학교 공지/학식/일정 응답을 채팅 말풍선에 넣어보면서 긴 URL과 줄바꿈 없는 비정형 텍스트가 모바일 viewport를 밀어내고, 핵심 정보가 한 덩어리로 보여 가독성이 떨어지는 문제를 발견했습니다.",
           cause: "외부 API의 AI 응답은 JSON처럼 일정한 구조가 아니라 일반 문장, 긴 URL, 날짜, 목록, markdown 비슷한 텍스트가 섞여 들어왔습니다. 단순 문자열로 출력하면 브라우저가 긴 URL을 적절히 줄바꿈하지 못하고, 학식/공지 데이터가 줄바꿈 없이 붙어 사용자가 날짜와 링크를 구분하기 어려웠습니다. 포트폴리오 자료 기준 URL 텍스트 노출을 줄여야 할 정도로 시각적 노이즈가 컸습니다.",
@@ -338,7 +359,7 @@ export const portfolio = {
         {
           title: "대화 내역 내보내기 시 서버 재전송 방지",
           issue: "대화 내역 내보내기 기능을 설계하면서 이미 브라우저에 있는 사용자 대화를 txt 파일 생성을 위해 서버로 다시 보내면 불필요한 개인정보 노출 경로와 서버 저장 책임이 생기는 문제를 발견했습니다.",
-          cause: "대화 내용은 이미 브라우저 메모리와 localStorage에 존재하는 사용자 데이터입니다. 단순 txt 파일 생성을 위해 이를 서버로 전송하면 개인정보가 네트워크를 한 번 더 지나가고, 서버 로그/저장 여부/삭제 책임까지 고려해야 합니다. 로그인 없는 가벼운 챗봇 UX라는 기능 성격에 비해 데이터 흐름과 운영 부담이 과해지는 구조였습니다.",
+          cause: "대화 내용은 이미 브라우저 메모리와 localStorage에 존재하는 사용자 데이터입니다. 단순 txt 파일 생성을 위해 이를 서버로 전송하면 개인정보가 네트워크를 한 번 더 지나가고, 서버 로그/저장 여부/삭제 책임까지 고려해야 합니다. 로그인 없는 가벼운 챗봇 UX라는 기능 성격에 비해 데이터 흐름과 관리 부담이 과해지는 구조였습니다.",
           resolution: "브라우저 Blob API와 URL.createObjectURL을 사용해 클라이언트 메모리에서 txt 파일을 만들고, 다운로드 후 revokeObjectURL로 URL을 해제했습니다.",
           result: "대화 내역 내보내기 흐름은 서버 저장/재전송 없이 브라우저 메모리에서 처리했습니다. Blob과 URL.createObjectURL로 txt 파일을 만들고 다운로드 후 revokeObjectURL로 해제해, 백엔드 인프라와 별개로 프론트엔드 담당 범위의 대화 파일 생성 과정에서 추가 저장 서버나 삭제 정책이 필요하지 않게 했습니다.",
           evidence: ["enhanced-chat-interface.tsx", "Blob", "URL.createObjectURL", "URL.revokeObjectURL"],
