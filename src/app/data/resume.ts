@@ -109,7 +109,7 @@ Fallow 정적 분석으로 중복 코드를 1,006줄(9.4%)에서 308줄(2.9%)로
       github: "https://github.com/sabin1108/Photomap",
       live: "https://photomap-three.vercel.app/",
       teamRole: "3인 협업 (FE 1명, BE 2명 / FE 최적화 및 상태 아키텍처 담당)",
-      description: "대용량 사진 데이터를 지도 기반으로 탐색하는 웹 서비스",
+      description: "여행 중 촬영한 사진을 위치 기반 지도에 보관하고, 이동 경로와 추억을 시각적으로 탐색하는 웹 서비스",
       techTags: ["React", "TypeScript", "Zustand", "D3.js", "Supabase", "@tanstack/react-virtual", "Unity WebGL", "Canvas", "cobe", "Lighthouse"],
       keyRoles: "상태 관리 구조 개선 / 렌더링 성능 최적화 / D3 및 WebGL 계열 시각화 연동 / 성능 측정 자동화",
       issues: [

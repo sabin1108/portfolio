@@ -213,7 +213,7 @@ export const portfolio = {
         { category: "대량 UI / D3", metric: "Framer Motion", before: "2,142회", after: "0회", basis: "React Profiler / performance_optimization_final_report.md" },
         { category: "대량 UI / D3", metric: "사진 스크롤", before: "프리징 발생", after: "프레임 저하 완화", basis: "PerformanceMonitor / PhotoMap 포트폴리오 콘텐츠.md" },
         { category: "WebGL / canvas", metric: "GlobeView Commit", before: "69.9ms", after: "26.6ms", basis: "React Profiler / performance_optimization_final_report.md" },
-        { category: "WebGL / canvas", metric: "Frame probe", before: "측정 없음", after: "frame budget 기록", basis: "issue-nexon-webgl-after-dev-frame-budget.json" },
+        { category: "WebGL / canvas", metric: "Frame probe", before: "측정 없음", after: "frame budget 기준선 확보", basis: "issue-nexon-webgl-after-dev-frame-budget.json" },
       ],
       architecture: {
         title: "브라우저에서 사진을 탐색하는 흐름",
@@ -227,7 +227,7 @@ export const portfolio = {
           issue: "지도 화면에서는 React UI, Mapbox, Unity WebGL iframe, cobe canvas globe가 함께 동작해, 화면 전환이나 필터 변경 때 렌더링 책임이 섞이면 WebGL 런타임과 React 상태가 서로 영향을 주는 문제가 생길 수 있었습니다.",
           cause: "WebGL 기반 화면은 React 컴포넌트처럼 렌더마다 새로 계산되면 비용이 크고, iframe 내부 Unity 런타임이나 canvas renderer는 별도 수명 주기를 가집니다. React 상태 변경을 그대로 WebGL 렌더링 루프와 연결하면 지도 마커, 사진 데이터, globe marker 갱신이 한 흐름에 묶이고, 언마운트 후에도 이벤트 리스너나 렌더러 인스턴스가 남을 위험이 있었습니다.",
           resolution: "Unity WebGL 지도는 iframe으로 분리하고 postMessage/SendMessage로 필요한 사진·위치 데이터만 전달했습니다. cobe 기반 GlobeView는 idle mount, marker memoization, contain: layout paint size, globe.destroy() cleanup으로 canvas 렌더러의 영향 범위와 수명 주기를 명확히 했습니다. frame budget probe를 추가해 canvas 렌더링 비용을 React commit 비용과 따로 기록할 수 있게 했습니다.",
-          result: "React 상태 변경과 WebGL/canvas 렌더링 책임을 분리해 지도·글로브 화면을 별도 런타임처럼 관리할 수 있게 됐습니다. 화면 전환 시 renderer cleanup 경로가 생겼고, WebGL 보조 뷰는 React 전체 리렌더링 최적화와 별개로 샘플링·레이아웃 격리·메시지 브릿지를 기준으로 성능 병목을 설명할 수 있게 됐습니다. frame budget 기록도 생겨 이후 WebGL/canvas FPS 개선 작업을 같은 기준으로 비교할 수 있게 됐습니다.",
+          result: "React 상태 변경과 WebGL/canvas 렌더링 책임을 분리해 지도·글로브 화면을 별도 런타임처럼 관리할 수 있게 됐습니다. 화면 전환 시 renderer cleanup 경로가 생겼고, WebGL 보조 뷰는 React 전체 리렌더링 최적화와 별개로 샘플링·레이아웃 격리·메시지 브릿지를 기준으로 성능 병목을 설명할 수 있게 됐습니다. cobe canvas GlobeView는 11.1초 구간에서 106 frames, max frame 183.3ms, avg frame 104.74ms를 기록해 이후 WebGL/canvas 개선 작업을 같은 기준으로 비교할 수 있게 됐습니다.",
           evidence: ["Map2DView.tsx", "public/unity-map/mapbox.html", "GlobeView.tsx", "issue-nexon-webgl-after-dev-frame-budget.json"],
         },
         {
