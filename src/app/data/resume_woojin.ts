@@ -2,11 +2,11 @@
 
 const woojinMotivation = `우진지앤에스를 보며 가장 먼저 연결된 지점은 공공·국방 정보체계와 GIS 기반 서비스였습니다. 공식 사이트에서 COP와 공간정보시스템, 국방정보체계, 공공분야 정보체계, GIS DB, AI·빅데이터·사이버보안을 주요 사업으로 소개하고 있었고, 공고 우대사항에도 CesiumJS, OpenLayers, Mapbox 등 Web GIS 경험이 포함되어 있었습니다.
 
-저는 공공·국방 계열 웹 시스템에서는 새 기술을 많이 쓰는 것보다 데이터 흐름을 안정적으로 정리하고, 변경에 강한 화면 구조를 만드는 일이 더 중요하다고 생각합니다. PhotoMap에서는 Mapbox 기반 지도 화면에 사진의 위치 데이터를 연결하고, Unity WebGL iframe과 cobe canvas globe를 함께 다루는 Web GIS 성격의 탐색 UI를 만들었습니다. 이 과정에서 React 상태 변경과 WebGL/canvas 렌더링 책임을 분리했고, Lighthouse와 React Profiler, frame budget probe로 이미지 전송·React 렌더링·WebGL frame 비용을 나눠 확인했습니다.
+공공·국방 계열 웹 시스템에서는 새 기술을 많이 쓰는 것보다 데이터 흐름을 안정적으로 정리하고, 변경에 강한 화면 구조를 만드는 일이 더 중요하다고 생각합니다. PhotoMap에서 저는 Mapbox 기반 지도 화면에 위치 기반 사진 데이터를 표시하고, Unity WebGL iframe과 cobe canvas globe를 React UI 흐름에 통합했습니다. Unity WebGL 지도는 iframe으로 분리해 postMessage로 위치 데이터만 전달하는 방식으로 React 상태 변경과 WebGL 런타임의 책임을 나눴고, Supabase image transform과 이미지 로딩 우선순위 조정을 통해 Lighthouse 기준 Performance score를 50점에서 77점으로, LCP를 63,804ms에서 4,150ms로, 초기 payload를 12,586KiB에서 381KiB로 개선했습니다. 상태 변경 리렌더링 범위는 70여 개 컴포넌트에서 5개 이하로 줄이고, React Profiler 기준 커밋 시간은 9.7ms에서 6.2ms로 낮췄습니다.
 
-Game Information Platform에서는 외부 API 응답 차이를 UI에서 직접 처리하지 않도록 Adapter/Normalizer 계층으로 정리했고, 0원/null 가격 방어, stale cache, rate limit, Vitest/Playwright 검증을 통해 장애와 회귀에 대비했습니다. 이는 공공 SI나 정보체계 프로젝트에서 필요한 데이터 계약, 예외 처리, 테스트 기반 품질 관리와 맞닿아 있다고 봅니다.
+Game Information Platform에서는 Steam과 Epic, ITAD 등 외부 API 응답 차이를 UI가 직접 처리하지 않도록 Adapter와 Normalizer 계층으로 정리했고, 0원이나 null 가격이 최저가로 오판되지 않도록 방어 로직을 뒀습니다. stale cache와 rate limit으로 외부 API 장애가 화면 전체를 무너뜨리지 않게 했고, Vitest 60개 테스트와 Playwright E2E 9개 시나리오로 주요 로직과 사용자 흐름을 검증했습니다. 이는 공공 SI나 정보체계 프로젝트에서 필요한 데이터 계약, 예외 처리, 테스트 기반 품질 관리와 맞닿아 있다고 생각합니다.
 
-아직 Java/JSP나 전자정부프레임워크 실무 경험은 부족합니다. 대신 Mapbox 기반 Web GIS 화면 구현, Unity WebGL iframe 연동, canvas 렌더링 수명 주기 분리, 웹 표준 기반 UI, TypeScript/JavaScript, API 경계 분리와 성능 측정 경험은 확실히 쌓아왔습니다. 우진지앤에스에서는 기존 공공·국방 정보체계의 개발 방식과 도메인 규칙을 빠르게 배우면서, 사용자가 오래 안정적으로 쓰는 웹 화면과 데이터 흐름을 만드는 개발자로 기여하고 싶습니다.`;
+아직 Java·JSP나 전자정부프레임워크 실무 경험은 부족하지만, Mapbox 기반 Web GIS 화면 구현, Unity WebGL iframe 연동, canvas 렌더링 수명 주기 분리, API 경계 분리와 성능 측정 경험은 확실히 쌓아왔습니다. 우진지앤에스에서 기존 공공·국방 정보체계의 개발 방식과 도메인 규칙을 빠르게 배우면서, 사용자가 오래 안정적으로 쓰는 웹 화면과 데이터 흐름을 만드는 개발자로 기여하고 싶습니다.`;
 
 export const resumeWoojinData = {
   ...resumeData,
