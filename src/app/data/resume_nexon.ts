@@ -1,12 +1,12 @@
 import { resumeData } from "./resume";
 
-const nexonMotivation = `메이플AX실 공고에서 끌렸던 지점은 AI 모델 자체보다, 그 결과물을 사용자가 브라우저 안에서 직접 보고 고치고 함께 다루는 제작 도구를 만든다는 점이었습니다. 저는 프론트엔드를 화면을 배치하는 일보다, 사용자가 복잡한 작업을 끊기지 않고 이어가게 만드는 일에 가깝다고 생각합니다.
+const nexonMotivation = `메이플AX실 공고에서 끌렸던 지점은 AI 모델 자체보다, 그 결과물을 사용자가 브라우저 안에서 직접 검토하고 조정하는 제작 도구를 만든다는 점이었습니다. 저는 프론트엔드를 화면을 배치하는 일보다, 사용자가 복잡한 작업을 끊기지 않고 이어가게 만드는 일에 가깝다고 생각합니다.
 
-PhotoMap을 만들면서 비슷한 문제를 많이 겪었습니다. 대량 이미지, 지도, 타임라인, 관계 그래프, Unity WebGL iframe, cobe canvas globe가 한 화면 흐름 안에 섞이면서 어디서 느려지는지부터 분리해야 했습니다. Lighthouse 측정 기준, Supabase image transform 기반 preview 전송 최적화 후 Performance score를 50점에서 77점으로 높이고, LCP를 63,804ms에서 4,150ms로 낮췄으며, 초기 payload를 12,586KiB에서 381KiB로 줄인 기록을 남겼습니다. WebGL/canvas 영역은 React 상태 변경과 분리하고, idle mount와 cleanup, frame budget 측정으로 따로 추적할 수 있게 정리했습니다.
+PhotoMap에서는 대량 이미지, 지도, 타임라인, 관계 그래프, Unity WebGL iframe, cobe 기반 canvas globe가 한 화면 흐름 안에 섞이면서 병목 원인을 먼저 분리해야 했습니다. Lighthouse 측정 기준 Supabase image transform 기반 preview 전송 최적화 후 Performance score를 50점에서 77점으로 높이고, LCP를 63,804ms에서 4,150ms로 낮췄습니다. WebGL/canvas 영역은 React 상태 변경과 분리하고, idle mount와 cleanup, frame budget 측정으로 React 렌더링 지표와 따로 추적할 수 있게 정리했습니다.
 
-생성형 AI 기반 포트폴리오 요약 플랫폼 논문에서는 AI 응답을 보여주는 것보다, 사용자가 그 결과를 어떻게 신뢰하고 판단할 수 있을지를 더 많이 고민했습니다. 스트리밍 응답, 근거 확인, 평가자 화면을 나누어 설계했던 경험이 있어서, 멀티모달 AI 결과물을 실제 제작 흐름 안에 녹이는 일에도 관심이 큽니다.
+생성형 AI 기반 포트폴리오 요약 플랫폼 논문에서는 AI 응답을 보여주는 것보다, 사용자가 그 결과를 어떻게 신뢰하고 판단할 수 있을지를 더 많이 고민했습니다. 스트리밍 응답, 근거 확인, 평가자 화면을 나누어 설계했던 경험이 있어서, AI 결과물을 실제 제작 흐름 안에 녹이는 일에도 관심이 큽니다.
 
-Three.js나 Yjs를 깊게 다뤄본 경험은 아직 부족합니다. 그래서 이 포지션에서 배우고 싶은 지점도 분명합니다. 다만 Canvas/WebGL 계열 화면에서 병목을 측정하고 React 상태 흐름과 분리해본 경험은 있기 때문에, 렌더링 최적화와 실시간 협업 구조도 빠르게 따라가며 실제 제작 도구의 품질로 연결해보고 싶습니다.`;
+이런 경험을 바탕으로 브라우저 안에서 복잡한 제작 흐름이 끊기지 않도록 렌더링 품질과 상호작용 안정성을 높이는 프론트엔드 개발자로 기여하고 싶습니다.`;
 
 export const resumeNexonData = {
   ...resumeData,
