@@ -3,6 +3,7 @@ import { ExternalLink, FileText, Github, Globe, Mail, Printer, Lock, Key } from 
 import { resumeData, RESUME_PASSCODE } from "../data/resume";
 import { resumeEliceData } from "../data/resume_elice";
 import { resumeNexonData } from "../data/resume_nexon";
+import { resumePooolingforestData } from "../data/resume_pooolingforest";
 import { resumeWoojinData } from "../data/resume_woojin";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
@@ -153,8 +154,11 @@ export function Resume() {
   const normalizedPath = currentPath.toLowerCase();
   const isElicePath = normalizedPath.includes("elice_a3b2c");
   const isNexonPath = normalizedPath.includes("nexon_web_frontend");
+  const isPooolingforestPath = normalizedPath.includes("pooolingforest");
   const isWoojinPath = normalizedPath.includes("woojin_web_developer");
-  const activeResumeData = isWoojinPath
+  const activeResumeData = isPooolingforestPath
+    ? resumePooolingforestData
+    : isWoojinPath
     ? resumeWoojinData
     : isNexonPath
       ? resumeNexonData
@@ -164,7 +168,7 @@ export function Resume() {
 
   const { summary, coreSkills, projectHighlights, activityGroups, education, profile } = activeResumeData;
 
-  if (!authorized && !isElicePath && !isNexonPath && !isWoojinPath) {
+  if (!authorized && !isElicePath && !isNexonPath && !isPooolingforestPath && !isWoojinPath) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-slate-100 px-4 py-8">
         <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-lg">
