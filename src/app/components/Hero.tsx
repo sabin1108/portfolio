@@ -2,8 +2,8 @@ import { motion } from "motion/react";
 import { Github, Mail } from "lucide-react";
 import { portfolio } from "../data/portfolio";
 
-export function Hero() {
-  const { profile } = portfolio;
+export function Hero({ data = portfolio }: { data?: typeof portfolio }) {
+  const { profile } = data;
 
   return (
     <motion.section

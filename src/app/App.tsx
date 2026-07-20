@@ -4,6 +4,8 @@ import { Timeline } from "./components/Timeline";
 import { Education } from "./components/Education";
 import { Resume } from "./components/Resume";
 import { Printer } from "lucide-react";
+import { portfolio } from "./data/portfolio";
+import { fullstackPortfolio } from "./data/portfolio_fullstack";
 
 function TopNav({
   showResumeLink = false,
@@ -49,12 +51,32 @@ function TopNav({
   );
 }
 
+function PortfolioPage({ data = portfolio }: { data?: typeof portfolio }) {
+  return (
+    <>
+      <TopNav showPrintButton />
+      <main className="portfolio-page min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/40">
+        <div className="portfolio-sheet mx-auto max-w-6xl px-6 py-16 sm:px-8 sm:py-20">
+          <Hero data={data} />
+          <Projects data={data} />
+          <Timeline />
+          <Education />
+        </div>
+      </main>
+    </>
+  );
+}
+
 export default function App() {
   const currentPath = window.location.pathname;
 
   if (currentPath === "/en") {
     window.location.replace("/");
     return null;
+  }
+
+  if (currentPath === "/fullstack") {
+    return <PortfolioPage data={fullstackPortfolio} />;
   }
 
   const isResumePage =

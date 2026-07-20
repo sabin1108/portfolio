@@ -56,7 +56,7 @@ export type Project = {
   caseStudies: CaseStudy[];
 };
 
-export type Activity = {
+type Activity = {
   date: string;
   title: string;
   description: string;
@@ -351,17 +351,17 @@ export const portfolio = {
         {
           title: "로그인 없는 로컬 채팅 기록 저장과 탭 동기화",
           issue: "로그인 없이 사용하는 구조에서 새로고침하면 대화가 사라질 수 있고, 여러 탭을 열어 한쪽에서 채팅을 추가/삭제했을 때 다른 탭의 채팅 목록과 활성 대화가 어긋나는 상태 불일치 문제를 발견했습니다.",
-          cause: "로그인 없이 서버 DB를 쓰지 않으면 채팅 기록은 브라우저 localStorage에만 남습니다. localStorage 자체는 탭 사이에 공유되지만 각 탭의 React state는 독립적으로 유지되므로, 한 탭에서 채팅을 추가하거나 삭제해도 다른 탭은 기존 메모리 상태를 계속 보여줍니다. storage 이벤트를 구독하지 않으면 저장소와 화면 상태가 새로고침 전까지 어긋날 수 있었습니다.",
+          cause: "로그인 없는 구조에서는 채팅 기록이 브라우저 localStorage에 남습니다. localStorage 자체는 탭 사이에 공유되지만 각 탭의 React state는 독립적으로 유지되므로, 한 탭에서 채팅을 추가하거나 삭제해도 다른 탭은 기존 메모리 상태를 계속 보여줍니다. storage 이벤트를 구독하지 않으면 저장소와 화면 상태가 새로고침 전까지 어긋날 수 있었습니다.",
           resolution: "useLocalStorage hook에서 localStorage 읽기/쓰기를 감싸고, storage 이벤트를 구독해 다른 탭의 변경을 현재 탭 상태에 반영했습니다.",
-          result: "대화 기록 전용 서버 저장 없이도 새로고침 후 채팅 목록과 활성 채팅을 복원할 수 있게 됐고, storage 이벤트를 통해 다른 탭의 변경을 현재 탭 상태에 반영했습니다. 로그인 없는 구조를 유지하면서도 사용자가 여러 탭을 열었을 때 대화 목록이 어긋나는 위험을 줄였습니다.",
+          result: "localStorage 기반으로 새로고침 후 채팅 목록과 활성 채팅을 복원할 수 있게 됐고, storage 이벤트를 통해 다른 탭의 변경을 현재 탭 상태에 반영했습니다. 로그인 없는 구조에서도 사용자가 여러 탭을 열었을 때 대화 목록이 어긋나는 위험을 줄였습니다.",
           evidence: ["use-chat-history.ts", "use-local-storage.ts", "storage event"],
         },
         {
-          title: "대화 내역 내보내기 시 서버 재전송 방지",
-          issue: "대화 내역 내보내기 기능을 설계하면서 이미 브라우저에 있는 사용자 대화를 txt 파일 생성을 위해 서버로 다시 보내면 불필요한 개인정보 노출 경로와 서버 저장 책임이 생기는 문제를 발견했습니다.",
-          cause: "대화 내용은 이미 브라우저 메모리와 localStorage에 존재하는 사용자 데이터입니다. 단순 txt 파일 생성을 위해 이를 서버로 전송하면 개인정보가 네트워크를 한 번 더 지나가고, 서버 로그/저장 여부/삭제 책임까지 고려해야 합니다. 로그인 없는 가벼운 챗봇 UX라는 기능 성격에 비해 데이터 흐름과 관리 부담이 과해지는 구조였습니다.",
+          title: "대화 내역 브라우저 내보내기",
+          issue: "대화 내역 내보내기 기능을 설계하면서 이미 브라우저에 있는 대화 내용을 txt 파일로 만드는 흐름을 어떻게 단순하게 처리할지 고민했습니다.",
+          cause: "대화 내용은 이미 브라우저 메모리와 localStorage에 존재했습니다. 단순 txt 파일 생성을 위해 별도 백엔드 흐름을 추가하면 기능 성격에 비해 데이터 흐름과 구현 범위가 커지는 구조였습니다.",
           resolution: "브라우저 Blob API와 URL.createObjectURL을 사용해 클라이언트 메모리에서 txt 파일을 만들고, 다운로드 후 revokeObjectURL로 URL을 해제했습니다.",
-          result: "대화 내역 내보내기 흐름은 서버 저장/재전송 없이 브라우저 메모리에서 처리했습니다. Blob과 URL.createObjectURL로 txt 파일을 만들고 다운로드 후 revokeObjectURL로 해제해, 백엔드 인프라와 별개로 프론트엔드 담당 범위의 대화 파일 생성 과정에서 추가 저장 서버나 삭제 정책이 필요하지 않게 했습니다.",
+          result: "대화 내역 내보내기 흐름은 브라우저 기능 중심으로 처리했습니다. Blob과 URL.createObjectURL로 txt 파일을 만들고 다운로드 후 revokeObjectURL로 해제해, 프론트엔드 담당 범위에서 대화 파일 생성 흐름을 완성했습니다.",
           evidence: ["enhanced-chat-interface.tsx", "Blob", "URL.createObjectURL", "URL.revokeObjectURL"],
         },
         {

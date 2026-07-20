@@ -631,7 +631,7 @@ function ProjectSection({ project, index }: { project: PortfolioProject; index: 
     </motion.article>
   );
 }
-export function Projects() {
+export function Projects({ data = portfolio }: { data?: typeof portfolio }) {
   return (
     <motion.section
       initial={false}
@@ -648,7 +648,7 @@ export function Projects() {
       </div>
 
       <div>
-        {portfolio.projects.map((project, index) => (
+        {data.projects.map((project, index) => (
           <ProjectSection key={project.title} project={project} index={index} />
         ))}
       </div>
