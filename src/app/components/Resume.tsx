@@ -14,11 +14,13 @@ function ResumeHeader({
   summary,
   portfolioHref = "https://binportfolio.site/",
   portfolioLabel = "binportfolio.site",
+  portfolioNavHref = "/",
 }: {
   profile: typeof resumeData.profile;
   summary: string;
   portfolioHref?: string;
   portfolioLabel?: string;
+  portfolioNavHref?: string;
 }) {
   return (
     <header className="resume-header mb-8 border-b border-slate-200 pb-6">
@@ -59,7 +61,7 @@ function ResumeHeader({
             PDF 저장
           </Button>
           <Button asChild variant="outline" className="border-slate-300 text-slate-700">
-            <a href="/" aria-label="포트폴리오로 이동">
+            <a href={portfolioNavHref} aria-label="포트폴리오로 이동">
               <ExternalLink className="mr-2 h-4 w-4" />
               포트폴리오
             </a>
@@ -240,6 +242,7 @@ export function Resume() {
           summary={summary}
           portfolioHref={isPooolingforestPath ? "https://binportfolio.site/fullstack" : undefined}
           portfolioLabel={isPooolingforestPath ? "binportfolio.site/fullstack" : undefined}
+          portfolioNavHref={isPooolingforestPath ? "/fullstack" : undefined}
         />
 
         <div className="resume-first-page-grid">
