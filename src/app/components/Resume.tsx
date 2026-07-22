@@ -5,15 +5,20 @@ import { resumeEliceData } from "../data/resume_elice";
 import { resumeNexonData } from "../data/resume_nexon";
 import { resumePooolingforestData } from "../data/resume_pooolingforest";
 import { resumeWoojinData } from "../data/resume_woojin";
+import { resumeLsscData } from "../data/resume_lssc";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 
 function ResumeHeader({
   profile,
   summary,
+  portfolioHref = "https://binportfolio.site/",
+  portfolioLabel = "binportfolio.site",
 }: {
   profile: typeof resumeData.profile;
   summary: string;
+  portfolioHref?: string;
+  portfolioLabel?: string;
 }) {
   return (
     <header className="resume-header mb-8 border-b border-slate-200 pb-6">
@@ -80,13 +85,13 @@ function ResumeHeader({
           github.com/sabin1108
         </a>
         <a
-          href="https://binportfolio.site/"
+          href={portfolioHref}
           target="_blank"
           rel="noreferrer"
           className="inline-flex items-center gap-1.5 hover:text-indigo-600"
         >
           <Globe className="h-4 w-4" />
-          binportfolio.site
+          {portfolioLabel}
         </a>
       </div>
 
@@ -156,8 +161,11 @@ export function Resume() {
   const isNexonPath = normalizedPath.includes("nexon_web_frontend");
   const isPooolingforestPath = normalizedPath.includes("pooolingforest");
   const isWoojinPath = normalizedPath.includes("woojin_web_developer");
+  const isLsscPath = normalizedPath.includes("lssc_fullstack");
   const activeResumeData = isPooolingforestPath
     ? resumePooolingforestData
+    : isLsscPath
+    ? resumeLsscData
     : isWoojinPath
     ? resumeWoojinData
     : isNexonPath
@@ -168,7 +176,7 @@ export function Resume() {
 
   const { summary, coreSkills, projectHighlights, activityGroups, education, profile } = activeResumeData;
 
-  if (!authorized && !isElicePath && !isNexonPath && !isPooolingforestPath && !isWoojinPath) {
+  if (!authorized && !isElicePath && !isNexonPath && !isPooolingforestPath && !isWoojinPath && !isLsscPath) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-slate-100 px-4 py-8">
         <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-lg">
@@ -227,7 +235,12 @@ export function Resume() {
   return (
     <main className="min-h-screen bg-slate-100 px-4 py-8 print:bg-white print:px-0 print:py-0">
       <article className="resume-sheet mx-auto max-w-5xl bg-white px-6 py-8 shadow-sm print:max-w-none print:px-0 print:py-0 print:shadow-none sm:px-10">
-        <ResumeHeader profile={profile} summary={summary} />
+        <ResumeHeader
+          profile={profile}
+          summary={summary}
+          portfolioHref={isPooolingforestPath ? "https://binportfolio.site/fullstack" : undefined}
+          portfolioLabel={isPooolingforestPath ? "binportfolio.site/fullstack" : undefined}
+        />
 
         <div className="resume-first-page-grid">
           {activeResumeData.motivation && (
