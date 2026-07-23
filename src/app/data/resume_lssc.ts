@@ -1,12 +1,10 @@
 import { resumeData } from "./resume";
 
-const lsscMotivation = `LSSC 지원에서 가장 먼저 연결된 지점은 "필요한 문제를 스스로 발견하고 제품과 인프라를 함께 만들어 갈 수 있는 풀스택 개발자"라는 역할 정의였습니다. 잡코리아 공고 기준 LSSC는 풀스택 개발자를 모집하고 있으며, 경력·학력 무관 포지션으로 React, Node.js, MongoDB 기반 웹 프로덕트 개발 역량을 요구하는 흐름으로 확인했습니다. Ninehire 채용 페이지에서도 개발 포지션을 열어 두고 있고, 회사는 D2C 미디어커머스에서 여러 브랜드와 시장을 빠르게 넓히는 Scale Out 방향을 강조하고 있습니다.
+const lsscMotivation = `LSSC에 지원한 이유는 여러 자체 브랜드를 동시에 운영하는 미디어커머스 환경에서, 개발자가 상품·콘텐츠·판매 흐름을 빠르게 연결하는 역할을 할 수 있다고 봤기 때문입니다. 브랜드와 카테고리가 늘어날수록 운영 데이터, 고객 접점 화면, 내부 관리 도구가 함께 복잡해지기 때문에 화면 구현만이 아니라 데이터 계약과 API 경계를 안정적으로 잡는 개발 역량이 중요하다고 생각했습니다.
 
-저는 화면 구현에만 머무르지 않고 데이터 흐름, API 경계, 장애 대응, 테스트까지 함께 정리해 온 경험이 있습니다. Game Information Platform에서는 Steam/Epic/ITAD처럼 응답 구조가 다른 외부 API를 adapter/normalizer와 공통 view model로 정리하고, stale cache와 rate limit을 route 경계에 둬 외부 API 장애가 곧바로 사용자 화면 장애로 번지지 않도록 설계했습니다.
+제가 기여할 수 있는 일은 세 가지입니다. 첫째, Game Information Platform에서 외부 API 3종의 응답 차이를 공통 view model로 정리한 경험을 바탕으로 브랜드별 데이터 흐름이 화면에 직접 새지 않도록 경계를 만들 수 있습니다. 둘째, PhotoMap에서 LCP 63,804ms를 4,150ms로 줄이고 초기 payload를 12,586KiB에서 381KiB로 낮춘 경험을 바탕으로 고객이 직접 보는 페이지의 로딩 병목을 수치로 추적하고 개선할 수 있습니다. 셋째, Vitest 21개 파일 60개 테스트와 Playwright 흐름 검증, Fallow 기반 중복 코드 1,006줄에서 308줄 감소 경험을 바탕으로 빠르게 만든 기능도 검증 가능한 상태로 유지할 수 있습니다.
 
-PhotoMap에서는 React, TypeScript, Zustand, D3.js, Supabase, Mapbox, Unity WebGL이 얽힌 프로젝트에서 상태 관리와 렌더링 병목을 개선했습니다. Context API 기반 전역 상태를 Zustand selector 구조로 전환하고, D3 force simulation의 tick 업데이트를 React state 밖으로 분리했으며, Vercel 기준 LCP 발견 지연과 지도 marker 초기화/클릭 이동 보정까지 이어서 정리했습니다.
-
-LSSC처럼 빠르게 브랜드와 시장을 넓히는 조직에서는 요구사항을 기다리기보다 문제를 먼저 구조화하고, 검증 가능한 단위부터 작게 만들어 운영 가능한 흐름으로 연결하는 개발자가 필요하다고 봅니다. MongoDB 실무 주력 경험은 아직 보완 과제지만, Supabase/PostgreSQL 기반 데이터 모델링과 API 정규화 경험을 바탕으로 입사 후 빠르게 따라잡겠습니다.`;
+입사 후에는 LSSC의 브랜드 운영과 고객 경험을 연결하는 웹 기능, 사내 업무를 줄이는 관리 도구, 데이터 기반 의사결정을 돕는 화면을 빠르게 구현하고 싶습니다. 단순히 기능을 붙이는 데서 끝내지 않고, 문제가 생겼을 때 원인을 좁혀 다시 개선할 수 있는 구조와 검증 흐름까지 함께 만드는 개발자로 기여하겠습니다.`;
 
 const lsscProjectHighlights = resumeData.projectHighlights.map((project) => {
   if (project.title === "Game Information Platform") {
@@ -54,7 +52,7 @@ const lsscProjectHighlights = resumeData.projectHighlights.map((project) => {
       ],
       achievements: [
         "React Profiler 기준 리렌더링 범위를 70여 개 컴포넌트에서 5개 이하로 줄이고 커밋 시간을 9.7ms에서 6.2ms로 낮췄습니다.",
-        "Lighthouse 측정 기준 Performance 50점에서 77점, LCP 63,804ms에서 4,150ms까지 개선한 기록을 확보했습니다.",
+        "Lighthouse 측정 기준 Performance 50점에서 77점, LCP 63,804ms에서 4,150ms, 초기 payload 12,586KiB에서 381KiB까지 개선한 기록을 확보했습니다.",
         "지도 marker 초기화와 cluster 클릭 이동 보정까지 정리해 사용자가 체감하는 지도 인터랙션 안정성을 개선했습니다.",
         "대량 이미지 구간에서도 DOM 노드를 약 200개 수준으로 유지해 브라우저가 감당해야 하는 렌더링 범위를 고정했습니다.",
       ],
@@ -65,15 +63,15 @@ const lsscProjectHighlights = resumeData.projectHighlights.map((project) => {
     return {
       ...project,
       keyRoles:
-        "채팅 UI 구현 / Next.js API route proxy / 응답 가독성·로컬 저장 흐름 개선",
+        "채팅 UI 구현 / Fallback 선택지 흐름 / Next.js API route proxy / 응답 가독성·로컬 저장 흐름 개선",
       issues: [
-        "공지, 식단, 일정 데이터와 AI 응답이 섞이며 긴 URL과 비정형 텍스트가 모바일 채팅 UI를 깨뜨렸습니다.",
+        "모호한 질문이 들어왔을 때 AI가 의도를 좁히지 못하고, 공지·식단·일정 데이터와 긴 URL이 섞이며 모바일 채팅 UI를 깨뜨렸습니다.",
         "외부 백엔드 응답 형식 차이를 UI 컴포넌트가 직접 처리하면 수정 범위가 계속 커질 수 있었습니다.",
         "로그인 없는 구조에서도 새로고침 후 대화 복원과 사용자가 필요한 대화 내역 내보내기가 필요했습니다.",
         "전시용 서비스로 보여주기 위해 학식·공지·일정·빠른 링크를 한 흐름에서 탐색할 수 있는 방향이 필요했습니다.",
       ],
       resolutions: [
-        "ReactMarkdown과 markdown link 변환으로 긴 URL과 목록형 응답을 읽기 쉬운 메시지 구조로 바꿨습니다.",
+        "Fallback 선택지 UI로 질문 범위를 좁히고, ReactMarkdown과 markdown link 변환으로 긴 URL과 목록형 응답을 읽기 쉬운 메시지 구조로 바꿨습니다.",
         "Next.js API Routes를 proxy layer로 두어 UI는 메시지 표시와 상호작용에 집중하도록 분리했습니다.",
         "localStorage 기반 대화 복원, storage event 동기화, Blob API 기반 txt 내보내기 흐름을 구현했습니다.",
         "카카오톡 챗봇과 웹페이지형 챗봇을 비교한 뒤, 전시 가능성과 기능 확장성을 고려해 웹 기반 챗봇 UI로 방향을 정했습니다.",
@@ -99,11 +97,9 @@ export const resumeLsscData = {
   summary:
     `문제를 먼저 구조화하고, 화면 구현부터 API 경계, 데이터 흐름, 테스트까지 함께 다루는 풀스택 지향 개발자 민사빈입니다.
 
-Game Information Platform에서는 Steam/Epic/ITAD처럼 응답 구조가 다른 외부 API를 adapter/normalizer와 공통 view model로 정리해 UI가 API별 예외에 직접 묶이지 않도록 만들었습니다. stale cache와 rate limit을 route 경계에 두고, Vitest와 Playwright로 API route, 가격 계산, 캐시, 관심 목록, 모바일 플로우를 검증했습니다.
+Game Information Platform에서는 Steam/Epic/ITAD 외부 API 3종의 응답 차이를 adapter/normalizer와 공통 view model로 정리해 UI가 API별 예외에 직접 묶이지 않도록 만들었습니다. 0원/null 가격 오판을 방어하고, stale cache와 rate limit을 route 경계에 두었으며, Vitest 21개 파일 60개 테스트와 Playwright 흐름 검증으로 가격 계산·캐시·관심 목록·모바일 플로우를 확인했습니다. Fallow 정적 분석으로 중복 코드는 1,006줄(9.4%)에서 308줄(2.9%)로 줄이고, 미사용 파일 1개와 미사용 export 11개를 0개로 정리했습니다.
 
-PhotoMap에서는 React, TypeScript, Zustand, D3.js, Supabase, Mapbox, Unity WebGL이 얽힌 지도 기반 시각화 프로젝트에서 상태 관리와 렌더링 병목을 개선했습니다. Context API를 Zustand selector 구조로 전환하고, D3 force simulation 업데이트를 React state 밖으로 분리했으며, Vercel LCP 발견 지연 개선과 지도 marker 초기화/클릭 이동 보정까지 이어서 정리했습니다.
-
-LSSC처럼 빠르게 브랜드와 시장을 넓히는 조직에서는 사내 업무 문제를 웹 소프트웨어로 빠르게 구조화하고 운영 가능한 상태로 만드는 역량이 중요하다고 봅니다. 요구사항을 기다리기보다 문제를 먼저 정의하고, 검증 가능한 단위부터 구현·테스트·배포하는 개발자로 기여하고 싶습니다.` ,
+PhotoMap에서는 지도, 사진, 타임라인, WebGL 화면이 함께 동작하는 구조에서 성능 병목을 수치로 분리했습니다. Lighthouse 기준 Performance를 50점에서 77점으로 올리고, LCP를 63,804ms에서 4,150ms로 줄였으며, 초기 payload를 12,586KiB에서 381KiB로 낮췄습니다. Context API를 Zustand selector 구조로 전환해 리렌더링 범위를 70여 개 컴포넌트에서 5개 이하로 줄이고, React Profiler 기준 commit 시간을 9.7ms에서 6.2ms로 낮췄습니다. D3 force simulation 업데이트는 React state 밖으로 분리해 렌더링 횟수를 370회에서 25회로 줄였습니다.` ,
   motivation: lsscMotivation,
   coreSkills: [
     { title: "Frontend", items: ["React.js", "Next.js", "TypeScript", "JavaScript"] },
@@ -115,5 +111,19 @@ LSSC처럼 빠르게 브랜드와 시장을 넓히는 조직에서는 사내 업
     { title: "Tools - 배포/인프라", items: ["Vercel", "NCP"] },
     { title: "Tools - AI 개발", items: ["Codex", "Claude Code", "OpenAI API", "Gemini"] },
   ],
+  activityGroups: resumeData.activityGroups.map((group) => {
+    if (group.title === "생성형 AI 기반 포트폴리오 요약 플랫폼") {
+      return {
+        ...group,
+        items: [
+          "Vercel AI SDK 기반 스트리밍 연동과 기술 스택 DB 교차 검증 흐름을 설계했습니다.",
+          "AI 추출 데이터의 비표준 명칭을 필터링/치환하는 검증 레이어로 데이터 왜곡 위험을 줄였습니다.",
+          "컴포넌트·라우트 분리로 관리자 대시보드 LoC 231줄 -> 172줄 감소, 구조적 가독성 약 40%+ 개선 근거를 정리했습니다.",
+        ],
+      };
+    }
+
+    return group;
+  }),
   projectHighlights: lsscProjectHighlights,
 };

@@ -3,6 +3,7 @@ import { Projects } from "./components/Projects";
 import { Timeline } from "./components/Timeline";
 import { Education } from "./components/Education";
 import { Resume } from "./components/Resume";
+import { FullstackPdfPortfolio } from "./components/FullstackPdfPortfolio";
 import { Printer } from "lucide-react";
 import { portfolio } from "./data/portfolio";
 import { fullstackPortfolio } from "./data/portfolio_fullstack";
@@ -77,6 +78,10 @@ export default function App() {
 
   if (currentPath === "/fullstack") {
     return <PortfolioPage data={fullstackPortfolio} />;
+  }
+
+  if (currentPath === "/fullstack/pdf") {
+    return <FullstackPdfPortfolio />;
   }
 
   const isResumePage =

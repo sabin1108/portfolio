@@ -1,0 +1,673 @@
+.pdf-portfolio {
+  min-height: 100vh;
+  background: #eef2f7;
+  color: #111827;
+  font-family:
+    Pretendard,
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+.pdf-portfolio *,
+.pdf-portfolio *::before,
+.pdf-portfolio *::after {
+  box-sizing: border-box;
+}
+
+.pdf-page {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  padding: 14mm 13mm;
+  background: #ffffff;
+  break-after: page;
+  page-break-after: always;
+}
+
+.pdf-page:last-child {
+  break-after: auto;
+  page-break-after: auto;
+}
+
+.pdf-cover,
+.pdf-closing {
+  display: grid;
+  align-content: center;
+  gap: 18mm;
+}
+
+.pdf-kicker {
+  margin: 0 0 3mm;
+  color: #1d4ed8;
+  font-size: 9.5pt;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.pdf-cover h1 {
+  margin: 0;
+  font-size: 34pt;
+  line-height: 1.25;
+}
+
+.pdf-cover h2,
+.pdf-closing h2,
+.pdf-cases-page h2,
+.pdf-project-header h2 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 23pt;
+  line-height: 1.2;
+}
+
+.pdf-lead {
+  max-width: 160mm;
+  margin: 7mm 0 0;
+  color: #334155;
+  font-size: 14.2pt;
+  font-weight: 650;
+  line-height: 1.55;
+}
+
+.pdf-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4mm;
+  margin-top: 8mm;
+  color: #475569;
+  font-size: 10.5pt;
+  font-weight: 700;
+}
+
+.pdf-cover-grid,
+.pdf-strengths {
+  display: grid;
+  gap: 4mm;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.pdf-cover-grid article,
+.pdf-strengths article,
+.pdf-stack section,
+.pdf-case {
+  border: 1px solid #d9e2ef;
+  border-radius: 3mm;
+  background: #f8fafc;
+}
+
+.pdf-cover-grid article,
+.pdf-strengths article {
+  min-height: 39mm;
+  padding: 5mm;
+}
+
+.pdf-cover-grid strong,
+.pdf-strengths strong {
+  display: block;
+  margin-bottom: 2mm;
+  color: #0f172a;
+  font-size: 11.5pt;
+}
+
+.pdf-cover-grid span,
+.pdf-strengths p {
+  margin: 0;
+  color: #475569;
+  font-size: 9.3pt;
+  line-height: 1.55;
+}
+
+.pdf-project-header {
+  padding-bottom: 5mm;
+  border-bottom: 1px solid #d9e2ef;
+}
+
+.pdf-project-header p:not(.pdf-kicker) {
+  margin: 2mm 0 0;
+  color: #475569;
+  font-size: 10.5pt;
+  font-weight: 700;
+}
+
+.pdf-summary {
+  margin: 6mm 0;
+  color: #334155;
+  font-size: 11.2pt;
+  font-weight: 620;
+  line-height: 1.58;
+}
+
+.pdf-stack {
+  display: grid;
+  gap: 3mm;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-bottom: 6mm;
+}
+
+.pdf-stack section {
+  padding: 4mm;
+}
+
+.pdf-stack h3,
+.pdf-section-title {
+  margin: 0 0 2mm;
+  color: #0f172a;
+  font-size: 11.5pt;
+  line-height: 1.25;
+}
+
+.pdf-stack p {
+  margin: 0;
+  color: #475569;
+  font-size: 9.2pt;
+  line-height: 1.5;
+}
+
+.pdf-shot-grid {
+  display: grid;
+  gap: 3mm;
+}
+
+.pdf-shot-grid-large {
+  grid-template-columns: 1.4fr 1fr;
+  grid-template-rows: repeat(2, 35mm);
+  margin-bottom: 6mm;
+}
+
+.pdf-shot-grid img {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #d9e2ef;
+  border-radius: 2.5mm;
+  background: #f1f5f9;
+  object-fit: cover;
+}
+
+.pdf-shot-grid img:first-child {
+  grid-row: span 2;
+}
+
+.pdf-flow {
+  display: grid;
+  gap: 2mm;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.pdf-flow-step {
+  min-height: 20mm;
+  padding: 3mm;
+  border: 1px solid #cbd5e1;
+  border-radius: 2.5mm;
+  background: #f8fafc;
+  color: #0f172a;
+  font-size: 8.5pt;
+  font-weight: 800;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.pdf-flow-number {
+  display: inline-flex;
+  width: 5mm;
+  height: 5mm;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1mm;
+  border-radius: 999px;
+  background: #1d4ed8;
+  color: #ffffff;
+  font-size: 7.5pt;
+}
+
+.pdf-cases {
+  display: grid;
+  gap: 4mm;
+  margin-top: 5mm;
+}
+
+.pdf-case {
+  padding: 3.4mm;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.pdf-case h3 {
+  margin: 0 0 2.5mm;
+  color: #0f172a;
+  font-size: 12.2pt;
+  line-height: 1.3;
+}
+
+.pdf-case-grid {
+  display: grid;
+  gap: 2.4mm;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.pdf-case h4 {
+  margin: 0 0 1.2mm;
+  color: #1d4ed8;
+  font-size: 9.2pt;
+  line-height: 1.25;
+}
+
+.pdf-case p,
+.pdf-case li {
+  color: #334155;
+  font-size: 8.8pt;
+  line-height: 1.5;
+}
+
+.pdf-case p {
+  margin: 0;
+}
+
+.pdf-case ul {
+  display: grid;
+  gap: 1.1mm;
+  margin: 0;
+  padding-left: 4mm;
+}
+
+.pdf-evidence {
+  margin-top: 3mm !important;
+  padding-top: 2.5mm;
+  border-top: 1px solid #e2e8f0;
+  color: #64748b !important;
+  font-size: 8.4pt !important;
+  font-weight: 650;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  html,
+  body,
+  #root {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0;
+    background: #ffffff !important;
+  }
+
+  .pdf-portfolio {
+    background: #ffffff !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .pdf-page {
+    margin: 0;
+    box-shadow: none;
+  }
+}
+
+
+/* architecture image */
+.pdf-architecture-image {
+  display: block;
+  width: 100%;
+  max-height: none;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  object-fit: contain;
+}
+
+
+/* cover skills panel */
+.pdf-skills-panel {
+  padding: 6mm;
+  border: 1px solid #d9e2ef;
+  border-radius: 3mm;
+  background: #f8fafc;
+}
+
+.pdf-skills-panel h2 {
+  margin: 0 0 4mm;
+  color: #0f172a;
+  font-size: 17pt;
+  line-height: 1.25;
+}
+
+.pdf-skills-grid {
+  display: grid;
+  gap: 2.4mm 7mm;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.pdf-skills-grid p {
+  margin: 0;
+  color: #334155;
+  font-size: 9.8pt;
+  line-height: 1.48;
+}
+
+.pdf-skills-grid strong,
+.pdf-stack strong {
+  color: #0f172a;
+  font-weight: 850;
+}
+
+
+/* profile closing page */
+.pdf-profile-grid {
+  display: grid;
+  gap: 4mm;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.pdf-profile-grid article {
+  min-height: 76mm;
+  padding: 5mm;
+  border: 1px solid #d9e2ef;
+  border-radius: 3mm;
+  background: #f8fafc;
+}
+
+.pdf-profile-grid h3 {
+  margin: 0 0 3mm;
+  color: #0f172a;
+  font-size: 12pt;
+  line-height: 1.25;
+}
+
+.pdf-profile-grid ul {
+  display: grid;
+  gap: 2.3mm;
+  margin: 0;
+  padding-left: 4mm;
+}
+
+.pdf-profile-grid li {
+  color: #334155;
+  font-size: 9.4pt;
+  line-height: 1.55;
+}
+
+
+/* activity details */
+.pdf-profile-grid-two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.pdf-profile-grid-two article {
+  min-height: 0;
+}
+
+.pdf-profile-meta {
+  margin: 0 0 3mm;
+  color: #1d4ed8;
+  font-size: 9pt;
+  font-weight: 750;
+  line-height: 1.45;
+}
+
+
+/* metric table */
+.pdf-metric-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border: 1px solid #cbd5e1;
+  border-radius: 2.5mm;
+  background: #ffffff;
+}
+
+.pdf-metric-table th,
+.pdf-metric-table td {
+  padding: 2.2mm 2.8mm;
+  border-bottom: 1px solid #cbd5e1;
+  border-right: 1px solid #e2e8f0;
+  color: #334155;
+  font-size: 8.6pt;
+  line-height: 1.42;
+  text-align: left;
+  vertical-align: top;
+}
+
+.pdf-metric-table thead th {
+  background: #eef2ff;
+  color: #0f172a;
+  font-size: 8.4pt;
+  font-weight: 850;
+}
+
+.pdf-metric-table tbody th {
+  width: 25%;
+  background: #f8fafc;
+  color: #0f172a;
+  font-weight: 800;
+}
+
+.pdf-metric-table tbody td:nth-child(3) {
+  color: #0f172a;
+  font-weight: 800;
+}
+
+.pdf-metric-table tr:last-child th,
+.pdf-metric-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.pdf-metric-table th:last-child,
+.pdf-metric-table td:last-child {
+  border-right: 0;
+}
+
+
+/* row layout polish */
+.pdf-project-intro {
+  padding-bottom: 10mm;
+}
+
+.pdf-project-intro .pdf-summary {
+  margin: 4.5mm 0;
+  font-size: 10.3pt;
+  line-height: 1.5;
+}
+
+.pdf-project-intro .pdf-stack {
+  gap: 2.4mm;
+  margin-bottom: 4mm;
+}
+
+.pdf-project-intro .pdf-stack section {
+  padding: 3.2mm;
+}
+
+.pdf-project-intro .pdf-stack p {
+  font-size: 8.7pt;
+  line-height: 1.42;
+}
+
+.pdf-project-intro .pdf-shot-grid-large {
+  grid-template-rows: repeat(2, 27mm);
+  margin-bottom: 4mm;
+}
+
+.pdf-architecture-metrics {
+  display: grid;
+  gap: 3mm;
+}
+
+.pdf-architecture-metrics .pdf-architecture-image {
+  max-height: 72mm;
+}
+
+.pdf-architecture-metrics .pdf-metric-table {
+  margin-top: 0;
+}
+
+.pdf-closing {
+  align-content: start;
+  gap: 6mm;
+}
+
+.pdf-profile-grid-two {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 3mm;
+}
+
+.pdf-profile-grid-two article {
+  display: grid;
+  grid-template-columns: 48mm minmax(0, 1fr);
+  gap: 4mm;
+  min-height: 0;
+  padding: 4mm;
+}
+
+.pdf-profile-grid-two h3 {
+  margin: 0;
+  font-size: 11pt;
+}
+
+.pdf-profile-grid-two .pdf-profile-meta {
+  grid-column: 1;
+  margin-top: 2mm;
+}
+
+.pdf-profile-grid-two ul {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  gap: 1.6mm;
+}
+
+.pdf-profile-grid-two li {
+  font-size: 8.9pt;
+  line-height: 1.45;
+}
+/* project intro architecture stack metrics */
+.pdf-project-intro {
+  padding-bottom: 9mm;
+}
+
+.pdf-project-intro .pdf-summary {
+  margin: 4mm 0 4.5mm;
+  font-size: 10pt;
+  line-height: 1.46;
+}
+
+.pdf-architecture-metrics {
+  gap: 2.6mm;
+}
+
+.pdf-architecture-metrics .pdf-architecture-image {
+  width: 100%;
+  max-height: 118mm;
+  object-fit: contain;
+}
+
+.pdf-stack-under-architecture {
+  gap: 2mm;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+}
+
+.pdf-stack-under-architecture section {
+  padding: 2.8mm 3mm;
+}
+
+.pdf-stack-under-architecture h3 {
+  margin-bottom: 1.2mm;
+  font-size: 9.6pt;
+}
+
+.pdf-stack-under-architecture p {
+  font-size: 8.15pt;
+  line-height: 1.34;
+}
+
+.pdf-architecture-metrics .pdf-metric-table {
+  margin-top: 0;
+}
+
+.pdf-architecture-metrics .pdf-metric-table th,
+.pdf-architecture-metrics .pdf-metric-table td {
+  padding: 1.75mm 2.2mm;
+  font-size: 8.05pt;
+  line-height: 1.32;
+}
+
+.pdf-architecture-metrics .pdf-metric-table tbody tr:nth-child(even) th,
+.pdf-architecture-metrics .pdf-metric-table tbody tr:nth-child(even) td {
+  background: #f8fafc;
+}
+/* project screenshot pages */
+.pdf-screenshots-page {
+  display: grid;
+  align-content: start;
+  gap: 7mm;
+}
+
+.pdf-screenshots-page h2 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 23pt;
+  line-height: 1.2;
+}
+
+.pdf-shot-grid-page {
+  grid-template-rows: repeat(2, 93mm);
+  margin-bottom: 0;
+}
+
+.pdf-shot-grid-page img {
+  object-fit: contain;
+}
+/* screenshot pages: image-first layout */
+.pdf-shot-grid-page {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: 104mm 54mm;
+  gap: 5mm;
+  margin: 0;
+}
+
+.pdf-shot-grid-page img {
+  border: 0;
+  border-radius: 1.5mm;
+  background: transparent;
+  object-fit: contain;
+}
+
+.pdf-shot-grid-page img:first-child {
+  grid-column: 1 / -1;
+  grid-row: auto;
+}
+/* metric table neutral print fix */
+.pdf-metric-table {
+  border-color: #d7dee8;
+}
+
+.pdf-metric-table thead th,
+.pdf-metric-table tbody th,
+.pdf-architecture-metrics .pdf-metric-table tbody tr:nth-child(even) th,
+.pdf-architecture-metrics .pdf-metric-table tbody tr:nth-child(even) td {
+  background: #ffffff;
+}
+
+.pdf-metric-table thead th {
+  border-bottom: 1.2px solid #b8c3d1;
+  color: #0f172a;
+}
+
+.pdf-metric-table th,
+.pdf-metric-table td {
+  border-right-color: #e5eaf1;
+  border-bottom-color: #e5eaf1;
+}
+
+.pdf-metric-table tbody tr + tr th,
+.pdf-metric-table tbody tr + tr td {
+  border-top: 1px solid #eef2f7;
+}

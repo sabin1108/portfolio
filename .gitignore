@@ -15,4 +15,7 @@ public/photo/
 
 # Private local resume URL index
 src/app/data/private_resume_links.ts
-
+# Local generated artifacts
+dev-server*.log
+output/
+pdf_thesis/
