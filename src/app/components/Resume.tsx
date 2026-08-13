@@ -6,6 +6,7 @@ import { resumeNexonData } from "../data/resume_nexon";
 import { resumePooolingforestData } from "../data/resume_pooolingforest";
 import { resumeWoojinData } from "../data/resume_woojin";
 import { resumeLsscData } from "../data/resume_lssc";
+import { resumeAxData } from "../data/resume_ax";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 
@@ -164,10 +165,13 @@ export function Resume() {
   const isPooolingforestPath = normalizedPath.includes("pooolingforest");
   const isWoojinPath = normalizedPath.includes("woojin_web_developer");
   const isLsscPath = normalizedPath.includes("lssc_fullstack");
+  const isAxPath = normalizedPath.includes("ax_ai_native") || normalizedPath === "/resume_ax";
   const activeResumeData = isPooolingforestPath
     ? resumePooolingforestData
     : isLsscPath
     ? resumeLsscData
+    : isAxPath
+    ? resumeAxData
     : isWoojinPath
     ? resumeWoojinData
     : isNexonPath
@@ -178,7 +182,7 @@ export function Resume() {
 
   const { summary, coreSkills, projectHighlights, activityGroups, education, profile } = activeResumeData;
 
-  if (!authorized && !isElicePath && !isNexonPath && !isPooolingforestPath && !isWoojinPath && !isLsscPath) {
+  if (!authorized && !isElicePath && !isNexonPath && !isPooolingforestPath && !isWoojinPath && !isLsscPath && !isAxPath) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-slate-100 px-4 py-8">
         <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-lg">
@@ -240,9 +244,9 @@ export function Resume() {
         <ResumeHeader
           profile={profile}
           summary={summary}
-          portfolioHref={isPooolingforestPath ? "https://binportfolio.site/fullstack" : undefined}
-          portfolioLabel={isPooolingforestPath ? "binportfolio.site/fullstack" : undefined}
-          portfolioNavHref={isPooolingforestPath ? "/fullstack" : undefined}
+          portfolioHref={isPooolingforestPath ? "https://binportfolio.site/fullstack" : isAxPath ? "https://binportfolio.site/ax" : undefined}
+          portfolioLabel={isPooolingforestPath ? "binportfolio.site/fullstack" : isAxPath ? "binportfolio.site/ax" : undefined}
+          portfolioNavHref={isPooolingforestPath ? "/fullstack" : isAxPath ? "/ax" : undefined}
         />
 
         <div className="resume-first-page-grid">
@@ -340,7 +344,7 @@ export function Resume() {
                   
                   {project.issues && project.issues.length > 0 && (
                     <div className="mt-4 space-y-1">
-                      <div className="font-bold text-slate-900 text-[1rem] project-subheading">이슈</div>
+                      <div className="font-bold text-slate-900 text-[1rem] project-subheading">{isAxPath ? "문제 정의" : "이슈"}</div>
                       <ul className="list-disc pl-5 mt-1 space-y-1.5 text-slate-600 text-[0.95rem] leading-relaxed">
                         {project.issues.map((issue, idx) => (
                           <li key={idx}>{issue}</li>
@@ -349,9 +353,19 @@ export function Resume() {
                     </div>
                   )}
 
+                  {"aiApproach" in project && Array.isArray(project.aiApproach) && project.aiApproach.length > 0 && (
+                    <div className="mt-4 space-y-1">
+                      <div className="font-bold text-slate-900 text-[1rem] project-subheading">AI 활용 방식</div>
+                      <ul className="list-disc pl-5 mt-1 space-y-1.5 text-slate-600 text-[0.95rem] leading-relaxed">
+                        {project.aiApproach.map((approach) => (
+                          <li key={approach}>{approach}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                   {project.resolutions && project.resolutions.length > 0 && (
                     <div className="mt-4 space-y-1">
-                      <div className="font-bold text-slate-900 text-[1rem] project-subheading">해결</div>
+                      <div className="font-bold text-slate-900 text-[1rem] project-subheading">{isAxPath ? "실행 및 검증" : "해결"}</div>
                       <ul className="list-disc pl-5 mt-1 space-y-1.5 text-slate-600 text-[0.95rem] leading-relaxed">
                         {project.resolutions.map((res, idx) => (
                           <li key={idx}>{res}</li>

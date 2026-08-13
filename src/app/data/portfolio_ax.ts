@@ -1,0 +1,141 @@
+import { portfolio, type CaseStudy, type Project } from "./portfolio";
+
+function getProject(title: string): Project {
+  const project = portfolio.projects.find((item) => item.title === title);
+  if (!project) throw new Error(`Portfolio project not found: ${title}`);
+  return project;
+}
+
+const gameInfo = getProject("Game Information Platform");
+const photoMap = getProject("PhotoMap");
+const aiChatBot = getProject("AI ChatBot");
+
+function getCaseStudy(project: Project, title: string): CaseStudy {
+  const caseStudy = project.caseStudies.find((item) => item.title === title);
+  if (!caseStudy) throw new Error(`Portfolio case study not found: ${title}`);
+  return caseStudy;
+}
+
+const gameInfoCases: CaseStudy[] = [
+  {
+    title: "모호한 목표를 검증 가능한 작업으로 바꾼 개발 운영",
+    issue: "가격 비교 서비스라는 목표 아래 검색, 관심 목록, AI 인사이트, 웹뷰, 분석, 모니터링이 함께 얽혀 있었습니다. 1인 개발에서 큰 요청부터 그대로 구현하면 사용자 가치와 완료 기준이 흐려지기 쉬웠습니다.",
+    cause: "기획부터 데이터 계약, UI, QA까지 혼자 맡아야 했습니다. AI에게 넓은 범위를 한꺼번에 맡기면 기능은 빨리 늘어도 가격 규칙, 인증 경계, 테스트, 문서가 빠질 위험이 컸습니다.",
+    resolution: "제품 목표를 PRD로 정리한 뒤 AI 인사이트, scale readiness, analytics, bundle, CI·demo 작업을 GitHub issue #15~#25의 vertical slice로 나눴습니다. Harness에는 product, data contract, frontend UX, QA, evidence 관점을 맡는 agent 5개와 skill 5개를 두고 구현과 검증이 함께 끝나도록 작업 순서를 고정했습니다.",
+    result: "AI 인사이트도 요약 UI에서 끝내지 않고 job route 인증, deterministic 후보 생성, evidence-only prompt, stale snapshot 표시 정책, empty state, API·컴포넌트 테스트까지 한 흐름으로 완성했습니다. 여러 날 이어진 작업은 handoff에 변경 파일, 검증 명령, 남은 위험을 기록해 맥락을 이어갔습니다.",
+    evidence: ["README - AI Skill 활용 방식", "GitHub issues #15~#25", "CI workflow", "handoff records"],
+  },
+  {
+    title: "AI가 가격을 지어내지 못하게 데이터 계약으로 제한",
+    issue: "생성형 AI가 읽기 쉬운 할인 설명을 만들더라도 실제로 존재하지 않는 가격이나 할인율을 보태면 사용자의 구매 판단을 해칠 수 있었습니다.",
+    cause: "가격은 API마다 필드와 갱신 시점이 다르고 출시 예정 상품은 0원이나 null로 들어옵니다. 자유로운 prompt만으로는 현재가, 과거 최저가, 리뷰 근거의 출처를 보장하기 어려웠습니다.",
+    resolution: "AI가 설명할 후보는 코드에서 deterministic 조건으로 먼저 결정했습니다. prompt에는 저장된 price snapshot과 review evidence만 넣고, 외부 AI 없이 mock summarizer로 후보 생성부터 저장까지 테스트했습니다. 오래된 evidence는 현재가처럼 보이지 않도록 UI 정책도 분리했습니다.",
+    result: "AI는 저장된 근거를 요약하는 일만 맡겼습니다. 가격 계산과 후보 선정은 업무 규칙으로 처리해 가격 미정 상품이 최저가나 목표가 달성으로 표시되는 경로를 막았습니다. 사용자의 구매 판단을 보호하면서 spec 25개 파일, 69개 케이스를 갖췄고 중복 코드는 1,006줄(9.4%)에서 308줄(2.9%)로 줄었습니다.",
+    evidence: ["ai-insights.ts", "game-score.ts", "25 spec files / 69 cases", "Fallow reports"],
+  },
+];
+
+const photoMapCases: CaseStudy[] = [
+  {
+    title: "느리다는 인상을 반증 가능한 이미지 가설로 바꾸기",
+    issue: "모바일에서 첫 사진이 매우 늦게 보였지만 React 렌더링, Supabase DB, 이미지 전송 중 어디가 병목인지 구분되지 않았습니다. 감으로 코드를 바꾸면 개선 원인을 설명할 수 없는 상태였습니다.",
+    cause: "기준 구현은 첫 화면 주변의 522,002B JPEG 약 30장을 동시에 요청하고 여러 이미지에 `eager/high`를 줬습니다. 1.6Mbps 환경에서 약 15.66MB의 초기 후보가 대역폭을 나눠 쓰며 첫 이미지 완료를 밀어냈습니다.",
+    resolution: "AI로 이미지 경로를 조사하고 ‘원본 요청 경쟁을 줄이면 첫 사진 p95가 낮아진다’는 falsifiable hypothesis를 세웠습니다. 같은 Preview에서 baseline/optimized query mode를 고정하고 CPU, RTT, 대역폭, 콜드·웜 캐시를 통제하는 Playwright 하네스를 만들었습니다. 환경변수와 Preview Authentication은 직접 관리했고, 원시 JSON과 실패 실행도 사람이 검토했습니다.",
+    result: "통제된 모바일 4G 콜드 A/B에서 첫 실제 사진 p95가 79.05초에서 3.59초로 95.5% 줄었습니다. 보호 로그인 화면, 잘못 선택한 DOM 이미지, 불공정한 캐시 조건 등 오류가 있던 5가지 실행은 결과에서 폐기했습니다.",
+    evidence: ["image A/B raw JSON", "Playwright harness", "PR #22", "discarded-run log"],
+  },
+  {
+    title: "이미지 전달 정책을 바꾸고 DB 과잉 최적화를 피하기",
+    issue: "작은 카드에서도 원본 이미지를 썼고, Supabase Image Transformations가 꺼진 환경에서는 transform URL이 403을 반환했습니다. 이미지 문제를 DB 문제로 오인해 index를 먼저 추가할 가능성도 있었습니다.",
+    cause: "썸네일, 화면 표시용 이미지, 원본의 용도가 나뉘지 않았고 실제 LCP 후보와 나머지 이미지가 높은 우선순위로 경쟁했습니다. frontend와 DB를 함께 측정하면 병목 위치도 흐려졌습니다.",
+    resolution: "업로드 시 480px thumbnail WebP와 1600px display WebP를 만들고, 화면별 URL과 우선순위 정책을 분리했습니다. 별도 Supabase staging에는 synthetic media 10,000건을 넣고 k6 smoke, 30분 peak, spike로 읽기 경로만 측정했습니다.",
+    result: "초기 이미지 후보 모델 바이트는 약 15.66MB에서 0.91MB로 94.2% 줄어 사진 탐색 전환의 대기 시간을 낮췄습니다. 최대 56.35 read API RPS에서 p95 약 208ms, HTTP 실패·429·5xx 0건이었고 DB 포화 근거가 없어 추가 index를 넣지 않았습니다. 미완료 2시간 soak는 성과에서 제외했습니다.",
+    evidence: ["imageVariants.ts", "image tests 8/8", "k6 results", "Supabase dashboard"],
+  },
+  ...photoMap.caseStudies.filter((item) =>
+    ["Context API 전역 리렌더링을 Zustand selector로 축소", "D3 tick 업데이트를 React state에서 분리"].includes(item.title),
+  ),
+];
+
+const gameInfoAx: Project = {
+  ...gameInfo,
+  summary: "제품 목표를 PRD와 vertical slice로 구조화하고, AI agent·skill을 역할별로 나눠 구현 속도와 검증 책임을 함께 관리한 1인 제품 개발 사례입니다.",
+  responsibilities: ["제품 목표를 PRD와 issue #15~#25로 분해", "product·data·UX·QA·evidence 역할을 나눈 Harness 운영", "AI 출력을 domain rule, 테스트, CI, Fallow로 검증"],
+  tech: [...gameInfo.tech, "AI Harness", "GitHub Issues"],
+  metrics: [
+    { label: "검증 자산", value: "25 files / 69 cases", basis: "unit·component·API·E2E" },
+    { label: "중복 코드", value: "9.4% → 2.9%", basis: "Fallow 전후" },
+    { label: "미사용 export", value: "11 → 0", basis: "Fallow 결과" },
+  ],
+  architecture: {
+    title: "AI-assisted 제품 개발을 통제한 작업 구조",
+    description: "문제 구조화, 역할 분리, domain guardrail, 자동 검증, evidence 기록을 한 작업 단위로 묶었습니다.",
+    columns: [
+      { title: "Problem", nodes: [{ label: "PRD", detail: "사용자 가치와 완료 기준" }, { label: "Issue", detail: "vertical slice" }] },
+      { title: "AI Roles", nodes: [{ label: "Product / Data", detail: "범위와 계약 점검" }, { label: "Frontend / QA", detail: "UX와 회귀 검증" }] },
+      { title: "Human Control", nodes: [{ label: "Domain Rules", detail: "가격·stale 정책" }, { label: "Security", detail: "secret·RLS 경계" }] },
+      { title: "Evidence", nodes: [{ label: "CI / Tests", detail: "typecheck부터 E2E" }, { label: "Fallow / Docs", detail: "품질 수치와 재현" }] },
+    ],
+    flow: ["목표를 PRD와 완료 기준으로 바꿉니다.", "AI 구현 후보에 domain guardrail을 적용합니다.", "검증 결과가 남아야 issue를 닫습니다."],
+  },
+  caseStudies: gameInfoCases,
+};
+
+const photoMapAx: Project = {
+  ...photoMap,
+  summary: "‘사진이 늦게 보인다’는 문제를 네트워크 경쟁 가설로 좁히고, AI-assisted 하네스와 사람이 검토한 원시 측정값으로 개선을 증명한 성능 실험입니다.",
+  responsibilities: ["성능 가설과 A/B 완료 기준 수립", "AI-assisted 하네스·이미지 정책 구현", "staging 안전 통제와 실패 실행 폐기"],
+  tech: [...photoMap.tech.filter((item) => item !== "Lighthouse"), "Playwright", "k6", "WebP", "AI Harness"],
+  metrics: [
+    { label: "첫 사진 p95", value: "79.05s → 3.59s", basis: "모바일 4G 콜드 합성 A/B" },
+    { label: "초기 이미지 후보", value: "15.66MB → 0.91MB", basis: "fixture 모델" },
+    { label: "Supabase read", value: "56.35 RPS / p95 208ms", basis: "synthetic 10,000건, 오류 0" },
+  ],
+  metricRows: [
+    { category: "Latency", metric: "첫 실제 사진 p95", before: "79.05초", after: "3.59초", basis: "모바일 4G 콜드 A/B" },
+    { category: "Traffic", metric: "초기 이미지 후보", before: "약 15.66MB", after: "약 0.91MB", basis: "fixture 기반 모델" },
+    { category: "Latency", metric: "관계 보기 p95", before: "7.62초", after: "4.90초", basis: "navigation A/B" },
+    { category: "Latency", metric: "앨범 p95", before: "15.37초", after: "3.94초", basis: "navigation A/B" },
+  ],
+  architecture: {
+    title: "AI-assisted 성능 실험과 사람 검증 경계",
+    description: "AI로 조사·가설·하네스·구현 속도를 높였습니다. 안전 범위 설정, 원시 결과 채택, 한계 해석은 사람이 맡았습니다.",
+    columns: [
+      { title: "Problem", nodes: [{ label: "User wait", detail: "첫 사진의 긴 대기" }, { label: "Hypothesis", detail: "이미지 요청 경쟁" }] },
+      { title: "AI Work", nodes: [{ label: "Investigation", detail: "경로·실패 조사" }, { label: "Implementation", detail: "WebP·progressive modal" }] },
+      { title: "Human Control", nodes: [{ label: "Environment", detail: "staging·Preview" }, { label: "Validity", detail: "불공정 실행 폐기" }] },
+      { title: "Evidence", nodes: [{ label: "Playwright", detail: "p95·원시 JSON" }, { label: "k6", detail: "traffic·error·saturation" }] },
+    ],
+    flow: ["대기를 측정 구간으로 나눕니다.", "baseline과 optimized 조건을 고정합니다.", "원시 결과를 검토한 뒤 주장 범위를 정합니다."],
+  },
+  caseStudies: photoMapCases,
+};
+
+const aiChatBotAx: Project = {
+  ...aiChatBot,
+  summary: "사용자가 흩어진 학교 정보를 어떻게 묻고 확인할지 먼저 정했습니다. 불규칙한 AI·백엔드 응답이 UI로 새지 않게 경계를 나눈 2인 협업 사례입니다.",
+  responsibilities: ["학식 접근 문제에서 웹 챗봇 방향 결정", "AI·백엔드 응답을 API route 경계에서 분리", "FE·BE 응답 계약과 사용자 메시지 UX 조율"],
+  caseStudies: [
+    getCaseStudy(aiChatBot, "학식 접근성 문제에서 웹 챗봇 방향으로 전환"),
+    {
+      title: "AI 응답을 신뢰 가능한 화면 데이터로 가정하지 않기",
+      issue: "채팅, 공지, 식단 응답에는 JSON, 문장, 긴 URL, 날짜와 목록이 섞였습니다. 이를 그대로 출력하면 모바일 말풍선이 깨지고 예외 처리가 UI에 쌓였습니다.",
+      cause: "생성형 AI와 외부 백엔드는 화면이 원하는 고정 형식을 항상 보장하지 않습니다. UI가 endpoint와 응답 변형을 모두 알면 백엔드 변경이 메시지 목록까지 번집니다.",
+      resolution: "Next.js API Routes를 proxy boundary로 두고 외부 호출 책임을 모았습니다. ReactMarkdown으로 링크·목록을 렌더링하고 긴 URL은 줄바꿈 가능한 링크로 바꿨습니다.",
+      result: "UI는 메시지 표시와 상호작용에 집중하게 됐고 모바일 가로 스크롤과 말풍선 깨짐을 줄였습니다. 학교 정보 접근성 개선 흐름은 BRIGHT MAKERS EXPO 2025 우수상으로 이어졌습니다.",
+      evidence: ["app/api/chat/route.ts", "enhanced-chat-interface.tsx", "ReactMarkdown", "캡스톤 우수상"],
+    },
+    getCaseStudy(aiChatBot, "로그인 없는 로컬 채팅 기록 저장과 탭 동기화"),
+    getCaseStudy(aiChatBot, "대화 내역 브라우저 내보내기"),
+  ],
+};
+
+export const axPortfolio = {
+  ...portfolio,
+  profile: {
+    ...portfolio.profile,
+    title: "AI-Native Product Engineer",
+    headline: "모호한 목표를 문제와 검증 기준으로 바꾸고, AI와 함께 빠르게 구현하되 테스트와 지표로 결과를 책임집니다.",
+  },
+  projects: [gameInfoAx, photoMapAx, aiChatBotAx],
+} as const;
