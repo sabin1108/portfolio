@@ -18,25 +18,24 @@ function getCaseStudy(project: Project, title: string): CaseStudy {
 
 const gameInfoCases: CaseStudy[] = [
   {
-    title: "모호한 목표를 검증 가능한 작업으로 바꾼 개발 운영",
-    issue: "가격 비교 서비스라는 목표 아래 검색, 관심 목록, AI 인사이트, 웹뷰, 분석, 모니터링이 함께 얽혀 있었습니다. 1인 개발에서 큰 요청부터 그대로 구현하면 사용자 가치와 완료 기준이 흐려지기 쉬웠습니다.",
-    cause: "기획부터 데이터 계약, UI, QA까지 혼자 맡아야 했습니다. AI에게 넓은 범위를 한꺼번에 맡기면 기능은 빨리 늘어도 가격 규칙, 인증 경계, 테스트, 문서가 빠질 위험이 컸습니다.",
-    resolution: "제품 목표를 PRD로 정리한 뒤 AI 인사이트, scale readiness, analytics, bundle, CI·demo 작업을 GitHub issue #15~#25의 vertical slice로 나눴습니다. Harness에는 product, data contract, frontend UX, QA, evidence 관점을 맡는 agent 5개와 skill 5개를 두고 구현과 검증이 함께 끝나도록 작업 순서를 고정했습니다.",
-    aiApproach: "AI를 한 명의 만능 개발자처럼 쓰지 않았습니다. product architect가 범위와 완료 기준을 점검하고, data integration agent가 API·cache·RLS 계약을 검토하며, frontend와 QA agent가 웹뷰 UX와 회귀 위험을 확인하게 했습니다. to-issues로 작업을 쪼개고 handoff로 다음 세션에 결정 근거와 검증 명령을 넘겼습니다.",
-    result: "AI 인사이트도 요약 UI에서 끝내지 않고 job route 인증, 같은 입력이면 같은 결과가 나오는 후보 생성, 저장 근거만 받는 prompt, 오래된 가격 표시 정책, 데이터가 없을 때의 화면, API·컴포넌트 테스트까지 한 흐름으로 완성했습니다. 여러 날 이어진 작업은 handoff에 변경 파일, 검증 명령, 남은 위험을 기록해 맥락을 이어갔습니다.",
-    evidence: ["README - AI Skill 활용 방식", "GitHub issues #15~#25", "CI workflow", "handoff records"],
+    title: "agent 5개·skill 5개로 API·웹뷰·QA 검토 기준을 고정",
+    issue: "외부 가격 API, Supabase 인증·DB, 모바일 웹뷰, analytics, 인사이트 작업을 1인 개발로 함께 진행했습니다. 기능별 확인 기준이 없으면 구현 속도는 빨라도 API key 노출, cache key 누락, 오래된 가격 오표시, 웹뷰 회귀, 테스트·문서 누락을 놓칠 수 있었습니다.",
+    cause: "한 번의 AI 요청에 제품 범위, 데이터 계약, 화면 UX, 테스트, 문서화를 모두 맡기면 서로 다른 검토 기준이 섞였습니다. 여러 날짜에 걸친 작업에서는 이전 결정과 검증 명령을 다시 찾는 비용도 생겼습니다.",
+    resolution: "Harness plugin으로 product, data contract, frontend UX, QA, evidence 관점을 프로젝트 전용 agent 5개와 skill 5개로 분리했습니다. 큰 작업은 to-issues로 AI insight, scale readiness, analytics, bundle, CI·demo를 GitHub issue #15~#25에 나누고, handoff에 변경 파일·검증 명령·남은 위험을 기록했습니다.",
+    aiApproach: "product architect는 기능 범위와 issue 분해, data integration agent는 ITAD·Steam·Supabase·RLS·cache key, frontend agent는 웹뷰와 store bridge, QA agent는 Vitest·Playwright·회귀 검증, documentation 역할은 README·CI·demo 근거를 점검하는 데 사용했습니다.",
+    result: "AI 인사이트 작업에서는 인증, 가격 규칙, 오래된 데이터 표시, 빈 화면, API·컴포넌트 테스트를 함께 확인했습니다. analytics 검토에서는 문서의 experiment_exposed와 실제 코드 이벤트명 experiment_exposure 불일치를 찾아 수정했습니다. 기능 완료 뒤 typecheck·lint·test·build와 필요한 smoke test 결과를 남기는 기준을 유지했습니다.",
+    evidence: ["README.md - AI Skill 활용 방식과 성과", "GitHub issues #15~#25", "src/lib/analytics/events.ts", "CI workflow"],
   },
   {
-    title: "AI가 가격을 지어내지 못하게 데이터 계약으로 제한",
-    issue: "생성형 AI가 읽기 쉬운 할인 설명을 만들더라도 실제로 존재하지 않는 가격이나 할인율을 보태면 사용자의 구매 판단을 해칠 수 있었습니다.",
-    cause: "가격은 API마다 필드와 갱신 시점이 다르고 출시 예정 상품은 0원이나 null로 들어옵니다. 자유로운 prompt만으로는 현재가, 과거 최저가, 리뷰 근거의 출처를 보장하기 어려웠습니다.",
-    resolution: "AI가 설명할 후보는 코드의 명시적인 조건으로 먼저 결정했습니다. prompt에는 저장된 price snapshot과 review evidence만 넣고, 외부 AI 없이 mock summarizer로 후보 생성부터 저장까지 테스트했습니다. 오래된 evidence는 현재가처럼 보이지 않도록 UI 정책도 분리했습니다.",
-    aiApproach: "game-data-contracts skill로 AI 입력을 저장된 가격 snapshot과 review evidence로 제한했습니다. AI는 후보 선택이나 가격 계산에는 관여하지 않고, 코드가 고른 근거를 읽기 쉬운 문장으로 요약하는 역할만 맡았습니다. mock summarizer로 외부 모델 없이 같은 계약을 반복 검증했습니다.",
-    result: "AI는 저장된 근거를 요약하는 일만 맡겼습니다. 가격 계산과 후보 선정은 업무 규칙으로 처리해 가격 미정 상품이 최저가나 목표가 달성으로 표시되는 경로를 막았습니다. 사용자의 구매 판단을 보호하면서 spec 25개 파일, 69개 케이스를 갖췄고 중복 코드는 1,006줄(9.4%)에서 308줄(2.9%)로 줄었습니다.",
-    evidence: ["ai-insights.ts", "game-score.ts", "25 spec files / 69 cases", "Fallow reports"],
+    title: "외부 모델 연결 전, mock 요약기로 가격 근거 입력 계약 검증",
+    issue: "향후 외부 AI를 연결했을 때 저장된 가격·할인율·리뷰 밖의 내용을 생성하면 구매 판단을 해칠 수 있었습니다. 실제 모델 연결 전에 어떤 데이터만 입력하고 어떤 조건에서 결과를 만들지 검증할 필요가 있었습니다.",
+    cause: "가격이 0원인 상품은 목표가 달성으로 오판할 수 있고, source snapshot이나 가격 근거가 없는 상품은 인사이트 후보가 되어서는 안 됩니다. 오래된 snapshot은 현재 가격과 구분해 표시해야 했습니다.",
+    resolution: "historical_low, deep_discount, high_review_discount 후보를 코드 조건으로 만들고 source snapshot이나 가격 근거가 없으면 후보를 생성하지 않았습니다. 요약 입력에는 game·product·snapshot ID, 가격, 할인율, 리뷰, 관측 시점만 넣었습니다. 현재 구현과 테스트는 외부 모델 대신 mock-evidence-summarizer-v1을 사용합니다.",
+    aiApproach: "game-data-contracts skill로 외부 가격 API, cache, RLS, price snapshot과 요약 입력의 경계를 검토했습니다. 실제 AI 연결 전에도 동일한 입력 계약과 저장 성공·실패 경로를 반복 검증할 수 있도록 mock summarizer를 유지했습니다.",
+    result: "후보 선정과 가격 계산은 코드가 담당하고 요약기는 저장된 근거만 사용하도록 분리했습니다. 인사이트 저장 실패 시 run을 failed로 기록하고 job route는 500을 반환하되 공개 사용자 API는 독립적으로 동작합니다. #16~#17 완료 시 후보·job 관련 10개 테스트가 통과했고, 현재 전체 test/spec 자산은 25개 파일·69개 케이스입니다.",
+    evidence: ["src/lib/jobs/ai-insight-candidates.ts", "src/lib/jobs/ai-insight-summaries.ts", "tests/jobs-api.test.ts", "GitHub issues #16~#17"],
   },
 ];
-
 const photoMapCases: CaseStudy[] = [
   {
     title: "느리다는 인상을 반증 가능한 이미지 가설로 바꾸기",
