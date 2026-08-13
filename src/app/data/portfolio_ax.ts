@@ -40,16 +40,16 @@ const photoMapCases: CaseStudy[] = [
     title: "느리다는 인상을 반증 가능한 이미지 가설로 바꾸기",
     issue: "모바일에서 첫 사진이 매우 늦게 보였지만 React 렌더링, Supabase DB, 이미지 전송 중 어디가 병목인지 구분되지 않았습니다. 감으로 코드를 바꾸면 개선 원인을 설명할 수 없는 상태였습니다.",
     cause: "기준 구현은 첫 화면 주변의 522,002B JPEG 약 30장을 동시에 요청하고 여러 이미지에 `eager/high`를 줬습니다. 1.6Mbps 환경에서 약 15.66MB의 초기 후보가 대역폭을 나눠 쓰며 첫 이미지 완료를 밀어냈습니다.",
-    resolution: "AI로 이미지 경로를 조사하고 ‘원본 요청 경쟁을 줄이면 첫 사진 p95가 낮아진다’는 falsifiable hypothesis를 세웠습니다. 같은 Preview에서 baseline/optimized query mode를 고정하고 CPU, RTT, 대역폭, 콜드·웜 캐시를 통제하는 Playwright 하네스를 만들었습니다. 환경변수와 Preview Authentication은 직접 관리했고, 원시 JSON과 실패 실행도 사람이 검토했습니다.",
-    result: "통제된 모바일 4G 콜드 A/B에서 첫 실제 사진 p95가 79.05초에서 3.59초로 95.5% 줄었습니다. 보호 로그인 화면, 잘못 선택한 DOM 이미지, 불공정한 캐시 조건 등 오류가 있던 5가지 실행은 결과에서 폐기했습니다.",
+    resolution: "AI로 이미지 경로를 조사하고 ‘원본 요청 경쟁을 줄이면 첫 사진 p95가 낮아진다’는 검증 가능한 가설을 세웠습니다. 실제 사용자 데이터와 운영 환경은 건드리지 않고, 고정된 Vercel Preview와 Supabase staging의 합성 이미지 120건으로 Playwright 하네스를 구성했습니다. viewport 390×844, DPR 2, CPU 4배 slowdown, RTT 150ms, 다운로드 1.6Mbps, 업로드 0.75Mbps를 적용했습니다. 같은 코드와 데이터에서 query parameter만 baseline/optimized로 바꾸고, 서로 다른 Chromium context를 5회씩 실행해 브라우저 캐시가 비교를 흐리지 않게 했습니다.",
+    result: "유효 표본 10회(모드별 5회)의 통제된 모바일 4G 콜드 A/B에서 첫 실제 사진 p95가 79.05초에서 3.59초로 95.5% 줄었습니다. Playwright가 기록한 원시 JSON을 직접 검토했고, 보호 로그인 화면, 잘못 선택한 DOM 이미지, 불공정한 캐시 조건 등 5가지 오류 유형에 해당한 실행은 결과에서 제외했습니다. 합성 실험이므로 실제 사용자 전체의 p95로 확대 해석하지 않았습니다.",
     evidence: ["image A/B raw JSON", "Playwright harness", "PR #22", "discarded-run log"],
   },
   {
     title: "이미지 전달 정책을 바꾸고 DB 과잉 최적화를 피하기",
     issue: "작은 카드에서도 원본 이미지를 썼고, Supabase Image Transformations가 꺼진 환경에서는 transform URL이 403을 반환했습니다. 이미지 문제를 DB 문제로 오인해 index를 먼저 추가할 가능성도 있었습니다.",
     cause: "썸네일, 화면 표시용 이미지, 원본의 용도가 나뉘지 않았고 실제 LCP 후보와 나머지 이미지가 높은 우선순위로 경쟁했습니다. frontend와 DB를 함께 측정하면 병목 위치도 흐려졌습니다.",
-    resolution: "업로드 시 480px thumbnail WebP와 1600px display WebP를 만들고, 화면별 URL과 우선순위 정책을 분리했습니다. 별도 Supabase staging에는 synthetic media 10,000건을 넣고 k6 smoke, 30분 peak, spike로 읽기 경로만 측정했습니다.",
-    result: "초기 이미지 후보 모델 바이트는 약 15.66MB에서 0.91MB로 94.2% 줄어 사진 탐색 전환의 대기 시간을 낮췄습니다. 최대 56.35 read API RPS에서 p95 약 208ms, HTTP 실패·429·5xx 0건이었고 DB 포화 근거가 없어 추가 index를 넣지 않았습니다. 미완료 2시간 soak는 성과에서 제외했습니다.",
+    resolution: "업로드 시 브라우저 Canvas로 480px thumbnail WebP(quality 0.72)와 1600px display WebP(quality 0.80)를 만들고, 화면별 URL과 로딩 우선순위를 분리했습니다. DB 성능은 이미지 A/B와 분리했습니다. Supabase staging에 category 10건, location 1,000건, media 10,000건, description 8,000건, favorites 1,000건의 합성 데이터를 만들고, k6의 각 iteration에서 카테고리·최근 media 50건과 관계 데이터·favorites를 조회했습니다. smoke 5분, peak 30분, spike 6분 순으로 읽기 경로만 부하 테스트했습니다.",
+    result: "초기 이미지 후보 모델 바이트는 약 15.66MB에서 0.91MB로 94.2% 줄어 사진 탐색 전환의 대기 시간을 낮췄습니다. spike에서 평균 56.35 read API RPS, p95 207.93ms, p99 223.18ms를 기록했고 HTTP 실패·429·5xx·dropped iteration은 모두 0건이었습니다. Supabase 대시보드에서도 CPU 2%, memory 51%, connection 15/60 수준이라 DB 포화 근거가 없었고 추가 index를 넣지 않았습니다. 중단된 2시간 soak 결과는 성과에서 제외했습니다.",
     evidence: ["imageVariants.ts", "image tests 8/8", "k6 results", "Supabase dashboard"],
   },
   ...photoMap.caseStudies.filter((item) =>
@@ -99,14 +99,14 @@ const photoMapAx: Project = {
   ],
   architecture: {
     title: "AI-assisted 성능 실험과 사람 검증 경계",
-    description: "AI로 조사·가설·하네스·구현 속도를 높였습니다. 안전 범위 설정, 원시 결과 채택, 한계 해석은 사람이 맡았습니다.",
+    description: "이미지 체감 속도와 DB 처리량을 한 수치로 섞지 않았습니다. 서로 다른 staging 실험으로 분리하고, 환경 고정과 원시 결과 채택, 한계 해석은 사람이 맡았습니다.",
     columns: [
-      { title: "Problem", nodes: [{ label: "User wait", detail: "첫 사진의 긴 대기" }, { label: "Hypothesis", detail: "이미지 요청 경쟁" }] },
-      { title: "AI Work", nodes: [{ label: "Investigation", detail: "경로·실패 조사" }, { label: "Implementation", detail: "WebP·progressive modal" }] },
-      { title: "Human Control", nodes: [{ label: "Environment", detail: "staging·Preview" }, { label: "Validity", detail: "불공정 실행 폐기" }] },
-      { title: "Evidence", nodes: [{ label: "Playwright", detail: "p95·원시 JSON" }, { label: "k6", detail: "traffic·error·saturation" }] },
+      { title: "Image A/B", nodes: [{ label: "Preview", detail: "Vercel + 합성 이미지 120건" }, { label: "Mobile 4G", detail: "390×844·CPU 4×·1.6Mbps" }] },
+      { title: "Playwright", nodes: [{ label: "Comparison", detail: "동일 코드·데이터, query mode만 변경" }, { label: "Sampling", detail: "콜드 context 모드별 5회" }] },
+      { title: "Load Test", nodes: [{ label: "Supabase staging", detail: "media 10,000건 + 관계 데이터" }, { label: "k6", detail: "5분 smoke·30분 peak·6분 spike" }] },
+      { title: "Human Control", nodes: [{ label: "Validity", detail: "원시 JSON·대시보드 교차 검토" }, { label: "Limits", detail: "RUM 아님·미완료 soak 제외" }] },
     ],
-    flow: ["대기를 측정 구간으로 나눕니다.", "baseline과 optimized 조건을 고정합니다.", "원시 결과를 검토한 뒤 주장 범위를 정합니다."],
+    flow: ["운영 데이터와 분리된 staging 환경을 만듭니다.", "baseline과 optimized 조건을 고정해 반복 측정합니다.", "부하 테스트는 별도 데이터와 읽기 경로로 실행합니다.", "원시 결과와 한계를 함께 기록한 뒤 주장 범위를 정합니다."],
   },
   caseStudies: photoMapCases,
 };
@@ -137,5 +137,5 @@ export const axPortfolio = {
     title: "AI-Native Product Engineer",
     headline: "모호한 목표를 문제와 검증 기준으로 바꾸고, AI와 함께 빠르게 구현하되 테스트와 지표로 결과를 책임집니다.",
   },
-  projects: [gameInfoAx, photoMapAx, aiChatBotAx],
+  projects: [photoMapAx, gameInfoAx, aiChatBotAx],
 } as const;
