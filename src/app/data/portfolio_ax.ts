@@ -91,6 +91,32 @@ const photoMapAx: Project = {
     { label: "초기 이미지 후보", value: "15.66MB → 0.91MB", basis: "fixture 모델" },
     { label: "Supabase read", value: "56.35 RPS / p95 208ms", basis: "synthetic 10,000건, 오류 0" },
   ],
+  validationSetup: {
+    title: "성능 수치가 만들어진 테스트 환경",
+    description: "운영 서비스의 실사용 지표처럼 보이지 않도록 이미지 체감 속도와 DB 처리량을 별도의 가상 환경에서 측정했습니다.",
+    tracks: [
+      {
+        name: "모바일 이미지 전달 A/B",
+        purpose: "원본 이미지 요청 경쟁을 줄였을 때 첫 실제 사진 표시 시간이 개선되는지 확인",
+        environment: "Vercel Preview + Supabase staging · Playwright Chromium · 390×844 / DPR 2 · CPU 4× slowdown · RTT 150ms · 다운로드 1.6Mbps / 업로드 0.75Mbps",
+        dataset: "개인정보가 없는 합성 media 120건 · 기준 JPEG 522,002B · Production DB/Storage 미사용",
+        procedure: "같은 코드·데이터에서 query parameter만 baseline/optimized로 변경 · 새 Chromium context로 모드별 5회, 유효 표본 총 10회 측정 · Playwright 원시 JSON 검토",
+        criteria: "첫 실제 사진 완료 p50·p95, 관계 보기·앨범 전환 p95, 이미지 표시 성공률을 동일 조건에서 비교",
+        result: "첫 실제 사진 p95 79.05초 → 3.59초(-95.5%) · 초기 이미지 후보 15.66MB → 0.91MB(-94.2%)",
+        limitation: "모드별 5회의 통제된 합성 실험이며 RUM이 아님 · 조건이 깨진 실행은 제외 · 실제 사용자 전체 성능으로 확대 해석하지 않음",
+      },
+      {
+        name: "Supabase 읽기 부하 테스트",
+        purpose: "이미지 지연과 DB 병목을 분리하고, 목표 읽기 부하에서 추가 index가 필요한지 판단",
+        environment: "Production과 분리된 동일 Region Supabase staging · k6 · REST 읽기 경로만 측정 · Vercel CDN·Storage 이미지·write flow 제외",
+        dataset: "category 10건 · location 1,000건 · media 10,000건 · description 8,000건 · favorites 1,000건의 합성 데이터",
+        procedure: "iteration마다 category, 최근 media 50건과 관계 데이터, favorites 조회 · smoke 5분 → peak 30분 → spike 6분 실행",
+        criteria: "checks >99% · HTTP failure <1% · p95 <300ms · p99 <800ms · 429·5xx·dropped iteration 0건",
+        result: "spike 평균 56.35 API RPS · p95 207.93ms / p99 223.18ms · HTTP 실패·429·5xx·dropped iteration 0건",
+        limitation: "읽기 중심 합성 workload 기준 · 대시보드는 rolling window 값 · 중단된 2시간 soak는 결과에서 제외",
+      },
+    ],
+  },
   metricRows: [
     { category: "Latency", metric: "첫 실제 사진 p95", before: "79.05초", after: "3.59초", basis: "모바일 4G 콜드 A/B" },
     { category: "Traffic", metric: "초기 이미지 후보", before: "약 15.66MB", after: "약 0.91MB", basis: "fixture 기반 모델" },

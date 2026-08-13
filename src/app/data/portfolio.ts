@@ -29,6 +29,23 @@ export type CaseStudy = {
   evidence: string[];
 };
 
+export type ValidationTrack = {
+  name: string;
+  purpose: string;
+  environment: string;
+  dataset: string;
+  procedure: string;
+  criteria: string;
+  result: string;
+  limitation: string;
+};
+
+export type ValidationSetup = {
+  title: string;
+  description: string;
+  tracks: ValidationTrack[];
+};
+
 export type Project = {
   title: string;
   subtitle: string;
@@ -47,6 +64,7 @@ export type Project = {
   };
   metrics: Metric[];
   metricRows?: MetricRow[];
+  validationSetup?: ValidationSetup;
   architecture: {
     title: string;
     description: string;

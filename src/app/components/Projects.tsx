@@ -5,6 +5,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ExternalLink,
+  FlaskConical,
   Github,
   Image as ImageIcon,
   Network,
@@ -165,6 +166,60 @@ function MetricGrid({ project }: { project: PortfolioProject }) {
     </div>
   );
 }
+function ValidationSetup({ project }: { project: PortfolioProject }) {
+  if (!project.validationSetup) {
+    return null;
+  }
+
+  return (
+    <section className="rounded-xl border border-blue-200 bg-blue-50/50 p-5 shadow-sm sm:p-6">
+      <div className="mb-5 flex items-start gap-3">
+        <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-700 text-white">
+          <FlaskConical className="h-4 w-4" />
+        </span>
+        <div>
+          <p className="text-xs font-bold uppercase tracking-wide text-blue-700">Performance validation</p>
+          <h4 className="mt-1 text-lg font-bold text-slate-950">{project.validationSetup.title}</h4>
+          <p className="mt-2 text-sm leading-relaxed text-slate-600">{project.validationSetup.description}</p>
+        </div>
+      </div>
+
+      <div className="grid gap-4 xl:grid-cols-2">
+        {project.validationSetup.tracks.map((track, trackIndex) => {
+          const rows = [
+            ["검증 목적", track.purpose],
+            ["실행 환경", track.environment],
+            ["가상 데이터", track.dataset],
+            ["테스트 절차", track.procedure],
+            ["판정 기준", track.criteria],
+            ["측정 결과", track.result],
+            ["해석 한계", track.limitation],
+          ] as const;
+
+          return (
+            <article key={track.name} className="overflow-hidden rounded-lg border border-slate-200 bg-white">
+              <div className="flex items-center gap-3 border-b border-slate-200 bg-slate-950 px-4 py-3 text-white">
+                <span className="text-xs font-bold text-blue-300">TEST {trackIndex + 1}</span>
+                <h5 className="text-sm font-bold">{track.name}</h5>
+              </div>
+              <dl className="divide-y divide-slate-100">
+                {rows.map(([label, value]) => (
+                  <div key={label} className="grid gap-1 px-4 py-3 sm:grid-cols-[6.5rem_minmax(0,1fr)] sm:gap-3">
+                    <dt className="text-xs font-bold text-slate-500">{label}</dt>
+                    <dd className={label === "측정 결과" ? "text-sm font-semibold leading-relaxed text-blue-800" : "text-sm leading-relaxed text-slate-700"}>
+                      {value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 function MetricTable({ project }: { project: PortfolioProject }) {
   if (!project.metricRows?.length) {
     return null;
@@ -624,6 +679,7 @@ function ProjectSection({ project, index }: { project: PortfolioProject; index: 
 
       <div className="space-y-6">
         <MetricGrid project={project} />
+        <ValidationSetup project={project} />
         <ArchitectureDiagram project={project} />
         <CaseStudyGrid project={project} />
         <MetricTable project={project} />
