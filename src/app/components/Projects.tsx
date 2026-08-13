@@ -176,39 +176,44 @@ function AiEngineeringSection({ project }: { project: PortfolioProject }) {
         </p>
       </div>
 
-      <ol className="mb-5 grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-        {project.aiEngineering.workflow.map((step, stepIndex) => (
-          <li key={step} className="rounded-lg border border-violet-100 bg-white px-3 py-3">
-            <span className="text-xs font-bold text-violet-700">STEP {stepIndex + 1}</span>
-            <p className="mt-1 text-sm font-semibold leading-snug text-slate-800">{step}</p>
-          </li>
-        ))}
-      </ol>
 
-      <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
-        <div className="hidden grid-cols-[minmax(8rem,0.7fr)_minmax(0,1.25fr)_minmax(0,1.25fr)] border-b border-slate-200 bg-slate-950 px-4 py-3 text-xs font-bold text-white md:grid">
-          <span>AI 개발 도구 / 운영 방식</span>
-          <span>어떻게 사용했는가</span>
-          <span>남긴 결과</span>
-        </div>
-        <div className="divide-y divide-slate-100">
-          {project.aiEngineering.practices.map((practice) => (
-            <dl key={practice.name} className="grid gap-2 px-4 py-3 md:grid-cols-[minmax(8rem,0.7fr)_minmax(0,1.25fr)_minmax(0,1.25fr)] md:gap-4">
-              <div>
-                <dt className="mb-1 text-xs font-bold text-slate-400 md:hidden">AI 개발 도구 / 운영 방식</dt>
-                <dd className="text-sm font-bold text-slate-900">{practice.name}</dd>
+      <div className="space-y-4">
+        {(["서비스 기능 AI", "개발 과정 AI"] as const).map((group) => {
+          const practices = project.aiEngineering?.practices.filter(
+            (practice) => practice.group === group,
+          ) ?? [];
+
+          return (
+            <section key={group} className="overflow-hidden rounded-lg border border-slate-200 bg-white">
+              <h5 className="border-b border-slate-200 bg-slate-950 px-4 py-3 text-sm font-bold text-white">
+                {group}
+              </h5>
+              <div className="hidden grid-cols-[minmax(8rem,0.7fr)_minmax(0,1.25fr)_minmax(0,1.25fr)] border-b border-slate-200 bg-slate-50 px-4 py-2 text-xs font-bold text-slate-500 md:grid">
+                <span>활용 대상 / 방식</span>
+                <span>어떻게 사용했는가</span>
+                <span>확인된 결과</span>
               </div>
-              <div>
-                <dt className="mb-1 text-xs font-bold text-slate-400 md:hidden">어떻게 사용했는가</dt>
-                <dd className="text-sm leading-relaxed text-slate-600">{practice.usedFor}</dd>
+              <div className="divide-y divide-slate-100">
+                {practices.map((practice) => (
+                  <dl key={practice.name} className="grid gap-2 px-4 py-3 md:grid-cols-[minmax(8rem,0.7fr)_minmax(0,1.25fr)_minmax(0,1.25fr)] md:gap-4">
+                    <div>
+                      <dt className="mb-1 text-xs font-bold text-slate-400 md:hidden">활용 대상 / 방식</dt>
+                      <dd className="text-sm font-bold text-slate-900">{practice.name}</dd>
+                    </div>
+                    <div>
+                      <dt className="mb-1 text-xs font-bold text-slate-400 md:hidden">어떻게 사용했는가</dt>
+                      <dd className="text-sm leading-relaxed text-slate-600">{practice.usedFor}</dd>
+                    </div>
+                    <div>
+                      <dt className="mb-1 text-xs font-bold text-slate-400 md:hidden">확인된 결과</dt>
+                      <dd className="text-sm leading-relaxed text-slate-700">{practice.outcome}</dd>
+                    </div>
+                  </dl>
+                ))}
               </div>
-              <div>
-                <dt className="mb-1 text-xs font-bold text-slate-400 md:hidden">남긴 결과</dt>
-                <dd className="text-sm leading-relaxed text-slate-700">{practice.outcome}</dd>
-              </div>
-            </dl>
-          ))}
-        </div>
+            </section>
+          );
+        })}
       </div>
 
       <div className="mt-4 rounded-lg border border-slate-200 bg-white px-4 py-4">

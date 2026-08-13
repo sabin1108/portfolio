@@ -48,6 +48,7 @@ export type ValidationSetup = {
 };
 
 export type AiEngineeringPractice = {
+  group: "서비스 기능 AI" | "개발 과정 AI";
   name: string;
   usedFor: string;
   outcome: string;
@@ -56,7 +57,6 @@ export type AiEngineeringPractice = {
 export type AiEngineering = {
   title: string;
   description: string;
-  workflow: string[];
   practices: AiEngineeringPractice[];
   humanControls: string[];
 };
