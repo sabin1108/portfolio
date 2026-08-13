@@ -25,6 +25,7 @@ export type CaseStudy = {
   issue: string;
   cause: string;
   resolution: string;
+  aiApproach?: string;
   result: string;
   evidence: string[];
 };
@@ -46,6 +47,20 @@ export type ValidationSetup = {
   tracks: ValidationTrack[];
 };
 
+export type AiEngineeringPractice = {
+  name: string;
+  usedFor: string;
+  outcome: string;
+};
+
+export type AiEngineering = {
+  title: string;
+  description: string;
+  workflow: string[];
+  practices: AiEngineeringPractice[];
+  humanControls: string[];
+};
+
 export type Project = {
   title: string;
   subtitle: string;
@@ -65,6 +80,7 @@ export type Project = {
   metrics: Metric[];
   metricRows?: MetricRow[];
   validationSetup?: ValidationSetup;
+  aiEngineering?: AiEngineering;
   architecture: {
     title: string;
     description: string;

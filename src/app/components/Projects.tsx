@@ -1,15 +1,10 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import {
-  CheckCircle2,
   ChevronLeft,
   ChevronRight,
   ExternalLink,
-  FlaskConical,
   Github,
-  Image as ImageIcon,
-  Network,
-  Table2,
   X,
 } from "lucide-react";
 import { portfolio, type Project } from "../data/portfolio";
@@ -166,6 +161,70 @@ function MetricGrid({ project }: { project: PortfolioProject }) {
     </div>
   );
 }
+function AiEngineeringSection({ project }: { project: PortfolioProject }) {
+  if (!project.aiEngineering) {
+    return null;
+  }
+
+  return (
+    <section className="rounded-xl border border-violet-200 bg-violet-50/40 p-5 shadow-sm sm:p-6">
+      <div className="mb-5">
+        <p className="text-xs font-bold uppercase tracking-wide text-violet-700">AI engineering</p>
+        <h4 className="mt-1 text-lg font-bold text-slate-950">{project.aiEngineering.title}</h4>
+        <p className="mt-2 max-w-4xl text-sm leading-relaxed text-slate-600">
+          {project.aiEngineering.description}
+        </p>
+      </div>
+
+      <ol className="mb-5 grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        {project.aiEngineering.workflow.map((step, stepIndex) => (
+          <li key={step} className="rounded-lg border border-violet-100 bg-white px-3 py-3">
+            <span className="text-xs font-bold text-violet-700">STEP {stepIndex + 1}</span>
+            <p className="mt-1 text-sm font-semibold leading-snug text-slate-800">{step}</p>
+          </li>
+        ))}
+      </ol>
+
+      <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
+        <div className="hidden grid-cols-[minmax(8rem,0.7fr)_minmax(0,1.25fr)_minmax(0,1.25fr)] border-b border-slate-200 bg-slate-950 px-4 py-3 text-xs font-bold text-white md:grid">
+          <span>AI 개발 도구 / 운영 방식</span>
+          <span>어떻게 사용했는가</span>
+          <span>남긴 결과</span>
+        </div>
+        <div className="divide-y divide-slate-100">
+          {project.aiEngineering.practices.map((practice) => (
+            <dl key={practice.name} className="grid gap-2 px-4 py-3 md:grid-cols-[minmax(8rem,0.7fr)_minmax(0,1.25fr)_minmax(0,1.25fr)] md:gap-4">
+              <div>
+                <dt className="mb-1 text-xs font-bold text-slate-400 md:hidden">AI 개발 도구 / 운영 방식</dt>
+                <dd className="text-sm font-bold text-slate-900">{practice.name}</dd>
+              </div>
+              <div>
+                <dt className="mb-1 text-xs font-bold text-slate-400 md:hidden">어떻게 사용했는가</dt>
+                <dd className="text-sm leading-relaxed text-slate-600">{practice.usedFor}</dd>
+              </div>
+              <div>
+                <dt className="mb-1 text-xs font-bold text-slate-400 md:hidden">남긴 결과</dt>
+                <dd className="text-sm leading-relaxed text-slate-700">{practice.outcome}</dd>
+              </div>
+            </dl>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-4 rounded-lg border border-slate-200 bg-white px-4 py-4">
+        <p className="text-xs font-bold uppercase tracking-wide text-slate-500">사람이 직접 통제한 기준</p>
+        <ul className="mt-3 grid gap-2 md:grid-cols-3">
+          {project.aiEngineering.humanControls.map((control) => (
+            <li key={control} className="border-l-2 border-violet-300 pl-3 text-sm leading-relaxed text-slate-700">
+              {control}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
 function ValidationSetup({ project }: { project: PortfolioProject }) {
   if (!project.validationSetup) {
     return null;
@@ -173,10 +232,7 @@ function ValidationSetup({ project }: { project: PortfolioProject }) {
 
   return (
     <section className="rounded-xl border border-blue-200 bg-blue-50/50 p-5 shadow-sm sm:p-6">
-      <div className="mb-5 flex items-start gap-3">
-        <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-700 text-white">
-          <FlaskConical className="h-4 w-4" />
-        </span>
+      <div className="mb-5">
         <div>
           <p className="text-xs font-bold uppercase tracking-wide text-blue-700">Performance validation</p>
           <h4 className="mt-1 text-lg font-bold text-slate-950">{project.validationSetup.title}</h4>
@@ -237,8 +293,7 @@ function MetricTable({ project }: { project: PortfolioProject }) {
 
   return (
     <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="mb-4 flex items-center gap-2">
-        <Table2 className="h-4 w-4 text-blue-600" />
+      <div className="mb-4">
         <h4 className="text-base font-semibold text-slate-900">
           {isPhotoMap
             ? "지표 표(측정 도구별 분류)"
@@ -473,8 +528,7 @@ function ArchitectureDiagram({ project }: { project: PortfolioProject }) {
 
   return (
     <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="mb-5 flex items-center gap-2">
-        <Network className="h-4 w-4 text-slate-700" />
+      <div className="mb-5">
         <h4 className="text-base font-semibold text-slate-900">아키텍처 흐름도</h4>
       </div>
 
@@ -548,8 +602,11 @@ function CaseStudyGrid({ project }: { project: PortfolioProject }) {
           { label: "이슈", value: caseStudy.issue },
           { label: "문제 원인", value: caseStudy.cause },
           { label: "해결", value: caseStudy.resolution },
+          ...(caseStudy.aiApproach
+            ? [{ label: "AI 활용", value: caseStudy.aiApproach }]
+            : []),
           { label: "성과", value: caseStudy.result },
-        ] as const;
+        ];
 
         return (
           <article key={caseStudy.title} className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
@@ -585,7 +642,6 @@ function CaseStudyGrid({ project }: { project: PortfolioProject }) {
                   key={item}
                   className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600"
                 >
-                  <CheckCircle2 className="h-3.5 w-3.5 text-blue-600" />
                   {item}
                 </span>
               ))}
@@ -669,8 +725,7 @@ function ProjectSection({ project, index }: { project: PortfolioProject; index: 
         </div>
 
         <div>
-          <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-900">
-            <ImageIcon className="h-4 w-4 text-blue-600" />
+          <div className="mb-3 text-sm font-semibold text-slate-900">
             실제 화면 자료
           </div>
           <ProjectGallery project={project} />
@@ -679,6 +734,7 @@ function ProjectSection({ project, index }: { project: PortfolioProject; index: 
 
       <div className="space-y-6">
         <MetricGrid project={project} />
+        <AiEngineeringSection project={project} />
         <ValidationSetup project={project} />
         <ArchitectureDiagram project={project} />
         <CaseStudyGrid project={project} />
