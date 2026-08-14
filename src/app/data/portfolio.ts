@@ -72,6 +72,7 @@ export type Project = {
   links: {
     live?: string;
     github: string;
+    evidence?: string;
   };
   imageGallery: {
     main: { src: string; alt: string };
@@ -220,7 +221,7 @@ export const portfolio = {
         "지도, 앨범, 타임라인, 관계 그래프 화면을 같은 데이터 흐름으로 연결",
         "Supabase 데이터 연동과 Unity WebGL 지도 화면 통합",
         "cobe 기반 canvas globe와 Unity WebGL iframe/postMessage 흐름의 렌더링 수명 주기 분리",
-        "BE 2명과 데이터 흐름을 맞추며 FE 상태 구조와 렌더링 책임 분리",
+        "BE 1명·Unity 1명과 데이터·지도 연동 흐름을 맞추며 FE 상태 구조와 렌더링 책임 분리",
       ],
       tech: ["React", "TypeScript", "Zustand", "Supabase", "D3.js", "@tanstack/react-virtual", "Unity WebGL", "Canvas", "cobe"],
       links: {

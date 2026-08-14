@@ -4,6 +4,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ExternalLink,
+  FileText,
   Github,
   X,
 } from "lucide-react";
@@ -726,6 +727,14 @@ function ProjectSection({ project, index }: { project: PortfolioProject; index: 
                 <Github className="ml-2 h-4 w-4" />
               </a>
             </Button>
+            {project.links.evidence ? (
+              <Button asChild variant="outline" className="border-blue-200 bg-blue-50 text-blue-800 hover:bg-blue-100">
+                <a href={project.links.evidence} target="_blank" rel="noreferrer">
+                  성능 근거
+                  <FileText className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+            ) : null}
           </div>
         </div>
 

@@ -318,6 +318,17 @@ export function Resume() {
                         서비스 바로가기
                       </a>
                     )}
+                    {"evidence" in project && typeof project.evidence === "string" && (
+                      <a
+                        href={project.evidence}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="print:hidden inline-flex items-center gap-1 rounded-md border border-slate-300 px-2 py-1 text-xs font-semibold text-slate-600 hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-600"
+                      >
+                        <FileText className="h-3.5 w-3.5" />
+                        성능 근거
+                      </a>
+                    )}
                   </div>
                   <span className="text-[0.95rem] font-medium text-slate-500">{project.period}</span>
                 </div>
@@ -361,6 +372,29 @@ export function Resume() {
                           <li key={approach}>{approach}</li>
                         ))}
                       </ul>
+                    </div>
+                  )}
+                  {"testEnvironment" in project && Array.isArray(project.testEnvironment) && project.testEnvironment.length > 0 && (
+                    <div className="mt-4 space-y-1">
+                      <div className="font-bold text-slate-900 text-[1rem] project-subheading">가상 테스트 환경</div>
+                      <dl className="resume-test-environment-panel mt-2 overflow-hidden rounded-md border border-slate-200 bg-slate-50/50">
+                        {project.testEnvironment.map((environment, index) => (
+                          <div
+                            key={environment.title}
+                            className="resume-test-environment-row grid gap-1 border-b border-slate-200 px-3 py-2 last:border-b-0 sm:grid-cols-[7.5rem_1fr]"
+                          >
+                            <dt className="text-[0.78rem] font-bold text-slate-500">
+                              {String(index + 1).padStart(2, "0")} · {environment.title}
+                            </dt>
+                            <dd>
+                              <span className="font-bold text-slate-900">{environment.metric}</span>
+                              <span className="mt-0.5 block text-[0.825rem] leading-relaxed text-slate-600">
+                                {environment.description}
+                              </span>
+                            </dd>
+                          </div>
+                        ))}
+                      </dl>
                     </div>
                   )}
                   {project.resolutions && project.resolutions.length > 0 && (

@@ -101,7 +101,7 @@ Fallow 정적 분석으로 중복 코드를 668줄에서 121줄로(약 82% 감�
       period: "2025.12 ~ 2026.04",
       github: "https://github.com/sabin1108/Photomap",
       live: "https://photomap-three.vercel.app/",
-      teamRole: "3인 협업 (FE 1명, BE 2명 / FE 최적화 및 상태 아키텍처 담당)",
+      teamRole: "3인 협업 (FE 1명, BE 1명, Unity 1명 / FE 최적화 및 상태 아키텍처 담당)",
       description: "대용량 사진 데이터를 지도 기반으로 탐색하는 웹 서비스",
       techTags: ["React", "TypeScript", "Zustand", "D3.js"],
       keyRoles: "상태 관리 구조 개선 / 렌더링 성능 최적화 / D3 시각화 구현",
@@ -116,7 +116,7 @@ Fallow 정적 분석으로 중복 코드를 668줄에서 121줄로(약 82% 감�
         "상태 관리를 Zustand로 전면 개편하고, 컴포넌트별로 상태 슬라이스만 구독하는 Selector 패턴 및 useShallow를 적용해 무관한 리렌더링을 차단했습니다.",
         "D3 좌표 연산과 React 렌더 사이클을 완전히 격리하여, SVG 요소를 Ref로 바인딩하고 tick 이벤트 내부에서 style.setProperty와 setAttribute로 DOM 속성을 직접 조작했습니다.",
         "useEffect cleanup 함수를 통해 탭 전환 시 D3 물리 엔진 인스턴스의 simulation.stop()을 호출하고 모든 리스너와 바인딩을 해제하는 안전한 수명 주기 클린업을 구현했습니다.",
-        "BE 2명과 협업하며 서버의 사진·위치·카테고리 데이터 흐름은 유지하고, FE 상태 구독 범위와 렌더링 방식을 조정해 팀 전체 수정 범위를 줄였습니다."
+        "BE 1명·Unity 1명과 협업하며 서버의 사진·위치·카테고리 데이터 흐름과 Unity 지도 연동은 유지하고, FE 상태 구독 범위와 렌더링 방식을 조정해 팀 전체 수정 범위를 줄였습니다."
       ],
       achievements: [
         "10,000건 이상의 대량 이미지 데이터를 처리할 때도 DOM 노드를 200개 이하로 상시 제어해 대량 사진 구간의 스크롤 프레임 저하를 완화했습니다.",

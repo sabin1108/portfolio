@@ -80,7 +80,7 @@ function PortfolioPage({
               {[
                 ["문제 정의", "가격 비교 제품 목표를 issue #15~#25로 나눠 구현·검증 단위를 명확히 했습니다."],
                 ["AI 활용과 책임", "AI는 조사·구현을 돕고, 가격 규칙·보안 경계·결과 채택은 사람이 결정했습니다."],
-                ["측정 결과", "첫 사진 p95 95.5% 단축 · 중복 코드 9.4%에서 2.9% · 56.35 API RPS 오류 0"],
+                ["측정 결과", "lab LCP p75 2.50초 · 첫 사진 p95 2.62초(optimized cold 100회) · 중복 코드 9.4%에서 2.9%"],
               ].map(([title, description]) => (
                 <article key={title} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
                   <p className="text-sm font-bold text-blue-700">{title}</p>

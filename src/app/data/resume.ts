@@ -108,7 +108,7 @@ Game Information Platform에서는 캐시 매니저 등 인프라 유틸리티�
       period: "2025.12 ~ 2026.04",
       github: "https://github.com/sabin1108/Photomap",
       live: "https://photomap-three.vercel.app/",
-      teamRole: "3인 협업 (FE 1명, BE 2명 / FE 최적화 및 상태 아키텍처 담당)",
+      teamRole: "3인 협업 (FE 1명, BE 1명, Unity 1명 / FE 최적화 및 상태 아키텍처 담당)",
       description: "여행 중 촬영한 사진을 위치 기반 지도에 보관하고, 이동 경로와 추억을 시각적으로 탐색하는 웹 서비스",
       techTags: ["React", "TypeScript", "Zustand", "D3.js", "Supabase", "@tanstack/react-virtual", "Unity WebGL", "Canvas", "cobe", "Lighthouse"],
       keyRoles: "상태 관리 구조 개선 / 렌더링 성능 최적화 / D3 및 WebGL 계열 시각화 연동 / 성능 측정 자동화",
