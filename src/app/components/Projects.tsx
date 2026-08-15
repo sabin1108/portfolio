@@ -167,6 +167,15 @@ function AiEngineeringSection({ project }: { project: PortfolioProject }) {
     return null;
   }
 
+  const practiceGroups = (["서비스 기능 AI", "개발 과정 AI"] as const)
+    .map((group) => ({
+      group,
+      practices: project.aiEngineering?.practices.filter(
+        (practice) => practice.group === group,
+      ) ?? [],
+    }))
+    .filter(({ practices }) => practices.length > 0);
+
   return (
     <section className="rounded-xl border border-violet-200 bg-violet-50/40 p-5 shadow-sm sm:p-6">
       <div className="mb-5">
@@ -179,12 +188,7 @@ function AiEngineeringSection({ project }: { project: PortfolioProject }) {
 
 
       <div className="space-y-4">
-        {(["서비스 기능 AI", "개발 과정 AI"] as const).map((group) => {
-          const practices = project.aiEngineering?.practices.filter(
-            (practice) => practice.group === group,
-          ) ?? [];
-
-          return (
+        {practiceGroups.map(({ group, practices }) => (
             <section key={group} className="overflow-hidden rounded-lg border border-slate-200 bg-white">
               <h5 className="border-b border-slate-200 bg-slate-950 px-4 py-3 text-sm font-bold text-white">
                 {group}
@@ -213,12 +217,13 @@ function AiEngineeringSection({ project }: { project: PortfolioProject }) {
                 ))}
               </div>
             </section>
-          );
-        })}
+          ))}
       </div>
 
       <div className="mt-4 rounded-lg border border-slate-200 bg-white px-4 py-4">
-        <p className="text-xs font-bold uppercase tracking-wide text-slate-500">사람이 직접 통제한 기준</p>
+        <p className="text-xs font-bold uppercase tracking-wide text-slate-500">
+          작업 과정에서 직접 설정하고 검증한 기준
+        </p>
         <ul className="mt-3 grid gap-2 md:grid-cols-3">
           {project.aiEngineering.humanControls.map((control) => (
             <li key={control} className="border-l-2 border-violet-300 pl-3 text-sm leading-relaxed text-slate-700">
@@ -226,6 +231,40 @@ function AiEngineeringSection({ project }: { project: PortfolioProject }) {
             </li>
           ))}
         </ul>
+      </div>
+    </section>
+  );
+}
+
+function FrontendFundamentalsSection({ project }: { project: PortfolioProject }) {
+  if (!project.frontendFundamentals?.length) {
+    return null;
+  }
+
+  return (
+    <section className="rounded-xl border border-cyan-200 bg-cyan-50/40 p-5 shadow-sm sm:p-6">
+      <div className="mb-5">
+        <p className="text-xs font-bold uppercase tracking-wide text-cyan-700">
+          React fundamentals
+        </p>
+        <h4 className="mt-1 text-lg font-bold text-slate-950">
+          React 기본 원리를 성능 개선에 적용
+        </h4>
+        <p className="mt-2 text-sm leading-relaxed text-slate-600">
+          라이브러리 사용보다 상태, 참조, reconciliation, 생명주기를 이해하고 적용한 근거입니다.
+        </p>
+      </div>
+
+      <div className="grid gap-3 lg:grid-cols-2">
+        {project.frontendFundamentals.map((item) => (
+          <article key={item.concept} className="rounded-lg border border-slate-200 bg-white p-4">
+            <h5 className="text-sm font-bold text-slate-900">{item.concept}</h5>
+            <p className="mt-2 text-sm leading-relaxed text-slate-600">{item.application}</p>
+            <p className="mt-3 border-l-2 border-cyan-400 pl-3 text-sm font-semibold leading-relaxed text-slate-800">
+              {item.result}
+            </p>
+          </article>
+        ))}
       </div>
     </section>
   );
@@ -332,7 +371,14 @@ function MetricTable({ project }: { project: PortfolioProject }) {
                           {row.metric}
                         </th>
                         <td className="px-4 py-3 text-slate-600">{row.before}</td>
-                        <td className="px-4 py-3 font-semibold text-slate-900">{row.after}</td>
+                        <td className="px-4 py-3 font-semibold text-slate-900">
+                          {row.after}
+                          {isPhotoMap && row.basis ? (
+                            <span className="mt-1 block text-xs font-normal leading-relaxed text-slate-500">
+                              {row.basis}
+                            </span>
+                          ) : null}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -748,6 +794,7 @@ function ProjectSection({ project, index }: { project: PortfolioProject; index: 
 
       <div className="space-y-6">
         <MetricGrid project={project} />
+        <FrontendFundamentalsSection project={project} />
         <AiEngineeringSection project={project} />
         <ValidationSetup project={project} />
         <ArchitectureDiagram project={project} />

@@ -7,6 +7,9 @@ import { resumePooolingforestData } from "../data/resume_pooolingforest";
 import { resumeWoojinData } from "../data/resume_woojin";
 import { resumeLsscData } from "../data/resume_lssc";
 import { resumeAxData } from "../data/resume_ax";
+import { resumeFrontendData } from "../data/resume_frontend";
+import { resumeNhnDoorayData } from "../data/resume_nhn_dooray";
+import { resumeWacusData } from "../data/resume_wacus";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 
@@ -166,23 +169,29 @@ export function Resume() {
   const isWoojinPath = normalizedPath.includes("woojin_web_developer");
   const isLsscPath = normalizedPath.includes("lssc_fullstack");
   const isAxPath = normalizedPath.includes("ax_ai_native") || normalizedPath === "/resume_ax";
+  const isNhnDoorayPath = normalizedPath.includes("nhn_dooray_frontend");
+  const isWacusPath = normalizedPath.includes("wacus_frontend");
   const activeResumeData = isPooolingforestPath
     ? resumePooolingforestData
     : isLsscPath
     ? resumeLsscData
     : isAxPath
     ? resumeAxData
+    : isNhnDoorayPath
+    ? resumeNhnDoorayData
+    : isWacusPath
+    ? resumeWacusData
     : isWoojinPath
     ? resumeWoojinData
     : isNexonPath
       ? resumeNexonData
       : isElicePath
         ? resumeEliceData
-        : resumeData;
+        : resumeFrontendData;
 
   const { summary, coreSkills, projectHighlights, activityGroups, education, profile } = activeResumeData;
 
-  if (!authorized && !isElicePath && !isNexonPath && !isPooolingforestPath && !isWoojinPath && !isLsscPath && !isAxPath) {
+  if (!authorized && !isElicePath && !isNexonPath && !isPooolingforestPath && !isWoojinPath && !isLsscPath && !isAxPath && !isNhnDoorayPath && !isWacusPath) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-slate-100 px-4 py-8">
         <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-lg">

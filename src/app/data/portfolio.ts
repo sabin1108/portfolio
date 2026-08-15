@@ -61,6 +61,12 @@ export type AiEngineering = {
   humanControls: string[];
 };
 
+export type FrontendFundamental = {
+  concept: string;
+  application: string;
+  result: string;
+};
+
 export type Project = {
   title: string;
   subtitle: string;
@@ -82,6 +88,7 @@ export type Project = {
   metricRows?: MetricRow[];
   validationSetup?: ValidationSetup;
   aiEngineering?: AiEngineering;
+  frontendFundamentals?: FrontendFundamental[];
   architecture: {
     title: string;
     description: string;

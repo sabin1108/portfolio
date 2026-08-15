@@ -6,6 +6,7 @@ import { Resume } from "./components/Resume";
 import { FullstackPdfPortfolio } from "./components/FullstackPdfPortfolio";
 import { Printer } from "lucide-react";
 import { portfolio } from "./data/portfolio";
+import { frontendPortfolio } from "./data/portfolio_frontend";
 import { fullstackPortfolio } from "./data/portfolio_fullstack";
 import { axPortfolio } from "./data/portfolio_ax";
 
@@ -58,10 +59,10 @@ function TopNav({
 }
 
 function PortfolioPage({
-  data = portfolio,
+  data,
   isAx = false,
 }: {
-  data?: typeof portfolio;
+  data: typeof portfolio;
   isAx?: boolean;
 }) {
   return (
@@ -132,17 +133,5 @@ export default function App() {
     );
   }
 
-  return (
-    <>
-      <TopNav showPrintButton />
-      <main className="portfolio-page min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/40">
-        <div className="portfolio-sheet mx-auto max-w-6xl px-6 py-16 sm:px-8 sm:py-20">
-          <Hero />
-          <Projects />
-          <Timeline />
-          <Education />
-        </div>
-      </main>
-    </>
-  );
+  return <PortfolioPage data={frontendPortfolio} />;
 }
