@@ -44,14 +44,28 @@ export const resumeWacusData = {
       ],
       achievements: [
         "lab LCP p75를 17.4초에서 2.5초로 85.6%, 첫 사진 p95를 17.6초에서 2.6초로 85.2% 단축했습니다. baseline cold 30회와 optimized cold 100회를 같은 조건에서 비교했습니다.",
-        "CDP 관측 전송량을 run당 3.20MB에서 335KB로 89.5% 줄였습니다.",
+        "CDP 관측 전송량을 run당 3,125KB에서 328KB로 89.5% 줄였습니다.",
         "상태 변경 리렌더링 범위를 70여 개 컴포넌트에서 5개 이하로 줄이고 React Profiler commit 시간을 9.7ms에서 6.2ms로 낮췄습니다.",
         "D3 NodeView 렌더링을 370회에서 25회로 93.2% 줄여 그래프 상호작용을 React 렌더링 루프에서 분리했습니다.",
       ],
     },
     {
       ...gameInfo,
-      keyRoles: "Next.js 반응형 서비스 전체 구현 / 검색·할인·상세·관심 목록 UI / 외부 API 정규화 / 테스트·배포·유지보수",
+      keyRoles: "Next.js 반응형 서비스 전체 구현 / 검색·할인·상세·관심 목록 UI / 공통 UI 계약 / 외부 API 정규화 / 테스트·배포·유지보수",
+      issues: [
+        "검색, 할인, 상세, 관심 목록처럼 반복되는 화면에서 외부 API별 응답 차이가 카드 UI와 상태 표시로 새면 화면 추가와 수정 비용이 커질 수 있었습니다.",
+        "웹에이전시 업무처럼 여러 화면을 빠르게 구축·수정해야 하는 상황에서는 HTML/CSS/React 구현뿐 아니라 로딩, 빈 결과, 오류 상태가 같은 기준으로 보여야 했습니다.",
+      ],
+      resolutions: [
+        "Next.js 화면과 API route 경계를 나누고 Steam, Epic, ITAD 응답을 공통 view model로 정규화해 카드, 상세, 관심 목록이 같은 props 계약을 사용하게 했습니다.",
+        "loading, empty, stale cache, rate limit, error 상태를 화면 상태로 분리하고 role, label, status 기준 테스트로 사용자가 보는 문구와 흐름을 확인했습니다.",
+        "Git 기반으로 typecheck, lint, Vitest, production build, Playwright smoke를 확인하며 변경 후 깨지는 화면을 줄였습니다.",
+      ],
+      achievements: [
+        "반복 화면의 API별 분기를 줄여 신규 화면이나 클라이언트 수정 때 확인 범위를 normalizer와 공통 UI 상태로 좁혔습니다.",
+        "Vitest, Testing Library, Playwright로 가격 판단, 캐시, 오류 상태, 관심 목록 흐름을 검증했습니다.",
+        "Fallow 분석으로 미사용 export 11개를 0개로, 중복 코드 비율을 9.4%에서 2.9%로 줄였습니다.",
+      ],
     },
     {
       ...aiChatBot,

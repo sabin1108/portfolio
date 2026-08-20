@@ -101,7 +101,7 @@ export const resumeAxData = {
       achievements: [
         "optimized cold 100회에서 lab LCP p75 2.5초, 첫 사진 완료 p95 2.6초, 최대 2.7초를 기록했습니다.",
         "첫 사진과 모달 이미지 모두 100/100회 성공했습니다. 총 1,300개 request에서 request failure·HTTP 오류·console 오류는 모두 0건이었습니다.",
-        "CDP 기준 cold run당 관측 전송량은 335,423B였습니다. 같은 조건의 522KB JPEG baseline 30회 결과도 별도 raw JSON으로 보존했습니다.",
+        "CDP 기준 cold run당 관측 전송량은 328KB였습니다. 같은 조건의 522KB JPEG baseline 30회 결과도 별도 raw JSON으로 보존했습니다.",
         "결과는 단일 physical runner의 synthetic lab 측정입니다. fresh browser context를 사용했지만 Vercel edge·DNS·OS cache까지 초기화한 field RUM은 아닙니다.",
       ],
     },
@@ -134,7 +134,7 @@ export const resumeAxData = {
   activityGroups: [
     {
       title: "생성형 AI 기반 포트폴리오 요약 플랫폼",
-      venue: "대한전자공학회 투고 및 심사 완료",
+      venue: "대한전자공학회논문지 투고 및 심사 완료",
       href: "/files/thesis/generative-ai-portfolio-summary-platform.pdf",
       linkLabel: "논문 PDF",
       items: [

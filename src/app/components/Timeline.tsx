@@ -3,7 +3,7 @@ import { ExternalLink, FileText } from "lucide-react";
 import { portfolio } from "../data/portfolio";
 import { Button } from "./ui/button";
 
-export function Timeline() {
+export function Timeline({ data = portfolio }: { data?: typeof portfolio }) {
   return (
     <motion.section
       initial={false}
@@ -20,7 +20,7 @@ export function Timeline() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        {portfolio.activities.map((activity, idx) => (
+        {data.activities.map((activity, idx) => (
           <motion.article
             key={activity.title}
             initial={false}
@@ -33,9 +33,16 @@ export function Timeline() {
               <div className="mb-3 text-xs font-semibold uppercase text-blue-700">
                 {activity.date}
               </div>
-              <h3 className="mb-2 text-base font-semibold leading-tight text-slate-900">
-                {activity.title}
-              </h3>
+              <div className="mb-2 flex flex-wrap items-center gap-2">
+                <h3 className="text-base font-semibold leading-tight text-slate-900">
+                  {activity.title}
+                </h3>
+                {activity.description.includes("우수상") ? (
+                  <span className="rounded-md border border-amber-200 bg-amber-50 px-2 py-0.5 text-xs font-bold text-amber-700">
+                    우수상
+                  </span>
+                ) : null}
+              </div>
               <p className="text-sm leading-relaxed text-slate-600">
                 {activity.description}
               </p>

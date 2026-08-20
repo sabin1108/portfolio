@@ -1,0 +1,7 @@
+﻿{
+  "duplicates": {
+    "ignore": [
+      "src/app/data/resume_elice.ts"
+    ]
+  }
+}

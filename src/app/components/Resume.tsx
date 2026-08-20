@@ -10,6 +10,7 @@ import { resumeAxData } from "../data/resume_ax";
 import { resumeFrontendData } from "../data/resume_frontend";
 import { resumeNhnDoorayData } from "../data/resume_nhn_dooray";
 import { resumeWacusData } from "../data/resume_wacus";
+import { resumeDailyPayData } from "../data/resume_dailypay";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 
@@ -171,6 +172,7 @@ export function Resume() {
   const isAxPath = normalizedPath.includes("ax_ai_native") || normalizedPath === "/resume_ax";
   const isNhnDoorayPath = normalizedPath.includes("nhn_dooray_frontend");
   const isWacusPath = normalizedPath.includes("wacus_frontend");
+  const isDailyPayPath = normalizedPath.includes("dailypay_frontend");
   const activeResumeData = isPooolingforestPath
     ? resumePooolingforestData
     : isLsscPath
@@ -179,6 +181,8 @@ export function Resume() {
     ? resumeAxData
     : isNhnDoorayPath
     ? resumeNhnDoorayData
+    : isDailyPayPath
+    ? resumeDailyPayData
     : isWacusPath
     ? resumeWacusData
     : isWoojinPath
@@ -191,7 +195,7 @@ export function Resume() {
 
   const { summary, coreSkills, projectHighlights, activityGroups, education, profile } = activeResumeData;
 
-  if (!authorized && !isElicePath && !isNexonPath && !isPooolingforestPath && !isWoojinPath && !isLsscPath && !isAxPath && !isNhnDoorayPath && !isWacusPath) {
+  if (!authorized && !isElicePath && !isNexonPath && !isPooolingforestPath && !isWoojinPath && !isLsscPath && !isAxPath && !isNhnDoorayPath && !isWacusPath && !isDailyPayPath) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-slate-100 px-4 py-8">
         <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-lg">
@@ -279,18 +283,20 @@ export function Resume() {
                   ))}
               </div>
 
-              <div className="resume-tool-skills">
-                <span className="font-bold text-slate-800">• Tools:</span>
-                <ul className="pl-6 mt-1 space-y-1.5 list-disc text-slate-600">
-                  {coreSkills
-                    .filter((group) => group.title.startsWith("Tools - "))
-                    .map((sub) => (
-                      <li key={sub.title}>
-                        <span className="font-semibold text-slate-700">{sub.title.replace("Tools - ", "")}</span>: {sub.items.join(", ")}
-                      </li>
-                    ))}
-                </ul>
-              </div>
+              {coreSkills.some((group) => group.title.startsWith("Tools - ")) ? (
+                <div className="resume-tool-skills">
+                  <span className="font-bold text-slate-800">• Tools:</span>
+                  <ul className="pl-6 mt-1 space-y-1.5 list-disc text-slate-600">
+                    {coreSkills
+                      .filter((group) => group.title.startsWith("Tools - "))
+                      .map((sub) => (
+                        <li key={sub.title}>
+                          <span className="font-semibold text-slate-700">{sub.title.replace("Tools - ", "")}</span>: {sub.items.join(", ")}
+                        </li>
+                      ))}
+                  </ul>
+                </div>
+              ) : null}
             </div>
           </Section>
         </div>

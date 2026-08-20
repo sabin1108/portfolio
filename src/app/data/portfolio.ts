@@ -216,7 +216,7 @@ export const portfolio = {
     {
       title: "PhotoMap",
       subtitle: "대량 사진 데이터를 지도, 앨범, 타임라인, 노드 그래프로 탐색하는 서비스",
-      period: "2025.12 - 2026.04",
+      period: "2025.12 - 2026.08",
       team: "3인 팀 / Frontend 담당",
       summary:
         "EXIF 위치와 촬영 시간을 기반으로 사진을 지도, 앨범, 타임라인, 관계 그래프로 탐색하는 서비스입니다. 초기 요청 병렬화, 전역 상태 분리, D3 시뮬레이션 분리, 가상화로 대량 사진에서도 화면이 버티는 구조로 정리했습니다.",
@@ -419,8 +419,8 @@ export const portfolio = {
   ] satisfies Project[],
   activities: [
     { date: "2025.04", title: "BRIGHT MAKERS EXPO 캡스톤디자인 경진대회", description: "AI ChatBot 프로젝트로 학교 정보 접근성 개선 서비스를 발표했습니다." },
-    { date: "2025.06", title: "학교 정보 접근성 향상을 위한 대화형 질의응답 시스템", description: "학교 공지, 학식, 학사 일정 정보를 질의응답 흐름으로 연결한 졸업 프로젝트 기반 논문입니다.", pdf: { label: "논문 PDF", href: "/files/thesis/interactive-campus-qa-system.pdf" } },
-    { date: "2026.05", title: "생성형 AI 기반 포트폴리오 요약 플랫폼", description: "지원자의 프로젝트 자료를 생성형 AI로 요약하고 평가자가 핵심 역량과 근거를 빠르게 확인하도록 돕는 플랫폼 논문입니다.", pdf: { label: "논문 PDF", href: "/files/thesis/generative-ai-portfolio-summary-platform.pdf" } },
+    { date: "2025.06", title: "학교 정보 접근성 향상을 위한 대화형 질의응답 시스템", description: "대한전자공학회 2025년도 하계종합학술대회 포스터/논문 발표. 학교 공지, 학식, 학사 일정 정보를 질의응답 흐름으로 연결한 졸업 프로젝트 기반 논문입니다.", pdf: { label: "논문 PDF", href: "/files/thesis/interactive-campus-qa-system.pdf" } },
+    { date: "2026.05", title: "생성형 AI 기반 포트폴리오 요약 플랫폼", description: "대한전자공학회논문지 투고 및 심사 완료. 지원자의 프로젝트 자료를 생성형 AI로 요약하고 평가자가 핵심 역량과 근거를 빠르게 확인하도록 돕는 플랫폼 논문입니다.", pdf: { label: "논문 PDF", href: "/files/thesis/generative-ai-portfolio-summary-platform.pdf" } },
     { date: "2025.09.12", title: "정보처리기사", description: "한국산업인력공단 주관 국가기술자격을 취득했습니다." },
   ] satisfies Activity[],
   education: {

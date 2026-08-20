@@ -105,7 +105,7 @@ Game Information Platform에서는 캐시 매니저 등 인프라 유틸리티�
     },
     {
       title: "PhotoMap",
-      period: "2025.12 ~ 2026.04",
+      period: "2025.12 ~ 2026.08",
       github: "https://github.com/sabin1108/Photomap",
       live: "https://photomap-three.vercel.app/",
       teamRole: "3인 협업 (FE 1명, BE 1명, Unity 1명 / FE 최적화 및 상태 아키텍처 담당)",
@@ -192,7 +192,7 @@ Game Information Platform에서는 캐시 매니저 등 인프라 유틸리티�
     },
     {
       title: "생성형 AI 기반 포트폴리오 요약 플랫폼",
-      venue: "대한전자공학회 투고 및 심사 완료",
+      venue: "대한전자공학회논문지 투고 및 심사 완료",
       href: "/files/thesis/generative-ai-portfolio-summary-platform.pdf",
       linkLabel: "논문 PDF",
       items: [
@@ -203,7 +203,7 @@ Game Information Platform에서는 캐시 매니저 등 인프라 유틸리티�
     },
     {
       title: "학교 정보 접근성 향상을 위한 대화형 질의응답 시스템",
-      venue: "대한전자공학회 2025 하계종합학술대회 포스터/논문 발표",
+      venue: "대한전자공학회 2025년도 하계종합학술대회 포스터/논문 발표",
       href: "/files/thesis/interactive-campus-qa-system.pdf",
       linkLabel: "논문 PDF",
       items: [

@@ -89,8 +89,9 @@ function PortfolioPage({
                 </article>
               ))}
             </section>
-          ) : null}          <Projects data={data} />
-          <Timeline />
+          ) : null}
+          <Projects data={data} />
+          <Timeline data={data} />
           <Education />
         </div>
       </main>
@@ -112,6 +113,10 @@ export default function App() {
 
   if (currentPath === "/fullstack/pdf") {
     return <FullstackPdfPortfolio />;
+  }
+
+  if (currentPath === "/frontend" || currentPath === "/portfolio_frontend") {
+    return <PortfolioPage data={frontendPortfolio} />;
   }
 
   if (currentPath === "/ax" || currentPath === "/portfolio_ax") {

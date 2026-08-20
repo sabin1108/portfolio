@@ -143,25 +143,6 @@ function ProjectGallery({ project }: { project: PortfolioProject }) {
   );
 }
 
-function MetricGrid({ project }: { project: PortfolioProject }) {
-  if (!project.metrics.length) {
-    return null;
-  }
-
-  return (
-    <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-      {project.metrics.map((metric) => (
-        <div key={metric.label} className="rounded-lg border border-slate-200 bg-white p-4">
-          <p className="text-xs font-semibold text-slate-500">{metric.label}</p>
-          <p className="mt-1 text-lg font-bold tracking-tight text-slate-900">
-            {metric.value}
-          </p>
-          <p className="mt-2 text-xs leading-relaxed text-slate-500">{metric.basis}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
 function AiEngineeringSection({ project }: { project: PortfolioProject }) {
   if (!project.aiEngineering) {
     return null;
@@ -236,45 +217,22 @@ function AiEngineeringSection({ project }: { project: PortfolioProject }) {
   );
 }
 
-function FrontendFundamentalsSection({ project }: { project: PortfolioProject }) {
-  if (!project.frontendFundamentals?.length) {
-    return null;
-  }
-
-  return (
-    <section className="rounded-xl border border-cyan-200 bg-cyan-50/40 p-5 shadow-sm sm:p-6">
-      <div className="mb-5">
-        <p className="text-xs font-bold uppercase tracking-wide text-cyan-700">
-          React fundamentals
-        </p>
-        <h4 className="mt-1 text-lg font-bold text-slate-950">
-          React 기본 원리를 성능 개선에 적용
-        </h4>
-        <p className="mt-2 text-sm leading-relaxed text-slate-600">
-          라이브러리 사용보다 상태, 참조, reconciliation, 생명주기를 이해하고 적용한 근거입니다.
-        </p>
-      </div>
-
-      <div className="grid gap-3 lg:grid-cols-2">
-        {project.frontendFundamentals.map((item) => (
-          <article key={item.concept} className="rounded-lg border border-slate-200 bg-white p-4">
-            <h5 className="text-sm font-bold text-slate-900">{item.concept}</h5>
-            <p className="mt-2 text-sm leading-relaxed text-slate-600">{item.application}</p>
-            <p className="mt-3 border-l-2 border-cyan-400 pl-3 text-sm font-semibold leading-relaxed text-slate-800">
-              {item.result}
-            </p>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 function ValidationSetup({ project }: { project: PortfolioProject }) {
   if (!project.validationSetup) {
     return null;
   }
 
+  const overviewRows = project.title === "PhotoMap"
+    ? [
+        ["기기", "390x844, DPR 2, 모바일 터치"],
+        ["성능 제한", "CPU 4배 slowdown, RTT 150ms, 1.6Mbps down / 0.75Mbps up"],
+        ["실행 방식", "매번 새 브라우저 환경에서 1회씩 순서대로 실행"],
+        ["표본", "baseline cold 30회 / optimized cold 100회"],
+        ["데이터", "실제 사용자 DB 대신 테스트용 이미지 묶음 사용"],
+        ["판정", "첫 사진·모달 성공률, LCP, KB, request/HTTP/console 오류"],
+        ["한계", "실제 사용자 통계가 아니라 한 대의 PC에서 반복 측정"],
+      ]
+    : [];
   return (
     <section className="rounded-xl border border-blue-200 bg-blue-50/50 p-5 shadow-sm sm:p-6">
       <div className="mb-5">
@@ -285,6 +243,21 @@ function ValidationSetup({ project }: { project: PortfolioProject }) {
         </div>
       </div>
 
+      {overviewRows.length > 0 ? (
+        <div className="mb-5 overflow-hidden rounded-lg border border-blue-200 bg-white">
+          <div className="border-b border-blue-100 bg-blue-50 px-4 py-3">
+            <h5 className="text-sm font-bold text-blue-900">측정 환경 한눈 요약</h5>
+          </div>
+          <div className="grid divide-y divide-slate-100 sm:grid-cols-2 sm:divide-x sm:divide-y-0">
+            {overviewRows.map(([label, value]) => (
+              <div key={label} className="grid gap-1 px-4 py-3 sm:grid-cols-[5.5rem_minmax(0,1fr)]">
+                <dt className="text-xs font-bold text-slate-500">{label}</dt>
+                <dd className="text-sm leading-relaxed text-slate-800">{value}</dd>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : null}
       <div className="grid gap-4 xl:grid-cols-2">
         {project.validationSetup.tracks.map((track, trackIndex) => {
           const rows = [
@@ -793,13 +766,11 @@ function ProjectSection({ project, index }: { project: PortfolioProject; index: 
       </div>
 
       <div className="space-y-6">
-        <MetricGrid project={project} />
-        <FrontendFundamentalsSection project={project} />
+        <MetricTable project={project} />
         <AiEngineeringSection project={project} />
         <ValidationSetup project={project} />
         <ArchitectureDiagram project={project} />
         <CaseStudyGrid project={project} />
-        <MetricTable project={project} />
       </div>
     </motion.article>
   );
