@@ -36,6 +36,7 @@ export const resumeDailyPayData = {
     { title: "Frontend", items: ["React.js", "Next.js", "TypeScript", "ES6+ JavaScript"] },
     { title: "UI & State", items: ["React Hooks", "SPA", "HTML5", "CSS3", "Tailwind CSS", "Zustand"] },
     { title: "Quality", items: ["Vitest", "Playwright", "React Profiler", "Lighthouse"] },
+    { title: "AI 활용", items: ["코드 경로 조사", "성능 가설", "실패 테스트", "측정 자동화", "근거 검토"] },
     { title: "Tools", items: ["Git", "GitHub", "Slack", "Codex"] },
   ],
   projectHighlights: [
@@ -43,7 +44,11 @@ export const resumeDailyPayData = {
       ...photoMap,
       keyRoles:
         "React SPA 화면 구현 / 상태 구독 범위 분리 / WebGL·canvas·D3 렌더링 생명주기 관리 / 모바일 성능 측정·개선",
-      aiApproach: [],
+      aiApproach: [
+        "AI로 이미지 로딩 병목과 렌더링 경로를 조사하고, 원본 이미지 요청 경쟁이 첫 화면 지연을 만든다는 가설을 세웠습니다.",
+        "실패를 재현하는 Playwright 측정 runner와 고정 mobile-mid 4G 조건을 구성해 최적화 전후를 반복 비교했습니다.",
+        "측정 오류가 의심되는 결과는 폐기하고, 원시 측정값과 테스트 결과를 확인한 뒤 최종 반영 여부를 직접 결정했습니다.",
+      ],
       issues: [
         "React UI, Mapbox 지도, Unity WebGL iframe, cobe canvas, D3 관계 그래프가 한 화면에서 동작해 상태 변경과 렌더링 책임이 쉽게 섞일 수 있었습니다.",
         "고해상도 사진 목록에서 원본 이미지 요청과 hover/transition 비용이 겹쳐 모바일 첫 화면 반응성이 떨어졌습니다.",
@@ -64,7 +69,11 @@ export const resumeDailyPayData = {
       ...gameInfo,
       keyRoles:
         "Next.js 서비스 구현 / 외부 API 응답 정규화 / 가격·캐시·오류 경계 설계 / 테스트 기반 유지보수",
-      aiApproach: [],
+      aiApproach: [
+        "AI로 제품 범위, 데이터 계약, frontend UX, QA 관점의 작업을 issue 단위로 분해했습니다.",
+        "API key, cache key, stale 가격, 비어 있는 상태, 모바일 safe-area 같은 위험 지점을 점검하게 하고 domain rule과 테스트를 통과한 제안만 반영했습니다.",
+        "Fallow 분석으로 미사용 export와 중복 clone을 찾고, 실제 참조와 테스트 결과를 확인한 뒤 정리했습니다.",
+      ],
       issues: [
         "Steam, Epic, ITAD API 응답 구조가 달라 검색/할인/상세/관련 목록 UI가 API별 예외를 직접 처리할 위험이 있었습니다.",
         "0원 또는 null 가격이 최저가와 목표가 달성 상태로 오판될 수 있었습니다.",

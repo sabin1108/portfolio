@@ -12,6 +12,7 @@ import { resumeNhnDoorayData } from "../data/resume_nhn_dooray";
 import { resumeWacusData } from "../data/resume_wacus";
 import { resumeDailyPayData } from "../data/resume_dailypay";
 import { resumeSmileDragonData } from "../data/resume_smiledragon";
+import { manualResumePathKeyword, resumeManualData } from "../data/resume_manual";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 
@@ -175,6 +176,7 @@ export function Resume() {
   const isWacusPath = normalizedPath.includes("wacus_frontend");
   const isDailyPayPath = normalizedPath.includes("dailypay_frontend");
   const isSmileDragonPath = normalizedPath.includes("smiledragon_frontend");
+  const isManualPath = normalizedPath.includes(manualResumePathKeyword.toLowerCase());
   const activeResumeData = isPooolingforestPath
     ? resumePooolingforestData
     : isLsscPath
@@ -185,6 +187,8 @@ export function Resume() {
     ? resumeNhnDoorayData
     : isSmileDragonPath
     ? resumeSmileDragonData
+    : isManualPath
+    ? resumeManualData
     : isDailyPayPath
     ? resumeDailyPayData
     : isWacusPath
@@ -199,7 +203,7 @@ export function Resume() {
 
   const { summary, coreSkills, projectHighlights, activityGroups, education, profile } = activeResumeData;
 
-  if (!authorized && !isElicePath && !isNexonPath && !isPooolingforestPath && !isWoojinPath && !isLsscPath && !isAxPath && !isNhnDoorayPath && !isWacusPath && !isDailyPayPath && !isSmileDragonPath) {
+  if (!authorized && !isElicePath && !isNexonPath && !isPooolingforestPath && !isWoojinPath && !isLsscPath && !isAxPath && !isNhnDoorayPath && !isWacusPath && !isDailyPayPath && !isSmileDragonPath && !isManualPath) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-slate-100 px-4 py-8">
         <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-lg">
