@@ -19,7 +19,7 @@ const aiChatBot = getProject("AI ChatBot");
 const basePhotoMap = getBaseProject("PhotoMap");
 const baseGameInfo = getBaseProject("Game Information Platform");
 const webGlCase = basePhotoMap.caseStudies.find(
-  (item) => item.title === "WebGL 지도와 canvas globe 렌더링 수명 주기 분리",
+  (item) => item.title === "WebGL 지도와 3D globe 렌더링 수명 주기 분리",
 );
 
 function retitleCaseStudy(caseStudy: CaseStudy, title: string): CaseStudy {
@@ -27,9 +27,9 @@ function retitleCaseStudy(caseStudy: CaseStudy, title: string): CaseStudy {
 }
 
 const photoMapCaseTitles: Record<string, string> = {
-  "WebGL 지도와 canvas globe 렌더링 수명 주기 분리": "iframe·canvas cleanup으로 WebGL 렌더링 수명 주기 분리",
+  "WebGL 지도와 3D globe 렌더링 수명 주기 분리": "iframe·renderer cleanup으로 WebGL 렌더링 수명 주기 분리",
   "느리다는 인상을 반복 가능한 이미지 evidence로 바꾸기": "Playwright·CDP로 이미지 LCP와 전송량 반복 측정",
-  "D3 tick 업데이트를 React state에서 분리": "ref·DOM 속성 갱신으로 D3 tick을 React state에서 분리",
+  "D3 tick 업데이트를 React state에서 분리": "과도한 리렌더링을 줄이기 위한 D3 그래프 갱신 범위 분리",
 };
 
 const gameInfoCaseTitles: Record<string, string> = {
@@ -42,11 +42,11 @@ const gameInfoCaseTitles: Record<string, string> = {
 
 const photoMapFrontend: Project = {
   ...photoMap,
-  subtitle: "지도·WebGL·canvas·D3 인터랙션으로 사진을 탐색하는 반응형 웹 서비스",
+  subtitle: "지도·WebGL·관계 그래프로 사진을 탐색하는 반응형 웹 서비스",
   summary:
-    "React 화면에 Mapbox 지도, Unity WebGL iframe, cobe canvas globe, D3 관계 그래프를 통합한 3인 팀 프로젝트입니다. 반응형 화면에서 여러 렌더링 계층이 충돌하지 않도록 수명 주기와 상태 경계를 나눴고, 5,000건 이상의 사진 탐색에서 대량 DOM·D3 tick·이미지 네트워크 경쟁을 측정해 개선했습니다. 모바일 첫 사진 지연은 Vercel 배포 환경에서 테스트용 이미지 묶음을 고정하고 optimized cold 100회로 반복 검증했습니다.",
+    "여행이나 일상에서 찍은 사진을 위치와 시간 흐름으로 다시 탐색하는 사진 지도 서비스입니다. 사용자는 EXIF 위치 정보를 바탕으로 지도에서 촬영 장소를 확인하고, 앨범·타임라인·관계 그래프를 오가며 사진 묶음과 이동 경로를 살펴볼 수 있습니다. 3인 팀 프로젝트에서 저는 프론트엔드를 맡아 React 화면에 Mapbox 지도, Unity WebGL iframe, 3D globe, D3 관계 그래프를 연결했고, 대량 사진 탐색에서도 화면이 끊기지 않도록 렌더링 수명 주기와 상태 경계를 분리했습니다.",
   responsibilities: [
-    "Mapbox 지도, 앨범, 타임라인, Unity WebGL iframe, canvas globe, D3 관계 그래프를 React 화면에 통합",
+    "Mapbox 지도, 앨범, 타임라인, Unity WebGL iframe, 3D globe, D3 관계 그래프를 React 화면에 통합",
     "Zustand selector와 useShallow로 상태 구독 범위를 줄이고, 대량 목록은 가상화로 DOM 수를 제한",
     "D3 tick 좌표를 React state에서 ref/DOM 속성 갱신으로 분리해 초당 반복 이벤트의 reconciliation 비용 축소",
     "Vercel Preview, Playwright, CDP encodedDataLength, React Profiler 기준으로 성능 개선 전후를 반복 측정",

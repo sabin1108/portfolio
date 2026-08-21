@@ -59,32 +59,6 @@ const lsscProjectHighlights = resumeData.projectHighlights.map((project) => {
     };
   }
 
-  if (project.title === "AI ChatBot") {
-    return {
-      ...project,
-      keyRoles:
-        "채팅 UI 구현 / Fallback 선택지 흐름 / Next.js API route proxy / 응답 가독성·로컬 저장 흐름 개선",
-      issues: [
-        "모호한 질문이 들어왔을 때 AI가 의도를 좁히지 못하고, 공지·식단·일정 데이터와 긴 URL이 섞이며 모바일 채팅 UI를 깨뜨렸습니다.",
-        "외부 백엔드 응답 형식 차이를 UI 컴포넌트가 직접 처리하면 수정 범위가 계속 커질 수 있었습니다.",
-        "로그인 없는 구조에서도 새로고침 후 대화 복원과 사용자가 필요한 대화 내역 내보내기가 필요했습니다.",
-        "전시용 서비스로 보여주기 위해 학식·공지·일정·빠른 링크를 한 흐름에서 탐색할 수 있는 방향이 필요했습니다.",
-      ],
-      resolutions: [
-        "Fallback 선택지 UI로 질문 범위를 좁히고, ReactMarkdown과 markdown link 변환으로 긴 URL과 목록형 응답을 읽기 쉬운 메시지 구조로 바꿨습니다.",
-        "Next.js API Routes를 proxy layer로 두어 UI는 메시지 표시와 상호작용에 집중하도록 분리했습니다.",
-        "localStorage 기반 대화 복원, storage event 동기화, Blob API 기반 txt 내보내기 흐름을 구현했습니다.",
-        "카카오톡 챗봇과 웹페이지형 챗봇을 비교한 뒤, 전시 가능성과 기능 확장성을 고려해 웹 기반 챗봇 UI로 방향을 정했습니다.",
-      ],
-      achievements: [
-        "공지 링크와 학사 정보를 모바일 채팅 말풍선 안에서 읽기 쉬운 구조로 보여주도록 개선했습니다.",
-        "FE-BE 응답 경계를 나누어 백엔드 응답 형식 변화가 UI 전체 수정으로 번지는 위험을 줄였습니다.",
-        "학교 정보 접근성 개선 AI ChatBot 서비스로 BRIGHT MAKERS EXPO 2025 캡스톤디자인 경진대회 우수상을 받았습니다.",
-        "공지, 학식, 일정처럼 흩어진 정보를 채팅 흐름으로 연결해 사용자가 필요한 정보를 빠르게 찾는 방향을 제시했습니다.",
-      ],
-    };
-  }
-
   return project;
 });
 

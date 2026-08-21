@@ -219,18 +219,18 @@ export const portfolio = {
       period: "2025.12 - 2026.08",
       team: "3인 팀 / Frontend 담당",
       summary:
-        "EXIF 위치와 촬영 시간을 기반으로 사진을 지도, 앨범, 타임라인, 관계 그래프로 탐색하는 서비스입니다. 초기 요청 병렬화, 전역 상태 분리, D3 시뮬레이션 분리, 가상화로 대량 사진에서도 화면이 버티는 구조로 정리했습니다.",
+        "여행이나 일상에서 찍은 사진을 위치와 시간 흐름으로 다시 탐색하는 사진 지도 서비스입니다. 사용자는 EXIF 위치 정보를 바탕으로 지도에서 촬영 장소를 확인하고, 앨범·타임라인·관계 그래프를 오가며 사진 묶음과 이동 경로를 살펴볼 수 있습니다. 3인 팀 프로젝트에서 저는 프론트엔드를 맡아 React 화면에 Mapbox 지도, Unity WebGL iframe, 3D globe, D3 관계 그래프를 연결했고, 대량 사진 탐색에서도 화면이 끊기지 않도록 렌더링 수명 주기와 상태 경계를 분리했습니다.",
 
       responsibilities: [
         "EXIF 메타데이터를 읽어 사진, 위치, 시간 데이터를 화면에서 바로 쓸 수 있게 정리",
         "Zustand selector로 사진, 필터, 선택 상태를 분리하고 전역 리렌더링 범위를 축소",
         "대량 사진 구간을 row 가상화로 바꾸고 D3 tick 업데이트를 React state 밖으로 분리",
-        "지도, 앨범, 타임라인, 관계 그래프 화면을 같은 데이터 흐름으로 연결",
-        "Supabase 데이터 연동과 Unity WebGL 지도 화면 통합",
-        "cobe 기반 canvas globe와 Unity WebGL iframe/postMessage 흐름의 렌더링 수명 주기 분리",
+        "Mapbox 지도, 앨범, 타임라인, Unity WebGL iframe, 3D globe, D3 관계 그래프를 React 화면에 통합",
+        "Vercel 배포 URL과 테스트용 이미지 묶음을 고정하고 optimized cold 100회로 모바일 첫 사진 지연 반복 검증",
+        "3D globe와 Unity WebGL iframe/postMessage 흐름의 렌더링 수명 주기 분리",
         "BE 1명·Unity 1명과 데이터·지도 연동 흐름을 맞추며 FE 상태 구조와 렌더링 책임 분리",
       ],
-      tech: ["React", "TypeScript", "Zustand", "Supabase", "D3.js", "@tanstack/react-virtual", "Unity WebGL", "Canvas", "cobe"],
+      tech: ["React", "TypeScript", "Zustand", "Supabase", "@tanstack/react-virtual", "Unity WebGL"],
       links: {
         live: "https://photomap-three.vercel.app/",
         github: "https://github.com/sabin1108/Photomap",
@@ -265,11 +265,11 @@ export const portfolio = {
       },
       caseStudies: [
         {
-          title: "WebGL 지도와 canvas globe 렌더링 수명 주기 분리",
-          issue: "지도 화면에서는 React UI, Mapbox, Unity WebGL iframe, cobe canvas globe가 함께 동작해, 화면 전환이나 필터 변경 때 렌더링 책임이 섞이면 WebGL 런타임과 React 상태가 서로 영향을 주는 문제가 생길 수 있었습니다.",
-          cause: "WebGL 기반 화면은 React 컴포넌트처럼 렌더마다 새로 계산되면 비용이 크고, iframe 내부 Unity 런타임이나 canvas renderer는 별도 수명 주기를 가집니다. React 상태 변경을 그대로 WebGL 렌더링 루프와 연결하면 지도 마커, 사진 데이터, globe marker 갱신이 한 흐름에 묶이고, 언마운트 후에도 이벤트 리스너나 렌더러 인스턴스가 남을 위험이 있었습니다.",
-          resolution: "Unity WebGL 지도는 iframe으로 분리하고 postMessage/SendMessage로 필요한 사진·위치 데이터만 전달했습니다. cobe 기반 GlobeView는 idle mount, marker memoization, contain: layout paint size, globe.destroy() cleanup으로 canvas 렌더러의 영향 범위와 수명 주기를 명확히 했습니다. frame budget probe를 추가해 canvas 렌더링 비용을 React commit 비용과 따로 기록할 수 있게 했습니다.",
-          result: "React 상태 변경과 WebGL/canvas 렌더링 책임을 분리해 지도·글로브 화면을 별도 런타임처럼 관리할 수 있게 됐습니다. 화면 전환 시 renderer cleanup 경로가 생겼고, WebGL 보조 뷰는 React 전체 리렌더링 최적화와 별개로 샘플링·레이아웃 격리·메시지 브릿지를 기준으로 성능 병목을 설명할 수 있게 됐습니다. cobe canvas GlobeView는 11.1초 구간에서 106 frames, max frame 183.3ms, avg frame 104.74ms를 기록해 이후 WebGL/canvas 개선 작업을 같은 기준으로 비교할 수 있게 됐습니다.",
+          title: "WebGL 지도와 3D globe 렌더링 수명 주기 분리",
+          issue: "지도 화면에서는 React UI, Mapbox, Unity WebGL iframe, 3D globe가 함께 동작해, 화면 전환이나 필터 변경 때 렌더링 책임이 섞이면 WebGL 런타임과 React 상태가 서로 영향을 주는 문제가 생길 수 있었습니다.",
+          cause: "WebGL 기반 화면은 React 컴포넌트처럼 렌더마다 새로 계산되면 비용이 크고, iframe 내부 Unity 런타임이나 3D globe renderer는 별도 수명 주기를 가집니다. React 상태 변경을 그대로 WebGL 렌더링 루프와 연결하면 지도 마커, 사진 데이터, globe marker 갱신이 한 흐름에 묶이고, 언마운트 후에도 이벤트 리스너나 렌더러 인스턴스가 남을 위험이 있었습니다.",
+          resolution: "Unity WebGL 지도는 iframe으로 분리하고 postMessage/SendMessage로 필요한 사진·위치 데이터만 전달했습니다. GlobeView는 idle mount, marker memoization, contain: layout paint size, globe.destroy() cleanup으로 3D globe renderer의 영향 범위와 수명 주기를 명확히 했습니다. frame budget probe를 추가해 globe 렌더링 비용을 React commit 비용과 따로 기록할 수 있게 했습니다.",
+          result: "React 상태 변경과 WebGL/3D globe 렌더링 책임을 분리해 지도·글로브 화면을 별도 런타임처럼 관리할 수 있게 됐습니다. 화면 전환 시 renderer cleanup 경로가 생겼고, WebGL 보조 뷰는 React 전체 리렌더링 최적화와 별개로 샘플링·레이아웃 격리·메시지 브릿지를 기준으로 성능 병목을 설명할 수 있게 됐습니다. GlobeView는 11.1초 구간에서 106 frames, max frame 183.3ms, avg frame 104.74ms를 기록해 이후 WebGL/3D globe 개선 작업을 같은 기준으로 비교할 수 있게 됐습니다.",
           evidence: ["Map2DView.tsx", "public/unity-map/mapbox.html", "GlobeView.tsx", "issue-nexon-webgl-after-dev-frame-budget.json"],
         },
         {

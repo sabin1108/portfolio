@@ -5,11 +5,10 @@ const projects = new Map(
 );
 const gameInfo = projects.get("Game Information Platform");
 const photoMap = projects.get("PhotoMap");
-const aiChatBot = projects.get("AI ChatBot");
-const axProjectOrder = ["PhotoMap", "Game Information Platform", "AI ChatBot"];
+const axProjectOrder = ["PhotoMap", "Game Information Platform"];
 
-if (!gameInfo || !photoMap || !aiChatBot) {
-  throw new Error("AX resume requires Game Information Platform, PhotoMap, and AI ChatBot.");
+if (!gameInfo || !photoMap) {
+  throw new Error("AX resume requires Game Information Platform and PhotoMap.");
 }
 
 export const resumeAxData = {
@@ -104,30 +103,7 @@ export const resumeAxData = {
         "CDP 기준 cold run당 관측 전송량은 328KB였습니다. 같은 조건의 522KB JPEG baseline 30회 결과도 별도 raw JSON으로 보존했습니다.",
         "결과는 단일 physical runner의 synthetic lab 측정입니다. fresh browser context를 사용했지만 Vercel edge·DNS·OS cache까지 초기화한 field RUM은 아닙니다.",
       ],
-    },
-    {
-      ...aiChatBot,
-      keyRoles: "사용자 문제 정의 / 웹 챗봇 UX 기획 / AI·백엔드 응답 경계 설계 / FE·BE 협업",
-      issues: [
-        "학식, 공지, 일정 정보가 여러 화면에 흩어져 사용자가 원하는 내용을 찾기까지 여러 단계를 거쳐야 했습니다. 카카오톡 챗봇은 접근성은 높지만 전시와 기능 확장에 제약이 있었습니다.",
-        "AI와 외부 백엔드 응답에 JSON, 일반 문장, 긴 URL, 날짜·목록이 섞여 이를 그대로 출력하면 모바일 말풍선이 깨지고 기능별 예외 처리가 UI에 쌓였습니다.",
-      ],
-      aiApproach: [
-        "AI를 붙이는 것보다 사용자가 어떤 질문으로 어떤 학교 정보를 확인할지 먼저 정의하고, 학식·공지·일정·빠른 링크를 한 채팅 흐름으로 묶었습니다.",
-        "생성형 AI 응답을 고정된 화면 데이터로 가정하지 않고 Next.js API Routes를 proxy boundary로 두어 외부 endpoint와 응답 차이를 UI 밖에서 흡수했습니다.",
-      ],
-      resolutions: [
-        "ReactMarkdown과 remark-gfm으로 링크와 목록을 렌더링하고, 긴 URL에는 줄바꿈 가능한 스타일을 적용했습니다.",
-        "FE는 내부 route와 메시지 구조만 바라보게 해 BE의 데이터 수집 책임과 프론트의 사용자 대화 책임을 나눴습니다.",
-        "localStorage와 storage event로 대화를 복원·탭 동기화하고, Blob API로 서버 재전송 없이 대화 내역을 내보냈습니다.",
-      ],
-      achievements: [
-        "외부 응답 포맷 변경이 채팅 입력과 메시지 목록 전체로 번지는 범위를 줄이고, 모바일 가로 스크롤과 말풍선 깨짐을 완화했습니다.",
-        "2인 협업에서 데이터 수집과 사용자 대화 흐름의 수정 지점을 분리해 경진대회 발표와 논문 산출물까지 제품 흐름을 완성했습니다.",
-        "학교 정보 접근성 개선 AI ChatBot으로 BRIGHT MAKERS EXPO 2025 캡스톤디자인 경진대회 우수상을 받았습니다.",
-      ],
-    },
-  ].sort(
+    },  ].sort(
     (left, right) =>
       axProjectOrder.indexOf(left.title) - axProjectOrder.indexOf(right.title),
   ),

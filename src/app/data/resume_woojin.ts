@@ -16,7 +16,7 @@ PhotoMap에서는 Mapbox 기반 지도 화면에 위치 기반 사진 데이터�
 
 Game Information Platform에서는 Steam/Epic/ITAD API 응답 차이를 Adapter/Normalizer 계층으로 정리하고, 0원/null 가격 오판 방지, stale cache, rate limit, Vitest/Playwright 테스트를 통해 장애와 회귀에 대비했습니다. Fallow 정적 분석 결과를 기준으로 unused files/exports, duplication, maintainability를 추적해 unused files 1개와 unused exports 11개를 0개로 정리했고, 중복 코드는 1,006줄(9.4%)에서 308줄(2.9%)로 낮췄으며 maintainability를 91.3에서 92.1로 개선했습니다.
 
-HTML/CSS/JavaScript 기반 화면 구현, API 경계 분리, 공공 정보 접근성 개선 챗봇, Mapbox·WebGL 기반 지도 데이터 탐색 UI 경험을 바탕으로 공공·국방 정보체계 웹 개발에 빠르게 적응하겠습니다.`,
+HTML/CSS/JavaScript 기반 화면 구현, API 경계 분리, Mapbox·WebGL 기반 지도 데이터 탐색 UI 경험을 바탕으로 공공·국방 정보체계 웹 개발에 빠르게 적응하겠습니다.`,
   coreSkills: resumeData.coreSkills.map((group) =>
     group.title === "Frontend"
       ? { ...group, items: ["HTML5", "CSS3", "JavaScript", "TypeScript", "React.js", "Next.js"] }
@@ -84,41 +84,13 @@ HTML/CSS/JavaScript 기반 화면 구현, API 경계 분리, 공공 정보 접�
       };
     }
 
-    if (project.title === "AI ChatBot") {
-      return {
-        ...project,
-        techTags: ["Next.js", "TypeScript", "HTML/CSS", "Tailwind CSS", "React-Markdown", "Blob API"],
-        keyRoles: "학교 정보 접근성 개선 UI / API 응답 경계 분리 / 로컬 대화 저장·내보내기 구현",
-        issues: [
-          "학식, 공지, 학사 일정 정보가 여러 출처와 화면에 흩어져 있어 사용자가 원하는 정보를 찾기까지 여러 단계를 거쳐야 했습니다.",
-          "초기 조사 과정에서 교내 Open API 제공 여부가 명확하지 않고 부서별 문의가 필요한 상황이 확인되어, 공지·학식·일정 데이터를 안정적으로 가져오는 방식을 별도로 검토해야 했습니다.",
-          "2인 협업에서 백엔드가 공지·식단·일정 데이터를 수집하고 프론트엔드는 채팅 UI로 보여줘야 했기 때문에, 응답 형식 차이를 UI가 직접 처리하면 FE와 BE 변경이 강하게 묶이는 문제가 있었습니다.",
-          "로그인 없는 localStorage 구조에서 새로고침과 여러 탭 사용 시 대화 목록과 활성 대화가 어긋날 수 있었습니다."
-        ],
-        resolutions: [
-          "학식, 공지, 학사 일정, 빠른 링크를 채팅 UI와 보조 화면에서 함께 확인할 수 있게 사용자 흐름을 정리했습니다.",
-          "Open API 제공 여부가 불명확한 데이터는 백엔드 수집 경로와 프론트 표시 책임을 분리해, UI가 데이터 출처별 수집 방식을 직접 알지 않도록 정리했습니다.",
-          "Next.js API Routes를 proxy layer로 두고 백엔드 응답을 채팅 UI가 소비하기 쉬운 형태로 받도록 경계를 정리했습니다.",
-          "useLocalStorage hook과 storage 이벤트로 대화 기록 복원과 탭 간 상태 동기화를 처리했습니다."
-        ],
-        achievements: [
-          "학교 정보 접근성 개선 AI ChatBot 서비스로 BRIGHT MAKERS EXPO 2025 캡스톤디자인 경진대회 우수상을 받았습니다.",
-          "공지·식단·일정 데이터 수집 책임과 채팅 UI 표시 책임을 나눠 FE와 BE 변경이 한 화면 컴포넌트에 함께 번지는 위험을 줄였습니다.",
-          "응답 경계를 route/API 계층으로 모으면서 UI 컴포넌트 책임을 메시지 표시와 사용자 상호작용 중심으로 줄였습니다.",
-          "대화 내역 내보내기를 서버 저장/재전송 없이 브라우저 Blob API로 처리했습니다."
-        ],
-      };
-    }
-
     return project;
   }).sort((a, b) => {
-    const order = ["PhotoMap", "Game Information Platform", "AI ChatBot"];
+    const order = ["PhotoMap", "Game Information Platform"];
     return order.indexOf(a.title) - order.indexOf(b.title);
   }),
   activityGroups: resumeData.activityGroups.filter((group) =>
-    group.title.includes("학교 정보 접근성") ||
-    group.title.includes("생성형 AI") ||
-    group.title.includes("BRIGHT MAKERS")
+    group.title.includes("생성형 AI")
   ),
   motivation: woojinMotivation,
 } as const;

@@ -5,10 +5,9 @@ const projects = new Map(
 );
 const photoMap = projects.get("PhotoMap");
 const gameInfo = projects.get("Game Information Platform");
-const aiChatBot = projects.get("AI ChatBot");
 
-if (!photoMap || !gameInfo || !aiChatBot) {
-  throw new Error("WACUS resume requires PhotoMap, Game Information Platform, and AI ChatBot.");
+if (!photoMap || !gameInfo) {
+  throw new Error("WACUS resume requires PhotoMap and Game Information Platform.");
 }
 
 export const resumeWacusData = {
@@ -66,24 +65,7 @@ export const resumeWacusData = {
         "Vitest, Testing Library, Playwright로 가격 판단, 캐시, 오류 상태, 관심 목록 흐름을 검증했습니다.",
         "Fallow 분석으로 미사용 export 11개를 0개로, 중복 코드 비율을 9.4%에서 2.9%로 줄였습니다.",
       ],
-    },
-    {
-      ...aiChatBot,
-      keyRoles: "보조 경험 / ReactMarkdown 메시지 UI / AI·백엔드 응답 경계",
-      issues: [
-        "AI와 외부 백엔드 응답에 문장, 긴 URL, 날짜·목록이 섞여 모바일 말풍선과 UI 예외 처리가 복잡해졌습니다.",
-      ],
-      aiApproach: [
-        "생성형 AI 응답을 고정된 화면 데이터로 가정하지 않고 Next.js API route를 proxy boundary로 두었습니다.",
-      ],
-      resolutions: [
-        "외부 응답 차이는 API route에서 흡수하고 ReactMarkdown으로 링크·목록을 렌더링해 긴 URL과 모바일 가독성을 보완했습니다.",
-      ],
-      achievements: [
-        "응답 변경이 메시지 UI 전체로 번지는 범위를 줄였고, 학교 정보 접근성 개선 서비스로 BRIGHT MAKERS EXPO 2025 우수상을 받았습니다.",
-      ],
-    },
-  ],
+    },  ],
   motivation: `WACUS 공고의 React·Next.js 기반 웹 UI, 동적인 인터랙션, 반응형 퍼블리싱, WebGL 경험 우대 항목은 제가 가장 구체적인 결과를 만든 PhotoMap과 맞닿아 있습니다. PhotoMap에서 위치 기반 사진을 Mapbox 지도와 연결하고 Unity WebGL iframe, cobe canvas globe, D3 관계 그래프를 React 화면 안에 통합했습니다. 단순히 시각 요소를 붙이는 데서 끝내지 않고 postMessage 경계, idle mount, cleanup, 상태 구독 범위를 나눠 여러 렌더링 계층이 서로의 성능을 침범하지 않게 했습니다.
 
 사용자가 실제로 보는 결과도 반복 검증했습니다. 작은 카드와 상세 화면이 같은 원본 이미지를 요청하던 구조를 thumbnail·display WebP로 나누고 첫 이미지 후보 하나만 높은 우선순위로 처리했습니다. 고정된 모바일 기기·4G·CPU 조건에서 optimized cold 100회를 실행해 lab LCP p75 2.5초, 첫 사진 p95 2.6초, 첫 사진과 모달 100/100 성공을 기록했습니다. AI는 이미지 경로 조사, 가설 수립, 실패 테스트와 Playwright runner 구현을 보조했고, 측정 오류가 발견된 결과는 폐기한 뒤 전 구간을 다시 실행했습니다.

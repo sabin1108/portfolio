@@ -5,10 +5,9 @@ const projects = new Map(
 );
 const photoMap = projects.get("PhotoMap");
 const gameInfo = projects.get("Game Information Platform");
-const aiChatBot = projects.get("AI ChatBot");
 
-if (!photoMap || !gameInfo || !aiChatBot) {
-  throw new Error("Frontend resume requires PhotoMap, Game Information Platform, and AI ChatBot.");
+if (!photoMap || !gameInfo) {
+  throw new Error("Frontend resume requires PhotoMap and Game Information Platform.");
 }
 
 export const resumeFrontendData = {
@@ -21,7 +20,6 @@ export const resumeFrontendData = {
     "사용자가 느끼는 지연과 불편을 상태·렌더링·네트워크 문제로 나누고, 지표와 테스트로 개선을 확인하는 프론트엔드 개발자 민사빈입니다.",
     "PhotoMap에서는 React·Mapbox·Unity WebGL·canvas가 함께 동작하는 화면을 구현하고, Zustand selector·가상화·D3 tick 분리로 렌더링 범위를 줄였습니다. 모바일 이미지 지연은 AI로 조사·가설·실패 테스트·측정 runner 구현을 보조한 뒤, 고정 mobile-mid 4G 조건의 optimized cold 100회에서 lab LCP p75 2.5초와 첫 사진 p95 2.6초를 기록했습니다.",
     "개인 프로젝트 Game Information Platform에서는 외부 가격 API를 Adapter/Normalizer로 정규화하고, 0원·null 오판과 API 장애를 domain rule·stale cache·rate limit으로 방어했습니다. AI는 issue 분해, 데이터 계약·QA 검토, 테스트 보강, Fallow 분석에 사용했으며 결과는 25개 test/spec 파일·69개 케이스와 build로 검증했습니다.",
-    "AI ChatBot에서는 생성형 AI와 백엔드의 비정형 응답을 Next.js API route 경계에서 흡수하고, ReactMarkdown·localStorage·Blob API로 읽기·복원·내보내기 흐름을 보완했습니다.",
   ].join("\n\n"),
   coreSkills: [
     { title: "Frontend", items: ["React.js", "Next.js", "TypeScript", "JavaScript"] },
@@ -59,11 +57,6 @@ export const resumeFrontendData = {
         "전체 test/spec 자산 25개 파일·69개 케이스를 구성했고, 주요 리팩터 구간에서 Vitest 21 files / 60 tests 통과 기록을 남겼습니다.",
         "미사용 export를 11개에서 0개로, 중복 코드 비율을 9.4%에서 2.9%로 줄였습니다.",
       ],
-    },
-    {
-      ...aiChatBot,
-      keyRoles: "채팅 UI·반응형 메시지 표시 / AI·백엔드 응답 경계 / 대화 복원·내보내기 / FE·BE 협업",
-    },
-  ],
+    },  ],
   motivation: "",
 } as const;
