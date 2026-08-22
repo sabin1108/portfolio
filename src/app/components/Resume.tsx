@@ -1,21 +1,23 @@
 import { useState, useEffect } from "react";
 import { ExternalLink, FileText, Github, Globe, Mail, Printer, Lock, Key } from "lucide-react";
-import { resumeData, RESUME_PASSCODE } from "../data/resume";
-import { resumeEliceData } from "../data/resume_elice";
-import { resumeNexonData } from "../data/resume_nexon";
-import { resumePooolingforestData } from "../data/resume_pooolingforest";
-import { resumeWoojinData } from "../data/resume_woojin";
-import { resumeLsscData } from "../data/resume_lssc";
-import { resumeAxData } from "../data/resume_ax";
-import { resumeFrontendData } from "../data/resume_frontend";
-import { resumeNhnDoorayData } from "../data/resume_nhn_dooray";
-import { resumeWacusData } from "../data/resume_wacus";
-import { resumeDailyPayData } from "../data/resume_dailypay";
-import { resumeSmileDragonData } from "../data/resume_smiledragon";
-import { manualResumePathKeyword, resumeManualData } from "../data/resume_manual";
+import {
+  resumeData,
+  RESUME_PASSCODE,
+  resumeEliceData,
+  resumeNexonData,
+  resumePooolingforestData,
+  resumeWoojinData,
+  resumeLsscData,
+  resumeAxData,
+  resumeFrontendData,
+  resumeNhnDoorayData,
+  resumeWacusData,
+  resumeDailyPayData,
+  resumeSmileDragonData,
+  resumeRegistry,
+} from "../data/main";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-
 function ResumeHeader({
   profile,
   summary,
@@ -139,7 +141,7 @@ export function Resume() {
     // 1. Check URL query param '?key=...'
     const params = new URLSearchParams(window.location.search);
     const urlKey = params.get("key");
-    if (urlKey === RESUME_PASSCODE) {
+    if (RESUME_PASSCODE && urlKey === RESUME_PASSCODE) {
       setAuthorized(true);
       sessionStorage.setItem("resume_auth_key", urlKey);
       return;
@@ -147,7 +149,7 @@ export function Resume() {
 
     // 2. Check sessionStorage
     const savedKey = sessionStorage.getItem("resume_auth_key");
-    if (savedKey === RESUME_PASSCODE) {
+    if (RESUME_PASSCODE && savedKey === RESUME_PASSCODE) {
       setAuthorized(true);
     }
   }, []);
@@ -155,7 +157,7 @@ export function Resume() {
   const handleVerify = (e: React.FormEvent) => {
     e.preventDefault();
     const cleanKey = inputKey.trim();
-    if (cleanKey === RESUME_PASSCODE) {
+    if (RESUME_PASSCODE && cleanKey === RESUME_PASSCODE) {
       setAuthorized(true);
       sessionStorage.setItem("resume_auth_key", cleanKey);
       setErrorMsg("");
@@ -176,7 +178,9 @@ export function Resume() {
   const isWacusPath = normalizedPath.includes("wacus_frontend");
   const isDailyPayPath = normalizedPath.includes("dailypay_frontend");
   const isSmileDragonPath = normalizedPath.includes("smiledragon_frontend");
-  const isManualPath = normalizedPath.includes(manualResumePathKeyword.toLowerCase());
+  const matchedRegistryResume = resumeRegistry.find((resume) =>
+    normalizedPath.includes(resume.keyword.toLowerCase()),
+  );
   const activeResumeData = isPooolingforestPath
     ? resumePooolingforestData
     : isLsscPath
@@ -187,8 +191,8 @@ export function Resume() {
     ? resumeNhnDoorayData
     : isSmileDragonPath
     ? resumeSmileDragonData
-    : isManualPath
-    ? resumeManualData
+    : matchedRegistryResume
+    ? matchedRegistryResume.data
     : isDailyPayPath
     ? resumeDailyPayData
     : isWacusPath
@@ -203,7 +207,7 @@ export function Resume() {
 
   const { summary, coreSkills, projectHighlights, activityGroups, education, profile } = activeResumeData;
 
-  if (!authorized && !isElicePath && !isNexonPath && !isPooolingforestPath && !isWoojinPath && !isLsscPath && !isAxPath && !isNhnDoorayPath && !isWacusPath && !isDailyPayPath && !isSmileDragonPath && !isManualPath) {
+  if (!authorized && !isElicePath && !isNexonPath && !isPooolingforestPath && !isWoojinPath && !isLsscPath && !isAxPath && !isNhnDoorayPath && !isWacusPath && !isDailyPayPath && !isSmileDragonPath && !matchedRegistryResume) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-slate-100 px-4 py-8">
         <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-lg">

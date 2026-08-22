@@ -30,13 +30,12 @@ export const resumeDailyPayData = {
     "React 기반 SPA에서 상태 전파, 렌더링 생명주기, API 응답 경계를 분리해 화면 속도와 안정성을 개선해 온 프론트엔드 개발자 민사빈입니다. 화면을 구현한 뒤 감으로 판단하지 않고, 병목을 나눠 보고 재현 가능한 환경을 만든 다음 테스트와 측정값으로 확인하는 방식으로 작업해 왔습니다.",
     "PhotoMap에서는 React UI 안에 Mapbox, Unity WebGL iframe, canvas, D3가 함께 동작하는 화면을 구현했습니다. React 상태 변경이 필요한 영역과 WebGL·canvas·D3처럼 별도 수명주기를 가진 렌더링 계층을 분리했고, Zustand selector와 D3 tick 분리로 불필요한 리렌더링 범위를 줄였습니다. 모바일 첫 화면 지연도 같은 방식으로 접근했습니다. Vercel 배포 환경에서 테스트용 이미지 묶음과 mobile-mid 4G 조건을 고정하고 optimized cold 100회를 반복 측정해 lab LCP p75 2.5초, 첫 사진 p95 2.6초를 확인했습니다.",
     "Game Information Platform에서는 Next.js 서비스에서 Steam/Epic/ITAD API 응답 차이를 adapter와 normalizer로 정리했습니다. UI 컴포넌트가 외부 API의 필드명, 결측값, 장애 상태를 직접 처리하지 않도록 공통 view model을 두었고, 0원/null 가격 오판, stale cache, rate limit, 오류 화면은 테스트로 검증했습니다. 게임 카드, 관심 목록 폼, 목표 조건 폼은 구현 세부보다 role, label, status처럼 사용자가 실제로 보는 기준으로 확인했습니다.",
-    "AI는 코드 경로 조사, 성능 가설 정리, 반복 측정 runner 구현, QA 관점 점검에 활용했습니다. 다만 병목 판단, 표본 채택, 결과 해석, 최종 반영 여부는 원시 측정값과 테스트 결과를 보고 직접 결정했습니다. 빠르게 시도하되 근거 없이 확정하지 않는 방식으로, 데일리페이의 신청·심사·전자계약·선정산 실행 흐름에서 사용자가 상태와 예외를 오해 없이 이해하는 웹 프론트엔드 플랫폼 개발에 기여하겠습니다.",
+    "AI는 코드 경로 조사, 성능 가설 정리, 반복 측정 하네스 구현, QA 관점 점검에 활용했습니다. 다만 병목 판단, 표본 채택, 결과 해석, 최종 반영 여부는 원시 측정값과 테스트 결과를 보고 직접 결정했습니다. 빠르게 시도하되 근거 없이 확정하지 않는 방식으로, 데일리페이의 신청·심사·전자계약·선정산 실행 흐름에서 사용자가 상태와 예외를 오해 없이 이해하는 웹 프론트엔드 플랫폼 개발에 기여하겠습니다.",
   ].join("\n\n"),
   coreSkills: [
     { title: "Frontend", items: ["React.js", "Next.js", "TypeScript", "ES6+ JavaScript"] },
     { title: "UI & State", items: ["React Hooks", "SPA", "HTML5", "CSS3", "Tailwind CSS", "Zustand"] },
     { title: "Quality", items: ["Vitest", "Playwright", "React Profiler", "Lighthouse"] },
-    { title: "AI 활용", items: ["코드 경로 조사", "성능 가설", "실패 테스트", "측정 자동화", "근거 검토"] },
     { title: "Tools", items: ["Git", "GitHub", "Slack", "Codex"] },
   ],
   projectHighlights: [
@@ -46,7 +45,7 @@ export const resumeDailyPayData = {
         "React SPA 화면 구현 / 상태 구독 범위 분리 / WebGL·canvas·D3 렌더링 생명주기 관리 / 모바일 성능 측정·개선",
       aiApproach: [
         "AI로 이미지 로딩 병목과 렌더링 경로를 조사하고, 원본 이미지 요청 경쟁이 첫 화면 지연을 만든다는 가설을 세웠습니다.",
-        "실패를 재현하는 Playwright 측정 runner와 고정 mobile-mid 4G 조건을 구성해 최적화 전후를 반복 비교했습니다.",
+        "실패를 재현하는 Playwright 측정 하네스와 고정 mobile-mid 4G 조건을 구성해 최적화 전후를 반복 비교했습니다.",
         "측정 오류가 의심되는 결과는 폐기하고, 원시 측정값과 테스트 결과를 확인한 뒤 최종 반영 여부를 직접 결정했습니다.",
       ],
       issues: [
@@ -70,7 +69,7 @@ export const resumeDailyPayData = {
       keyRoles:
         "Next.js 서비스 구현 / 외부 API 응답 정규화 / 가격·캐시·오류 경계 설계 / 테스트 기반 유지보수",
       aiApproach: [
-        "AI로 제품 범위, 데이터 계약, frontend UX, QA 관점의 작업을 issue 단위로 분해했습니다.",
+        "AI로 제품 범위, 데이터 계약, frontend UX, QA, evidence, 테스트 하네스 관점의 작업을 issue 단위로 분해했습니다.",
         "API key, cache key, stale 가격, 비어 있는 상태, 모바일 safe-area 같은 위험 지점을 점검하게 하고 domain rule과 테스트를 통과한 제안만 반영했습니다.",
         "Fallow 분석으로 미사용 export와 중복 clone을 찾고, 실제 참조와 테스트 결과를 확인한 뒤 정리했습니다.",
       ],

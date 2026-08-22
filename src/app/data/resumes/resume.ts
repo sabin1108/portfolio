@@ -25,7 +25,7 @@ export type ActivityGroup = {
   items: string[];
 };
 
-export const RESUME_PASSCODE = "sabin011108";
+export const RESUME_PASSCODE = "";
 
 export const resumeData = {
   profile: {

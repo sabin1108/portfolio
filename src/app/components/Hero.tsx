@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { Github, Mail } from "lucide-react";
-import { portfolio } from "../data/portfolio";
+import { portfolio } from "../data/main";
 
 export function Hero({ data = portfolio }: { data?: typeof portfolio }) {
   const { profile } = data;

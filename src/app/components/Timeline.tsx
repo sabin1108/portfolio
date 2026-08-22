@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { ExternalLink, FileText } from "lucide-react";
-import { portfolio } from "../data/portfolio";
+import { portfolio } from "../data/main";
 import { Button } from "./ui/button";
 
 export function Timeline({ data = portfolio }: { data?: typeof portfolio }) {

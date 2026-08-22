@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { portfolio } from "../data/portfolio";
+import { portfolio } from "../data/main";
 import { Badge } from "./ui/badge";
 import { Card } from "./ui/card";
 

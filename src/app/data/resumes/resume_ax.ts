@@ -67,7 +67,7 @@ export const resumeAxData = {
       aiApproach: [
         "“원본 이미지 요청 경쟁을 줄이면 첫 사진 p95가 낮아진다”는 검증 가능한 가설을 세웠습니다.",
         "AI로 기존 하네스와 이미지 경로를 조사하고 Image Transformations 403을 재현하는 실패 테스트를 작성했습니다. 이후 Playwright runner, WebP 파생본 생성, 화면별 URL·우선순위 정책을 구현했습니다.",
-        "원시 분포에서 LCP observer callback race를 발견했습니다. Performance Timeline 직접 조회와 100ms settle로 runner를 수정한 뒤, 수정 전 100/30 결과를 폐기하고 두 mode 전체를 다시 실행했습니다.",
+        "측정 자동화도 검증 대상에 포함했습니다. 일부 표본에서 LCP 수집 시점이 실제 이미지 완료 흐름과 어긋나는 문제를 확인해 수집 기준을 보정했고, 기존 결과를 폐기한 뒤 같은 조건에서 baseline과 optimized를 다시 측정했습니다.",
       ],
       testEnvironment: [
         {

@@ -8,7 +8,7 @@ import {
   Github,
   X,
 } from "lucide-react";
-import { portfolio, type Project } from "../data/portfolio";
+import { portfolio, type Project } from "../data/main";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 

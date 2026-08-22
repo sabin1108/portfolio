@@ -5,10 +5,7 @@ import { Education } from "./components/Education";
 import { Resume } from "./components/Resume";
 import { FullstackPdfPortfolio } from "./components/FullstackPdfPortfolio";
 import { Printer } from "lucide-react";
-import { portfolio } from "./data/portfolio";
-import { frontendPortfolio } from "./data/portfolio_frontend";
-import { fullstackPortfolio } from "./data/portfolio_fullstack";
-import { axPortfolio } from "./data/portfolio_ax";
+import { portfolio, frontendPortfolio, fullstackPortfolio, axPortfolio } from "./data/main";
 
 function TopNav({
   showResumeLink = false,

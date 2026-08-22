@@ -27,7 +27,6 @@ export const resumeFrontendData = {
     { title: "State & Data", items: ["Zustand", "Supabase", "REST API", "Adapter / Normalizer"] },
     { title: "Performance", items: ["React Profiler", "Lighthouse", "Virtualization", "Image Delivery"] },
     { title: "Test & Quality", items: ["Vitest", "Testing Library", "Playwright", "GitHub Actions", "Fallow"] },
-    { title: "AI 활용", items: ["문제 분해", "코드 경로 조사", "테스트 하네스 보조", "근거 검토", "Handoff"] },
   ],
   projectHighlights: [
     {
@@ -43,7 +42,7 @@ export const resumeFrontendData = {
         "1인 개발에서 기능 범위, 데이터 계약, UI, 테스트, 문서 검토를 한 번에 처리하면 누락을 발견하기 어려웠습니다.",
       ],
       aiApproach: [
-        "AI 활용을 제품 범위, 데이터 계약, frontend UX, QA, evidence 역할로 나눠 issue #15~#25의 작업·완료 조건을 구체화했습니다.",
+        "AI 활용을 제품 범위, 데이터 계약, frontend UX, QA, evidence, 테스트 하네스 역할로 나눠 issue #15~#25의 작업·완료 조건을 구체화했습니다.",
         "API key·cache key·RLS·stale 가격·빈 상태·모바일 웹뷰 회귀를 검토하게 하고, 제안은 domain rule과 테스트를 통과한 경우만 반영했습니다.",
         "Fallow 결과로 미사용 export·중복 clone·복잡도 hotspot을 찾고, 사람이 실제 참조와 테스트 결과를 확인한 뒤 정리했습니다.",
       ],
