@@ -1,4 +1,4 @@
-import { resumeAxData } from "./resume_ax";
+import { resumeAxData } from "../resume_ax";
 
 const projects = new Map(
   resumeAxData.projectHighlights.map((project) => [project.title, project]),

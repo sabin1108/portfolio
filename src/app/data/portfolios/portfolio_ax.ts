@@ -166,7 +166,7 @@ const photoMapAx: Project = {
     tracks: [
       {
         name: "가상 모바일 이미지 A/B",
-        purpose: "원본 이미지 요청 경쟁을 줄인 뒤 최종 사용자 체감과 Web Vital이 반복 실행에서도 유지되는지 검증",
+        purpose: "preview 우선 로딩과 화면 밖 이미지 lazy load 적용 뒤 첫 사진 표시와 Web Vital이 반복 실행에서도 유지되는지 검증",
         environment: "Vercel에 배포된 같은 Preview URL을 Windows PC 한 대에서 Headless Chrome과 Playwright로 반복 측정 · 모바일 화면 크기 390×844 / DPR 2 / touch 조건 · CPU 4배 느리게, RTT 150ms, 다운로드 1.6Mbps, 업로드 0.75Mbps로 제한 · 한 번에 하나씩 실행",
         dataset: "실제 사용자 사진과 Production DB/Storage는 쓰지 않고, 테스트용 이미지 묶음을 고정해 비교 · baseline JPEG 510KB · optimized thumbnail WebP 30KB / display WebP 255KB",
         procedure: "같은 코드와 같은 Vercel 배포 URL을 유지하고 query parameter만 baseline/optimized로 변경 · optimized cold 100회 / baseline cold 30회 · 매번 새 브라우저 환경에서 실행 · 이미지 완료 후 100ms 기다린 뒤 Performance Timeline의 마지막 LCP entry 수집",

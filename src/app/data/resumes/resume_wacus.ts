@@ -1,5 +1,5 @@
-import { resumeFrontendData } from "./resume_frontend";
-import { resumeDailyPayData } from "./resume_dailypay";
+import { resumeFrontendData } from "./frozen/resume_frontend";
+import { resumeDailyPayData } from "./frozen/resume_dailypay";
 
 const projects = new Map(
   resumeFrontendData.projectHighlights.map((project) => [project.title, project]),

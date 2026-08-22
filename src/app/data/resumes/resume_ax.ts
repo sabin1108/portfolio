@@ -1,4 +1,4 @@
-import { resumeData } from "./resume";
+import { resumeData } from "./frozen/resume";
 
 const projects = new Map(
   resumeData.projectHighlights.map((project) => [project.title, project]),
@@ -21,7 +21,7 @@ export const resumeAxData = {
     "문제를 먼저 정의하고 AI로 탐색과 구현 속도를 높이되, 결과는 코드 규칙과 테스트로 검증하는 개발자 민사빈입니다.",
     "Game Information Platform에서는 외부 모델을 연결하기 전에 mock-evidence-summarizer-v1으로 저장된 가격 snapshot과 review evidence만 사용하는 입력 계약을 검증했습니다. 인증된 job route, 코드 기반 후보 선정, 저장, 오래된 데이터 표시, 빈 화면, API·컴포넌트 테스트를 하나의 기능 범위로 구현했습니다.",
     "개발 과정에서는 프로젝트 전용 agent 5개와 skill 5개로 제품 범위, 데이터 계약, 웹뷰 UX, QA, 문서 근거를 나눠 점검했습니다. 전체 test/spec 자산 25개 파일·69개 케이스를 구성했고, 여러 Fallow 정리 구간을 거쳐 중복률을 9.4%에서 2.9%로 낮췄습니다.",
-    "PhotoMap에서는 모바일 사진 지연을 이미지 요청 경쟁 문제로 좁히고 AI를 조사·가설 수립·실패 테스트·Playwright 하네스·WebP 전달 정책 구현에 활용했습니다. 통제된 mobile-mid 4G 환경에서 최적화 버전을 100회 콜드 실행해 lab LCP p75 2.5초, 첫 사진 완료 p95 2.6초를 기록했으며, 실제 사용자 RUM이 아닌 합성 실험이라는 한계도 함께 기록했습니다.",
+    "PhotoMap에서는 모바일 사진 지연을 원본 이미지의 초기 대역폭 점유 문제로 좁히고 AI를 조사·가설 수립·실패 테스트·Playwright 하네스·WebP 전달 정책 구현에 활용했습니다. 통제된 mobile-mid 4G 환경에서 최적화 버전을 100회 콜드 실행해 lab LCP p75 2.5초, 첫 사진 완료 p95 2.6초를 기록했으며, 실제 사용자 RUM이 아닌 합성 실험이라는 한계도 함께 기록했습니다.",
   ].join("\n\n"),
   coreSkills: [
     { title: "Frontend", items: ["React.js", "Next.js", "TypeScript", "JavaScript"] },
@@ -65,7 +65,7 @@ export const resumeAxData = {
         "기준 구현은 작은 카드에도 원본 JPEG를 사용하고 여러 이미지에 높은 우선순위를 줘, 제한된 모바일 대역폭에서 첫 사진 후보와 나머지 요청이 경쟁하고 있었습니다.",
       ],
       aiApproach: [
-        "“원본 이미지 요청 경쟁을 줄이면 첫 사진 p95가 낮아진다”는 검증 가능한 가설을 세웠습니다.",
+        "원본 이미지가 초기 네트워크 대역폭을 차지해 첫 사진 표시를 늦춘다고 보고, preview 우선 로딩과 lazy load로 첫 사진 p95 개선 여부를 검증했습니다.",
         "AI로 기존 하네스와 이미지 경로를 조사하고 Image Transformations 403을 재현하는 실패 테스트를 작성했습니다. 이후 Playwright runner, WebP 파생본 생성, 화면별 URL·우선순위 정책을 구현했습니다.",
         "측정 자동화도 검증 대상에 포함했습니다. 일부 표본에서 LCP 수집 시점이 실제 이미지 완료 흐름과 어긋나는 문제를 확인해 수집 기준을 보정했고, 기존 결과를 폐기한 뒤 같은 조건에서 baseline과 optimized를 다시 측정했습니다.",
       ],
