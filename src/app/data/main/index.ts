@@ -4,6 +4,7 @@ export {
   fullstackPortfolio,
   axPortfolio,
 } from "../portfolios";
+export type { CaseStudy, Project } from "../portfolios";
 
 export {
   resumeData,
