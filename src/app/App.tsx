@@ -4,6 +4,7 @@ import { Timeline } from "./components/Timeline";
 import { Education } from "./components/Education";
 import { Resume } from "./components/Resume";
 import { FullstackPdfPortfolio } from "./components/FullstackPdfPortfolio";
+import { BinTossPortfolio } from "./components/BinTossPortfolio";
 import { Printer } from "lucide-react";
 import { portfolio, frontendPortfolio, fullstackPortfolio, axPortfolio } from "./data/main";
 
@@ -118,6 +119,10 @@ export default function App() {
 
   if (currentPath === "/ax" || currentPath === "/portfolio_ax") {
     return <PortfolioPage data={axPortfolio} isAx />;
+  }
+
+  if (currentPath === "/portfolio_bin" || currentPath === "/portfolio/portfolio_bin") {
+    return <BinTossPortfolio />;
   }
 
   const isResumePage =

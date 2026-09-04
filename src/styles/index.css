@@ -1,7 +1,59 @@
 @import './fonts.css';
 @import './tailwind.css';
 @import './theme.css';
+@media screen {
+  .bin-toss-resume {
+    --toss-blue: #3182f6;
+    --toss-ink: #191f28;
+    --toss-gray-800: #333d4b;
+    --toss-gray-700: #4e5968;
+    --toss-gray-500: #8b95a1;
+    --toss-gray-100: #f2f4f6;
+    --toss-line: #e5e8eb;
+    font-family:
+      "Toss Product Sans OTF",
+      "Pretendard",
+      "SUIT",
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+  }
 
+  .bin-toss-resume section {
+    scroll-margin-top: 88px;
+  }
+
+  .bin-toss-resume :where(h1, h2, h3, p, a, span) {
+    overflow-wrap: anywhere;
+  }
+
+  .bin-toss-resume :where(h1, h2, h3, p) {
+    letter-spacing: 0;
+  }
+
+  .bin-toss-resume :where(a, button) {
+    transition-duration: 0.15s;
+    transition-timing-function: ease;
+  }
+
+  .bin-toss-resume ::selection {
+    background: rgba(49, 130, 246, 0.16);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bin-toss-resume *,
+    .bin-toss-resume *::before,
+    .bin-toss-resume *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
 @media print {
   @page {
     size: A4;
@@ -380,3 +432,115 @@
     border-radius: 6px !important;
   }
 }
+
+
+@media screen {
+  .portfolio-bin { font-family: "Toss Product Sans OTF", "Pretendard", "SUIT", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-rendering: optimizeLegibility; }
+  .portfolio-bin { font-size: 1.05rem; }
+  .portfolio-bin .text-sm { font-size: .95rem; line-height: 1.65; }
+  .portfolio-bin .text-base { font-size: 1.05rem; }
+  .portfolio-bin-architecture-title { font-size: 1.55rem; line-height: 1.35; }
+  .portfolio-bin-architecture-label { font-size: 1rem; line-height: 1.45; }
+  .portfolio-bin-architecture-detail { font-size: .95rem; line-height: 1.65; }
+  .portfolio-bin-band { min-height: 78vh; display: grid; align-items: center; overflow: hidden; }
+  .portfolio-bin-container { width: min(100% - 2.5rem, 72rem); margin-inline: auto; padding-block: 7rem; }
+  .portfolio-bin-title { font-size: clamp(2.4rem, 5vw, 5.4rem); line-height: 1.08; letter-spacing: 0; font-weight: 900; }
+  .portfolio-bin-nav { background: rgb(255 255 255 / 82%); border-bottom: 1px solid rgb(0 27 55 / 6%); backdrop-filter: blur(18px); }
+  .portfolio-bin-device { width: min(100%, 27rem); margin-inline: auto; overflow: hidden; border: 1rem solid #191f28; border-radius: 2.5rem; background: #fff; box-shadow: 0 32px 90px rgb(0 27 55 / 18%); }
+  .portfolio-bin-device-top { display: flex; gap: .35rem; padding: .8rem 1rem; background: #f2f4f6; }
+  .portfolio-bin-device-top span { width: .5rem; height: .5rem; border-radius: 999px; background: #b8c1cc; }
+  .portfolio-bin-device-body { padding: 2.1rem 1.8rem 3rem; }
+  @media (max-width: 640px) { .portfolio-bin-container { width: min(100% - 2rem, 72rem); padding-block: 5rem; } .portfolio-bin-band { min-height: auto; } .portfolio-bin-title { font-size: 2.7rem; } .portfolio-bin-device { border-width: .7rem; border-radius: 1.8rem; } }
+  @media (prefers-reduced-motion: reduce) { .portfolio-bin *, .portfolio-bin *::before, .portfolio-bin *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
+}
+
+
+@media screen {
+  .bin-resume-pdf {
+    max-width: 1020px;
+    border-top: 5px solid #191f28;
+    box-shadow: 0 18px 60px rgb(25 31 40 / 8%);
+  }
+  .bin-resume-pdf .resume-header { padding-bottom: 1.5rem; border-bottom-color: #191f28; }
+  .bin-resume-pdf .resume-header h1 { letter-spacing: 0; }
+  .bin-resume-pdf .resume-header .text-indigo-600,
+  .bin-resume-pdf .resume-header .text-indigo-700 { color: #3182f6; }
+  .bin-resume-pdf .resume-section h2 {
+    color: #191f28;
+    border-bottom: 2px solid #191f28;
+    font-size: 1rem;
+    letter-spacing: .04em;
+  }
+  .bin-resume-pdf .resume-project {
+    border-left: 3px solid #e5e8eb;
+    padding-left: 1.25rem;
+  }
+  .bin-resume-pdf .resume-project-first { border-left-color: #3182f6; }
+  .bin-resume-pdf .project-subheading {
+    margin-top: 1.1rem;
+    color: #3182f6;
+    font-size: .82rem;
+    letter-spacing: .04em;
+  }
+  .bin-resume-pdf .resume-project ul { margin-top: .35rem; }
+  .bin-resume-pdf .resume-activity-card {
+    border: 0;
+    border-top: 1px solid #e5e8eb;
+    border-radius: 0;
+    padding: 1rem 0;
+  }
+  .bin-resume-pdf .resume-activity-card:first-child { border-top: 0; padding-top: 0; }
+  .bin-resume-pdf a { color: #2272eb; }
+}
+
+
+.bin-classic-page { min-height: 100vh; background: #eef1f4; padding: 3rem 1rem; color: #20262e; font-family: "Pretendard", "SUIT", "Noto Sans KR", Arial, sans-serif; }
+.bin-classic-resume { width: min(100%, 900px); margin: 0 auto; background: #fff; padding: 3.4rem 4rem; box-shadow: 0 18px 45px rgb(31 41 55 / 8%); }
+.bin-classic-header { display: flex; justify-content: space-between; gap: 2rem; border-bottom: 1px solid #cfd5dc; padding-bottom: 1.5rem; }
+.bin-classic-kicker { margin: 0 0 .5rem; color: #426b91; font-size: .7rem; font-weight: 800; letter-spacing: .1em; }
+.bin-classic-header h1 { margin: 0; color: #151a21; font-size: 2.5rem; line-height: 1.1; letter-spacing: -.04em; }
+.bin-classic-role { margin: .45rem 0 0; color: #4e5968; font-size: 1rem; font-weight: 600; }
+.bin-classic-contact { display: flex; flex-wrap: wrap; gap: .35rem 1rem; margin-top: 1.3rem; }
+.bin-classic-contact a, .bin-classic-links a, .bin-classic-activities a { display: inline-flex; align-items: center; gap: .3rem; color: #426b91; font-size: .72rem; font-weight: 600; text-decoration: none; }
+.bin-classic-contact svg, .bin-classic-links svg, .bin-classic-activities svg { width: .8rem; height: .8rem; }
+.bin-classic-photo { width: 120px; height: 150px; flex: 0 0 auto; border-radius: 2px; object-fit: cover; filter: saturate(.8); }
+.bin-classic-section { margin-top: 1.65rem; }
+.bin-classic-section h2 { margin: 0 0 .75rem; padding-bottom: .35rem; border-bottom: 2px solid #20262e; color: #20262e; font-size: .95rem; font-weight: 800; letter-spacing: .04em; }
+.bin-classic-summary, .bin-classic-skills p, .bin-classic-project p, .bin-classic-activities p, .bin-classic-education p, .bin-classic-certificates p { margin: 0; color: #4e5968; font-size: .92rem; line-height: 1.72; }
+.bin-classic-skills { display: grid; grid-template-columns: 1fr 1fr; column-gap: 2rem; row-gap: .25rem; }
+.bin-classic-skills strong, .bin-classic-story strong, .bin-classic-role-line strong { display: inline-block; margin-right: .55rem; color: #20262e; font-size: .76rem; }
+.bin-classic-project { padding: 1rem 0 1.15rem; border-bottom: 1px solid #e3e7eb; }
+.bin-classic-project:first-child { padding-top: 0; }
+.bin-classic-project-heading { display: flex; justify-content: space-between; gap: 1rem; }
+.bin-classic-project-heading h3 { margin: 0; color: #151a21; font-size: 1.12rem; }
+.bin-classic-project-heading p { margin-top: .25rem; }
+.bin-classic-project-heading > span { flex: 0 0 auto; color: #6b7684; font-size: .72rem; }
+.bin-classic-role-line { margin-top: .65rem !important; }
+.bin-classic-story { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(4, auto); gap: .75rem 20px; margin-top: .75rem; }
+.bin-classic-story > div { display: grid; grid-row: span 4; grid-template-rows: subgrid; align-content: start; padding: 9px 0 0; border-top: 1px solid #e3e7eb; }
+.bin-classic-story > div:first-child { border-top-color: #9ab4ca; }
+.bin-classic-story h4 { margin: 0 0 .65rem; color: #151a21; font-size: 1.05rem; line-height: 1.4; }
+.bin-classic-emphasis { padding: 0; color: #245f95; background: none; font-family: inherit; font-size: inherit; font-weight: 600; line-height: inherit; text-decoration-line: underline; text-decoration-color: #6fa7d8; text-decoration-thickness: 2px; text-underline-offset: .2em; text-decoration-skip-ink: auto; }
+.bin-classic-story strong { display: block; margin: .6rem 0 .1rem; }
+.bin-classic-story strong:first-of-type { margin-top: 0; }
+.bin-classic-story p { margin: 0; }
+.bin-classic-story > div p + p { margin-top: 0; }
+
+.bin-classic-lesson { margin-top: .55rem !important; color: #6b7684; }
+.bin-classic-lesson strong { display: block; margin: .6rem 0 .1rem; }
+.bin-classic-story p { margin-top: .25rem; }
+.bin-classic-links { display: flex; flex-wrap: wrap; align-items: center; gap: .55rem .85rem; margin-top: .8rem; }
+.bin-classic-links > span { margin-right: auto; color: #7a8694; font-size: .68rem; }
+.bin-classic-activities article { padding: .65rem 0; border-bottom: 1px solid #e3e7eb; }
+.bin-classic-activities article:first-child { padding-top: 0; }
+.bin-classic-activities article > div, .bin-classic-education { display: flex; justify-content: space-between; gap: 1rem; }
+.bin-classic-activities strong, .bin-classic-education strong, .bin-classic-certificates strong { color: #20262e; font-size: .8rem; }
+.bin-classic-activities span { color: #7a8694; font-size: .72rem; }
+.bin-classic-venue { color: #426b91 !important; font-size: .72rem !important; }
+.bin-classic-activities a { margin-top: .3rem; }
+.bin-classic-certificates { margin-top: .75rem; padding-top: .75rem; border-top: 1px solid #e3e7eb; }
+.bin-classic-print { position: fixed; right: 1.5rem; bottom: 1.5rem; display: inline-flex; align-items: center; gap: .4rem; border: 0; border-radius: 4px; background: #20262e; color: #fff; padding: .7rem 1rem; font-weight: 700; cursor: pointer; }
+.bin-classic-print svg { width: 1rem; height: 1rem; }
+@media (max-width: 700px) { .bin-classic-page { padding: 0; } .bin-classic-resume { padding: 2rem 1.25rem; } .bin-classic-header { gap: 1rem; } .bin-classic-header h1 { font-size: 2rem; } .bin-classic-skills, .bin-classic-story { grid-template-columns: 1fr; grid-template-rows: auto; } .bin-classic-story > div { display: block; grid-row: auto; padding-left: .65rem; } .bin-classic-story > div p + p { margin-top: .7rem; } .bin-classic-photo { width: 88px; height: 110px; } }
+@page { size: A4; margin: 9mm; }
+@media print { .bin-classic-page { min-height: 0; padding: 0; background: #fff; } .bin-classic-resume { width: auto; padding: 0; box-shadow: none; } .bin-classic-print { display: none; } .bin-classic-section { break-inside: auto; } .bin-classic-project { break-inside: avoid; } .bin-classic-header h1 { font-size: 25px; } .bin-classic-summary, .bin-classic-skills p, .bin-classic-project p, .bin-classic-activities p, .bin-classic-education p, .bin-classic-certificates p { font-size: 11.8px; line-height: 1.58; } .bin-classic-summary { font-size: 13px; line-height: 1.65; } .bin-classic-story { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 20px; } .bin-classic-story > div { padding-top: 9px; } .bin-classic-story h4 { margin-bottom: 7px; font-size: 13px; } .bin-classic-story > div p + p { margin-top: 0; } .bin-classic-lesson { font-size: inherit !important; } .bin-classic-project:nth-child(2) { break-before: page; page-break-before: always; } .bin-classic-section { margin-top: 13px; } .bin-classic-section h2 { font-size: 12px; margin-bottom: 6px; } }

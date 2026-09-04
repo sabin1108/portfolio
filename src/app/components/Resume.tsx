@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+
 import { ExternalLink, FileText, Github, Globe, Mail, Printer, Lock, Key } from "lucide-react";
 import {
   resumeData,
@@ -18,6 +19,7 @@ import {
 } from "../data/main";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
+import { BinClassicResume } from "./BinClassicResume";
 function ResumeHeader({
   profile,
   summary,
@@ -132,6 +134,8 @@ function Section({
   );
 }
 
+
+
 export function Resume() {
   const [authorized, setAuthorized] = useState<boolean>(false);
   const [inputKey, setInputKey] = useState<string>("");
@@ -206,6 +210,42 @@ export function Resume() {
         : resumeFrontendData;
 
   const { summary, coreSkills, projectHighlights, activityGroups, education, profile } = activeResumeData;
+  const isBinResume = ["frontend_bin", "bin_resume"].includes(matchedRegistryResume?.keyword ?? "");
+  if (isBinResume) {
+    return <BinClassicResume data={activeResumeData} />;
+  }
+
+  const showSkillsAfterEducation = false;
+  const skillsSection = (
+    <Section title="기술 스택" className="resume-skills-section">
+      <div className="resume-copy resume-skills-copy text-[0.975rem] leading-relaxed text-slate-700 space-y-2.5 pl-1">
+        <div className="resume-primary-skills">
+          {coreSkills
+            .filter((group) => group.items.length > 0 && !group.title.startsWith("Tools - "))
+            .map((group) => (
+              <div key={group.title}>
+                <span className="font-bold text-slate-800">• {group.title}</span>: {group.items.join(", ")}
+              </div>
+            ))}
+        </div>
+
+        {coreSkills.some((group) => group.title.startsWith("Tools - ")) ? (
+          <div className="resume-tool-skills">
+            <span className="font-bold text-slate-800">• Tools:</span>
+            <ul className="pl-6 mt-1 space-y-1.5 list-disc text-slate-600">
+              {coreSkills
+                .filter((group) => group.title.startsWith("Tools - "))
+                .map((sub) => (
+                  <li key={sub.title}>
+                    <span className="font-semibold text-slate-700">{sub.title.replace("Tools - ", "")}</span>: {sub.items.join(", ")}
+                  </li>
+                ))}
+            </ul>
+          </div>
+        ) : null}
+      </div>
+    </Section>
+  );
 
   if (!authorized && !isElicePath && !isNexonPath && !isPooolingforestPath && !isWoojinPath && !isLsscPath && !isAxPath && !isNhnDoorayPath && !isWacusPath && !isDailyPayPath && !isSmileDragonPath && !matchedRegistryResume) {
     return (
@@ -265,7 +305,7 @@ export function Resume() {
 
   return (
     <main className="min-h-screen bg-slate-100 px-4 py-8 print:bg-white print:px-0 print:py-0">
-      <article className="resume-sheet mx-auto max-w-5xl bg-white px-6 py-8 shadow-sm print:max-w-none print:px-0 print:py-0 print:shadow-none sm:px-10">
+        <article className={`resume-sheet ${isBinResume ? "bin-resume-pdf" : ""} mx-auto max-w-5xl bg-white px-6 py-8 shadow-sm print:max-w-none print:px-0 print:py-0 print:shadow-none sm:px-10`}>
         <ResumeHeader
           profile={profile}
           summary={summary}
@@ -283,34 +323,7 @@ export function Resume() {
             </Section>
           )}
 
-          <Section title="기술 스택" className="resume-skills-section">
-            <div className="resume-copy resume-skills-copy text-[0.975rem] leading-relaxed text-slate-700 space-y-2.5 pl-1">
-              <div className="resume-primary-skills">
-                {coreSkills
-                  .filter((group) => group.items.length > 0 && !group.title.startsWith("Tools - "))
-                  .map((group) => (
-                    <div key={group.title}>
-                      <span className="font-bold text-slate-800">• {group.title}</span>: {group.items.join(", ")}
-                    </div>
-                  ))}
-              </div>
-
-              {coreSkills.some((group) => group.title.startsWith("Tools - ")) ? (
-                <div className="resume-tool-skills">
-                  <span className="font-bold text-slate-800">• Tools:</span>
-                  <ul className="pl-6 mt-1 space-y-1.5 list-disc text-slate-600">
-                    {coreSkills
-                      .filter((group) => group.title.startsWith("Tools - "))
-                      .map((sub) => (
-                        <li key={sub.title}>
-                          <span className="font-semibold text-slate-700">{sub.title.replace("Tools - ", "")}</span>: {sub.items.join(", ")}
-                        </li>
-                      ))}
-                  </ul>
-                </div>
-              ) : null}
-            </div>
-          </Section>
+          {!showSkillsAfterEducation && skillsSection}
         </div>
 
         <Section title="프로젝트" className="resume-projects-section">
@@ -382,7 +395,7 @@ export function Resume() {
                   
                   {project.issues && project.issues.length > 0 && (
                     <div className="mt-4 space-y-1">
-                      <div className="font-bold text-slate-900 text-[1rem] project-subheading">{isAxPath ? "문제 정의" : "이슈"}</div>
+                      <div className="font-bold text-slate-900 text-[1rem] project-subheading">{isAxPath ? "문제 정의" : isBinResume ? "문제 상황" : "이슈"}</div>
                       <ul className="list-disc pl-5 mt-1 space-y-1.5 text-slate-600 text-[0.95rem] leading-relaxed">
                         {project.issues.map((issue, idx) => (
                           <li key={idx}>{issue}</li>
@@ -426,7 +439,7 @@ export function Resume() {
                   )}
                   {project.resolutions && project.resolutions.length > 0 && (
                     <div className="mt-4 space-y-1">
-                      <div className="font-bold text-slate-900 text-[1rem] project-subheading">{isAxPath ? "실행 및 검증" : "해결"}</div>
+                      <div className="font-bold text-slate-900 text-[1rem] project-subheading">{isAxPath ? "실행 및 검증" : isBinResume ? "판단과 처리" : "해결"}</div>
                       <ul className="list-disc pl-5 mt-1 space-y-1.5 text-slate-600 text-[0.95rem] leading-relaxed">
                         {project.resolutions.map((res, idx) => (
                           <li key={idx}>{res}</li>
@@ -437,7 +450,7 @@ export function Resume() {
 
                   {project.achievements && project.achievements.length > 0 && (
                     <div className="mt-4 space-y-1">
-                      <div className="font-bold text-slate-900 text-[1rem] project-subheading">성과</div>
+                      <div className="font-bold text-slate-900 text-[1rem] project-subheading">{isBinResume ? "확인한 결과" : "성과"}</div>
                       <ul className="list-disc pl-5 mt-1 space-y-1.5 text-slate-600 text-[0.95rem] leading-relaxed">
                         {project.achievements.map((ach, idx) => (
                           <li key={idx}>{ach}</li>
@@ -511,6 +524,8 @@ export function Resume() {
             ))}
           </div>
         </Section>
+
+        {showSkillsAfterEducation && skillsSection}
       </article>
     </main>
   );
