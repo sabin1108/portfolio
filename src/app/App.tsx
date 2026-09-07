@@ -134,7 +134,7 @@ export default function App() {
   if (isResumePage) {
     return (
       <>
-        <TopNav portfolioHref={currentPath.toLowerCase().includes("ax_ai_native") || currentPath.toLowerCase() === "/resume_ax" ? "/ax" : "/"} />
+        <TopNav portfolioHref={/\/resume\/(bin_resume|frontend_bin)$/.test(currentPath) ? "/portfolio_bin" : currentPath.toLowerCase().includes("ax_ai_native") || currentPath.toLowerCase() === "/resume_ax" ? "/ax" : "/"} />
         <Resume />
       </>
     );
