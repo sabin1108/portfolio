@@ -1,0 +1,205 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "PhotoMap · 화면과 상태 갱신",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/sabin1108/Photomap.git",
+      "revision": "9043e098e0e9d6c83d9faab5f6eeb38981ee703d"
+    },
+    "viewBox": [
+      1260,
+      780
+    ]
+  },
+  "components": [
+    {
+      "id": "store",
+      "type": "frontend",
+      "label": "Zustand 사진 상태",
+      "sublabel": "사진 · 분류 · 선택 상태",
+      "pos": [
+        70,
+        300
+      ],
+      "size": [
+        220,
+        80
+      ],
+      "sources": [
+        {
+          "path": "Frontend/src/store/usePhotoStore.ts",
+          "line": 148,
+          "label": "구현 코드"
+        }
+      ]
+    },
+    {
+      "id": "feed",
+      "type": "frontend",
+      "label": "PhotoFeed",
+      "sublabel": "행 가상화 · selector 구독",
+      "pos": [
+        490,
+        300
+      ],
+      "size": [
+        220,
+        80
+      ],
+      "sources": [
+        {
+          "path": "Frontend/src/components/PhotoFeed.tsx",
+          "line": 27,
+          "label": "구현 코드"
+        }
+      ]
+    },
+    {
+      "id": "images",
+      "type": "frontend",
+      "label": "imageUrl.ts",
+      "sublabel": "목록·상세 주소와 요청 우선순위",
+      "pos": [
+        910,
+        300
+      ],
+      "size": [
+        220,
+        80
+      ],
+      "sources": [
+        {
+          "path": "Frontend/src/lib/imageUrl.ts",
+          "line": 3,
+          "label": "구현 코드"
+        }
+      ]
+    },
+    {
+      "id": "map",
+      "type": "frontend",
+      "label": "Map2DView",
+      "sublabel": "지도 준비 전 요청 보관",
+      "pos": [
+        490,
+        80
+      ],
+      "size": [
+        220,
+        80
+      ],
+      "sources": [
+        {
+          "path": "Frontend/src/components/Map2DView.tsx",
+          "line": 93,
+          "label": "구현 코드"
+        }
+      ]
+    },
+    {
+      "id": "iframe",
+      "type": "external",
+      "label": "Unity 지도 iframe",
+      "sublabel": "준비 · 사진 갱신 · 선택 메시지",
+      "pos": [
+        910,
+        80
+      ],
+      "size": [
+        220,
+        80
+      ],
+      "sources": [
+        {
+          "path": "Frontend/src/components/Map2DView.tsx",
+          "line": 126,
+          "label": "구현 코드"
+        }
+      ]
+    },
+    {
+      "id": "graph",
+      "type": "frontend",
+      "label": "D3 그래프",
+      "sublabel": "좌표 직접 갱신 · 종료 시 중지",
+      "pos": [
+        490,
+        540
+      ],
+      "size": [
+        220,
+        80
+      ],
+      "sources": [
+        {
+          "path": "Frontend/src/hooks/useForceSimulation.ts",
+          "line": 40,
+          "label": "구현 코드"
+        }
+      ]
+    },
+    {
+      "id": "db",
+      "type": "database",
+      "label": "Supabase",
+      "sublabel": "사진·분류 조회와 저장",
+      "pos": [
+        70,
+        540
+      ],
+      "size": [
+        220,
+        80
+      ],
+      "sources": [
+        {
+          "path": "Frontend/src/store/usePhotoStore.ts",
+          "line": 208,
+          "label": "구현 코드"
+        }
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "feed",
+      "to": "store",
+      "label": "사진 상태 구독",
+      "labelAt": [
+        340,
+        400
+      ]
+    },
+    {
+      "from": "feed",
+      "to": "images",
+      "label": "이미지 주소 선택"
+    },
+    {
+      "from": "map",
+      "to": "store",
+      "label": "사진·선택 상태 구독"
+    },
+    {
+      "from": "map",
+      "to": "iframe",
+      "label": "postMessage 전송"
+    },
+    {
+      "from": "graph",
+      "to": "store",
+      "label": "사진 관계 데이터 사용"
+    },
+    {
+      "from": "store",
+      "to": "db",
+      "label": "조회·저장 요청",
+      "labelAt": [
+        180,
+        460
+      ]
+    }
+  ]
+}

@@ -2,40 +2,83 @@
 
 ## Source of truth
 - Status: Active
-- Last refreshed: 2026-09-04
-- Primary product surfaces: `/portfolio_bin`, `/resume/bin_resume`
-- Evidence reviewed: Toss homepage interaction patterns, local CSS Stats export, existing portfolio and resume data.
+- Last refreshed: 2026-09-09
+- Primary product surfaces: `/portfolio_bin`; the resume at `/resume/bin_resume` keeps its separate reading and print layout.
+- Evidence reviewed: user-supplied presentation-scroll-animation.zip, live https://toss.im/ (2026-09-08), projectNotes in BinTossPortfolio.tsx, architecture/candidates/photomap-ko.architecture.json and gameinfo-ko-v2.architecture.json.
+- Latest user correction supersedes the interim diagram redesign: retain dark coral/blue and the earlier fixed TOC slide layout; use ORIGINAL architecture PNG assets, not newly drawn diagrams. Show project main image first, original architecture with side explanations second, and detailed implementation/case pages afterward. Scroll drives horizontal page transitions. Opening cover uses typography/project index instead of PhotoMap screenshot.
 
 ## Brand
-- Personality: measured, clear, human, evidence-led.
-- Trust signals: real project screens, metrics, architecture, papers, certification, and source links.
-- Avoid: decorative gradients, generic AI copy, unexplained technical claims, and resume content hidden behind motion.
+- Personality: calm, precise, personal.
+- Trust signals: actual project screens, explained decisions, reproducible measurement conditions, acknowledged limitations.
+- Avoid: generic claims, decorative statistics, identical left-image/right-text slides, tiny diagrams and obligatory external viewers.
 
 ## Product goals
-- Goals: make the portfolio immersive and scannable; make the resume printable and evidence-dense from page one.
-- Non-goals: make the resume behave like a long-form animated portfolio.
+- Goals: a first-time reader understands what was built, what the developer owned, why code changed and what was checked.
+- Non-goals: copying the resume verbatim or reproducing Toss branding.
+- Success signals: architecture readable without clicking; complete narratives available through scrolling; no clipped content.
+
+## Personas and jobs
+- Primary personas: recruiters and frontend engineers reviewing a candidate.
+- User jobs: scan the service first; understand decisions; inspect supporting details and source links.
+- Contexts: desktop review, mobile link opening, keyboard navigation, reduced motion.
 
 ## Information architecture
-- Portfolio: introduction -> strengths -> project -> metrics -> architecture -> decisions -> activities/papers -> profile.
-- Resume: profile/contact -> summary and skills -> projects -> activities/papers -> education and certificates.
+- Navigation: global project/profile/resume links and compact sticky project chapter navigation.
+- Project order: PhotoMap, GameInfo.
+- Nine pages per project: service introduction, original architecture, two implementation pages, two pages per case study (diagnosis and changes/results), evidence and remaining work.
+- Core content stays inline; only external project/source links open new tabs.
+
+## Design principles
+- A slide has one primary idea. Preserve the earlier image-plus-TOC layout for detailed pages, with a large centered original image and side explanations on the architecture page.
+- Explain the task in plain Korean before naming the implementation technique.
+- Split detailed narratives into enough slides to fit the viewport; smaller screens use normal document flow with all content available.
 
 ## Visual language
-- Color: Toss-inspired blue, ink, neutral gray, and white bands.
-- Typography: Korean-capable system stack with Toss Product Sans OTF when available; zero tracking on display copy.
-- Motion: viewport reveals, progress bar, and restrained parallax on portfolio only.
-- Shape: compact rounded controls, large framed project media, no nested page cards.
+- Color: dark #0c1010, warm white #f2f0ea, PhotoMap coral #e39a80, GameInfo blue #87c5dc.
+- Typography: existing Korean font stack; display headings 34-54px, body 14-16px, diagram node titles at least 20px.
+- Spacing/layout: generous scene margins, full-width diagrams, large central product media with short side explanations, alternating case composition.
+- Shape: restrained borders and 12px corners for media and meaningful diagram nodes.
+- Motion: native scrolling controls a sticky page stage; incoming/outgoing pages translate horizontally with opacity. No wheel capture, timers or forced snap.
+- Imagery: actual project screens. Architecture uses existing public/architecture/photomap-dark-preview.png and gameinfo-dark-preview.png unchanged, with plain-language side explanations. No replacement architecture drawings or required external viewer.
+
+## Components
+- Reuse: frontendPortfolio, projectNotes, global navigation, existing color tokens and Lucide icons.
+- Changed: ProjectPresentation, original architecture image page, existing TOC sidebar, editorial cover, project-presentation.css.
+- States: active/inert slide, horizontal transition, static responsive reading, reduced-motion reading.
+- Ownership: portfolio-specific tokens remain in bin-portfolio.css, scene rules in project-presentation.css.
 
 ## Accessibility
-- Preserve semantic headings, links, details/summary, visible focus states, and reduced-motion behavior.
-- Keep all critical resume content in normal document flow and print media.
+- Target: readable contrast, keyboard navigation and reflow; no claim of full conformance audit.
+- Preserve native anchor and heading semantics, visible focus states, complete DOM content.
+- Hide browser scrollbar only on the portfolio route; preserve wheel/touch/PageDown/Space scrolling.
+- Reduced motion: no fade or transforms; all text remains visible. Print keeps content in flow.
 
 ## Responsive behavior
-- Support mobile and desktop; portfolio bands collapse to one column and resume print rules remove navigation and shadows.
+- Desktop slide enhancement requires width >=1100, height >=760 and no reduced motion. All nine panels verified at 1100x760,1366x768 and1440x1000.
+- Smaller screens: images, diagrams and case columns stack or reflow. No fixed-height text containers.
+- Touch: chapter anchors and native scrolling remain available.
+
+## Interaction states
+- Loading: image dimensions reserve space; content is independent of images.
+- Empty/error: existing project limitations are explained, not presented as proven service guarantees.
+- Success: active chapter and inline results provide location/context.
+- Disabled: no hidden required navigation.
+- Offline/slow network: textual case studies remain readable while images load.
+
+## Content voice
+- Natural factual Korean; explain observable behavior before API/library names.
+- No invented performance gains, visitor counts or production reliability claims.
+- PhotoMap 100-run/p95 measurement stays explicitly synthetic. GameInfo demo fallback, memory cache and free-price limitation remain visible.
 
 ## Implementation constraints
-- Reuse the existing React, Motion, Tailwind, Lucide, and portfolio data models.
-- Do not add a Three.js dependency for decorative effects; use existing project evidence and CSS visuals unless a real 3D artifact is required.
-- Verify with `npm run build` and route smoke tests for both surfaces.
+- Existing React/Vite/CSS only; no new dependencies.
+- IntersectionObserver maps native scroll markers to the active page; CSS owns horizontal transitions. Inactive slides are inert; responsive/reduced-motion views expose every page. Listeners and observers clean up on unmount.
+- Verify mobile/tablet/desktop/short viewport, reduced motion, scene order, inline facts, scrolling/fade, keyboard anchors, image loading, resume isolation and production build.
 
 ## Open questions
-- [ ] Replace placeholder narrative copy with final candidate-approved wording.
+- None blocking. Current user direction authorizes content-aware composition within verified project facts.
+## Reading pace refinement (2026-09-09)
+- 66svh per slide; last page retains100svh of room. The project track is628svh, about10% shorter than the previous700svh. Headings enter first, then explanatory blocks and results. Reduced motion remains static.
+- Describe concrete failed requests, pending map selection and verification outcomes; omit test-count boasting and generic coverage disclaimers from portfolio copy.
+
+- Narratives explain implemented user-facing behavior, triggering situations, decisions and observed outcomes. Do not use source filenames as the substance of portfolio explanations; keep source links for optional technical inspection.

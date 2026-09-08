@@ -121,7 +121,7 @@ export default function App() {
     return <PortfolioPage data={axPortfolio} isAx />;
   }
 
-  if (currentPath === "/portfolio_bin" || currentPath === "/portfolio/portfolio_bin") {
+  if (currentPath === "/" || currentPath === "/portfolio_bin" || currentPath === "/portfolio/portfolio_bin") {
     return <BinTossPortfolio />;
   }
 
