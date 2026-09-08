@@ -113,7 +113,7 @@ export default function App() {
     return <FullstackPdfPortfolio />;
   }
 
-  if (currentPath === "/frontend" || currentPath === "/portfolio_frontend") {
+  if (currentPath === "/past" || currentPath === "/frontend" || currentPath === "/portfolio_frontend") {
     return <PortfolioPage data={frontendPortfolio} />;
   }
 

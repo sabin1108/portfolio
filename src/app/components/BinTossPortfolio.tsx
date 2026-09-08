@@ -160,6 +160,7 @@ export function BinTossPortfolio() {
       <footer className="bin-work-footer" id="profile"><div className="bin-work-container">
         <div><h2>{data.profile.name}</h2><p>{data.education.school} · {data.education.degree}</p></div>
         <div className="bin-work-footer-links">
+          <a href="/past">이전 포트폴리오 <ArrowUpRight size={15} /></a>
           <a href={`mailto:${data.profile.contacts.email}`}>{data.profile.contacts.email}</a>
           <a href={data.profile.contacts.github} target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={15} /></a>
           <a href="/resume/bin_resume">이력서 <ArrowUpRight size={15} /></a>
