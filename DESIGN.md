@@ -82,3 +82,8 @@
 - Describe concrete failed requests, pending map selection and verification outcomes; omit test-count boasting and generic coverage disclaimers from portfolio copy.
 
 - Narratives explain implemented user-facing behavior, triggering situations, decisions and observed outcomes. Do not use source filenames as the substance of portfolio explanations; keep source links for optional technical inspection.
+
+## Scroll interval verification (2026-09-09)
+- Desktop slide markers are one viewport height apart (100svh). The previous 66svh interval skipped from page 3 to page 5 with a 900px wheel input at 1366x768.
+- Native scrolling remains enabled; very large or sustained gestures can still traverse multiple pages.
+- Regression: node scripts/verify-portfolio-wheel.cjs checks both directions, both projects, 1366x768 and 1440x1000, anchor navigation, reduced motion and mobile fallback.

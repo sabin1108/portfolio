@@ -1,4 +1,4 @@
-import { resumeWacusData } from "./resume_wacus";
+import { resumeWacusData } from "./agency_resume_base";
 
 export const manualResumePathKeyword = "blink";// 링크 바꾸는곳
 

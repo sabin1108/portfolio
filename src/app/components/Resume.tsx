@@ -211,8 +211,8 @@ export function Resume() {
 
   const { summary, coreSkills, projectHighlights, activityGroups, education, profile } = activeResumeData;
   const isBinResume = ["frontend_bin", "bin_resume"].includes(matchedRegistryResume?.keyword ?? "");
-  if (isBinResume) {
-    return <BinClassicResume data={activeResumeData} />;
+  if (isBinResume || isWacusPath) {
+    return <BinClassicResume data={activeResumeData} isWacus={isWacusPath} />;
   }
 
   const showSkillsAfterEducation = false;

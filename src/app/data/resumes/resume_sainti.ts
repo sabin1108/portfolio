@@ -1,4 +1,4 @@
-import { resumeWacusData } from "./resume_wacus";
+import { resumeWacusData } from "./agency_resume_base";
 
 const projects = new Map(
   resumeWacusData.projectHighlights.map((project) => [project.title, project]),
