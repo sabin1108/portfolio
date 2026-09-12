@@ -2,7 +2,7 @@
 
 ## Source of truth
 - Status: Active
-- Last refreshed: 2026-09-09
+- Last refreshed: 2026-09-13
 - Primary product surfaces: `/portfolio_bin`; the resume at `/resume/bin_resume` keeps its separate reading and print layout.
 - Evidence reviewed: user-supplied presentation-scroll-animation.zip, live https://toss.im/ (2026-09-08), projectNotes in BinTossPortfolio.tsx, architecture/candidates/photomap-ko.architecture.json and gameinfo-ko-v2.architecture.json.
 - Latest user correction supersedes the interim diagram redesign: retain dark coral/blue and the earlier fixed TOC slide layout; use ORIGINAL architecture PNG assets, not newly drawn diagrams. Show project main image first, original architecture with side explanations second, and detailed implementation/case pages afterward. Scroll drives horizontal page transitions. Opening cover uses typography/project index instead of PhotoMap screenshot.
@@ -87,3 +87,9 @@
 - Desktop slide markers are one viewport height apart (100svh). The previous 66svh interval skipped from page 3 to page 5 with a 900px wheel input at 1366x768.
 - Native scrolling remains enabled; very large or sustained gestures can still traverse multiple pages.
 - Regression: node scripts/verify-portfolio-wheel.cjs checks both directions, both projects, 1366x768 and 1440x1000, anchor navigation, reduced motion and mobile fallback.
+
+## Frontend evidence completion (2026-09-13)
+- Keep nine slides per project. PhotoMap implementation pages explain shared UI and state ownership; GameInfo explains card composition and infinite loading. Preserve the existing architecture images and both measured PhotoMap cases.
+- Result cards show before/after values and reduction rates, with sample sizes and synthetic experiment conditions nearby. Do not attribute the image or virtualization results to the later shared-UI changes.
+- At desktop widths 1100-1250px, give story text more width and reduce the image/text gap to 40px. Keep body font sizes, content, and navigation available without overlap. For desktop heights up to 850px, cap architecture image height at 100svh minus 320px to keep the heading inside the slide.
+- Regression: `node scripts/verify-portfolio-layout.cjs` owns a temporary local server, checks all 18 slide boundaries at three desktop sizes, static mobile/tablet/short-screen layouts, result cards, runtime errors, and existing wheel/reduced-motion checks. Screenshots go to local `test-results/`.

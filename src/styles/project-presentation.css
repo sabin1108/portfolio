@@ -81,6 +81,7 @@ html.bin-presentation-page::-webkit-scrollbar { display: none; }
   .bin-deck-page-body { padding-block: 8px 12px; }
   .bin-deck-overview-heading { margin-bottom: 18px; gap: 48px; }
   .bin-deck-product img { height: 36svh; }
+  .bin-deck-architecture-layout img { max-height: calc(100svh - 320px); }
   .bin-deck-process { margin-top: 18px; }
   .bin-deck-process li { padding-block: 11px; }
   .bin-deck-process p { line-height: 1.7; }
@@ -91,6 +92,9 @@ html.bin-presentation-page::-webkit-scrollbar { display: none; }
   .bin-deck-chapters a { padding-block: 5px; }
   .bin-deck-sidebar img { height: 25svh; }
   .bin-deck-evidence { gap: 24px 48px; margin-top: 22px; }
+}
+@media (min-width: 1100px) and (max-width: 1250px) and (min-height: 760px) {
+  .bin-deck-story .bin-deck-page-body { grid-template-columns: minmax(0,.7fr) minmax(0,1.3fr); gap: 40px; }
 }
 @media (max-width: 1099px), (max-height: 759px) {
   .bin-deck-page + .bin-deck-page { border-top: 1px solid var(--work-line); }
@@ -148,3 +152,7 @@ html.bin-presentation-page::-webkit-scrollbar { display: none; }
 @keyframes bin-copy-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
 .bin-deck-emphasis { color: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: .2em; }
+
+.bin-deck-metric { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; margin-bottom: 8px; font-variant-numeric: tabular-nums; }
+.bin-deck-metric strong { font-size: clamp(22px, 2.2vw, 30px); line-height: 1.25; color: #f2f5f2; letter-spacing: -.025em; }
+.bin-deck-metric > span { color: var(--work-accent); font-size: 14px; font-weight: 600; }
