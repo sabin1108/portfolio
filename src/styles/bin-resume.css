@@ -25,3 +25,18 @@
   .bin-classic-activities article, .bin-classic-education { break-inside: avoid; }
   .bin-classic-section h2 { break-after: avoid; }
 }
+
+@media print {
+.bin-classic-page.bin-classic-wacus .bin-classic-project { padding: 8px 0 10px; break-inside: auto; }
+.bin-classic-page.bin-classic-wacus .bin-classic-project:first-child { padding-top: 0; }
+.bin-classic-page.bin-classic-wacus .bin-classic-project:nth-child(2) { break-before: page; page-break-before: always; padding-top: 0; }
+.bin-classic-page.bin-classic-wacus .bin-classic-project-heading { break-inside: avoid; break-after: avoid; page-break-after: avoid; }
+.bin-classic-page.bin-classic-wacus .bin-classic-role-line { break-inside: avoid; break-after: avoid; page-break-after: avoid; }
+.bin-classic-page.bin-classic-wacus .bin-classic-story { gap: 6px 18px; margin-top: 6px; }
+.bin-classic-page.bin-classic-wacus .bin-classic-story > div { padding-top: 6px; break-inside: avoid; }
+.bin-classic-page.bin-classic-wacus .bin-classic-story h4 { margin-bottom: 2px; font-size: 12px; }
+.bin-classic-page.bin-classic-wacus .bin-classic-story strong { margin: 0 0 2px; font-size: 10px; }
+.bin-classic-page.bin-classic-wacus .bin-classic-project p { line-height: 1.48; }
+.bin-classic-page.bin-classic-wacus .bin-classic-role-line { margin-top: 5px !important; }
+.bin-classic-page.bin-classic-wacus .bin-classic-links { margin-top: 5px; }
+}

@@ -1,3 +1,4 @@
+import { wacusPhotoMapStories, wacusGameInfoStories } from "../data/resumes/resume_wacus";
 import { ExternalLink, FileText, Github, Mail, Printer } from "lucide-react";
 import type { resumeFrontendData } from "../data/main";
 import { binCaseNarratives } from "../data/binCaseNarratives";
@@ -37,6 +38,8 @@ function EmphasizedText({ text, phrases = [] }: { text: string; phrases?: readon
 }
 
 function getResumeStories(projectTitle: string, isWacus: boolean) {
+  if (isWacus && projectTitle === "PhotoMap") return wacusPhotoMapStories;
+  if (isWacus && projectTitle === "Game Information Platform") return wacusGameInfoStories;
   const selectedStories = [
     ...(binCaseNarratives[projectTitle] ?? []).filter((story) => story.kind === "ux").slice(0, 1),
     ...(binCaseNarratives[projectTitle] ?? []).filter((story) => story.kind === "tech").slice(0, 1),
@@ -103,7 +106,7 @@ function getResumeStories(projectTitle: string, isWacus: boolean) {
 export function BinClassicResume({ data, isWacus = false }: { data: ResumeData; isWacus?: boolean }) {
   const { profile, summary, coreSkills, projectHighlights, activityGroups, education } = data;
   return (
-    <main className="bin-classic-page">
+    <main className={isWacus ? "bin-classic-page bin-classic-wacus" : "bin-classic-page"}>
       <article className="bin-classic-resume">
         <header className="bin-classic-header">
           <div>
