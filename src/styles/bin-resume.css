@@ -2,6 +2,9 @@
 .bin-classic-story h4 { font-size: 1rem; }
 .bin-classic-story strong { font-size: .78rem; }
 .bin-classic-page .bin-classic-emphasis { color: #245f95; text-decoration-line: underline; font-weight: 600; }
+.bin-classic-achievements { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: .9rem; }
+.bin-classic-achievements li { border-left: 3px solid #245f95; padding-left: 1rem; break-inside: avoid; }
+.bin-classic-achievements h4 { margin: 0 0 .35rem; color: #245f95; font-size: 1.05rem; line-height: 1.5; font-variant-numeric: tabular-nums; }
 .bin-classic-page .bin-classic-skills { display: block; margin: 0; }
 .bin-classic-skill-row { display: grid; grid-template-columns: 7rem minmax(0, 1fr); align-items: baseline; column-gap: 1.25rem; padding: .65rem 0; }
 .bin-classic-skill-row + .bin-classic-skill-row { border-top: 1px solid #e3e7eb; }
@@ -19,6 +22,8 @@
   .bin-classic-page .bin-classic-print { position: static; margin: 1rem 1.25rem 2rem; }
 }
 @media print {
+  .bin-classic-achievements { gap: .6rem; margin-top: .7rem; }
+  .bin-classic-achievements h4 { font-size: 12px; }
   .bin-classic-skill-row { padding-block: .35rem; break-inside: avoid; }
   .bin-classic-skill-row dt, .bin-classic-skill-row dd { font-size: 11.8px; }
   .bin-classic-page .bin-classic-project:nth-child(2) { break-before: auto; page-break-before: auto; }

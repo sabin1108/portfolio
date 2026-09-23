@@ -61,7 +61,7 @@ const path = require('node:path');
       assert.equal(await page.locator('.bin-deck-page[aria-hidden="true"]').count(), 0);
       console.log(`PASS static layout: ${viewport.width}x${viewport.height}`);
     }
-    assert.equal(await page.locator('.bin-deck-metric').count(), 2);
+    assert.equal(await page.locator('.bin-deck-metric').count(), 4);
     assert.deepEqual(errors, []);
     console.log('PASS numeric result cards and runtime');
     await browser.close();

@@ -142,7 +142,14 @@ export function BinClassicResume({ data, isWacus = false }: { data: ResumeData; 
                   <span>{project.period}</span>
                 </div>
                 <p className="bin-classic-role-line"><strong>담당</strong>{project.keyRoles}</p>
-                <div className="bin-classic-story">
+                {!isWacus && project.title === "Game Information Platform" ? (
+                  <ul className="bin-classic-achievements" aria-label="게임 할인 플랫폼 핵심 성과">
+                    {project.achievements.map((achievement) => {
+                      const [result, detail] = achievement.split(" — ");
+                      return <li key={result}><h4>{result}</h4><p>{detail}</p></li>;
+                    })}
+                  </ul>
+                ) : <div className="bin-classic-story">
                   {getResumeStories(project.title, isWacus).map((story) => (
                     <div key={story.title}>
                       <h4>{story.title}</h4>
@@ -151,7 +158,7 @@ export function BinClassicResume({ data, isWacus = false }: { data: ResumeData; 
                       <p><strong>결과</strong><EmphasizedText text={story.result} phrases={story.emphasis} /></p>
                     </div>
                   ))}
-                </div>
+                </div>}
                 <div className="bin-classic-links">
                   <span>{project.techTags.join(" · ")}</span>
                   <a href={project.github} target="_blank" rel="noreferrer"><Github />소스</a>

@@ -32,14 +32,6 @@ const photoMapCaseTitles: Record<string, string> = {
   "D3 tick 업데이트를 React state에서 분리": "과도한 리렌더링을 줄이기 위한 D3 그래프 갱신 범위 분리",
 };
 
-const gameInfoCaseTitles: Record<string, string> = {
-  "외부 API 응답 포맷 차이로 인한 UI 결합 제거": "Adapter·Normalizer로 외부 API 응답을 공통 view model로 변환",
-  "0원/null 가격 데이터가 할인/목표가로 오판되는 문제 해결": "currentPriceCents 조건으로 0원/null 가격 오판 방지",
-  "외부 API 장애와 호출 한도 초과 대응": "stale cache·rate limit으로 외부 API 실패 화면 방어",
-  "기능 확장 이후 테스트와 검증 루틴 구축": "Vitest·Playwright로 API route와 사용자 흐름 회귀 검증",
-  "비동기 UI cleanup과 generic 유틸로 상태 누수·타입 손실 방지": "useEffect cleanup·generic 유틸로 비동기 상태와 타입 보존",
-};
-
 const photoMapFrontend: Project = {
   ...photoMap,
   subtitle: "지도·WebGL·관계 그래프로 사진을 탐색하는 반응형 웹 서비스",
@@ -113,81 +105,82 @@ const photoMapFrontend: Project = {
 const gameInfoFrontend: Project = {
   ...gameInfo,
   subtitle: baseGameInfo.subtitle,
+  imageGallery: {
+    main: { src: "/1_project/gameinfo-home-20260922.png", alt: "게임 할인 플랫폼의 다크 스토어 홈과 할인 가격" },
+    supporting: [
+      { src: "/1_project/gameinfo-search-20260922.png", alt: "게임 제목·태그·스토어·가격 조건으로 검색하는 화면" },
+      { src: "/1_project/gameinfo-home-20260922.png", alt: "게임 표지와 가격을 비교하는 할인 피드" },
+    ],
+  },
   summary:
-    "Steam·Epic·ITAD 게임 데이터를 검색, 할인 피드, 상세, 관심 목록, 목표 가격 화면으로 연결한 Next.js 서비스입니다. 핵심 근거는 외부 API 응답을 UI에 직접 붙이지 않고 Adapter/Normalizer와 공통 view model로 고정한 점, 0원·null 가격 오판을 도메인 규칙과 테스트로 막은 점, stale cache·rate limit·오류 상태를 사용자 화면 기준으로 검증한 점입니다.",
+    "Steam·Epic·ITAD 게임 데이터를 검색, 할인 피드, 상세, 관심 목록 화면으로 연결한 Next.js 서비스입니다. 할인 피드 카드 렌더 호출을 6회 → 2회로 줄이고, 동일 제목 동시 조건 요청 4건의 제목 후보 조회를 1회로 공유해 검색·목록 화면의 반복 작업을 줄였습니다.",
   responsibilities: [
-    "Next.js App Router 기반 검색·할인·상세·관심 목록 화면 구현",
-    "Steam·Epic·ITAD 응답을 GameSummary/StoreProduct view model로 정규화해 카드·상세·관심 목록의 props 계약 통일",
-    "Supabase Auth/DB와 watchlist, target price, price snapshot 흐름을 사용자 상태 UI와 연결",
-    "Vitest, Testing Library, Playwright로 API route, 가격 계산, cache/rate limit, 관심 목록 UI 상태 검증",
+    "React.memo와 stable key로 할인 피드 실패·재시도·추가 로딩 흐름의 기존 카드 반복 렌더링 축소",
+    "제목 후보 캐시와 진행 중 요청 공유로 동일 제목 동시 조건 요청 4건의 후보 조회를 1회로 통합",
+    "SearchControls를 uncontrolled GET form과 URL query로 구성해 입력 상태와 결과 목록 갱신 경계 분리",
+    "서버 Suspense/스트리밍 경계와 이미지 eager/lazy 우선순위로 첫 화면과 후속 목록 로딩 역할 분리",
   ],
-  metricRows: baseGameInfo.metricRows,
+  metrics: [
+    { label: "할인 피드 카드 렌더 호출", value: "6회 → 2회", basis: "약 67% 감소 · 실패·재시도·추가 로딩 흐름" },
+    { label: "동일 제목의 동시 요청", value: "4건 → 조회 1회", basis: "제목 후보 캐시·진행 중 요청 공유" },
+  ],
+  metricRows: undefined,
   frontendFundamentals: [
     {
-      concept: "서버/클라이언트 경계",
-      application: "Next.js route handler와 client UI를 나누어 브라우저가 직접 외부 API key와 응답 포맷을 알지 않게 했습니다.",
-      result: "UI는 정규화된 view model만 사용하고, 외부 API 변경은 route/adapter 경계에서 먼저 흡수합니다.",
+      concept: "렌더링 경계와 memoization",
+      application: "GameCard와 관심 목록 액션을 같은 memo 경계에서 다루고, game.id key로 기존 카드의 identity를 유지했습니다.",
+      result: "할인 피드 실패·재시도·추가 로딩 흐름의 카드 호출 6회 → 2회",
     },
     {
-      concept: "비동기 상태와 오류 상태",
-      application: "검색, 할인 피드, 관심 상품 흐름에서 loading, empty, stale cache, rate limit, error 상태를 화면 상태로 분리했습니다.",
-      result: "외부 API timeout이나 호출 제한이 곧바로 빈 화면/500 화면처럼 보이지 않게 방어했습니다.",
+      concept: "요청 중복 제거",
+      application: "정규화한 제목을 기준으로 후보 캐시와 진행 중 요청 Promise를 공유했습니다.",
+      result: "동일 제목 동시 조건 요청 4건의 제목 후보 조회 1회 공유",
     },
     {
-      concept: "데이터 정규화와 props 계약",
-      application: "Steam·Epic·ITAD 응답을 adapter/normalizer로 공통 GameSummary/StoreProduct 모델에 맞췄습니다.",
-      result: "카드, 상세, 관심 목록 컴포넌트가 API별 필드명 차이를 직접 처리하지 않습니다.",
-    },
-
-
-    {
-      concept: "순수 함수와 테스트 가능한 규칙",
-      application: "가격 후보 산정, 0원/null 제외, 목표가 달성 판단을 UI 밖의 함수와 테스트로 고정했습니다.",
-      result: "currentPriceCents > 0 규칙을 기준으로 잘못된 최저가/목표가 표시를 차단했습니다.",
+      concept: "입력 상태와 결과 렌더링 분리",
+      application: "SearchControls는 uncontrolled GET form과 URL query로 두고, 결과 목록은 서버 Suspense/스트리밍 경계에서 갱신했습니다.",
+      result: "검색 조건 UI와 결과 목록의 갱신 범위를 분리",
     },
     {
-      concept: "사용자 상태를 기준으로 한 테스트",
-      application: "게임 카드, 관심 목록 폼, 목표 조건 폼, AI 인사이트 UI를 구현 세부사항보다 role, label, status, alert 기준으로 검증했습니다.",
-      result: "외부 API 실패, 캐시 상태, 빈 화면, 목표가 입력 같은 예외 흐름을 사용자가 보는 문구와 상태로 확인했습니다.",
+      concept: "이미지 로딩 우선순위",
+      application: "첫 표지 이미지는 eager/high priority로, 후속 이미지는 lazy로 분리했습니다.",
+      result: "첫 화면과 후속 목록 이미지의 로딩 역할 구분",
     },
   ],
   aiEngineering: undefined,
   architecture: {
-    title: "외부 API 응답을 UI 계약으로 고정한 FE 구조",
+    title: "검색·할인 피드의 반복 작업을 줄인 FE 구조",
     description:
-      "화면 컴포넌트는 Steam, Epic, ITAD 응답 포맷을 직접 알지 않고 Next.js route와 normalizer가 만든 view model만 사용합니다. 가격 계산, 캐시, 호출 제한, 오류 상태는 route/domain 경계에서 먼저 처리합니다.",
+      "검색 조건은 URL 상태로 공유하고, 결과 목록은 서버 경계에서 갱신합니다. 할인 피드는 카드 memo 경계와 stable key로 기존 카드의 반복 렌더링을 줄이고, 제목 후보 조회는 캐시와 진행 중 요청 공유로 중복 실행을 막습니다.",
     columns: [
-      { title: "Client UI", nodes: [{ label: "Search / Deals", detail: "검색, 할인 피드, 신작 목록" }, { label: "Watchlist", detail: "관심 상품, 목표 가격, 상태 피드백" }] },
-      { title: "Next.js Boundary", nodes: [{ label: "Route Handler", detail: "외부 API 호출과 key 보호" }, { label: "View Model", detail: "화면이 쓰는 표시 데이터 구성" }] },
-      { title: "Domain Rules", nodes: [{ label: "Adapter / Normalizer", detail: "상점별 응답을 공통 모델로 변환" }, { label: "Price Guard", detail: "0원/null 가격 후보 제외" }] },
-      { title: "Reliability", nodes: [{ label: "Stale Cache", detail: "외부 API 실패 시 기존 데이터 표시" }, { label: "Rate Limit", detail: "반복 호출 429와 retry metadata" }] },
+      { title: "Search UI", nodes: [{ label: "GET Form", detail: "입력 상태와 URL query 연결" }, { label: "Suspense Boundary", detail: "조건 UI와 결과 목록 갱신 분리" }] },
+      { title: "Deal Feed", nodes: [{ label: "Memo Card", detail: "카드·액션 렌더 경계 고정" }, { label: "Stable Key", detail: "game.id 기준 카드 identity 유지" }] },
+      { title: "Request Sharing", nodes: [{ label: "Title Cache", detail: "정규화 제목 후보 재사용" }, { label: "Inflight Promise", detail: "진행 중 후보 조회 공유" }] },
+      { title: "Image Priority", nodes: [{ label: "First Cover", detail: "eager/high priority" }, { label: "Rest Covers", detail: "lazy loading" }] },
     ],
     flow: [
-      "사용자가 검색, 할인, 상세, 관심 목록 화면에서 데이터를 요청합니다.",
-      "Next.js route가 외부 API를 호출하고 normalizer가 응답 차이를 공통 view model로 변환합니다.",
-      "UI는 같은 props 계약으로 카드, 상세, 관심 목록을 렌더링합니다.",
-      "가격 계산, stale cache, rate limit, 오류 상태는 테스트로 고정한 규칙을 통과한 뒤 화면에 표시합니다.",
+      "사용자가 검색 조건을 제출하면 URL query가 조건의 기준이 됩니다.",
+      "서버 경계에서 결과 목록을 준비하고, 조건 UI는 결과 fetch와 분리해 표시합니다.",
+      "할인 피드는 memoized GameCard와 game.id key로 기존 카드의 반복 호출을 줄입니다.",
+      "같은 제목의 후보 조회는 cache/inflight 공유로 4건 동시 요청에서도 1회만 실행합니다.",
     ],
   },
   caseStudies: [
-    ...baseGameInfo.caseStudies
-      .filter((item) =>
-        [
-          "외부 API 응답 포맷 차이로 인한 UI 결합 제거",
-          "0원/null 가격 데이터가 할인/목표가로 오판되는 문제 해결",
-          "외부 API 장애와 호출 한도 초과 대응",
-          "기능 확장 이후 테스트와 검증 루틴 구축",
-          "Fallow 지표 기반 dead code와 중복 코드 정리",
-        ].includes(item.title),
-      )
-      .map((item) => retitleCaseStudy(item, gameInfoCaseTitles[item.title] ?? item.title)),
     {
-      title: gameInfoCaseTitles["비동기 UI cleanup과 generic 유틸로 상태 누수·타입 손실 방지"],
-      issue: "관심 목록 추가 후 토스트 메시지를 일정 시간 뒤 닫고, 무한 로딩은 IntersectionObserver로 다음 데이터를 불러오는 구조였습니다. 화면 전환 뒤 timer나 observer가 남으면 이미 사라진 컴포넌트의 상태를 갱신할 수 있고, API timeout/cache 유틸을 route마다 따로 만들면 결과 타입이 쉽게 흐려질 수 있었습니다.",
-      cause: "setTimeout과 IntersectionObserver는 React 렌더링과 별도로 동작합니다. cleanup 없이 남기면 unmount 이후에도 callback이 실행될 수 있습니다. 또 timeout, fresh cache, stale fallback은 여러 API route에서 반복되는 비동기 처리인데, any나 넓은 타입으로 묶으면 route별 응답 타입과 cache entry 필드 보장이 약해집니다.",
-      resolution: "AddToWatchlistForm에서는 timerRef를 두고 useEffect cleanup에서 clearTimeout을 호출했습니다. useIntersectionLoader에서는 cleanup으로 observer.disconnect()를 실행했습니다. 비동기 유틸은 withTimeout<T>로 원래 Promise 결과 타입을 유지했고, stale cache는 T extends TimedCacheEntry 제약으로 expiresAt과 staleUntil 필드를 보장했습니다.",
-      result: "토스트와 무한 로딩 관찰자가 화면 전환 뒤 상태를 갱신하는 경로를 막았습니다. timeout과 cache 처리는 여러 route에서 재사용하면서도 API 응답 타입과 cache entry 타입 정보를 잃지 않게 됐습니다.",
-      evidence: ["add-to-watchlist-form.tsx", "use-intersection-loader.ts", "async-utils.ts", "stale-cache.ts"],
+      title: "카드 렌더 호출을 약 67% 줄였습니다",
+      issue: "할인 피드에서 실패·재시도·추가 로딩이 이어질 때 기존 카드까지 반복 호출되어 목록이 길어질수록 렌더링 비용이 커질 수 있었습니다.",
+      cause: "부모가 매번 생성하는 액션 JSX의 참조가 달라져, GameCard에 memo만 적용해도 기존 카드가 다시 호출됐습니다.",
+      resolution: "FeedGameCard 안에서 카드와 액션을 함께 생성하도록 memo 경계를 옮기고, 목록 병합 시 기존 게임 객체의 참조를 유지했습니다.",
+      result: "고정 데이터 Vitest/jsdom 실험에서 할인 피드 누적 카드 호출이 6회 → 2회로 줄었고, 기존 카드의 추가 호출은 4회 → 0회가 됐습니다.",
+      evidence: ["feed-render-evidence.md", "feed-game-card.tsx", "React.memo", "game.id key"],
+    },
+    {
+      title: "동시 요청 4건을 후보 조회 1회로 묶었습니다",
+      issue: "같은 제목의 조건 요청이 동시에 들어올 때 제목 후보 조회가 중복 실행될 수 있었습니다.",
+      cause: "요청별로 후보 조회를 따로 시작하면 같은 제목을 찾는 중에도 같은 작업이 반복됩니다.",
+      resolution: "제목 후보 캐시와 진행 중 요청을 공유하고, 태그·스토어·가격 조건은 가져온 후보에 적용하도록 분리했습니다.",
+      result: "동일 제목의 동시 필터 요청 4건에서 제목 후보 조회가 1회만 실행되는 것을 테스트로 확인했습니다.",
+      evidence: ["search-behavior.test.ts", "home-streaming.test.tsx", "title candidate cache", "inflight request sharing"],
     },
   ],
 };
