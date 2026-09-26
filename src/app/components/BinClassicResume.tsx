@@ -15,8 +15,8 @@ const resumeResultOverrides: Record<string, string> = {
     "빈 화면 대신 현재 상태와 다음 행동을 보여주게 됐고, API가 일시적으로 불안정한 상황에서도 기존 정보나 재시도 안내를 확인할 수 있게 했습니다.",
 };
 
-function ResumeSection({ title, children }: { title: string; children: React.ReactNode }) {
-  return <section className="bin-classic-section"><h2>{title}</h2>{children}</section>;
+function ResumeSection({ title, children, className = "" }: { title: string; children: React.ReactNode; className?: string }) {
+  return <section className={`bin-classic-section ${className}`}><h2>{title}</h2>{children}</section>;
 }
 
 function EmphasizedText({ text, phrases = [] }: { text: string; phrases?: readonly string[] }) {
@@ -106,12 +106,13 @@ function getResumeStories(projectTitle: string, isWacus: boolean) {
 export function BinClassicResume({ data, isWacus = false }: { data: ResumeData; isWacus?: boolean }) {
   const { profile, summary, coreSkills, projectHighlights, activityGroups, education } = data;
   return (
-    <main className={isWacus ? "bin-classic-page bin-classic-wacus" : "bin-classic-page"}>
+    <main className={isWacus ? "bin-classic-page bin-classic-wacus" : "bin-classic-page bin-classic-editorial"}>
       <article className="bin-classic-resume">
         <header className="bin-classic-header">
           <div>
             <h1>{profile.name}</h1>
             <p className="bin-classic-role">{profile.title}</p>
+            {!isWacus && <p className="bin-classic-intro">{summary}</p>}
             <div className="bin-classic-contact">
               <a href={`mailto:${profile.contacts.email}`}><Mail />{profile.contacts.email}</a>
               <a href={profile.contacts.github} target="_blank" rel="noreferrer"><Github />github.com/sabin1108</a>
@@ -121,9 +122,9 @@ export function BinClassicResume({ data, isWacus = false }: { data: ResumeData; 
           {profile.image ? <img className="bin-classic-photo" src={profile.image} alt={profile.name} /> : null}
         </header>
 
-        <ResumeSection title="자기소개">
+        {isWacus && <ResumeSection title="자기소개">
           <p className="bin-classic-summary">{summary}</p>
-        </ResumeSection>
+        </ResumeSection>}
 
         {data.motivation?.trim() ? (
           <ResumeSection title="지원동기">
@@ -135,18 +136,24 @@ export function BinClassicResume({ data, isWacus = false }: { data: ResumeData; 
 
         <ResumeSection title="프로젝트 경험">
           <div className="bin-classic-projects">
-            {projectHighlights.map((project) => (
+            {projectHighlights.map((project, index) => (
               <article className="bin-classic-project" key={project.title}>
                 <div className="bin-classic-project-heading">
                   <div><h3>{project.title}</h3><p>{project.description}</p></div>
                   <span>{project.period}</span>
                 </div>
                 <p className="bin-classic-role-line"><strong>담당</strong>{project.keyRoles}</p>
-                {!isWacus && project.title === "Game Information Platform" ? (
-                  <ul className="bin-classic-achievements" aria-label="게임 할인 플랫폼 핵심 성과">
-                    {project.achievements.map((achievement) => {
+                {!isWacus ? (
+                  <ul className="bin-classic-achievements" aria-label={`${project.title} 핵심 성과`}>
+                    {project.achievements.map((achievement, achievementIndex) => {
                       const [result, detail] = achievement.split(" — ");
-                      return <li key={result}><h4>{result}</h4><p>{detail}</p></li>;
+                      const [headline, change] = result.split(" · ");
+                      return (
+                        <li className={index === 0 && achievementIndex < 2 ? "bin-classic-featured-result" : undefined} key={result}>
+                          <h4>{headline}{change && <span className="bin-classic-result-change">{change}</span>}</h4>
+                          <p>{detail}</p>
+                        </li>
+                      );
                     })}
                   </ul>
                 ) : <div className="bin-classic-story">
@@ -161,6 +168,7 @@ export function BinClassicResume({ data, isWacus = false }: { data: ResumeData; 
                 </div>}
                 <div className="bin-classic-links">
                   <span>{project.techTags.join(" · ")}</span>
+                  {!isWacus && <a href={`/portfolio_bin#project-${index}-scene-5`} target="_blank" rel="noreferrer"><ExternalLink />개선 과정·측정 근거</a>}
                   <a href={project.github} target="_blank" rel="noreferrer"><Github />소스</a>
                   {project.live ? <a href={project.live} target="_blank" rel="noreferrer"><ExternalLink />서비스</a> : null}
                 </div>
@@ -169,13 +177,13 @@ export function BinClassicResume({ data, isWacus = false }: { data: ResumeData; 
           </div>
         </ResumeSection>
 
-        <ResumeSection title="발표·논문·자격">
+        <ResumeSection title={isWacus ? "발표·논문·자격" : "발표·논문·수상"} className={!isWacus ? "bin-classic-supporting" : undefined}>
           <div className="bin-classic-activities">
             {activityGroups.map((group) => (
               <article key={`${group.title}-${group.items[0]}`}>
                 <div><strong>{group.title}</strong><span>{group.period}</span></div>
                 {group.venue ? <p className="bin-classic-venue">{group.venue}</p> : null}
-                {group.items.map((item) => <p key={item}>{item}</p>)}
+                {(isWacus ? group.items : [group.items[1] ?? group.items[0]]).map((item) => <p key={item}>{item}</p>)}
                 {group.href ? <a href={group.href} target="_blank" rel="noreferrer"><FileText />{group.linkLabel ?? "자료 보기"}</a> : null}
               </article>
             ))}
