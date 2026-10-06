@@ -1,8 +1,16 @@
 import type { BinCaseNarrative } from "../binCaseNarratives";
 import { resumeVariantData as latestResumeData } from "./resume_frontend_bin";
+import { resumeFrontendData } from "./frozen/resume_frontend";
 
 export const resumeWacusData = {
   ...latestResumeData,
+  activityGroups: resumeFrontendData.activityGroups,
+  coreSkills: [
+    { title: "프론트엔드", items: ["React", "Next.js", "TypeScript", "JavaScript"] },
+    { title: "UI·상태", items: ["Zustand selector", "URL 상태 복원", "공통 컴포넌트", "Mapbox", "D3"] },
+    { title: "데이터·검증", items: ["API 응답 정규화", "Supabase", "Vitest", "Playwright", "GitHub Actions"] },
+    { title: "성능", items: ["React Profiler", "Lighthouse", "목록 가상화", "이미지 요청 우선순위"] },
+  ],
   summary: "React·Next.js로 사진 탐색 서비스와 게임 가격 비교 서비스를 개발한 프론트엔드 개발자 민사빈입니다. 공통 UI와 화면별 로직의 경계를 설계하고 상태 관리·API 연동·반응형 화면을 구현했습니다. 구현 후에는 사용자 조작과 이미지 로딩을 테스트와 측정으로 확인합니다.",
   projectHighlights: latestResumeData.projectHighlights.map((project) =>
     project.title === "PhotoMap"

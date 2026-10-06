@@ -149,7 +149,7 @@ export function BinClassicResume({ data, isWacus = false }: { data: ResumeData; 
                       const [result, detail] = achievement.split(" — ");
                       const [headline, change] = result.split(" · ");
                       return (
-                        <li className={index === 0 && achievementIndex < 2 ? "bin-classic-featured-result" : undefined} key={result}>
+                        <li className={achievementIndex < 2 ? "bin-classic-featured-result" : undefined} key={result}>
                           <h4>{headline}{change && <span className="bin-classic-result-change">{change}</span>}</h4>
                           <p>{detail}</p>
                         </li>
@@ -177,7 +177,7 @@ export function BinClassicResume({ data, isWacus = false }: { data: ResumeData; 
           </div>
         </ResumeSection>
 
-        <ResumeSection title={isWacus ? "발표·논문·자격" : "발표·논문·수상"} className={!isWacus ? "bin-classic-supporting" : undefined}>
+        <ResumeSection title={isWacus ? "발표·논문·자격" : "특허·논문·발표·수상"} className={!isWacus ? "bin-classic-supporting" : undefined}>
           <div className="bin-classic-activities">
             {activityGroups.map((group) => (
               <article key={`${group.title}-${group.items[0]}`}>

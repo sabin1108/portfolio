@@ -28,7 +28,6 @@ function retitleCaseStudy(caseStudy: CaseStudy, title: string): CaseStudy {
 
 const photoMapCaseTitles: Record<string, string> = {
   "WebGL 지도와 3D globe 렌더링 수명 주기 분리": "iframe·renderer cleanup으로 WebGL 렌더링 수명 주기 분리",
-  "느리다는 인상을 반복 가능한 이미지 evidence로 바꾸기": "Playwright·CDP로 이미지 LCP와 전송량 반복 측정",
   "D3 tick 업데이트를 React state에서 분리": "과도한 리렌더링을 줄이기 위한 D3 그래프 갱신 범위 분리",
 };
 
@@ -36,7 +35,7 @@ const photoMapFrontend: Project = {
   ...photoMap,
   subtitle: "지도·WebGL·관계 그래프로 사진을 탐색하는 반응형 웹 서비스",
   summary:
-    "여행이나 일상에서 찍은 사진을 위치와 시간 흐름으로 다시 탐색하는 사진 지도 서비스입니다. 사용자는 EXIF 위치 정보를 바탕으로 지도에서 촬영 장소를 확인하고, 앨범·타임라인·관계 그래프를 오가며 사진 묶음과 이동 경로를 살펴볼 수 있습니다. 3인 팀 프로젝트에서 저는 프론트엔드를 맡아 React 화면에 Mapbox 지도, Unity WebGL iframe, 3D globe, D3 관계 그래프를 연결했고, 대량 사진 탐색에서도 화면이 끊기지 않도록 렌더링 수명 주기와 상태 경계를 분리했습니다.",
+    "사진을 지도와 시간순으로 다시 찾아보는 서비스입니다. 3인 팀에서 프론트엔드를 맡아 지도·앨범·타임라인 UI를 만들고 Mapbox, Unity WebGL, D3 관계 그래프를 연결했습니다. 목록에는 썸네일을 제공하고 행 단위 가상화를 적용해 이미지 용량과 화면 밖 카드 렌더링을 줄였습니다.",
   responsibilities: [
     "Mapbox 지도, 앨범, 타임라인, Unity WebGL iframe, 3D globe, D3 관계 그래프를 React 화면에 통합",
     "Zustand selector와 useShallow로 상태 구독 범위를 줄이고, 대량 목록은 가상화로 DOM 수를 제한",
@@ -44,11 +43,15 @@ const photoMapFrontend: Project = {
     "Vercel Preview, Playwright, CDP encodedDataLength, React Profiler 기준으로 성능 개선 전후를 반복 측정",
   ],
   metrics: [
-    { label: "lab LCP p75", value: "17.4s → 2.5s", basis: "85.6% 단축 · baseline cold 30회 / optimized cold 100회" },
-    { label: "첫 사진 p95", value: "17.6s → 2.6s", basis: "85.2% 단축 · baseline cold 30회 / optimized cold 100회" },
-    { label: "관측 전송량 / run", value: "3,125KB → 328KB", basis: "89.5% 감소 · CDP encodedDataLength" },
-    { label: "D3 NodeView 렌더링", value: "370회 → 25회", basis: "93.2% 감소 · React Profiler" },
+    { label: "사진 16장 · 이미지 응답 본문", value: "4.22MB → 237KB", basis: "94.4% 감소 · 동일 사진의 큰 이미지/썸네일 비교 · 조건별 5회" },
+    { label: "최대 렌더링 카드", value: "3,000개 → 57개", basis: "합성 항목 3,000개 · 동일 SVG 반복 · 모바일 크기 PC · 조건별 3회" },
   ],
+  metricRows: [
+    { category: "이미지 응답 본문", metric: "동일 사진 16장", before: "4.22MB", after: "237KB", basis: "94.4% 감소 · 같은 배포에서 큰 WebP/썸네일 비교 · 조건별 5회" },
+    { category: "렌더링 카드 수", metric: "합성 항목 3,000개", before: "3,000개", after: "최대 57개", basis: "동일 SVG 반복 · 모바일 크기 PC 390×844/DPR 2 · 조건별 3회" },
+  ],
+  // Historical timing setup remains in the AX variant; current conditions accompany each case.
+  validationSetup: undefined,
   frontendFundamentals: [
     {
       concept: "상태 변경과 리렌더 전파",
@@ -71,7 +74,7 @@ const photoMapFrontend: Project = {
     {
       concept: "reconciliation 비용과 컴포넌트 경계",
       application: "보이는 row만 렌더링하고 이미지 카드를 memoization해 대량 목록의 비교·DOM 생성 범위를 제한했습니다.",
-      result: "10,000장 조건에서도 DOM 약 200개 수준 유지",
+      result: "합성 항목 3,000개 · 모바일 크기 PC에서 최대 카드 57개",
     },
     {
       concept: "생명주기와 cleanup",
@@ -81,11 +84,26 @@ const photoMapFrontend: Project = {
   ],
   aiEngineering: undefined,
   caseStudies: [
+    {
+      title: "사진 16장의 이미지 응답 본문 94.4% 감소",
+      issue: "목록의 작은 사진 카드에 상세용 큰 이미지를 전달하면 필요한 크기보다 많은 데이터를 내려받게 됩니다.",
+      cause: "목록과 상세 화면은 사진을 표시하는 크기가 달라 같은 파일을 쓸 필요가 없었습니다.",
+      resolution: "목록용 썸네일과 상세 이미지를 나누고 주소 선택 코드를 한곳에 모았습니다. 동일 Vercel 배포에서 같은 사진 16장을 큰 display WebP로 전달하는 조건을 재현해 thumb WebP와 비교했습니다.",
+      result: "조건별 5회 비교에서 사진 응답 본문 합계가 4.22MB에서 237KB로 94.4% 줄었습니다. 과거 운영 배포나 전체 트래픽 대비 감소율은 아닙니다.",
+      evidence: ["2026-10-03 동일 사진 비교", "동일 배포·사진 16장·조건별 5회", "이미지 응답 본문"],
+    },
+    {
+      title: "3,000개 합성 항목에서 최대 렌더링 카드 57개",
+      issue: "사진 목록 전체를 렌더링하면 화면 밖 카드도 DOM에 남습니다.",
+      cause: "목록 크기에 따라 생성되는 카드 수가 늘어나 보이지 않는 항목까지 처리해야 했습니다.",
+      resolution: "행 단위 가상화로 화면에 보이는 구간과 주변 행만 렌더링했습니다. 같은 로컬 빌드에서 동일 SVG URL을 반복한 1,000개·3,000개 합성 항목의 전체 렌더링과 가상화를 조건별 3회 비교했습니다.",
+      result: "모바일 크기 PC 390×844/DPR 2에서 최대 카드는 3,000개에서 57개로 줄었습니다. 1,000개 항목도 최대 57개였으며, 데스크톱 1440×900/DPR 1에서는 최대 136개였습니다. 카드 수 비교로 실제 스마트폰 속도나 FPS 개선율을 뜻하지 않습니다.",
+      evidence: ["2026-10-04 가상화 비교", "동일 SVG 반복·합성 항목", "조건별 3회·최대 카드 수"],
+    },
     ...(webGlCase ? [retitleCaseStudy(webGlCase, photoMapCaseTitles[webGlCase.title] ?? webGlCase.title)] : []),
     ...photoMap.caseStudies
       .filter((item) =>
         [
-          "느리다는 인상을 반복 가능한 이미지 evidence로 바꾸기",
           "Context API 전역 리렌더링을 Zustand selector로 축소",
           "D3 tick 업데이트를 React state에서 분리",
         ].includes(item.title),
@@ -204,7 +222,7 @@ export const frontendPortfolio = {
     ...axPortfolio.profile,
     title: "Front-End Developer",
     headline:
-      "React·Next.js 화면에서 상태 전파, API 계약, 렌더링 수명 주기, 이미지 전송 병목을 코드 구조와 반복 측정으로 증명하는 프론트엔드 개발자입니다.",
+      "React·Next.js로 사진 탐색과 게임 가격 비교 서비스를 만들었습니다. 화면이 늦어지거나 같은 작업이 반복되는 부분을 찾아 고치고, 측정과 테스트로 결과를 확인합니다.",
   },
   projects: [photoMapFrontend, gameInfoFrontend],
   activities: [
@@ -214,6 +232,15 @@ export const frontendPortfolio = {
       description: "학교 공지·식단·학사 일정 정보를 채팅 UI로 제공한 2인 졸업 프로젝트입니다. ReactMarkdown로 긴 답변과 링크를 읽기 쉽게 표시하고, Next.js API route로 백엔드 응답 경계를 분리했습니다. 이 프로젝트로 BRIGHT MAKERS EXPO 2025 캡스톤디자인 경진대회 우수상을 받았고, 관련 내용을 학술대회 포스터/논문으로 발표했습니다.",
       pdf: { label: "논문 PDF", href: "/files/thesis/interactive-campus-qa-system.pdf" },
     },
-    ...portfolio.activities.filter((activity) => activity.date !== "2025.04" && activity.pdf?.href !== "/files/thesis/interactive-campus-qa-system.pdf"),
+    ...portfolio.activities
+      .filter((activity) => activity.date !== "2025.04" && activity.pdf?.href !== "/files/thesis/interactive-campus-qa-system.pdf")
+      .map((activity) => activity.title === "생성형 AI 기반 포트폴리오 요약 플랫폼"
+        ? {
+            date: "2026.09.30",
+            title: "생성형 인공지능 기반 포트폴리오 요약 및 검증 시스템 및 그 방법",
+            description: "특허 출원 10-2026-0186451. 공동 발명자로 참여해 포트폴리오 요약의 기술정보를 지식정보와 비교하고, 기술 명칭을 표준화하거나 확인되지 않은 정보를 제외하는 요약·검증 방식을 정리했습니다.",
+            pdf: { label: "특허 명세서 PDF", href: "/files/patents/generative-ai-portfolio-summary-verification.pdf" },
+          }
+        : activity),
   ],
 } as const;

@@ -28,17 +28,16 @@
 .bin-classic-editorial .bin-classic-project-heading h3 { font-size: 1.3rem; letter-spacing: -.02em; }
 .bin-classic-editorial .bin-classic-project-heading > span { padding-top: .3rem; font-size: .78rem; }
 .bin-classic-editorial .bin-classic-role-line { font-size: .83rem; }
-.bin-classic-editorial .bin-classic-achievements { gap: 1.1rem; margin-top: 1.2rem; }
+.bin-classic-editorial .bin-classic-achievements { gap: 1rem; margin-top: 1.1rem; }
 .bin-classic-editorial .bin-classic-achievements li { border-left: 0; padding-left: 0; }
-.bin-classic-editorial .bin-classic-achievements h4 { color: #20262e; font-size: .96rem; line-height: 1.6; }
-.bin-classic-editorial .bin-classic-achievements p { font-size: .87rem; line-height: 1.75; }
+.bin-classic-editorial .bin-classic-achievements h4 { color: #20262e; font-size: .96rem; line-height: 1.55; }
+.bin-classic-editorial .bin-classic-achievements p { font-size: .87rem; line-height: 1.68; }
 .bin-classic-editorial .bin-classic-result-change { display: block; color: #245f95; font-size: .85rem; font-weight: 600; }
-.bin-classic-editorial .bin-classic-project:first-child .bin-classic-achievements { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem 1.75rem; }
-.bin-classic-editorial .bin-classic-featured-result { padding-top: .8rem; border-top: 2px solid #245f95; }
+.bin-classic-editorial .bin-classic-achievements { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem 1.75rem; }
+.bin-classic-editorial .bin-classic-featured-result { padding-top: .7rem; border-top: 2px solid #245f95; }
 .bin-classic-editorial .bin-classic-featured-result h4 { font-size: 1.05rem; letter-spacing: -.015em; }
 .bin-classic-editorial .bin-classic-featured-result .bin-classic-result-change { margin-top: .2rem; font-size: 1rem; }
-.bin-classic-editorial .bin-classic-project:first-child .bin-classic-achievements li:not(.bin-classic-featured-result) { grid-column: 1 / -1; }
-.bin-classic-editorial .bin-classic-project:nth-child(2) .bin-classic-achievements li { display: grid; grid-template-columns: 15rem minmax(0, 1fr); gap: 1.5rem; }
+.bin-classic-editorial .bin-classic-achievements li:not(.bin-classic-featured-result) { grid-column: 1 / -1; }
 .bin-classic-editorial .bin-classic-links { margin-top: 1rem; }
 .bin-classic-editorial .bin-classic-links > span { flex-basis: 100%; color: #526071; font-size: .75rem; }
 .bin-classic-editorial .bin-classic-activities article { padding: .75rem 0; }
@@ -58,8 +57,7 @@
   .bin-classic-editorial .bin-classic-intro { margin-top: 1.75rem; }
   .bin-classic-editorial .bin-classic-project-heading { display: block; }
   .bin-classic-editorial .bin-classic-project-heading > span { display: block; margin-top: .35rem; }
-  .bin-classic-editorial .bin-classic-project:first-child .bin-classic-achievements { grid-template-columns: 1fr; }
-  .bin-classic-editorial .bin-classic-project:nth-child(2) .bin-classic-achievements li { display: block; }
+  .bin-classic-editorial .bin-classic-achievements { grid-template-columns: 1fr; }
   .bin-classic-editorial .bin-classic-featured-result h4 { font-size: 1rem; }
   .bin-classic-editorial .bin-classic-links { gap: .5rem 1rem; }
   .bin-classic-editorial .bin-classic-contact a,
@@ -89,19 +87,17 @@
   .bin-classic-editorial .bin-classic-project-heading h3 { font-size: 17px; }
   .bin-classic-editorial .bin-classic-project-heading > span,
   .bin-classic-editorial .bin-classic-role-line { font-size: 12px; }
-  .bin-classic-editorial .bin-classic-achievements,
-  .bin-classic-editorial .bin-classic-project:first-child .bin-classic-achievements { gap: 10px 20px; margin-top: 10px; }
+  .bin-classic-editorial .bin-classic-achievements { gap: 9px 18px; margin-top: 9px; }
   .bin-classic-editorial .bin-classic-achievements h4,
   .bin-classic-editorial .bin-classic-featured-result h4 { font-size: 14px; }
   .bin-classic-editorial .bin-classic-project-heading p,
   .bin-classic-editorial .bin-classic-education p,
   .bin-classic-editorial .bin-classic-certificates p,
   .bin-classic-editorial .bin-classic-achievements p,
-  .bin-classic-editorial .bin-classic-activities p { font-size: 14px; line-height: 1.6; }
+  .bin-classic-editorial .bin-classic-activities p { font-size: 13.6px; line-height: 1.54; }
   .bin-classic-editorial .bin-classic-result-change,
   .bin-classic-editorial .bin-classic-featured-result .bin-classic-result-change { font-size: 12px; }
-  .bin-classic-editorial .bin-classic-featured-result { padding-top: 7px; }
-  .bin-classic-editorial .bin-classic-project:nth-child(2) .bin-classic-achievements li { grid-template-columns: 14rem minmax(0, 1fr); gap: 16px; }
+  .bin-classic-editorial .bin-classic-featured-result { padding-top: 6px; }
   .bin-classic-editorial .bin-classic-links { margin-top: 8px; gap: 5px 12px; }
   .bin-classic-editorial .bin-classic-links > span { font-size: 11px; }
   .bin-classic-editorial .bin-classic-activities article { padding: 7px 0; }
