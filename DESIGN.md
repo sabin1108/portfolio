@@ -2,12 +2,13 @@
 
 ## Source of truth
 - Status: Active
-- Last refreshed: 2026-10-06
+- Last refreshed: 2026-10-07
 - Primary product surfaces: `/portfolio_bin`; the resume at `/resume/bin_resume` keeps its separate reading and print layout.
 - Evidence reviewed: user-supplied presentation-scroll-animation.zip, live https://toss.im/ (2026-09-08), projectNotes in BinTossPortfolio.tsx, architecture/candidates/photomap-ko.architecture.json and gameinfo-ko-v2.architecture.json.
 - Latest user correction supersedes the interim diagram redesign: retain dark coral/blue and the earlier fixed TOC slide layout; use ORIGINAL architecture PNG assets, not newly drawn diagrams. Show project main image first, original architecture with side explanations second, and detailed implementation/case pages afterward. Scroll drives horizontal page transitions. Opening cover uses typography/project index instead of PhotoMap screenshot.
 
 ## Brand
+- Latest copy refinement (2026-10-07): explain virtualization's DOM/card-count effect immediately after its action. Keep synthetic-list/mobile-size-PC scope next to the result and detailed viewport/DPR/repetition conditions on the evidence page. Use “목록용 썸네일 / 상세용 큰 이미지” instead of internal image-variant names. Expand the default resume introduction to roughly three desktop lines covering frontend work, validation, and AI/research/patent participation.
 - Personality: calm, precise, personal.
 - Trust signals: actual project screens, explained decisions, reproducible measurement conditions, acknowledged limitations.
 - Avoid: generic claims, decorative statistics, identical left-image/right-text slides, tiny diagrams and obligatory external viewers.
@@ -72,7 +73,7 @@
 
 ## Implementation constraints
 - Existing React/Vite/CSS only; no new dependencies.
-- IntersectionObserver maps native scroll markers to the active page; CSS owns horizontal transitions. Inactive slides are inert; responsive/reduced-motion views expose every page. Listeners and observers clean up on unmount.
+- Desktop active pages are calculated from absolute scroll position and marker spacing; CSS owns horizontal transitions. Inactive slides are inert; responsive/reduced-motion views expose every page. Listeners, animation frames and observers clean up on unmount.
 - Verify mobile/tablet/desktop/short viewport, reduced motion, scene order, inline facts, scrolling/fade, keyboard anchors, image loading, resume isolation and production build.
 
 ## Open questions
@@ -86,8 +87,33 @@
 - Both resume projects use the same hierarchy: two measured results side by side on desktop, then two full-width implementation entries. GameInfo leads with mock card calls and shared candidate lookup; narrow screens stack the results.
 - Omit the separate AI development-process section. The final GameInfo slide links directly to project activities; implementation and validation explanations stay in their project pages.
 - Evidence: PhotoMap docs/performance/image-comparison-2026-10-03.md, portfolio-validation-2026-10-04.md and their verification JSON/summary CSV. This update supersedes earlier instructions to feature the old PhotoMap timing metrics.
+
+## Screen loading and place search detail (2026-10-07)
+- Add React.lazy/Suspense screen splitting and upload-place-search 400ms debounce to the editable default resume and PhotoMap implementation pages. Preserve nine slides per project, existing measured results, architecture assets and two-page A4 output.
+- PhotoMap may use a fifth achievement entry for these implementation details; retain the first two measured results and existing navigation/D3 explanations. Company-specific and frozen resumes stay unchanged.
+- Distinguish immediate local input from delayed parent-state synchronization and place lookup. Queries shorter than two characters skip lookup and synchronize immediately. Do not claim request cancellation, stale-response protection, measured request reduction or loading-time gains from this debounce/code-splitting implementation.
+- Source evidence: PhotoMap Frontend/src/App.tsx and Frontend/src/components/UploadScreen.tsx. These details supplement the current portfolio; they are not explanations for the separate 94.4% image-body or 57-card measurements.
+
+## Readability trial (2026-10-07)
+- User requested a reversible visual/copy trial. Snapshot of the pre-trial portfolio files and this document: `_workspace/readability-before-20261007-162636/`. Restoring that snapshot preserves the earlier React.lazy/debounce addition; the resume is outside this trial.
+- Preserve nine slides per project, architecture PNGs, colors, scrolling, links and visible measurement limits. Do not hide essential content behind a modal or accordion.
+- Implementation pages use a short introduction and two or three labeled points. Remove repetitive concluding paragraphs. Result pages show the scoped metric before the two implementation steps; evidence pages use short, scannable lists.
+- Shorten prose rather than shrinking text. Keep React.lazy/Suspense, 400ms debounce, image/sample conditions and synthetic/mock distinctions explicit.
+
+## Personal introduction and image-case clarification (2026-10-07)
+- Portfolio introduction describes finding and resolving user friction; the resume introduction describes verification through measurement and tests. Mention AI service work, paper presentation and joint patent application in supporting portfolio copy without implying model research or patent registration.
+- Enlarge the editable resume portrait to 112x140px on desktop, 80x100px on mobile and 96x120px in print. Preserve company-specific resume styles.
+- The PhotoMap 94.4% case concerns smaller thumbnail files, not lazy loading. Loading policy and request priority were held constant. Keep the scoped metric label visible and detailed deployment/sample conditions on the evidence slide without repeating them below the result metric.
+- Validation completed: production build, six resume viewport checks (320–1366px), aliases/company-specific styles, and overflow checks passed. The latest A4 export remains two pages; both rendered pages were visually inspected with the enlarged portrait and revised introduction.
+## Border and scroll consistency correction (2026-10-07)
+- Remove the bounded hero gradient that produced a visible rectangular background edge. The selected-project list uses one separator between projects, with no redundant top/bottom rules; the full-width section guide keeps its boundary.
+- Desktop slide selection uses the nearest marker to the sticky anchor offset, calculated from actual DOM spacing. The same scroll position selects the same page in both directions. Keep native wheel/touch/keyboard scrolling and 100svh spacing; do not cancel wheel events or force one page per arbitrary gesture.
+- Use one 450ms horizontal page transition; remove staggered text animations that delayed individual blocks after navigation.
+- Regression: `scripts/verify-portfolio-scroll-position.cjs` reproduced a direction-dependent selection at the same offset before the fix and checks bidirectional position, anchors and repeated equal wheel distances at three desktop viewports. Existing layout/wheel/reduced-motion checks remain required.
+- Pre-fix snapshot: `_workspace/scroll-border-before-20261007-205350/`.
+
 ## Reading pace refinement (2026-09-09)
-- 66svh per slide; last page retains100svh of room. The project track is628svh, about10% shorter than the previous700svh. Headings enter first, then explanatory blocks and results. Reduced motion remains static.
+- Historical 66svh experiment was superseded by the 100svh interval below. The October scroll correction uses a single page transition without staggered text entrances. Reduced motion remains static.
 - Describe concrete failed requests, pending map selection and verification outcomes; omit test-count boasting and generic coverage disclaimers from portfolio copy.
 
 - Narratives explain implemented user-facing behavior, triggering situations, decisions and observed outcomes. Do not use source filenames as the substance of portfolio explanations; keep source links for optional technical inspection.

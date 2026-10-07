@@ -4,7 +4,7 @@ import { frontendPortfolio } from "../data/main";
 import "../../styles/project-presentation.css";
 
 type Case = { title: string; problem: string; check: string; action: string[]; result: string; metric?: { label: string; value: string; change: string }; note?: string };
-type Notes = { summary: string; role: string; cases: Case[]; implementation: { title: string; reason: string; steps: string[]; note: string }[] };
+type Notes = { summary: string; role: string; cases: Case[]; implementation: { title: string; reason: string; steps: { title: string; body: string }[]; note: string }[] };
 const chapterPages = [0, 1, 2, 4, 6, 8];
 const chapterLabels = ["서비스 소개", "아키텍처", "구조와 구현", "해결한 문제 01", "해결한 문제 02", "측정 근거와 적용 기술"];
 
@@ -44,19 +44,42 @@ export function ProjectPresentation({ project, index, notes }: { project: typeof
     return () => { media.removeEventListener("change", update); window.removeEventListener("beforeprint", beforePrint); window.removeEventListener("afterprint", update); };
   }, []);
   useEffect(() => {
-    let observer: IntersectionObserver;
-    const observe = () => {
-      observer?.disconnect();
+    let observer: IntersectionObserver | undefined;
+    let pendingFrame = 0;
+    const updateActive = () => {
+      pendingFrame = 0;
+      const markers = root.current?.querySelectorAll<HTMLElement>(".bin-deck-marker");
+      if (!markers || markers.length < 2) return;
+      const step = markers[1].offsetTop - markers[0].offsetTop;
+      if (step <= 0) return;
+      const anchorOffset = parseFloat(getComputedStyle(markers[0]).scrollMarginTop) || 0;
+      const progress = (anchorOffset - markers[0].getBoundingClientRect().top) / step;
+      setActive(Math.max(0, Math.min(total - 1, Math.round(progress))));
+    };
+    const scheduleUpdate = () => {
+      if (!pendingFrame) pendingFrame = requestAnimationFrame(updateActive);
+    };
+    if (enhanced) {
+      // One position has one active page, regardless of scroll direction or input device.
+      updateActive();
+      window.addEventListener("scroll", scheduleUpdate, { passive: true });
+      window.addEventListener("resize", scheduleUpdate);
+    } else {
       observer = new IntersectionObserver(entries => {
         for (const entry of entries) if (entry.isIntersecting) setActive(Number((entry.target as HTMLElement).dataset.page));
-      }, { rootMargin: `-${Math.round(innerHeight * .3)}px 0px -${Math.round(innerHeight * .65)}px 0px` });
-      root.current?.querySelectorAll(enhanced ? ".bin-deck-marker" : ".bin-deck-page").forEach(el => observer.observe(el));
-    };
-    observe(); window.addEventListener("resize", observe);
+      }, { rootMargin: "-25% 0px -50% 0px" });
+      root.current?.querySelectorAll(".bin-deck-page").forEach(el => observer?.observe(el));
+    }
     const frame = requestAnimationFrame(() => {
       if (location.hash.startsWith(`#project-${index}-scene-`)) document.getElementById(location.hash.slice(1))?.scrollIntoView({block:"start",behavior:"instant"});
     });
-    return () => { observer.disconnect(); cancelAnimationFrame(frame); window.removeEventListener("resize", observe); };
+    return () => {
+      observer?.disconnect();
+      cancelAnimationFrame(frame);
+      cancelAnimationFrame(pendingFrame);
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+    };
   }, [enhanced, index]);
 
   const chapters = (current: number) => <nav className="bin-deck-chapters" aria-label={`${project.title} 목차`}>{chapterLabels.map((label, i) => <a key={label} href={`#${id(chapterPages[i])}`} aria-current={current >= chapterPages[i] && current < (chapterPages[i + 1] ?? total) ? "step" : undefined}><span>0{i + 1}</span>{label}</a>)}</nav>;
@@ -68,14 +91,14 @@ export function ProjectPresentation({ project, index, notes }: { project: typeof
     </> },
     { kind: "architecture", label: "아키텍처", content: <>
       <div className="bin-deck-architecture-heading"><p className="bin-work-eyebrow">02 · 아키텍처</p><h2>{photo ? "사진 상태가 화면으로 이어지는 구조" : "검색 요청이 가격 정보가 되기까지"}</h2></div>
-      <div className="bin-deck-architecture-layout"><aside><span>{photo ? "함께 쓰는 사진 상태" : "화면과 서버의 역할"}</span><p>{photo ? "Zustand의 사진·좋아요는 필요한 값만 구독합니다. 검색·필터는 URL, 모달·편집 입력은 각 화면의 local state로 관리합니다." : "화면은 검색 조건을 전달합니다. 서버는 저장된 응답을 확인하고, 필요하면 ITAD에 가격 정보를 요청합니다."}</p></aside><figure><img src={`/architecture/${slug}-dark-preview.png`} alt={photo ? "기존 PhotoMap 아키텍처: 사진 상태, PhotoFeed, 이미지 주소 선택, 지도 iframe, D3, Supabase 관계도" : "기존 GameInfo 아키텍처: 검색 API, 캐시, ITAD, 가격 변환, 관심 목록 관계도"} width="2448" height="1516" /><figcaption>{photo ? "PhotoMap · 화면과 상태 갱신" : "GameInfo · 검색과 데이터 처리"}</figcaption></figure><aside><span>{photo ? "D3 좌표를 state에 넣지 않은 이유" : "외부 응답을 가격 정보로 바꾸기"}</span><p>{photo ? "매 tick마다 React를 갱신하지 않도록, React는 노드 구조·선택을 맡고 D3는 CSS 좌표·SVG 선만 바꿉니다. 데이터 변경·화면 이탈 시 기존 simulation을 중지해 이전 계산이 남지 않게 합니다." : "ITAD의 금액·상점·구매 링크를 공통 모델로 바꿔 화면이 응답 형식을 직접 처리하지 않게 했습니다. 양수 가격만 최저가 후보로 사용해 결측값·0원 오판을 막았습니다. 관심 목록은 인증 후 저장합니다."}</p></aside></div>
+      <div className="bin-deck-architecture-layout"><aside><span>{photo ? "상태의 저장 위치" : "검색 요청 처리"}</span><p>{photo ? "사진·좋아요는 Zustand.\n검색·필터는 URL.\n편집 입력은 local state.\n화면에 필요한 값만 구독합니다." : "검색 조건 전달\n캐시된 응답 확인\n필요하면 ITAD 조회\n관심 목록은 인증 후 저장"}</p></aside><figure><img src={`/architecture/${slug}-dark-preview.png`} alt={photo ? "기존 PhotoMap 아키텍처: 사진 상태, PhotoFeed, 이미지 주소 선택, 지도 iframe, D3, Supabase 관계도" : "기존 GameInfo 아키텍처: 검색 API, 캐시, ITAD, 가격 변환, 관심 목록 관계도"} width="2448" height="1516" /><figcaption>{photo ? "PhotoMap · 화면과 상태 갱신" : "GameInfo · 검색과 데이터 처리"}</figcaption></figure><aside><span>{photo ? "React와 D3의 역할" : "가격 응답 정규화"}</span><p>{photo ? "React: 노드 구조·선택\nD3: CSS 좌표·SVG 선\n데이터 변경·화면 이탈 시 기존 simulation 중지" : "금액·상점·구매 링크를 공통 모델로 변환합니다.\n양수 가격만 최저가 후보로 삼아 결측값·0원 오판을 막습니다."}</p></aside></div>
     </> },
-    ...notes.implementation.map((part, i) => ({ kind: "story", label: "구조와 구현", content: <><p className="bin-work-eyebrow">구조와 구현 · 0{i + 1}</p><h2>{part.title}</h2><p className="bin-deck-story-lead"><HighlightedCopy text={part.reason} /></p><ol className="bin-deck-process">{part.steps.map((step, n) => <li key={step}><span>0{n + 1}</span><p><HighlightedCopy text={step} /></p></li>)}</ol><p className="bin-deck-context">{photo ? ["같은 모양보다 같은 동작을 기준으로 공통화했습니다. 검색 조건과 액션은 화면에 남겨, 공통 컴포넌트가 모든 기능을 떠안지 않도록 했습니다.", "URL은 다시 방문할 탐색 조건, Zustand는 공유 데이터, local state는 일시적인 조작을 맡습니다. 저장 위치를 상태의 수명에 맞췄습니다."][i] : ["카드 표시와 액션 생성을 같은 memo 경계에 두고, 변경된 데이터만 갱신합니다.", "검색 조건은 URL로 보존하고, 입력과 결과 조회는 서로 다른 렌더링 경계에서 처리합니다."][i]}</p></> })),
+    ...notes.implementation.map((part, i) => ({ kind: "story", label: "구조와 구현", content: <><p className="bin-work-eyebrow">구조와 구현 · 0{i + 1}</p><h2>{part.title}</h2><p className="bin-deck-story-lead">{part.reason}</p><ol className="bin-deck-process bin-deck-key-points">{part.steps.map((step, n) => <li key={step.title}><span>0{n + 1}</span><div><h3>{step.title}</h3><p>{step.body}</p></div></li>)}</ol></> })),
     ...notes.cases.flatMap((item, i) => [
-      { kind: "story", label: `해결한 문제 0${i + 1} · 판단`, content: <><p className="bin-work-eyebrow">해결한 문제 0{i + 1} · 무엇을 확인했나</p><h2>{item.title}</h2><div className="bin-deck-narrative"><span>겪었던 문제</span><p><HighlightedCopy text={item.problem} /></p></div><div className="bin-deck-narrative"><span>확인과 판단</span><p><HighlightedCopy text={item.check} /></p></div><p className="bin-deck-continue">다음 장에서 바꾼 코드와 결과를 설명합니다.<ArrowRight size={16} /></p></> },
-      { kind: "story", label: `해결한 문제 0${i + 1} · 변경`, content: <><p className="bin-work-eyebrow">해결한 문제 0{i + 1} · 어떻게 바꿨나</p><h2>{photo ? ["목록에는 썸네일,\n상세에는 큰 이미지.", "화면 주변의 카드만\n렌더링합니다."][i] : ["카드와 액션을\n함께 memo로 감쌌습니다.", "같은 제목을 찾는 요청이\n조회 결과를 공유합니다."][i]}</h2><ol className="bin-deck-process">{item.action.map((step, n) => <li key={step}><span>0{n + 1}</span><p><HighlightedCopy text={step} /></p></li>)}</ol><div className="bin-deck-result"><span>{item.metric?.label ?? "결과"}</span>{item.metric && <div className="bin-deck-metric"><strong>{item.metric.value}</strong><span>{item.metric.change}</span></div>}<p><HighlightedCopy text={item.result} /></p></div></> },
+      { kind: "story", label: `해결한 문제 0${i + 1} · 판단`, content: <><p className="bin-work-eyebrow">해결한 문제 0{i + 1} · 무엇을 확인했나</p><h2>{item.title}</h2><div className="bin-deck-narrative"><span>문제</span><p><HighlightedCopy text={item.problem} /></p></div><div className="bin-deck-narrative"><span>확인 방법</span><p><HighlightedCopy text={item.check} /></p></div></> },
+      { kind: "story", label: `해결한 문제 0${i + 1} · 변경`, content: <><p className="bin-work-eyebrow">해결한 문제 0{i + 1} · 어떻게 바꿨나</p><h2>{photo ? ["목록에는 썸네일,\n상세에는 큰 이미지.", "화면 주변의 카드만\n렌더링합니다."][i] : ["카드와 액션을\n함께 memo로 감쌌습니다.", "같은 제목의 요청이\n조회 결과를 공유합니다."][i]}</h2><div className="bin-deck-result"><span>{item.metric?.label ?? "결과"}</span>{item.metric && <div className="bin-deck-metric"><strong>{item.metric.value}</strong><span>{item.metric.change}</span></div>}<p>{item.result}</p></div><ol className="bin-deck-process">{item.action.map((step, n) => <li key={step}><span>0{n + 1}</span><p><HighlightedCopy text={step} /></p></li>)}</ol></> },
     ]),
-    { kind: "evidence", label: "측정 근거와 적용 기술", content: <><p className="bin-work-eyebrow">측정 근거와 적용 기술</p><h2>{photo ? "같은 사진과 목록으로 비교했습니다." : "반복 호출과 화면 동작을 확인했습니다."}</h2><div className="bin-deck-evidence">{notes.cases.map((item, i) => <article key={item.title}><span>0{i + 1} · {photo ? ["이미지 측정", "목록 렌더링"][i] : ["카드 렌더 호출", "검색 후보 조회 공유"][i]}</span><p>{item.note}</p></article>)}{notes.implementation.map((part, i) => <article key={part.title}><span>0{i + 3} · {photo ? ["공통 UI·키보드 조작", "탐색 조건·목록 위치 복원"][i] : ["가격 처리·자동 검증", "입력 분리·서버 스트리밍"][i]}</span><p>{part.note}</p></article>)}</div></> },
+    { kind: "evidence", label: "측정 근거와 적용 기술", content: <><p className="bin-work-eyebrow">측정 근거와 적용 기술</p><h2>{photo ? "비교 조건과 확인한 범위" : "호출 수와 화면 동작의 근거"}</h2><div className="bin-deck-evidence">{notes.cases.map((item, i) => <article key={item.title}><h3>{photo ? ["이미지 응답 본문", "최대 렌더링 카드"][i] : ["mock 카드 호출", "제목 후보 조회 공유"][i]}</h3><ul>{item.note?.split("\n").map(line => <li key={line}>{line}</li>)}</ul></article>)}{notes.implementation.map((part, i) => <article key={part.title}><h3>{photo ? ["화면 분할·공통 UI", "입력 요청·탐색 복원"][i] : ["가격 처리·자동 검증", "입력 분리·서버 스트리밍"][i]}</h3><ul>{part.note.split("\n").map(line => <li key={line}>{line}</li>)}</ul></article>)}</div></> },
   ];
   return <section ref={root} id={`project-${index}`} className={`bin-work-project bin-deck ${enhanced ? "is-enhanced" : ""}`} aria-label={`${project.title} 프로젝트`}>
     <div className="bin-deck-track" style={enhanced ? {height:`${(total - 1) * scrollStep + 100}svh`} : undefined}>

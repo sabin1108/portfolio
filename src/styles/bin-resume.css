@@ -15,6 +15,7 @@
 /* The general resume gives measured work more room than supporting credentials. */
 .bin-classic-editorial .bin-classic-resume { padding: 3rem 3.5rem; }
 .bin-classic-editorial .bin-classic-header { align-items: flex-start; gap: 2.5rem; padding-bottom: 1.75rem; }
+.bin-classic-editorial .bin-classic-photo { width: 112px; height: 140px; object-fit: cover; flex-shrink: 0; }
 .bin-classic-editorial .bin-classic-intro { max-width: 36rem; margin: 1rem 0 0; color: #4e5968; font-size: .94rem; line-height: 1.75; }
 .bin-classic-editorial .bin-classic-contact { margin-top: 1rem; }
 .bin-classic-editorial .bin-classic-contact a,
@@ -52,8 +53,8 @@
   .bin-classic-editorial .bin-classic-resume { padding: 1.75rem 1.25rem; }
   .bin-classic-editorial .bin-classic-header { position: relative; display: block; padding-top: .4rem; }
   .bin-classic-editorial .bin-classic-header h1,
-  .bin-classic-editorial .bin-classic-role { padding-right: 5.25rem; }
-  .bin-classic-editorial .bin-classic-photo { position: absolute; right: 0; top: 0; width: 64px; height: 80px; }
+  .bin-classic-editorial .bin-classic-role { padding-right: 6.25rem; }
+  .bin-classic-editorial .bin-classic-photo { position: absolute; right: 0; top: 0; width: 80px; height: 100px; }
   .bin-classic-editorial .bin-classic-intro { margin-top: 1.75rem; }
   .bin-classic-editorial .bin-classic-project-heading { display: block; }
   .bin-classic-editorial .bin-classic-project-heading > span { display: block; margin-top: .35rem; }
@@ -74,7 +75,7 @@
 @media print {
   .bin-classic-editorial .bin-classic-resume { padding: 0; }
   .bin-classic-editorial .bin-classic-header { gap: 1.5rem; padding-bottom: 10px; }
-  .bin-classic-editorial .bin-classic-photo { width: 80px; height: 100px; }
+  .bin-classic-editorial .bin-classic-photo { width: 96px; height: 120px; }
   .bin-classic-editorial .bin-classic-intro { margin-top: 8px; font-size: 14px; line-height: 1.6; }
   .bin-classic-editorial .bin-classic-contact { margin-top: 8px; }
   .bin-classic-editorial .bin-classic-contact a,

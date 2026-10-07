@@ -15,10 +15,10 @@ export const resumePathKeyword = ["frontend_bin", "bin_resume"] as const;
 export const resumeVariantData = {
   ...resumeFrontendData,
   summary:
-    "React와 Next.js로 사진 탐색, 지도, 가격 비교 화면을 만들었습니다. 이미지 전송량, 렌더링 범위, API 응답 경로를 나눠 확인하고 화면 구조와 데이터 처리 방식을 고쳤습니다.",
+    "구현한 기능을 측정과 테스트로 검증하는 프론트엔드 개발자입니다. React·Next.js로 사진 탐색과 가격 비교 화면을 만들며 이미지 전송량과 렌더링 범위를 줄였습니다. AI 서비스 구현·논문 발표·공동 특허 출원에도 참여했습니다.",
   coreSkills: [
     { title: "프론트엔드", items: ["React", "Next.js", "TypeScript", "JavaScript"] },
-    { title: "성능", items: ["React Profiler", "Lighthouse", "목록 가상화", "이미지 요청 우선순위"] },
+    { title: "성능", items: ["React Profiler", "Lighthouse"] },
   ],
   projectHighlights: [
     {
@@ -30,8 +30,9 @@ export const resumeVariantData = {
         "3인 팀(FE·BE·Unity 각 1명) 프론트엔드 담당 · 지도·앨범·타임라인·상세 UI · Mapbox·D3 연동 · 상태 관리",
       achievements: [
         "이미지 응답 본문 4.22MB → 237KB · 94.4% 감소 — 목록에는 썸네일을, 상세 화면에는 큰 이미지를 제공하도록 이미지 주소 선택을 분리했습니다. 같은 사진 16장을 큰 이미지로 제공하는 조건과 썸네일 조건을 동일 배포에서 비교했습니다.",
-        "렌더링 카드 3,000개 → 최대 57개 · 모바일 크기 PC 실험 — 사진 목록을 행 단위로 가상화해 화면 주변 카드만 남겼습니다. 390×844, DPR 2, 동일 SVG 반복 조건의 합성 3,000개 목록에서 렌더링 카드 수를 확인했습니다.",
+        "렌더링 카드 3,000개 → 최대 57개 · 합성 목록·모바일 크기 PC 실험 — 사진 목록을 행 단위로 가상화해 화면 주변 카드만 남기고, 보이지 않는 카드의 DOM 생성을 줄였습니다. 전체 항목이 늘어도 렌더링 범위를 현재 화면 주변으로 제한했습니다.",
         "뒤로가기로 검색 조건과 목록 위치 복원 — 검색·상세 UI는 공유하되 화면별 검색 조건과 액션은 분리했습니다. 탐색 조건은 URL, 사진·좋아요는 Zustand, 모달은 local state에 두고 다른 화면을 다녀온 뒤 이전 탐색으로 돌아오는지 확인했습니다.",
+        "화면 코드 분할·장소 검색 디바운스 — 지도·앨범·타임라인을 React.lazy로 나누고 Suspense로 대기 UI를 표시했습니다. 업로드 장소 입력은 즉시 표시하고, 검색 요청과 부모 상태 반영은 400ms 디바운스로 분리했습니다.",
         "D3 좌표 갱신을 React state에서 분리 — React는 노드 구조와 선택 상태를 관리하고 D3 tick은 좌표와 SVG 선만 갱신하도록 했습니다. 데이터 변경이나 화면 이탈 시 기존 simulation을 중지했습니다.",
       ],
     },

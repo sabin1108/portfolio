@@ -21,7 +21,7 @@
 .bin-work-eyebrow { display: flex; align-items: center; gap: 18px; color: var(--work-accent); font-size: 12px; font-weight: 650; letter-spacing: .06em; }
 .bin-work-section-rule { width: 32px; height: 1px; background: currentColor; opacity: .6; }
 .bin-work-hero { position: relative; isolation: isolate; display: grid; grid-template-columns: .9fr 1.1fr; column-gap: 64px; row-gap: 48px; align-items: center; min-height: calc(100svh - 69px); padding-block: 90px 28px; }
-.bin-work-hero::before { content: ""; position: absolute; z-index: -1; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 90% 42%, #31413b45, transparent 64%); }
+.bin-work-hero::before { content: none; }
 .bin-work-hero h1 { font-size: clamp(60px, 6.8vw, 98px); line-height: 1.06; letter-spacing: -.055em; }
 .bin-work-hero h1 span { display: block; margin-top: 22px; font-size: 23px; font-weight: 450; color: #c6cbc6; letter-spacing: -.015em; }
 .bin-work .bin-work-lead { margin-top: 36px; font-size: clamp(20px, 1.75vw, 26px); font-weight: 650; color: var(--work-text); line-height: 1.6; }
