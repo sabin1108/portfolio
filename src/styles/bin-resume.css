@@ -1,4 +1,5 @@
 .bin-classic-page { word-break: keep-all; overflow-wrap: anywhere; }
+.bin-classic-editorial .bin-classic-motivation .bin-classic-summary + .bin-classic-summary { margin-top: .8em; }
 .bin-classic-story h4 { font-size: 1rem; }
 .bin-classic-story strong { font-size: .78rem; }
 .bin-classic-page .bin-classic-emphasis { color: #245f95; text-decoration-line: underline; font-weight: 600; }
@@ -130,4 +131,27 @@
 .bin-classic-page.bin-classic-wacus .bin-classic-project p { line-height: 1.48; }
 .bin-classic-page.bin-classic-wacus .bin-classic-role-line { margin-top: 5px !important; }
 .bin-classic-page.bin-classic-wacus .bin-classic-links { margin-top: 5px; }
+}
+
+/* Application resumes pair each project with its surrounding context on A4. */
+@media print {
+  .bin-classic-application .bin-classic-resume { padding-inline: 4mm; }
+  .bin-classic-application .bin-classic-header { padding-bottom: 18px; }
+  .bin-classic-application .bin-classic-intro { line-height: 1.7; }
+  .bin-classic-application .bin-classic-section { margin-top: 24px; }
+  .bin-classic-application .bin-classic-motivation .bin-classic-summary { font-size: 14px; line-height: 1.75; orphans: 3; widows: 3; }
+  .bin-classic-application .bin-classic-motivation .bin-classic-summary + .bin-classic-summary { margin-top: 12px; }
+  .bin-classic-application .bin-classic-achievements { row-gap: 16px; }
+  .bin-classic-application .bin-classic-achievements h4 { margin-bottom: 7px; }
+  .bin-classic-application .bin-classic-project-heading p,
+  .bin-classic-application .bin-classic-achievements p,
+  .bin-classic-application .bin-classic-activities p,
+  .bin-classic-application .bin-classic-education p,
+  .bin-classic-application .bin-classic-certificates p { font-size: 14px; line-height: 1.68; }
+  .bin-classic-application .bin-classic-links { margin-top: 12px; }
+  .bin-classic-application .bin-classic-activities article { padding-block: 10px; }
+  .bin-classic-application .bin-classic-skill-row { padding-block: 7px; }
+  .bin-classic-application .bin-classic-project:first-child { border-bottom: 0; padding-bottom: 0; }
+  .bin-classic-application .bin-classic-project:nth-child(2) { break-before: page; page-break-before: always; padding-top: 0; }
+  .bin-classic-application .bin-classic-supporting { break-before: auto; margin-top: 26px; }
 }

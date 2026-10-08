@@ -105,8 +105,9 @@ function getResumeStories(projectTitle: string, isWacus: boolean) {
 
 export function BinClassicResume({ data, isWacus = false }: { data: ResumeData; isWacus?: boolean }) {
   const { profile, summary, coreSkills, projectHighlights, activityGroups, education } = data;
+  const hasMotivation = Boolean(data.motivation?.trim());
   return (
-    <main className={isWacus ? "bin-classic-page bin-classic-wacus" : "bin-classic-page bin-classic-editorial"}>
+    <main className={isWacus ? "bin-classic-page bin-classic-wacus" : `bin-classic-page bin-classic-editorial${hasMotivation ? " bin-classic-application" : ""}`}>
       <article className="bin-classic-resume">
         <header className="bin-classic-header">
           <div>
@@ -126,8 +127,8 @@ export function BinClassicResume({ data, isWacus = false }: { data: ResumeData; 
           <p className="bin-classic-summary">{summary}</p>
         </ResumeSection>}
 
-        {data.motivation?.trim() ? (
-          <ResumeSection title="지원동기">
+        {hasMotivation ? (
+          <ResumeSection title="지원동기" className="bin-classic-motivation">
             {data.motivation.split(/\n\s*\n/).map((paragraph) => (
               <p className="bin-classic-summary" key={paragraph}>{paragraph}</p>
             ))}
