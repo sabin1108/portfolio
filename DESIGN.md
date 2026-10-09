@@ -84,7 +84,7 @@
 - None blocking. Current user direction authorizes content-aware composition within verified project facts.
 
 ## Amjin application resume (2026-10-09)
-- Add `/resume/amjin_frontend` for JobKorea posting 50109520, with a tailored introduction and three motivation paragraphs. Reuse the readable default project evidence and existing `/portfolio_bin` link.
+- Use `/resume/amgine_frontend` for JobKorea posting 50109520, with a tailored introduction and three motivation paragraphs. Preserve `/resume/amjin_frontend` as an alias for previously shared links. Reuse the readable default project evidence and existing `/portfolio_bin` link.
 - Confirmed posting scope: Amjin, information security, web frontend; the official company website describes network threat and anomaly analysis solutions. Detailed job requirements were inaccessible; do not claim a required framework, specific product duties or prior security work.
 - Keep existing resume variants and portfolio unchanged. Use the existing application layout; verify mobile/desktop, direct access, print pages and default-resume isolation.
 

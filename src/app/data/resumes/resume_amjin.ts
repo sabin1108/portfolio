@@ -1,6 +1,6 @@
 import { resumeVariantData as baseResumeData } from "./resume_frontend_bin";
 
-export const resumePathKeyword = "amjin_frontend";
+export const resumePathKeyword = ["amgine_frontend", "amjin_frontend"] as const;
 
 // Job posting: https://www.jobkorea.co.kr/Recruit/GI_Read/50109520
 // Company solutions: https://www.amgine.co.kr/
