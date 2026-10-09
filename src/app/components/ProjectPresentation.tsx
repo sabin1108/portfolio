@@ -8,7 +8,7 @@ type Notes = { summary: string; role: string; cases: Case[]; implementation: { t
 const chapterPages = [0, 1, 2, 4, 6, 8];
 const chapterLabels = ["서비스 소개", "아키텍처", "구조와 구현", "해결한 문제 01", "해결한 문제 02", "측정 근거와 적용 기술"];
 
-const emphasisPhrases = ["action 슬롯", "게임 ID를 기준으로 중복 없이", "기존 카드는 유지", "value/onChange 기반 제어 컴포넌트","입력·초기화 UI는 공유","필요한 액션을 조합","Zustand","검색·태그·앨범 조건은 URL","모달·편집 입력은 local state", "이미지 크기와 품질만 바꿔", "목록에는 썸네일을, 상세 화면에는 큰 이미지를", "가상화만 켜고 껐습니다", "보이는 구간과 주변 행만 렌더링", "CSS 좌표와 SVG 선 위치만 직접 바꿉니다", "기존 시뮬레이션을 중지", "각 화면이 필요한 상태만 selector로 구독", "Zustand로 전환", "공통 TypeScript 모델로 변환", "5초 제한", "이전 응답을 경고 정보와 함께 반환"];
+const emphasisPhrases = ["표시 크기에 맞춰 이미지 크기·품질을 달리했습니다", "보이는 줄과 그 앞뒤의 사진 카드만", "이 기능만 켜고 꺼 비교했습니다", "내용이 같으면 다시 처리하지 않도록", "기존 게임 데이터를 그대로 사용", "진행 중인 결과를 함께 기다립니다"];
 function HighlightedCopy({ text }: { text: string }) {
   const matches = emphasisPhrases.map(phrase => ({ phrase, index: text.indexOf(phrase) }))
     .filter(match => match.index >= 0).sort((a, b) => a.index - b.index);
@@ -90,15 +90,24 @@ export function ProjectPresentation({ project, index, notes }: { project: typeof
       <figure className="bin-deck-product"><img src={main.src} alt={photo ? "PhotoMap 지도에서 사진을 찾는 화면" : "GameInfo 게임 검색 화면"} width="1440" height="960" /><figcaption>{photo ? "사진 탐색 · 상세 확인 · 좋아요 · 화면 이동 후 이전 탐색 조건 복원" : "게임 검색 · 상점별 가격 비교 · 관심 목록 등록"}</figcaption></figure>
     </> },
     { kind: "architecture", label: "아키텍처", content: <>
-      <div className="bin-deck-architecture-heading"><p className="bin-work-eyebrow">02 · 아키텍처</p><h2>{photo ? "사진 상태가 화면으로 이어지는 구조" : "검색 요청이 가격 정보가 되기까지"}</h2></div>
-      <div className="bin-deck-architecture-layout"><aside><span>{photo ? "상태의 저장 위치" : "검색 요청 처리"}</span><p>{photo ? "사진·좋아요는 Zustand.\n검색·필터는 URL.\n편집 입력은 local state.\n화면에 필요한 값만 구독합니다." : "검색 조건 전달\n캐시된 응답 확인\n필요하면 ITAD 조회\n관심 목록은 인증 후 저장"}</p></aside><figure><img src={`/architecture/${slug}-dark-preview.png`} alt={photo ? "기존 PhotoMap 아키텍처: 사진 상태, PhotoFeed, 이미지 주소 선택, 지도 iframe, D3, Supabase 관계도" : "기존 GameInfo 아키텍처: 검색 API, 캐시, ITAD, 가격 변환, 관심 목록 관계도"} width="2448" height="1516" /><figcaption>{photo ? "PhotoMap · 화면과 상태 갱신" : "GameInfo · 검색과 데이터 처리"}</figcaption></figure><aside><span>{photo ? "React와 D3의 역할" : "가격 응답 정규화"}</span><p>{photo ? "React: 노드 구조·선택\nD3: CSS 좌표·SVG 선\n데이터 변경·화면 이탈 시 기존 simulation 중지" : "금액·상점·구매 링크를 공통 모델로 변환합니다.\n양수 가격만 최저가 후보로 삼아 결측값·0원 오판을 막습니다."}</p></aside></div>
+      <div className="bin-deck-architecture-heading"><p className="bin-work-eyebrow">02 · 아키텍처</p><h2>{photo ? "사진 정보를 화면에 보여주기까지" : "검색 요청이 가격 정보가 되기까지"}</h2></div>
+      <div className="bin-deck-architecture-layout"><aside><span>{photo ? "정보를 저장하는 곳" : "검색 요청 처리"}</span><p>{photo ? "사진·좋아요는 Zustand.\n검색 조건은 URL.\n편집 중인 값은 해당 화면.\n필요한 값이 바뀔 때 갱신합니다." : "검색 조건 전달\n저장된 조회 결과 확인\n필요하면 ITAD 조회\n관심 목록은 로그인 확인 후 저장"}</p></aside><figure><img src={`/architecture/${slug}-dark-preview.png`} alt={photo ? "PhotoMap 구조: 사진 정보, 목록, 이미지, 지도, D3, Supabase의 연결" : "GameInfo 구조: 검색, 결과 저장, ITAD, 가격 정리, 관심 목록의 연결"} width="2448" height="1516" /><figcaption>{photo ? "PhotoMap · 사진 정보와 화면 갱신" : "GameInfo · 검색과 데이터 처리"}</figcaption></figure><aside><span>{photo ? "React와 D3의 역할" : "가격 정보를 같은 형식으로"}</span><p>{photo ? "React: 사진 간 연결·선택\nD3: 사진 위치·연결선 변경\n데이터가 바뀌거나 화면을 나가면 진행 중이던 작업을 멈춥니다." : "금액·상점·구매 링크를 화면에서 쓰는 형식으로 정리합니다.\n가격이 없거나 0원인 항목은 최저가 비교에서 제외합니다."}</p></aside></div>
     </> },
     ...notes.implementation.map((part, i) => ({ kind: "story", label: "구조와 구현", content: <><p className="bin-work-eyebrow">구조와 구현 · 0{i + 1}</p><h2>{part.title}</h2><p className="bin-deck-story-lead">{part.reason}</p><ol className="bin-deck-process bin-deck-key-points">{part.steps.map((step, n) => <li key={step.title}><span>0{n + 1}</span><div><h3>{step.title}</h3><p>{step.body}</p></div></li>)}</ol></> })),
     ...notes.cases.flatMap((item, i) => [
       { kind: "story", label: `해결한 문제 0${i + 1} · 판단`, content: <><p className="bin-work-eyebrow">해결한 문제 0{i + 1} · 무엇을 확인했나</p><h2>{item.title}</h2><div className="bin-deck-narrative"><span>문제</span><p><HighlightedCopy text={item.problem} /></p></div><div className="bin-deck-narrative"><span>확인 방법</span><p><HighlightedCopy text={item.check} /></p></div></> },
-      { kind: "story", label: `해결한 문제 0${i + 1} · 변경`, content: <><p className="bin-work-eyebrow">해결한 문제 0{i + 1} · 어떻게 바꿨나</p><h2>{photo ? ["목록에는 썸네일,\n상세에는 큰 이미지.", "화면 주변의 카드만\n렌더링합니다."][i] : ["카드와 액션을\n함께 memo로 감쌌습니다.", "같은 제목의 요청이\n조회 결과를 공유합니다."][i]}</h2><div className="bin-deck-result"><span>{item.metric?.label ?? "결과"}</span>{item.metric && <div className="bin-deck-metric"><strong>{item.metric.value}</strong><span>{item.metric.change}</span></div>}<p>{item.result}</p></div><ol className="bin-deck-process">{item.action.map((step, n) => <li key={step}><span>0{n + 1}</span><p><HighlightedCopy text={step} /></p></li>)}</ol></> },
+      { kind: "story", label: `해결한 문제 0${i + 1} · 변경`, content: <>
+        <p className="bin-work-eyebrow">해결한 문제 0{i + 1} · 어떻게 바꿨나</p>
+        <h2>{photo ? ["목록에는 썸네일,\n상세에는 큰 이미지.", "화면 주변의 카드만\n만듭니다."][i] : ["내용이 같은 카드는\n다시 처리하지 않도록.", "게임 목록을 재사용해\n반복 조회를 막았습니다."][i]}</h2>
+        <div className="bin-deck-result">
+          <span>{item.metric?.label ?? "결과"}</span>
+          {item.metric && <div className="bin-deck-metric"><strong>{item.metric.value}</strong><span>{item.metric.change}</span></div>}
+          <p>{item.result}</p>
+        </div>
+        <ol className="bin-deck-process">{item.action.map((step, n) => <li key={step}><span>0{n + 1}</span><p><HighlightedCopy text={step} /></p></li>)}</ol>
+      </> },
     ]),
-    { kind: "evidence", label: "측정 근거와 적용 기술", content: <><p className="bin-work-eyebrow">측정 근거와 적용 기술</p><h2>{photo ? "비교 조건과 확인한 범위" : "호출 수와 화면 동작의 근거"}</h2><div className="bin-deck-evidence">{notes.cases.map((item, i) => <article key={item.title}><h3>{photo ? ["이미지 응답 본문", "최대 렌더링 카드"][i] : ["mock 카드 호출", "제목 후보 조회 공유"][i]}</h3><ul>{item.note?.split("\n").map(line => <li key={line}>{line}</li>)}</ul></article>)}{notes.implementation.map((part, i) => <article key={part.title}><h3>{photo ? ["화면 분할·공통 UI", "입력 요청·탐색 복원"][i] : ["가격 처리·자동 검증", "입력 분리·서버 스트리밍"][i]}</h3><ul>{part.note.split("\n").map(line => <li key={line}>{line}</li>)}</ul></article>)}</div></> },
+    { kind: "evidence", label: "측정 근거와 적용 기술", content: <><p className="bin-work-eyebrow">측정 근거와 적용 기술</p><h2>{photo ? "비교 조건과 확인한 범위" : "처리 횟수와 화면 동작의 근거"}</h2><div className="bin-deck-evidence">{notes.cases.map((item, i) => <article key={item.title}><h3>{photo ? ["받아온 이미지 용량", "한 번에 만든 카드 수"][i] : ["카드 표시 처리 횟수", "같은 제목의 조회 결과 재사용"][i]}</h3><ul>{item.note?.split("\n").map(line => <li key={line}>{line}</li>)}</ul></article>)}{notes.implementation.map((part, i) => <article key={part.title}><h3>{photo ? ["화면 불러오기·기능 재사용", "장소 검색·이전 검색으로 복귀"][i] : ["가격 처리·자동 확인", "검색창 먼저, 결과는 나중에"][i]}</h3><ul>{part.note.split("\n").map(line => <li key={line}>{line}</li>)}</ul></article>)}</div></> },
   ];
   return <section ref={root} id={`project-${index}`} className={`bin-work-project bin-deck ${enhanced ? "is-enhanced" : ""}`} aria-label={`${project.title} 프로젝트`}>
     <div className="bin-deck-track" style={enhanced ? {height:`${(total - 1) * scrollStep + 100}svh`} : undefined}>

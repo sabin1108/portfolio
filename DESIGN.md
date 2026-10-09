@@ -2,7 +2,7 @@
 
 ## Source of truth
 - Status: Active
-- Last refreshed: 2026-10-07
+- Last refreshed: 2026-10-09
 - Primary product surfaces: `/portfolio_bin`; the resume at `/resume/bin_resume` keeps its separate reading and print layout.
 - Evidence reviewed: user-supplied presentation-scroll-animation.zip, live https://toss.im/ (2026-09-08), projectNotes in BinTossPortfolio.tsx, architecture/candidates/photomap-ko.architecture.json and gameinfo-ko-v2.architecture.json.
 - Latest user correction supersedes the interim diagram redesign: retain dark coral/blue and the earlier fixed TOC slide layout; use ORIGINAL architecture PNG assets, not newly drawn diagrams. Show project main image first, original architecture with side explanations second, and detailed implementation/case pages afterward. Scroll drives horizontal page transitions. Opening cover uses typography/project index instead of PhotoMap screenshot.
@@ -43,6 +43,7 @@
 - Imagery: actual project screens. Architecture uses existing public/architecture/photomap-dark-preview.png and gameinfo-dark-preview.png unchanged, with plain-language side explanations. No replacement architecture drawings or required external viewer.
 
 ## Components
+- Same-title search evidence (2026-10-09, latest correction): lead with the specific achievement: reusing the fetched game list avoids repeated title lookups when filters change. Explain what is stored and how it is reused. Feature zero additional title lookups in the cached-result reuse test, with same-title, cache-validity and mock scope visible. Keep the separate four-concurrent-searches/one-lookup test on the evidence slide, not as three competing headline numbers. Do not claim a measured four-to-one baseline, speed/cost gain, or total HTTP reduction. Evidence: GameInfo `tests/search-behavior.test.ts` and `src/lib/search.ts`. Use the existing result card; retain nine slides.
 - Reuse: frontendPortfolio, projectNotes, global navigation, existing color tokens and Lucide icons.
 - Changed: ProjectPresentation, original architecture image page, existing TOC sidebar, editorial cover, project-presentation.css.
 - States: active/inert slide, horizontal transition, static responsive reading, reduced-motion reading.
@@ -67,6 +68,9 @@
 - Offline/slow network: textual case studies remain readable while images load.
 
 ## Content voice
+- Default resume headings state the concrete contribution before the supporting number: smaller list images, only nearby photo cards, skipping unchanged-card work, and reusing a fetched game list. Describe what changed and its effect in plain Korean. The search-reuse achievement now leads with zero additional title lookups while saved results are valid; the separate four-request/one-lookup test remains portfolio evidence. Keep the mock/synthetic conditions in nearby prose and retain two A4 pages.
+- `localStorage` may be named directly where the implementation uses it, such as AI ChatBot conversation history. Keep the surrounding action in plain Korean; do not substitute it for React local state or session-only scroll restoration.
+- Latest wording direction (2026-10-09): recruiters should understand each action without frontend jargon. Keep technology names such as Zustand, React.lazy, Suspense and D3, but explain behavior in everyday Korean. Replace debounce with waiting 0.4 seconds after typing stops; explain the D3 role once, then say ongoing work stops when data changes or the user leaves. This supersedes earlier requirements to retain jargon verbatim. Preserve measurement scope, the two-character search condition, nine slides per project and the two-page default resume.
 - Natural factual Korean; explain observable behavior before API/library names.
 - No invented performance gains, visitor counts or production reliability claims.
 - PhotoMap leads with same-photo image response body reduction and synthetic-list card counts. Historical timing measurements retain their original conditions in supporting records. GameInfo demo fallback, memory cache and free-price limitation remain visible.
@@ -98,7 +102,7 @@
 - User requested a reversible visual/copy trial. Snapshot of the pre-trial portfolio files and this document: `_workspace/readability-before-20261007-162636/`. Restoring that snapshot preserves the earlier React.lazy/debounce addition; the resume is outside this trial.
 - Preserve nine slides per project, architecture PNGs, colors, scrolling, links and visible measurement limits. Do not hide essential content behind a modal or accordion.
 - Implementation pages use a short introduction and two or three labeled points. Remove repetitive concluding paragraphs. Result pages show the scoped metric before the two implementation steps; evidence pages use short, scannable lists.
-- Shorten prose rather than shrinking text. Keep React.lazy/Suspense, 400ms debounce, image/sample conditions and synthetic/mock distinctions explicit.
+- Shorten prose rather than shrinking text. Keep React.lazy/Suspense, 0.4 seconds after typing stops, image/sample conditions and synthetic/mock distinctions explicit.
 
 ## Personal introduction and image-case clarification (2026-10-07)
 - Portfolio introduction describes finding and resolving user friction; the resume introduction describes verification through measurement and tests. Mention AI service work, paper presentation and joint patent application in supporting portfolio copy without implying model research or patent registration.
@@ -132,9 +136,9 @@
 ## Content clarity refinement (2026-10-02)
 - Preserve the nine-slide composition, architecture PNGs, colors, typography, navigation and resume print layout. Clarify the existing copy rather than adding sections or copying the reference PDF's layout.
 - Connect user journeys with frontend ownership, and explain the decision behind shared UI, state lifetime and the React/D3 update boundary.
-- Name the first-photo measurement as load completion. Treat mocked card invocations and shared title-candidate lookups as scoped behavior evidence, not browser speed or total HTTP request reductions.
+- Name the first-photo measurement as load completion. Treat mocked card processing counts and shared same-title lookups as scoped behavior evidence, not browser speed or total HTTP request reductions.
 - Keep the default resume concise, with the existing achievement layout and supporting portfolio links. Company-specific and frozen resume content remains unchanged.
-- The final general resume has four evidence-backed entries per project: PhotoMap loading, selection, navigation state/shared UI and D3; GameInfo normalization, memo boundary, shared title lookup and CI. Keep A4 output at two pages without shrinking typography.
+- The final general resume has four evidence-backed entries per project: PhotoMap loading, selection, navigation state/shared UI and D3; GameInfo normalization, repeated card processing, shared title lookup and CI. Keep A4 output at two pages without shrinking typography.
 - The default resume describes image sizing and request priority without highlighting the 2.62s load-completion measurement. Portfolio evidence may retain the synthetic measurement while replacement tests are evaluated. Omit the 17.55s baseline and derived percentage; do not invent a replacement baseline.
 - Omit the UI/state and data/verification skill groups from the default resume. Preserve company variants. Explain image load checks in plain Korean rather than DOM property names.
 - The default resume and frontend portfolio link the 2026-09-30 patent application to a public specification excerpt that excludes private administrative pages. Label it as an application, preserve the original paper for historical/company-specific variants, and retain the two-page resume layout.

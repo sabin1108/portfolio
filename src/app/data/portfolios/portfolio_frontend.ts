@@ -229,7 +229,7 @@ export const frontendPortfolio = {
     {
       date: "2025.09 - 2025.11",
       title: "AI ChatBot - 캡스톤디자인 경진대회 우수상",
-      description: "학교 공지·식단·학사 일정 정보를 채팅 UI로 제공한 2인 졸업 프로젝트입니다. ReactMarkdown로 긴 답변과 링크를 읽기 쉽게 표시하고, Next.js API route로 백엔드 응답 경계를 분리했습니다. 이 프로젝트로 BRIGHT MAKERS EXPO 2025 캡스톤디자인 경진대회 우수상을 받았고, 관련 내용을 학술대회 포스터/논문으로 발표했습니다.",
+      description: "학교 공지·식단·학사 일정 정보를 채팅으로 제공한 2인 졸업 프로젝트입니다. ReactMarkdown로 긴 답변과 링크를 읽기 쉽게 표시하고, 대화 내역은 브라우저의 localStorage에 저장했습니다. 서버와 통신하는 코드는 Next.js API route에 모았습니다. 이 프로젝트로 BRIGHT MAKERS EXPO 2025 캡스톤디자인 경진대회 우수상을 받았고, 관련 내용을 학술대회 포스터/논문으로 발표했습니다.",
       pdf: { label: "논문 PDF", href: "/files/thesis/interactive-campus-qa-system.pdf" },
     },
     ...portfolio.activities
