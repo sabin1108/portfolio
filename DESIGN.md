@@ -83,6 +83,11 @@
 ## Open questions
 - None blocking. Current user direction authorizes content-aware composition within verified project facts.
 
+## Amjin application resume (2026-10-09)
+- Add `/resume/amjin_frontend` for JobKorea posting 50109520, with a tailored introduction and three motivation paragraphs. Reuse the readable default project evidence and existing `/portfolio_bin` link.
+- Confirmed posting scope: Amjin, information security, web frontend; the official company website describes network threat and anomaly analysis solutions. Detailed job requirements were inaccessible; do not claim a required framework, specific product duties or prior security work.
+- Keep existing resume variants and portfolio unchanged. Use the existing application layout; verify mobile/desktop, direct access, print pages and default-resume isolation.
+
 ## Portfolio and resume evidence update (2026-10-06)
 - Preserve portfolio slide count, architecture images, colors, scrolling and navigation. Update copy within that format. The default resume may change its hierarchy and spacing; keep readable mobile text and two A4 pages. Company-specific and frozen resumes remain unchanged.
 - Lead PhotoMap with image response body 4.22MB to 237KB (94.4%, same 16 photos, recreated large-image condition, five runs each) and maximum rendered cards 3,000 to 57 (synthetic items, one SVG URL, mobile-sized PC 390x844/DPR2). These are distinct experiments, not service-wide traffic or speed improvement percentages.

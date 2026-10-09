@@ -210,7 +210,7 @@ export function Resume() {
         : resumeFrontendData;
 
   const { summary, coreSkills, projectHighlights, activityGroups, education, profile } = activeResumeData;
-  const isBinResume = ["frontend_bin", "bin_resume", "powercube_frontend"].includes(matchedRegistryResume?.keyword ?? "");
+  const isBinResume = ["frontend_bin", "bin_resume", "powercube_frontend", "amjin_frontend"].includes(matchedRegistryResume?.keyword ?? "");
   if (isBinResume || isWacusPath) {
     return <BinClassicResume data={activeResumeData} isWacus={isWacusPath} />;
   }
