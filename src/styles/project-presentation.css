@@ -89,6 +89,10 @@ html.bin-presentation-page::-webkit-scrollbar { display: none; }
 .bin-work-selected a:last-child > span { color: #87c5dc; }
 .bin-work-selected h2 { font-size: clamp(32px,3.2vw,46px); margin-block: 12px; font-weight: 600; }
 .bin-work-selected a > p { font-size: 14px; color: #b5c1b9; max-width: 34ch; }
+.bin-work-selected-evidence { display: grid; gap: 4px; margin-top: 16px; }
+.bin-work-selected-evidence strong { color: var(--work-accent); font-size: 20px; line-height: 1.45; }
+.bin-work-selected a:last-child .bin-work-selected-evidence strong { color: #87c5dc; }
+.bin-work-selected-evidence small { color: var(--work-muted); font-size: 12px; line-height: 1.65; }
 .bin-work-selected a > svg { position: absolute; right: 0; top: 50%; color: var(--work-accent); transition: transform .25s; }
 .bin-work-selected a:hover > svg { transform: translate(4px,-4px); }
 @media (max-height: 850px) and (min-width: 1100px) {

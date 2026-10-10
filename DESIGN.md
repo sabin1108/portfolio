@@ -2,7 +2,7 @@
 
 ## Source of truth
 - Status: Active
-- Last refreshed: 2026-10-09
+- Last refreshed: 2026-10-10
 - Primary product surfaces: `/portfolio_bin`; the resume at `/resume/bin_resume` keeps its separate reading and print layout.
 - Evidence reviewed: user-supplied presentation-scroll-animation.zip, live https://toss.im/ (2026-09-08), projectNotes in BinTossPortfolio.tsx, architecture/candidates/photomap-ko.architecture.json and gameinfo-ko-v2.architecture.json.
 - Latest user correction supersedes the interim diagram redesign: retain dark coral/blue and the earlier fixed TOC slide layout; use ORIGINAL architecture PNG assets, not newly drawn diagrams. Show project main image first, original architecture with side explanations second, and detailed implementation/case pages afterward. Scroll drives horizontal page transitions. Opening cover uses typography/project index instead of PhotoMap screenshot.
@@ -68,6 +68,9 @@
 - Offline/slow network: textual case studies remain readable while images load.
 
 ## Content voice
+- Purpose-first copy (2026-10-10): explain why the user needs the change before its implementation: image loading, photo-list processing, initial loading and shared behavior, search restoration and repeated requests, and comparable price data. Keep the existing slides, metrics and test conditions; do not turn a stated goal into an unmeasured speed or usability result.
+- Cover introduction (2026-10-10): replace the activity summary beneath the developer statement with how unnecessary transfers and repeated lookups are investigated. Keep the two project links and pair each with its comparison method and scoped result: same-photo image bytes reduced 94.4%, and zero extra title lookups while a same-title saved result remains valid in a mocked test. Research and patent activities remain in their existing closing section.
+- Cover follow-up (2026-10-10): include the method and scoped numbers directly in the introductory paragraph: thumbnails reduced same-16-photo transfer by 94.4%, and reused valid results produced zero additional title lookups in testing.
 - Default resume headings state the concrete contribution before the supporting number: smaller list images, only nearby photo cards, skipping unchanged-card work, and reusing a fetched game list. Describe what changed and its effect in plain Korean. The search-reuse achievement now leads with zero additional title lookups while saved results are valid; the separate four-request/one-lookup test remains portfolio evidence. Keep the mock/synthetic conditions in nearby prose and retain two A4 pages.
 - `localStorage` may be named directly where the implementation uses it, such as AI ChatBot conversation history. Keep the surrounding action in plain Korean; do not substitute it for React local state or session-only scroll restoration.
 - Latest wording direction (2026-10-09): recruiters should understand each action without frontend jargon. Keep technology names such as Zustand, React.lazy, Suspense and D3, but explain behavior in everyday Korean. Replace debounce with waiting 0.4 seconds after typing stops; explain the D3 role once, then say ongoing work stops when data changes or the user leaves. This supersedes earlier requirements to retain jargon verbatim. Preserve measurement scope, the two-character search condition, nine slides per project and the two-page default resume.

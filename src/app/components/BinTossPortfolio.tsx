@@ -20,7 +20,7 @@ const projectNotes: Record<string, {
         problem: "작은 목록 카드에 상세용 큰 이미지를 쓰면 필요한 크기보다 많은 데이터를 받습니다.",
         check: "같은 배포 환경에서 사진 16장과 불러오는 방식은 유지하고, 큰 이미지와 썸네일의 용량을 비교했습니다.",
         action: [
-          "사진을 목록용 썸네일과 상세용 큰 이미지로 나눴습니다. 작은 카드에서는 썸네일 주소를 선택하도록 이미지 주소 처리를 한곳에 모았습니다.",
+          "사용자가 사진을 더 빨리 볼 수 있도록 목록에는 썸네일, 상세에는 큰 이미지를 제공했습니다. 화면에 맞는 이미지 주소를 선택하는 코드는 한곳에 모았습니다.",
           "두 이미지 모두 WebP를 사용하되, 표시 크기에 맞춰 이미지 크기·품질을 달리했습니다. 이미지를 언제, 어떤 순서로 요청할지 정하는 설정은 유지했습니다.",
         ],
         result: "",
@@ -32,7 +32,7 @@ const projectNotes: Record<string, {
         problem: "사진 카드를 모두 만들면 화면 밖 카드도 브라우저가 처리해야 합니다. 사진이 많을수록 불필요한 작업도 늘어납니다.",
         check: "같은 SVG 이미지를 반복한 테스트용 목록에서 모든 카드를 만드는 경우와 화면 주변만 만드는 경우를 비교했습니다.",
         action: [
-          "화면 너비에 맞춰 사진을 줄별로 묶고, 보이는 줄과 그 앞뒤의 사진 카드만 만듭니다.",
+          "사진 탐색 중 화면 처리 부담을 줄이기 위해, 화면 너비에 맞춰 사진을 줄별로 묶고 보이는 줄과 그 앞뒤의 사진 카드만 만듭니다.",
           "스크롤하면 필요한 줄의 카드를 만듭니다. 필터 기준과 사진 ID로 카드를 구분하는 방식은 유지하고, 이 기능만 켜고 꺼 비교했습니다.",
         ],
         result: "사진이 많아져도 한 번에 만드는 카드를 화면 주변으로 제한했습니다.",
@@ -42,7 +42,7 @@ const projectNotes: Record<string, {
     implementation: [
   {
     "title": "필요할 때 화면을 불러오고,\n같은 기능은 함께 씁니다.",
-    "reason": "화면 코드는 필요한 시점에 불러오고, 검색·사진 상세의 공통 동작은 함께 씁니다.",
+    "reason": "초기에 모든 화면을 불러오는 부담을 줄이고, 화면마다 같은 기능을 따로 수정하지 않도록 검색·사진 상세의 공통 동작을 한곳에서 관리했습니다.",
     "steps": [
       { "title": "필요한 화면부터 불러오기", "body": "지도·앨범·타임라인은 React.lazy로 필요할 때 불러옵니다. 준비 중에는 Suspense로 로딩 화면을 보여줍니다." },
       { "title": "검색창 재사용", "body": "입력·초기화 기능은 함께 쓰고, 장소 검색이나 앨범 필터처럼 화면마다 다른 기능은 따로 연결했습니다." },
@@ -52,7 +52,7 @@ const projectNotes: Record<string, {
   },
   {
     "title": "이전 검색은 기억하고,\n입력을 멈추면 장소를 찾습니다.",
-    "reason": "다시 찾을 조건은 보존하고, 업로드 장소 검색은 입력이 멈춘 뒤 요청합니다.",
+    "reason": "화면을 다녀와도 검색 조건과 보던 위치를 다시 찾지 않도록 했습니다. 장소 입력 중에는 불필요한 검색 요청을 줄였습니다.",
     "steps": [
       { "title": "사진·좋아요 함께 관리", "body": "Zustand에서 화면에 필요한 값만 가져옵니다. 필터 결과는 별도로 저장하지 않고 원본 사진에서 찾습니다." },
       { "title": "이전 검색으로 돌아가기", "body": "검색·태그·앨범 조건은 URL에 남깁니다. 글자마다 방문 기록을 쌓지 않고 화면 이동만 기록해, 뒤로가면 이전 조건과 목록 위치로 돌아갑니다." },
@@ -136,13 +136,23 @@ export function BinTossPortfolio() {
           <p className="bin-work-eyebrow">MIN SABIN · PORTFOLIO</p>
           <h1>{data.profile.name}<span>프론트엔드 개발자</span></h1>
           <p className="bin-work-lead">사용자의 불편을 살피고,<br />원인을 찾아 고치는 개발자입니다.</p>
-          <p>사진 탐색·게임 가격 비교 화면을 개선하고, AI 서비스 구현·논문 발표·공동 특허 출원에 참여했습니다.</p>
+          <p>사진 로딩 부담을 줄이기 위해 목록에 썸네일을 사용해, 동일 사진 16장의 전송량을 94.4% 줄였습니다. 검색 조건을 바꿀 때는 받아온 목록을 재사용해, 저장된 결과가 유효한 동안 추가 제목 조회를 0회로 유지했습니다.</p>
           <a className="bin-work-button" href="#projects">프로젝트 살펴보기 <ArrowDown size={17} /></a>
         </div>
         <div className="bin-work-selected">
           <p>SELECTED WORK · 2025—2026</p>
-          <a href="#project-0"><span>01 · 팀 프로젝트 / 프론트엔드</span><h2>PhotoMap</h2><p>사진을 장소와 시간으로 탐색하는 화면.<br />화면 이동 후에도 검색을 이어가고, 로딩을 개선한 과정.</p><ArrowUpRight size={28} /></a>
-          <a href="#project-1"><span>02 · 개인 프로젝트</span><h2>GameInfo</h2><p>같은 카드를 반복 처리하는 일을 줄이고,<br />같은 제목을 중복 조회하지 않도록 바꾼 과정.</p><ArrowUpRight size={28} /></a>
+          <a href="#project-0">
+            <span>01 · 팀 프로젝트 / 프론트엔드</span><h2>PhotoMap</h2>
+            <p>사진을 더 빨리 볼 수 있도록 작은 카드에 필요한 이미지 크기를 살피고, 같은 사진의 큰 이미지·썸네일을 비교했습니다.</p>
+            <div className="bin-work-selected-evidence"><strong>이미지 용량 94.4% 감소</strong><small>동일 배포·사진 16장 · 4.22MB → 237KB</small></div>
+            <ArrowUpRight size={28} />
+          </a>
+          <a href="#project-1">
+            <span>02 · 개인 프로젝트</span><h2>GameInfo</h2>
+            <p>조건을 바꿀 때 같은 목록을 다시 받지 않도록, 상점·태그 변경 후 제목 조회 횟수를 확인하고 받아온 목록을 재사용했습니다.</p>
+            <div className="bin-work-selected-evidence"><strong>추가 제목 조회 0회</strong><small>같은 제목·저장 결과 유효 시 · 테스트용 응답</small></div>
+            <ArrowUpRight size={28} />
+          </a>
         </div>
         <nav className="bin-work-hero-index" aria-label="포트폴리오 읽기 안내"><span>서비스 소개 · 아키텍처 · 구현 과정 · 문제 해결 · 검증</span><a href="#projects">스크롤해서 한 장씩 읽기 <ArrowDown size={14} /></a></nav>
       </header>
