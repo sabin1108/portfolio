@@ -5,6 +5,8 @@ import { Education } from "./components/Education";
 import { Resume } from "./components/Resume";
 import { FullstackPdfPortfolio } from "./components/FullstackPdfPortfolio";
 import { BinTossPortfolio } from "./components/BinTossPortfolio";
+import { AiApplication } from "./components/AiApplication";
+import { AiResearchPortfolio } from "./components/AiResearchPortfolio";
 import { Printer } from "lucide-react";
 import { portfolio, frontendPortfolio, fullstackPortfolio, axPortfolio } from "./data/main";
 
@@ -99,6 +101,14 @@ function PortfolioPage({
 
 export default function App() {
   const currentPath = window.location.pathname;
+
+  if (currentPath.replace(/\/$/, "") === "/ai-portfolio") {
+    return <AiResearchPortfolio />;
+  }
+
+  if (currentPath.replace(/\/$/, "") === "/ai-resume") {
+    return <AiApplication resume />;
+  }
 
   if (currentPath === "/en") {
     window.location.replace("/");

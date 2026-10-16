@@ -1,5 +1,14 @@
 # Design
 
+## AI application pages (2026-10-16)
+- Independent `/ai-portfolio` and `/ai-resume` routes for the Kyowon AI platform developer application. Existing routes and their in-progress edits remain separate.
+- Reuse the actual `ProjectPresentation` engine and all existing bin-work/bin-deck layout/transition rules: 100svh marker spacing, sticky stage at 92px, horizontal slide transitions, native wheel/keyboard scrolling, sidebar chapters, desktop enhancement threshold and static mobile/reduced-motion fallback. Each of the two projects has nine slides.
+- Latest user correction: only generative AI summary research and campus chatbot. Remove PhotoMap/GameInfo from the AI portfolio and resume. Emphasize actual personal work, API integration, response display, state management, failure handling and measured evidence matched to the Kyowon posting.
+- Distinguish personal frontend ownership and joint research results. The supplied September 2026 journal PDF supersedes older review-complete status only on these new routes.
+- Resume CSS stays under `.ai-application`; portfolio additions under `.ai-research-portfolio`. Reuse existing public chatbot images and an authored text-based flow diagram; do not copy figures out of the private desktop paper into public assets.
+- Print on white with dark headings and metrics. Resume exports to two A4 pages; portfolio to twenty (cover, eighteen slides, research). Check 320/390/768 widths, 1100x760/1366x768/1440x1000 slide bounds, direct anchors, reduced motion, prior routes and printed pages.
+- `scripts/verify-ai-presentation.cjs` compares computed geometry/transitions with `/portfolio_bin` and verifies all eighteen panels, forward/backward position equivalence, wheel and navigation. Existing `verify-portfolio-scroll-position.cjs` also passes after the optional presentation content extension.
+
 ## Source of truth
 - Status: Active
 - Last refreshed: 2026-10-10

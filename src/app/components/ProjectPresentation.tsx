@@ -5,6 +5,15 @@ import "../../styles/project-presentation.css";
 
 type Case = { title: string; problem: string; check: string; action: string[]; result: string; metric?: { label: string; value: string; change: string }; note?: string };
 type Notes = { summary: string; role: string; cases: Case[]; implementation: { title: string; reason: string; steps: { title: string; body: string }[]; note: string }[] };
+export type PresentationSlide = { kind: string; label: string; content: ReactNode };
+type Presentation = {
+  pages: PresentationSlide[];
+  chapters: { page: number; label: string }[];
+  sidebar: ReactNode;
+  links: ReactNode;
+  nextHref: string;
+  nextLabel: string;
+};
 const chapterPages = [0, 1, 2, 4, 6, 8];
 const chapterLabels = ["서비스 소개", "아키텍처", "구조와 구현", "해결한 문제 01", "해결한 문제 02", "측정 근거와 적용 기술"];
 
@@ -23,7 +32,7 @@ function HighlightedCopy({ text }: { text: string }) {
   return <>{parts}</>;
 }
 
-export function ProjectPresentation({ project, index, notes }: { project: typeof frontendPortfolio.projects[number]; index: number; notes: Notes }) {
+export function ProjectPresentation({ project, index, notes = { summary: "", role: "", cases: [], implementation: [] }, presentation }: { project: Pick<typeof frontendPortfolio.projects[number], "title" | "links" | "imageGallery">; index: number; notes?: Notes; presentation?: Presentation }) {
   const root = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
   const [enhanced, setEnhanced] = useState(false);
@@ -32,7 +41,7 @@ export function ProjectPresentation({ project, index, notes }: { project: typeof
   const stills = project.imageGallery.supporting.filter(item => !item.src.endsWith(".gif"));
   const main = photo ? stills[1] ?? project.imageGallery.main : project.imageGallery.main;
   const id = (page: number) => `project-${index}-scene-${page}`;
-  const total = 9;
+  const total = presentation?.pages.length ?? 9;
   const scrollStep = 100;
   useEffect(() => {
     const media = matchMedia("(min-width: 1100px) and (min-height: 760px) and (prefers-reduced-motion: no-preference)");
@@ -80,11 +89,12 @@ export function ProjectPresentation({ project, index, notes }: { project: typeof
       window.removeEventListener("scroll", scheduleUpdate);
       window.removeEventListener("resize", scheduleUpdate);
     };
-  }, [enhanced, index]);
+  }, [enhanced, index, total]);
 
-  const chapters = (current: number) => <nav className="bin-deck-chapters" aria-label={`${project.title} 목차`}>{chapterLabels.map((label, i) => <a key={label} href={`#${id(chapterPages[i])}`} aria-current={current >= chapterPages[i] && current < (chapterPages[i + 1] ?? total) ? "step" : undefined}><span>0{i + 1}</span>{label}</a>)}</nav>;
-  const links = <div className="bin-work-links"><a href={project.links.github} target="_blank" rel="noreferrer"><Github size={15} />소스 코드</a>{project.links.live && <a href={project.links.live} target="_blank" rel="noreferrer">서비스 열기 <ArrowUpRight size={15} /></a>}</div>;
-  const pages: { kind: string; label: string; content: ReactNode }[] = [
+  const chapterItems = presentation?.chapters ?? chapterLabels.map((label, i) => ({ label, page: chapterPages[i] }));
+  const chapters = (current: number) => <nav className="bin-deck-chapters" aria-label={`${project.title} 목차`}>{chapterItems.map(({ label, page }, i) => <a key={label} href={`#${id(page)}`} aria-current={current >= page && current < (chapterItems[i + 1]?.page ?? total) ? "step" : undefined}><span>0{i + 1}</span>{label}</a>)}</nav>;
+  const links = presentation?.links ?? <div className="bin-work-links"><a href={project.links.github} target="_blank" rel="noreferrer"><Github size={15} />소스 코드</a>{project.links.live && <a href={project.links.live} target="_blank" rel="noreferrer">서비스 열기 <ArrowUpRight size={15} /></a>}</div>;
+  const pages: PresentationSlide[] = presentation?.pages ?? [
     { kind: "overview", label: "서비스 소개", content: <>
       <div className="bin-deck-overview-heading"><div><p className="bin-work-eyebrow">프로젝트 0{index + 1} · {photo ? "PhotoMap" : "GameInfo"}</p><h2>{photo ? <>사진을 지도와<br />시간순으로.</> : <>게임을 찾고,<br />가격을 비교합니다.</>}</h2></div><div><p>{notes.summary}</p><p className="bin-deck-role">{notes.role}</p>{links}</div></div>
       <figure className="bin-deck-product"><img src={main.src} alt={photo ? "PhotoMap 지도에서 사진을 찾는 화면" : "GameInfo 게임 검색 화면"} width="1440" height="960" /><figcaption>{photo ? "사진 탐색 · 상세 확인 · 좋아요 · 화면 이동 후 이전 탐색 조건 복원" : "게임 검색 · 상점별 가격 비교 · 관심 목록 등록"}</figcaption></figure>
@@ -115,10 +125,10 @@ export function ProjectPresentation({ project, index, notes }: { project: typeof
       <div className="bin-deck-frame">
         {pages.map((page, i) => <section key={i} id={enhanced ? undefined : id(i)} data-page={i} data-kind={page.kind} aria-label={page.label} aria-hidden={enhanced && active !== i ? true : undefined} ref={el => { if(el) el.inert = enhanced && active !== i; }} className={`bin-deck-page bin-deck-${page.kind} ${active === i ? "is-active" : active > i ? "is-before" : "is-after"}`}>
           <div className="bin-deck-page-body">
-            {page.kind === "story" && <aside className="bin-deck-sidebar"><div className="bin-deck-project-name"><span>0{index + 1}</span>{photo ? "PhotoMap" : "GameInfo"}</div><figure><img src={(i === 2 && photo ? main : i === 3 && photo ? stills[1] ?? main : !photo && i >= 4 ? stills[Math.min(i >= 6 ? 1 : 0,stills.length - 1)] ?? main : main).src} alt={photo ? "PhotoMap 지도와 사진 탐색" : "GameInfo 게임 가격 비교와 검색"} width="1440" height="960" loading="lazy" /></figure>{chapters(i)}{links}</aside>}
+            {page.kind === "story" && <aside className="bin-deck-sidebar"><div className="bin-deck-project-name"><span>0{index + 1}</span>{presentation ? project.title : photo ? "PhotoMap" : "GameInfo"}</div>{presentation ? presentation.sidebar : <figure><img src={(i === 2 && photo ? main : i === 3 && photo ? stills[1] ?? main : !photo && i >= 4 ? stills[Math.min(i >= 6 ? 1 : 0,stills.length - 1)] ?? main : main).src} alt={photo ? "PhotoMap 지도와 사진 탐색" : "GameInfo 게임 가격 비교와 검색"} width="1440" height="960" loading="lazy" /></figure>}{chapters(i)}{links}</aside>}
             <div className="bin-deck-copy">{page.content}</div>
           </div>
-          <nav className="bin-deck-controls" aria-label={`${project.title} ${i + 1}장 이동`}><span>{String(i + 1).padStart(2,"0")} <span>/ {String(total).padStart(2,"0")}</span> · {page.label}</span><div>{i > 0 && <a href={`#${id(i - 1)}`} aria-label="이전 슬라이드"><ArrowLeft size={17} /></a>}<a href={i < total - 1 ? `#${id(i + 1)}` : photo ? "#project-1" : "#activities-title"}>{i < total - 1 ? "다음 장" : photo ? "다음 프로젝트" : "프로젝트 외 활동"}<ArrowRight size={17} /></a></div></nav>
+          <nav className="bin-deck-controls" aria-label={`${project.title} ${i + 1}장 이동`}><span>{String(i + 1).padStart(2,"0")} <span>/ {String(total).padStart(2,"0")}</span> · {page.label}</span><div>{i > 0 && <a href={`#${id(i - 1)}`} aria-label="이전 슬라이드"><ArrowLeft size={17} /></a>}<a href={i < total - 1 ? `#${id(i + 1)}` : presentation?.nextHref ?? (photo ? "#project-1" : "#activities-title")}>{i < total - 1 ? "다음 장" : presentation?.nextLabel ?? (photo ? "다음 프로젝트" : "프로젝트 외 활동")}<ArrowRight size={17} /></a></div></nav>
         </section>)}
       </div>
     </div>
