@@ -96,6 +96,14 @@
 .ai-resume .ai-research-list article { padding:18px 0; }
 .ai-resume .ai-research-list h3 { font-size:16px; }
 .ai-resume .ai-research-list article > p:not(.ai-eyebrow) { font-size:13px; }
+.ai-cases { display:grid; gap:20px; margin-top:22px; }
+.ai-case { border-top:1px solid var(--ai-line); padding-top:16px; }
+.ai-case h4 { font-size:15px; margin-bottom:10px; }
+.ai-case dl { display:grid; gap:8px; }
+.ai-case dl > div { display:grid; grid-template-columns:38px 1fr; gap:12px; font-size:13px; line-height:1.65; }
+.ai-case dt { color:var(--ai-muted); font-weight:600; }
+.ai-case dd { color:var(--ai-muted); }
+.ai-case-result dd,.ai-case-result dt { color:var(--ai-fg); font-weight:600; }
 @media(max-width:800px) {
   .ai-main { width:calc(100% - 40px); }
   .ai-nav { padding:16px 20px; gap:12px; }
@@ -170,4 +178,17 @@
   .ai-flow span { font-size:12px; }
   .ai-background { grid-template-columns:1fr 1fr; gap:30px; }
   .ai-skills > div,.ai-education p { font-size:11px; }
+  .ai-resume .ai-hero { padding-bottom:16px; }
+  .ai-resume .ai-section { padding:14px 0; }
+  .ai-resume .ai-project { padding:14px 0; }
+  .ai-resume .ai-project-summary { font-size:11px; }
+  .ai-resume .ai-project-role { margin-top:7px; font-size:10px; }
+  .ai-resume .ai-section-heading .ai-eyebrow { margin-bottom:5px; }
+  .ai-resume .ai-cases { gap:12px; margin-top:12px; }
+  .ai-resume .ai-case { padding-top:10px; break-inside:avoid; }
+  .ai-resume .ai-case h4 { font-size:12px; margin-bottom:7px; }
+  .ai-resume .ai-case dl { gap:5px; }
+  .ai-resume .ai-case dl > div { font-size:10.5px; line-height:1.6; grid-template-columns:28px 1fr; gap:10px; }
+  .ai-resume #research { break-before:page; }
+  .ai-resume .ai-project-links { margin-top:9px; font-size:10px; }
 }

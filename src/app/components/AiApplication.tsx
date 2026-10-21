@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import { ArrowUpRight, FileText, Github, Mail, Printer } from "lucide-react";
 import { aiApplication as data } from "../data/aiApplication";
+import { AiClassicResume } from "./AiClassicResume";
 import "../../styles/ai-application.css";
 
 function Research() {
   return <div className="ai-research-list">{data.research.map((item) => <article key={item.title}>
     <p className="ai-eyebrow">{item.status}</p><h3>{item.title}</h3><p>{item.description}</p>
     <a href={item.href} target="_blank" rel="noreferrer">{item.linkLabel}<ArrowUpRight size={15} /></a>
+    {item.pdfHref && <div><a href={item.pdfHref} target="_blank" rel="noreferrer">{item.pdfLabel}<ArrowUpRight size={15} /></a></div>}
   </article>)}</div>;
 }
 
@@ -25,6 +27,8 @@ export function AiApplication({ resume = false }: { resume?: boolean }) {
     document.title = `민사빈 | AI ${resume ? "Resume" : "Portfolio"}`;
     return () => { document.title = previousTitle; };
   }, [resume]);
+
+  if (resume) return <AiClassicResume />;
 
   return <div className={`ai-application ${resume ? "ai-resume" : "ai-portfolio"}`}>
     <a className="ai-skip" href="#ai-main">본문으로 이동</a>
@@ -50,19 +54,18 @@ export function AiApplication({ resume = false }: { resume?: boolean }) {
         </aside>}
       </header>
 
-      {resume && <section className="ai-section ai-motivation"><h2>지원동기 <span>교원그룹 · AI 플랫폼 개발</span></h2>{data.motivation.map(text => <p key={text}>{text}</p>)}</section>}
-
       <section className="ai-section ai-projects" aria-labelledby="ai-project-heading">
         <div className="ai-section-heading"><p className="ai-eyebrow">SELECTED WORK</p><h2 id="ai-project-heading">{resume ? "프로젝트·연구 경험" : "대화부터 검증까지, 연결한 경험"}</h2></div>
         {data.projects.map((project, index) => <article className="ai-project" id={project.id} key={project.id}>
           <div className="ai-project-heading"><span className="ai-number">0{index + 1}</span><div><p className="ai-eyebrow">{project.period}</p><h3>{project.title}</h3>{!resume && <p className="ai-subtitle">{project.subtitle}</p>}</div></div>
           <p className="ai-project-role">{project.role}</p><p className="ai-project-summary">{project.summary}</p>
+          {resume && <div className="ai-cases">{project.cases.map(item => <section className="ai-case" key={item.title}><h4>{item.title}</h4><dl><div><dt>문제</dt><dd>{item.problem}</dd></div><div><dt>해결</dt><dd>{item.action}</dd></div><div className="ai-case-result"><dt>결과</dt><dd>{item.result}</dd></div></dl></section>)}</div>}
           {!resume && <>
             {project.image ? <figure className="ai-project-image"><img src={project.image} alt={`${project.title} 실제 서비스 화면`} loading="lazy" /><figcaption>실제 프로젝트 화면 · {project.tech.join(" / ")}</figcaption></figure>
               : <ol className="ai-flow" aria-label="요약 플랫폼 처리 흐름">{["문서 수집", "텍스트 정제", "AI 요약", "지식 기반 검증", "저장·시각화"].map((step, i) => <li key={step}><small>0{i + 1}</small><span>{step}</span></li>)}</ol>}
             <div className="ai-steps">{project.steps.map(step => <div key={step.title}><h4>{step.title}</h4><p>{step.body}</p></div>)}</div>
           </>}
-          <div className="ai-result"><p className="ai-eyebrow">{resume ? "결과·검증" : "RESULT & EVIDENCE"}</p><p className="ai-result-title">{project.result}</p><p className="ai-scope">{project.scope}</p></div>
+          {!resume && <div className="ai-result"><p className="ai-eyebrow">RESULT & EVIDENCE</p><p className="ai-result-title">{project.result}</p><p className="ai-scope">{project.scope}</p></div>}
           <div className="ai-project-links"><span>{project.tech.join(" · ")}</span>
             {project.github && <a href={project.github} target="_blank" rel="noreferrer">소스 코드<ArrowUpRight size={14} /></a>}
             {index === 0 && <a href={data.research[0].href} target="_blank" rel="noreferrer">논문 DOI<ArrowUpRight size={14} /></a>}
@@ -72,6 +75,7 @@ export function AiApplication({ resume = false }: { resume?: boolean }) {
       </section>
       <section className="ai-section" id="research"><div className="ai-section-heading"><p className="ai-eyebrow">RESEARCH & PATENT</p><h2>논문·특허</h2></div><Research /></section>
       <section className="ai-section ai-background"><div><h2>기술 역량</h2><Skills /></div><div><h2>학력·자격</h2><Education /></div></section>
+      {resume && <section className="ai-section ai-motivation"><h2>지원동기 <span>교원그룹 · AI 플랫폼 개발</span></h2>{data.motivation.map(text => <p key={text}>{text}</p>)}</section>}
       <footer className="ai-footer"><p>민사빈 · AI 서비스 개발자</p><a href={resume ? "/ai-portfolio" : "/ai-resume"}><FileText size={16} />{resume ? "AI 포트폴리오" : "AI 이력서"}<ArrowUpRight size={16} /></a></footer>
     </main>
   </div>;

@@ -81,7 +81,7 @@ const fs = require('node:fs/promises');
       assert.equal(await page.locator('.bin-deck-page[aria-hidden=true]').count(), 0);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
       await page.goto('http://127.0.0.1:5196/ai-resume');
-      assert.equal(await page.locator('.ai-project').count(), 2);
+      assert.equal(await page.locator('.bin-classic-project').count(), 2);
       assert.ok(!/PhotoMap|GameInfo|Game Information Platform|mock-evidence/.test(await page.locator('main').innerText()));
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
       await page.goto('http://127.0.0.1:5196/ai-portfolio');

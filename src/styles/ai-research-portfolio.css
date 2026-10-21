@@ -1,4 +1,6 @@
 /* Layout and scroll behavior come from the existing bin-work/bin-deck styles. */
+.ai-research-document-links { display:flex; flex-direction:column; align-items:flex-start; gap:8px; margin-top:16px; }
+.ai-research-portfolio .ai-research-document-links a { margin-top:0; }
 .ai-research-portfolio .bin-work-nav button { display:inline-flex; padding:6px; border:1px solid var(--work-line); border-radius:4px; background:transparent; color:inherit; cursor:pointer; }
 .ai-research-portfolio .bin-work-nav button:focus-visible { outline:2px solid var(--work-accent); outline-offset:4px; }
 .ai-research-flow { list-style:none; padding:0; margin:28px 0; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border-block:1px solid var(--work-line); }
