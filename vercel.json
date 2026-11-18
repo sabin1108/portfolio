@@ -1,7 +1,12 @@
 {
+  "trailingSlash": false,
+  "headers": [
+    {"source":"/GYEOLSOFT","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow"}]},
+    {"source":"/documents/(.*)","headers":[{"key":"X-Robots-Tag","value":"noindex"}]}
+  ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/GYEOLSOFT",
       "destination": "/index.html"
     }
   ]

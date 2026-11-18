@@ -19,3 +19,13 @@ src/app/data/private_resume_links.ts
 dev-server*.log
 output/
 pdf_thesis/
+archive/
+tmp/
+test-results/
+.omx/
+.fallow/
+_workspace/
+.vercel/
+content/manuscript.md
+content/import-report.json
+content/build-report.json

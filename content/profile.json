@@ -1,0 +1,16 @@
+{
+  "name": "민사빈",
+  "role": "Front-End Developer",
+  "email": "minsabin1108@gmail.com",
+  "github": "https://github.com/sabin1108",
+  "portrait": "/media/portrait.jpg",
+  "education": {
+    "school": "한경국립대학교",
+    "degree": "소프트웨어융합학과",
+    "status": "졸업",
+    "period": "2020.03 ~ 2026.02",
+    "gpa": "3.87 / 4.5"
+  },
+  "certificates": [{"name":"정보처리기사","issuer":"한국산업인력공단","date":"2025.09.12"}],
+  "source": "archive/legacy-20261118/src/app/data/resumes/frozen/resume.ts:31-56"
+}

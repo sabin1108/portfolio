@@ -1,0 +1,13 @@
+archive/
+_workspace/
+.omx/
+.fallow/
+tmp/
+test-results/
+output/
+pdf_thesis/
+architecture/
+content/
+scripts/
+DESIGN.md
+dev-server*.log
