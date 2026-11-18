@@ -53,7 +53,8 @@ for key, document in manifest['documents'].items():
                 if char['size'] >= 12.75:
                     assert char['top'] >= 20 and char['bottom'] <= page.height - 20, (key, page_number, 'body enters header/footer margin', char['text'])
     dominant_size = font_sizes.most_common(1)[0][0]
-    assert abs(dominant_size - 13.5) <= .05, (key, 'Expected dominant 18px / 13.5pt body', dominant_size)
+    expected_body_pt = 12 if key == 'resume' else 13.5
+    assert abs(dominant_size - expected_body_pt) <= .05, (key, 'Unexpected dominant body font', dominant_size)
     document_checks.append({
         'document': key,
         'pdfPages': len(reader.pages),

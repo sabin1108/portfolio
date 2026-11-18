@@ -74,6 +74,7 @@
 - User manuscript wording unchanged. Short interface and diagram labels may summarize recorded facts. Numeric figures and their scope must match the records; setting56.2% refers to repeated settings preparation, with initial preparation cost separate.
 - No case numbers in published troubleshooting headings.
 - Resume uses existing personal facts and verbatim manuscript extracts; no invented job motivation or old project claims.
+- Resume content revision (2026-11-18): the user now authorizes a trust-focused introduction, separate Gyeolsoft UX motivation, concise implementation descriptions with recorded metrics, and verified training/research/patent/award history. Edit these in `content/resume.json`; keep the portfolio manuscript unchanged. Remove running headers and the repeated project title/date on page2. Resume PDF uses standard12pt body and web uses18px; both stay2 pages with no text clipping. This overrides the earlier18px resume and verbatim-extract requirements.
 
 ## Implementation constraints
 - React18 + Vite6 existing toolchain. No dependency upgrades or new framework.

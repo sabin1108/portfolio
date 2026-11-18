@@ -153,14 +153,16 @@ await check('tab hash, Back/Forward and keyboard remain synchronized',async()=>{
   await page.focus('loc=css:#tab-resume');await page.keyboard.press('ArrowLeft');await page.waitForSelector('.deck-view');
   await page.evaluate(()=>{location.hash='resume';});await page.waitForSelector('.resume-view');
 });
-await check('resume restores original header/project/achievements/skills/education structure',async()=>{
+await check('resume separates introduction, motivation and verified history without repeated headings',async()=>{
   await open('/GYEOLSOFT#resume');
   const state=await page.evaluate(()=>{
     const first=document.querySelector('.resume-page');const featured=[...first.querySelectorAll('.bin-classic-featured-result')].map(e=>e.getBoundingClientRect());
     const name=first.querySelector('.bin-classic-header h1').getBoundingClientRect();const photo=first.querySelector('.bin-classic-photo').getBoundingClientRect();
-    return{count:document.querySelectorAll('.resume-page').length,intro:!!first.querySelector('.bin-classic-header .bin-classic-intro'),role:!!first.querySelector('.bin-classic-role-line'),featuredCount:featured.length,sideBySide:Math.abs(featured[0].top-featured[1].top)<2,photoRight:photo.left>name.left,skills:document.querySelectorAll('.bin-classic-skill-row').length,headings:[...document.querySelectorAll('.bin-classic-section>h2')].map(e=>e.textContent),overflow:document.documentElement.scrollWidth>innerWidth};
+    return{count:document.querySelectorAll('.resume-page').length,intro:!!first.querySelector('.bin-classic-intro'),role:!!first.querySelector('.bin-classic-role-line'),featuredCount:featured.length,sideBySide:Math.abs(featured[0].top-featured[1].top)<2,photoRight:photo.left>name.left,skills:document.querySelectorAll('.bin-classic-skill-row').length,headings:[...document.querySelectorAll('.bin-classic-section>h2')].map(e=>e.textContent),projectHeadings:document.querySelectorAll('.bin-classic-project-heading').length,runningHeaders:document.querySelectorAll('.sheet.resume>header').length,records:document.querySelectorAll('.bin-classic-records>li').length,training:document.querySelector('.bin-classic-training').textContent,text:document.querySelector('.resume-workspace').textContent,overflow:document.documentElement.scrollWidth>innerWidth};
   });
-  assert.equal(state.count,2);assert(state.intro&&state.role&&state.sideBySide&&state.photoRight&&!state.overflow);assert.equal(state.featuredCount,2);assert.equal(state.skills,4);assert.deepEqual(state.headings,['프로젝트 경험','프로젝트 경험','기술 역량','학력 · 자격']);
+  assert.equal(state.count,2);assert(state.intro&&state.role&&state.sideBySide&&state.photoRight&&!state.overflow);assert.equal(state.featuredCount,2);assert.equal(state.skills,4);assert.deepEqual(state.headings,['프로젝트 경험','지원동기','기술 역량','학력 · 자격 · 교육','연구 · 특허 · 수상']);
+  assert.equal(state.projectHeadings,1);assert.equal(state.runningHeaders,0);assert.equal(state.records,4);assert(state.training.includes('LG CNS AM Inspire Camp 7기')&&state.training.includes('교육 중'));
+  for(const text of ['신뢰를 주는 프론트엔드','NextAuth·Supabase Auth','Stepper','searchParams','1.541초','0.675초','56.2%','입력 DOM 제거 0회','특허 출원','우수상'])assert(state.text.includes(text),`Resume evidence missing: ${text}`);
   await page.screenshot({path:path.join(output,'resume-original-structure.png')});
 });
 await check('resume contents follows native page scrolling',async()=>{

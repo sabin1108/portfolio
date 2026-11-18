@@ -12,6 +12,7 @@ const {marked}=await import(pathToFileURL(bundle+'/node/node_modules/marked/lib/
 const {chromium}=await import(pathToFileURL(bundle+'/node/node_modules/playwright/index.mjs'));
 const data=JSON.parse(await fs.readFile(path.join(root,'content/portfolio.json'),'utf8'));
 const profile=JSON.parse(await fs.readFile(path.join(root,'content/profile.json'),'utf8'));
+const resume=JSON.parse(await fs.readFile(path.join(root,'content/resume.json'),'utf8'));
 if(profile.project)for(const url of Object.values(profile.project))assert.equal(new URL(url).protocol,'https:','Project links must use HTTPS');
 const output=path.join(root,'public/documents');
 const work=path.join(root,'tmp/moa-documents-20261118');
@@ -67,23 +68,23 @@ const css=`
 `+legacyPortfolioCss+portfolioVisualCss+`
 .legacy-sheet .tree-diagram{height:auto;padding:8px 0}.legacy-sheet .folder-tree{font-size:18px}.legacy-sheet .tree-description{font-size:17px}.legacy-sheet .tree-row{min-height:40px}.legacy-sheet .tree-ellipsis .tree-row{min-height:20px;line-height:20px}.legacy-sheet .tree-ellipsis:before{top:10px}.legacy-sheet .tree-ellipsis:last-child:after{top:11px}.legacy-sheet .tree-omission-note{font-size:12px;line-height:1.4;color:#5c6d6b;margin-top:6px}
 `+legacyResumeCss;
-// Keep the prior resume's text as an independent preservation check for layout changes.
+// Preserve project prose independently; resume-only additions have a separate editable source.
 function expectedResumeSource(){
   const paragraphs=data.common[0].markdown.split(/\n\s*\n/).filter(Boolean);
-  const intro=paragraphs[1], role=paragraphs[2],skills=data.common[1].markdown.match(/\*\*Frontend:[\s\S]*?(?=\n\s*!\[\[|$)/)?.[0]||'';
+  const intro=resume.projectSummary||paragraphs[1], role=resume.role||paragraphs[2],skills=data.common[1].markdown.match(/\*\*Frontend:[\s\S]*?(?=\n\s*!\[\[|$)/)?.[0]||'';
   assert(intro&&role);
   const body1=`<div class="profile-top"><img class="portrait" src="${pathToFileURL(path.join(root,'public/media/portrait.jpg'))}" alt="${profile.name}"><div><h1>${profile.name}</h1><p>${profile.role}</p><p><a href="mailto:${profile.email}">${profile.email}</a></p><p><a href="${profile.github}">${profile.github}</a></p></div></div><h2>Project_Moa</h2><p>2026.09~2026.11 · 1인</p><p>${inline(intro)}</p><p>${inline(role)}</p><h2>기술</h2><div class="stack">${marked.parse(skills,{gfm:true,breaks:true})}</div><h2>학력 · 자격</h2><div class="education"><div><strong>${profile.education.school}</strong><p>${profile.education.degree} · ${profile.education.status}<br>${profile.education.period}<br>${profile.education.gpa}</p></div><div><strong>${profile.certificates[0].name}</strong><p>${profile.certificates[0].issuer}<br>${profile.certificates[0].date}</p></div></div>`;
   const entries=data.gyeol.filter(p=>p.kind==='case').map(p=>{
     const table=marked.lexer(p.markdown).find(t=>t.type==='table');
     assert(table,`Case table missing ${p.id}`);
-    return `<article class="experience"><h3>${escape(p.title)}</h3><p>${inline(table.rows[0][0].text)}</p></article>`;
+    return `<article class="experience"><h3>${escape(p.title)}</h3><p>${inline(resume.caseOverrides?.[p.id]||table.rows[0][0].text)}</p></article>`;
   });
   return [
     {id:'resume-profile',title:'프로필 · 모아 프로젝트',html:body1},
-    {id:'resume-experience',title:'프로젝트 경험',html:`<h1>프로젝트 경험</h1>${entries.join('')}`}
+    {id:'resume-experience',title:'프로젝트 경험',html:`<h1>프로젝트 경험</h1>${entries.join('')}<p>${inline(resume.motivation)}</p>${resume.introduction?marked.parse(resume.introduction):''}${resume.training.map(entry=>`<p>${escape(entry.name)} · ${escape(entry.status)}</p>`).join('')}${[...resume.research,...resume.awards].map(entry=>`<article><h3>${escape(entry.title)}</h3><p>${escape(entry.details)}</p></article>`).join('')}`}
   ].map((p,index)=>({...p,kind:'resume',markup:`<section class="sheet resume" data-page-id="${p.id}"><header><span>${profile.name} / ${profile.role}</span><span>GYEOLSOFT · RESUME</span></header><div class="page-content"><div class="body">${p.html}</div></div><footer><span>${profile.email}</span><span>${index+1} / 2</span></footer></section>`}));
 }
-function resumeSheets(){return createResumeSheets(data,profile,{inline,marked,escape,portraitUrl:pathToFileURL(path.join(root,'public/media/portrait.jpg')).href});}
+function resumeSheets(){return createResumeSheets(data,profile,resume,{inline,marked,escape,portraitUrl:pathToFileURL(path.join(root,'public/media/portrait.jpg')).href});}
 const layoutHelpers={renderTokens,lex:markdown=>marked.lexer(markdown,{gfm:true,breaks:true}),inline,folderTree,profile};
 const documents=[
   {id:'main',title:'포트폴리오',file:'main-portfolio.pdf',pages:createLegacyPages(data.common,layoutHelpers)},
@@ -204,7 +205,8 @@ try{
       fonts:[...document.querySelectorAll('.body>p,.block,.experience p,.stack p,.legacy-item>div,.bin-classic-achievements p,.bin-classic-intro,.bin-classic-role-line,.bin-classic-skill-row dd')].map(element=>parseFloat(getComputedStyle(element).fontSize))
     }));
     assert.equal(printState.bodyText,newSourceText.bodyText,'Print styling changed content');
-    assert(printState.fonts.every(size=>size>=18),'Print primary text must be18px or larger');
+    const minimumBodyPx=doc.id==='resume'?16:18;
+    assert(printState.fonts.every(size=>size>=minimumBodyPx),`${doc.id}: primary text is below ${minimumBodyPx}px`);
     printChecks.push({document:doc.id,minimumBodyPx:Math.min(...printState.fonts),textPreserved:true});
     await page.pdf({path:path.join(output,doc.file),preferCSSPageSize:true,printBackground:true,tagged:true});
   }

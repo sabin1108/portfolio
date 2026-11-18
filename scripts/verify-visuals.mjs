@@ -15,14 +15,14 @@ const results=[],measurements=[];
 async function check(name,run){try{await run();results.push({name,passed:true});}catch(error){results.push({name,passed:false,error:error.message});}}
 await page.goto(base+'/GYEOLSOFT');await page.waitForSelector('.document-page');
 
-if(baseline)await check('all original prose unchanged after removing new visual annotations',async()=>{
+if(baseline)await check('portfolio prose unchanged after removing new visual annotations',async()=>{
   const differences=await page.evaluate(({before,after})=>{
     const text=html=>{
       const doc=new DOMParser().parseFromString(html,'text/html');
       doc.querySelectorAll('.portfolio-visual:not([data-preserve-prose]),.tree-ellipsis,.tree-omission-note,.proof-badge,.evidence-condition,.project-links,.bin-classic-project-links').forEach(element=>element.remove());
       return doc.querySelector('.sheet').textContent.replace(/\s+/g,'');
     };
-    return Object.entries(after.documents).flatMap(([id,document])=>document.pages.filter(item=>text(item.html)!==text(before.documents[id].pages.find(old=>old.id===item.id).html)).map(item=>`${id}/${item.id}`));
+    return Object.entries(after.documents).filter(([id])=>id!=='resume').flatMap(([id,document])=>document.pages.filter(item=>text(item.html)!==text(before.documents[id].pages.find(old=>old.id===item.id).html)).map(item=>`${id}/${item.id}`));
   },{before:baseline,after:manifest});
   assert.deepEqual(differences,[]);
 });
