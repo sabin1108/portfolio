@@ -10,10 +10,11 @@ type Manifest = {
 };
 type Tab = 'portfolio' | 'resume';
 
-function DocumentSurface({page, magnification = 1}: {page: DocumentPage; magnification?: number}) {
+function DocumentSurface({page, magnification = 1, fixed = false}: {page: DocumentPage; magnification?: number; fixed?: boolean}) {
   const frame = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(page.width);
   useLayoutEffect(() => {
+    if (!fixed) return;
     const element = frame.current;
     if (!element) return;
     const update = () => setWidth(element.clientWidth);
@@ -21,7 +22,8 @@ function DocumentSurface({page, magnification = 1}: {page: DocumentPage; magnifi
     const observer = new ResizeObserver(update);
     observer.observe(element);
     return () => observer.disconnect();
-  }, []);
+  }, [fixed]);
+  if (!fixed) return <div className="document-surface reading-surface"><div className="document-sheet" dangerouslySetInnerHTML={{__html: page.html}} /></div>;
   const scale = width / page.width * magnification;
   return <div ref={frame} className="document-surface">
     <div className="document-size" style={{width: width * magnification, height: page.height * scale}}>
@@ -53,7 +55,7 @@ function ExpandedPage({page, onClose}: {page: DocumentPage; onClose: () => void}
         <button type="button" onClick={() => dialog.current?.close()} aria-label="확대 보기 닫기" autoFocus><X size={20}/></button>
       </div>
     </div>
-    <div className="zoom-canvas"><DocumentSurface page={page} magnification={magnification}/></div>
+    <div className="zoom-canvas"><DocumentSurface page={page} magnification={magnification} fixed/></div>
   </dialog>;
 }
 

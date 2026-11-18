@@ -88,13 +88,16 @@ for(const [width,height,dpr] of [[1280,900,1],[1440,1000,1],[1920,1080,2],[1024,
           const footer=sheet.querySelector('footer').getBoundingClientRect();
           const bounds=sheet.getBoundingClientRect();
           const frame=element.closest('.document-surface').getBoundingClientRect();
-          return{text:sheet.innerText.replace(/\s+/g,' ').trim(),gap:footer.top-content.bottom,extraWidth:bounds.width-frame.width,extraHeight:bounds.height-frame.height};
+          const scale=new DOMMatrix(getComputedStyle(element).transform).a;
+          const bodyFonts=[...sheet.querySelectorAll('.body>p,.block,.experience p,.stack p')].map(node=>parseFloat(getComputedStyle(node).fontSize)*scale);
+          return{text:sheet.innerText.replace(/\s+/g,' ').trim(),gap:footer.top-content.bottom,extraWidth:bounds.width-frame.width,extraHeight:bounds.height-frame.height,bodyFonts};
         })
       }));
       assert(!state.overflow,'Horizontal browser overflow');
       assert.equal(state.headerHeight,82,'Document CSS leaked into site header');
       assert.equal(state.rasterPages,0,'Raster page remains');
       assert.equal(state.pages.length,count);
+      assert(state.pages.every(p=>p.bodyFonts.every(size=>size>=17)),`Default body text below17px: ${JSON.stringify(state.pages.map(p=>p.bodyFonts))}`);
       assert(state.pages.every(p=>p.gap>=6&&p.extraWidth<=1&&p.extraHeight<=1),'Page content is clipped or overlaps footer');
       const manifest=(await page.fetch('/documents/manifest.json')).body;
       const documentData=typeof manifest==='string'?JSON.parse(manifest):manifest;

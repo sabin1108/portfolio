@@ -23,7 +23,7 @@
 4. `npm run dev -- --host 127.0.0.1 --port 4174` — 로컬 확인.
 5. `ego-browser skill`을 읽고 현재 작업의 TaskSpace에서 `scripts/verify-desktop.mjs?space=작업ID&base=http://127.0.0.1:4174`를 import한다. 선택·찾기·탭 히스토리·목차·확대·다운로드·기존 경로 차단을 검사한다. 이번 검토에서 모바일은 제외했다.
 
-PDF는 `public/documents`와 상위 작업 폴더의 `output/pdf/20261118`에 저장된다. 웹은 PDF 제작에 사용한 HTML과 범위를 제한한 `public/documents/document.css`를 함께 사용한다. 본문은 실제 글자여서 확대·선택·복사·브라우저 찾기가 가능하다. 파일 구조도 HTML 트리와 벡터 아이콘으로 표시한다. 다른 구성도는 원본 해상도를 유지한다.
+PDF는 `public/documents`와 상위 작업 폴더의 `output/pdf/20261118`에 저장된다. 웹은 PDF 제작에 사용한 HTML과 범위를 제한한 `public/documents/document.css`를 함께 사용한다. 기본 읽기 화면은 뷰어 CSS로 본문18px·자동 높이를 적용해 종이 크기에 맞춰 글자를 축소하지 않는다. PDF와 확대창은 원래 조판을 유지한다. 본문은 실제 글자여서 확대·선택·복사·브라우저 찾기가 가능하다. 파일 구조도 HTML 트리와 벡터 아이콘으로 표시한다. 다른 구성도는 원본 해상도를 유지한다.
 
 ## 기존 자료 보관
 

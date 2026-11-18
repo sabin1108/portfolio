@@ -29,14 +29,14 @@
 - Public assets: only new documents, manuscript images and portrait. Archive stays outside public and is excluded from Vercel upload.
 
 ## Design principles
-- PDF typography/layout owns the visual identity; viewer chrome remains quiet.
+- PDF typography/layout owns the visual identity; web defaults prioritize reading without zoom. Viewer chrome remains quiet.
 - Large headings, short rules, generous margins, restrained blue accent and readable Korean body.
 - Preserve document content rather than forcing a fixed page count.
 
 ## Visual language
 - Paper #fffefa, ink #172335, muted #667085, blue #2d4e91, fine rules #d9dfe7. Web background #f3f4f6.
 - System Korean sans-serif with an available local Korean font embedded/used in PDF generation. No remote font dependency.
-- Landscape A4 portfolio pages; portrait A4 resume. Screen viewer reuses the exact PDF authoring HTML and scoped CSS: selectable native text rather than rasterized pages. Diagram originals stay at full resolution; file structure uses a native HTML tree with vector icons.
+- Landscape A4 portfolio pages; portrait A4 resume. Web reuses the PDF authoring HTML with an auto-height reading layout:18px main text,1.85 line height,17px minimum primary text,38px inner margins and two-column sections. Document text does not shrink to fit a fixed page. PDF download and explicit zoom retain the original fixed-page layout. Diagram originals stay at full resolution; file structure uses a native HTML tree with vector icons.
 - Borders and small radii only on controls; no floating decorative cards.
 - No entrance animation, forced scroll, wheel interception, or carousel autoplay.
 
@@ -51,7 +51,7 @@
 - Normal native scrolling. Reduced-motion preference respected by having no essential motion.
 
 ## Responsive behavior
-- Desktop: narrow page index beside a central document canvas.
+- Desktop:200px page index and28px outer margins; auto-height reading pages, narrower paragraphs and visible body text at actual18px. At smaller desktop work areas sections use one column.
 - Mobile: compact controls, single-column pages, tap page to inspect at readable zoom.
 - Current review scope: desktop only, per user. Check 1280/1440/1920px, DPR2, browser zoom, keyboard use, old-route rejection and PDF downloads. Mobile behavior is preserved but excluded from this review.
 
