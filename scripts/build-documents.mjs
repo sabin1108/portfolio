@@ -4,6 +4,7 @@ import {fileURLToPath,pathToFileURL} from 'node:url';
 import assert from 'node:assert/strict';
 import {spawnSync} from 'node:child_process';
 import {legacyPortfolioCss,createLegacyPages} from './moa-legacy-layout.mjs';
+import {portfolioVisualCss} from './moa-portfolio-visuals.mjs';
 import {legacyResumeCss,createResumeSheets} from './moa-resume-theme.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const bundle='C:/Program Files/WindowsApps/OpenAI.CodexPrimaryRuntime.v26-1116-1210-0_26.1116.1210.0_x64__3k8sg7r9htsxt/dependencies';
@@ -11,6 +12,7 @@ const {marked}=await import(pathToFileURL(bundle+'/node/node_modules/marked/lib/
 const {chromium}=await import(pathToFileURL(bundle+'/node/node_modules/playwright/index.mjs'));
 const data=JSON.parse(await fs.readFile(path.join(root,'content/portfolio.json'),'utf8'));
 const profile=JSON.parse(await fs.readFile(path.join(root,'content/profile.json'),'utf8'));
+if(profile.project)for(const url of Object.values(profile.project))assert.equal(new URL(url).protocol,'https:','Project links must use HTTPS');
 const output=path.join(root,'public/documents');
 const work=path.join(root,'tmp/moa-documents-20261118');
 await fs.mkdir(output,{recursive:true});await fs.mkdir(work,{recursive:true});
@@ -36,30 +38,34 @@ function folderTree(){
       {name:'features/',description:'기능별 구현',children:[
         {name:'local-folders/',description:'로컬 파일·폴더 기능',children:[
           {name:'destination-picker/',description:'폴더 선택 부품'},
-          {name:'creation/',description:'새 파일·폴더 생성 부품'}
-        ]}
+          {name:'creation/',description:'새 파일·폴더 생성 부품'},
+          {omitted:true}
+        ]},
+        {omitted:true}
       ]},
       {name:'components/ui/',description:'여러 기능에서 쓰는 공통 부품',children:[
         {name:'WorkflowStepper.tsx',description:'진행 단계 표시'},
         {name:'feedback/',description:'',children:[
           {name:'StatusNotice.tsx',description:'오류·상태 안내'}
-        ]}
+        ]},
+        {omitted:true}
       ]},
       {name:'server/',description:'인증·API 등 서버 처리'},
       {name:'shared/',description:'여러 기능이 공유하는 코드'}
     ]}
   ];
   const render=(nodes,depth=0)=>`<ul class="${depth===0?'folder-tree':'tree-children'}">${nodes.map(node=>{
+    if(node.omitted)return `<li class="tree-ellipsis"><div class="tree-row" style="--depth:${depth}"><span class="tree-name" aria-label="일부 폴더와 파일 생략">…</span></div></li>`;
     const icon=node.name.endsWith('/')?'<path d="M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/>':'<path d="M6 3h8l4 4v14H6V3Zm8 0v5h4M9 12h6m-6 4h6"/>';
     return `<li><div class="tree-row" style="--depth:${depth}"><span class="tree-name"><svg viewBox="0 0 24 24" aria-hidden="true">${icon}</svg><span>${escape(node.name)}</span></span><span class="tree-description">${escape(node.description)}</span></div>${node.children?render(node.children,depth+1):''}</li>`;
   }).join('')}</ul>`;
-  return `<div class="tree-diagram">${render(entries)}</div>`;
+  return `<div class="tree-diagram">${render(entries)}</div><div class="tree-omission-note">… 일부 폴더와 파일 생략</div>`;
 }
 const css=`
-@page{size:A4 landscape;margin:0}*{box-sizing:border-box}html,body{margin:0;font-family:'Malgun Gothic',Arial,sans-serif;background:#0c1010;-webkit-print-color-adjust:exact;print-color-adjust:exact}a{color:inherit;text-decoration:none}.sheet{break-after:page}.sheet:last-child{break-after:auto}p,h1,h2,h3,h4,figure{margin:0}
+@page{size:A4 landscape;margin:0}*{box-sizing:border-box}html,body{margin:0;font-family:'Malgun Gothic',Arial,sans-serif;background:#f4f2ed;-webkit-print-color-adjust:exact;print-color-adjust:exact}a{color:inherit;text-decoration:none}.sheet{break-after:page}.sheet:last-child{break-after:auto}p,h1,h2,h3,h4,figure{margin:0}
 .tree-diagram{height:586px;display:flex;align-items:center;padding:14px 25px}.folder-tree,.tree-children{list-style:none;padding:0;margin:0;width:100%}.folder-tree{font-family:Consolas,'Courier New',monospace;font-size:17px;line-height:1.4}.folder-tree li{position:relative;margin:0;padding:0}.tree-row{display:grid;grid-template-columns:calc(430px - var(--depth)*36px) minmax(0,1fr);align-items:center;min-height:40px;gap:24px}.tree-name{display:flex;align-items:center;gap:12px;white-space:nowrap;color:#253b60}.tree-name svg{width:20px;height:20px;flex-shrink:0;stroke:#7083a0;stroke-width:1.5;fill:#edf1f7;stroke-linecap:round;stroke-linejoin:round}.tree-description{font-family:'Malgun Gothic','Noto Sans KR',Arial,sans-serif;font-size:14px;color:#697587;letter-spacing:-.02em}.tree-children{margin-left:10px;padding-left:25px;border-left:1px solid #d4dce8;width:calc(100% - 10px)}.tree-children>li:before{content:'';position:absolute;left:-25px;top:20px;width:23px;border-top:1px solid #d4dce8}.tree-children>li:last-child:after{content:'';position:absolute;left:-26px;top:21px;bottom:0;width:1px;background:#fffefa}.folder-tree>.tree-row,.folder-tree>li>.tree-row{font-weight:700}.folder-tree>li>.tree-row .tree-description{font-weight:400}
-`+legacyPortfolioCss+`
-.legacy-sheet .tree-diagram{height:auto;padding:10px 0}.legacy-sheet .folder-tree{font-size:18px}.legacy-sheet .tree-description{font-size:17px}.legacy-sheet .tree-row{min-height:44px}
+`+legacyPortfolioCss+portfolioVisualCss+`
+.legacy-sheet .tree-diagram{height:auto;padding:8px 0}.legacy-sheet .folder-tree{font-size:18px}.legacy-sheet .tree-description{font-size:17px}.legacy-sheet .tree-row{min-height:40px}.legacy-sheet .tree-ellipsis .tree-row{min-height:20px;line-height:20px}.legacy-sheet .tree-ellipsis:before{top:10px}.legacy-sheet .tree-ellipsis:last-child:after{top:11px}.legacy-sheet .tree-omission-note{font-size:12px;line-height:1.4;color:#5c6d6b;margin-top:6px}
 `+legacyResumeCss;
 // Keep the prior resume's text as an independent preservation check for layout changes.
 function expectedResumeSource(){
@@ -127,6 +133,14 @@ try{
       const box=sheet.getBoundingClientRect(),content=sheet.querySelector('.page-content').getBoundingClientRect(),footer=sheet.querySelector('footer').getBoundingClientRect();
       return{id:sheet.dataset.pageId,bottom:content.bottom-box.top,footer:footer.top-box.top,overflow:content.bottom>footer.top-12};
     }));
+    const visualClipping=await page.evaluate(()=>[...document.querySelectorAll('.portfolio-visual')].flatMap(figure=>{
+      const box=figure.getBoundingClientRect();
+      return [...figure.querySelectorAll('.diagram-node,.diagram-note,.diagram-caption,.role-branch,.timeline-labels,.wire-list,.stable-rows,.metric-range,.metric-change,.evidence-condition')].filter(element=>{
+        const bounds=element.getBoundingClientRect();
+        return bounds.left<box.left-2||bounds.right>box.right+2||bounds.top<box.top-2||bounds.bottom>box.bottom+2||element.scrollWidth>element.clientWidth+2;
+      }).map(element=>({visual:figure.dataset.visual,className:element.className,text:element.textContent.slice(0,40)}));
+    }));
+    assert.deepEqual(visualClipping,[],`${doc.id}: diagram text escapes its frame`);
     layout.push({document:doc.id,pages:metrics});
     if(metrics.some(m=>m.overflow)){console.log(JSON.stringify({overflow:doc.id,pages:metrics}));throw Error('Document content overflow');}
     const webDocument=await page.evaluate(publicUrl=>{

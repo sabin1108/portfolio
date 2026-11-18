@@ -6,7 +6,7 @@ import {createWheelNavigation, wheelPixels} from './wheel-navigation';
 type DocumentPage = {id: string; title: string; html: string; width: number; height: number; kind?: string; visual?: string};
 type PortfolioDocument = {id: string; title: string; pdf: string; pages: DocumentPage[]};
 type Manifest = {
-  profile: {name: string; role: string; email: string; github: string};
+  profile: {name: string; role: string; email: string; github: string; project?: {github: string; demo: string}};
   documents: {main: PortfolioDocument; gyeolsoft: PortfolioDocument; resume: PortfolioDocument};
 };
 type Tab = 'portfolio' | 'resume';
@@ -216,7 +216,7 @@ function Viewer({manifest, company}: {manifest: Manifest; company: boolean}) {
       <a className="open-pdf" href={doc.pdf} target="_blank" rel="noreferrer" aria-label="PDF로 열기"><FileText size={17}/><span>PDF로 열기</span></a>
     </aside>
     {menu && <button type="button" className="toc-backdrop" aria-label="목차 닫기" onClick={() => setMenu(false)}/>}
-    <header className="site-header"><div className="identity"><a href="/">{profile.name}</a><span>{profile.role}</span></div><div className="header-links"><a href={`mailto:${profile.email}`}>Email<ArrowUpRight size={13}/></a><a href={profile.github} target="_blank" rel="noreferrer">GitHub<ArrowUpRight size={13}/></a></div></header>
+    <header className="site-header"><div className="identity"><a href="/">{profile.name}</a><span>{profile.role}</span></div><div className="header-links"><a href={`mailto:${profile.email}`}>Email<ArrowUpRight size={13}/></a><a href={profile.project?.github||profile.github} target="_blank" rel="noreferrer">{profile.project?'Moa GitHub':'GitHub'}<ArrowUpRight size={13}/></a>{profile.project&&<a href={profile.project.demo} target="_blank" rel="noreferrer">데모 체험<ArrowUpRight size={13}/></a>}</div></header>
     <div className="document-bar">
       <div className="document-heading"><span className="document-context">{company ? 'GYEOLSOFT' : 'PORTFOLIO'}</span><h1>{doc.title}</h1></div>
       <div className="document-actions">

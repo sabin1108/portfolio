@@ -25,6 +25,14 @@ for key, document in manifest['documents'].items():
     pdf_pages = document.get('pdfPages', document['pages'])
     assert len(reader.pages) == len(pdf_pages)
     assert document.get('pdfPageCount', len(pdf_pages)) == len(reader.pages)
+    project_urls = set(manifest['profile']['project'].values())
+    pdf_urls = {
+        str(action['/URI'])
+        for page in reader.pages
+        for annotation in page.get('/Annots', [])
+        if (action := annotation.get_object().get('/A')) and '/URI' in action
+    }
+    assert project_urls <= pdf_urls, (key, 'PDF project links missing', sorted(project_urls - pdf_urls))
     extracted = '\n\n'.join(page.extract_text() or '' for page in reader.pages)
     actual = normalize(extracted)
     source = sources[key]
@@ -52,6 +60,7 @@ for key, document in manifest['documents'].items():
         'sourceUnits': len(source['units']),
         'missingUnits': 0,
         'lostCharacters': 0,
+        'projectLinks': len(project_urls),
         'dominantBodyFontPt': dominant_size,
         'fontSizes': dict(font_sizes.most_common()),
     })

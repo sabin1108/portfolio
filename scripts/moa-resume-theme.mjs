@@ -16,7 +16,7 @@ export function createResumeSheets(data, profile, {inline, marked, escape, portr
   const icon=type=>`<svg viewBox="0 0 24 24" aria-hidden="true">${type==='mail'?'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/>':type==='github'?'<path d="M9 19c-4.3 1.3-4.3-2.2-6-2.7M15 22v-3.9c0-1.1-.1-1.5-.6-2 3.3-.4 6.6-1.6 6.6-7.3a5.8 5.8 0 0 0-1.6-4 5.2 5.2 0 0 0-.1-4s-1.3-.4-4.2 1.6a14.4 14.4 0 0 0-7.6 0C4.6.4 3.3.8 3.3.8a5.2 5.2 0 0 0-.1 4 5.8 5.8 0 0 0-1.6 4c0 5.7 3.3 6.9 6.6 7.3-.4.4-.6 1-.6 2V22"/>':'<path d="M14 3h7v7M10 14 21 3M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/>'}</svg>`;
   const achievements=(items,start=0)=>`<ul class="bin-classic-achievements">${items.map((entry,index)=>`<li class="${start+index<2?'bin-classic-featured-result':''}"><h4>${escape(entry.title)}</h4><p>${inline(entry.text)}</p></li>`).join('')}</ul>`;
   const section=(title,body,className='')=>`<section class="bin-classic-section ${className}"><h2>${title}</h2>${body}</section>`;
-  const projectHeading=continuation=>`<div class="bin-classic-project-heading"><div><h3>Project_Moa${continuation?' <span class="bin-classic-continuation">계속</span>':''}</h3></div><span>2026.09~2026.11 · 1인</span></div>`;
+  const projectHeading=continuation=>`<div class="bin-classic-project-heading"><div><h3>Project_Moa${continuation?' <span class="bin-classic-continuation">계속</span>':''}</h3></div><span>2026.09~2026.11 · 1인</span></div>${!continuation&&profile.project?`<div class="bin-classic-project-links"><a href="${escape(profile.project.github)}" target="_blank" rel="noreferrer">${icon('github')}프로젝트 GitHub</a><a href="${escape(profile.project.demo)}" target="_blank" rel="noreferrer">${icon('external')}데모 체험</a></div>`:''}`;
   const contacts=`<div class="bin-classic-contact"><a href="mailto:${escape(profile.email)}">${icon('mail')}${escape(profile.email)}</a><a href="${escape(profile.github)}">${icon('github')}${escape(profile.github)}</a><a href="https://www.binportfolio.site/GYEOLSOFT">${icon('external')}포트폴리오</a></div>`;
   const classicHeader=`<div class="bin-classic-header"><div><h1>${escape(profile.name)}</h1><p class="bin-classic-role">${escape(profile.role)}</p><p class="bin-classic-intro">${inline(intro)}</p>${contacts}</div><img class="bin-classic-photo portrait" src="${escape(portraitUrl)}" alt="${escape(profile.name)}"></div>`;
   const page1=classicHeader+section('프로젝트 경험',`<article class="bin-classic-project">${projectHeading(false)}<p class="bin-classic-role-line"><strong>담당</strong>${inline(role)}</p>${achievements(cases.slice(0,3))}</article>`);
@@ -60,6 +60,9 @@ export const legacyResumeCss = `
 .sheet.resume .bin-classic-project-heading{display:flex;align-items:baseline;justify-content:space-between;gap:16px}
 .sheet.resume .bin-classic-project-heading h3{font-size:22px;line-height:1.4;letter-spacing:-.025em;margin:0}
 .sheet.resume .bin-classic-project-heading>span{color:#66717d;font-size:15px;line-height:1.5;white-space:nowrap}
+.sheet.resume .bin-classic-project-links{display:flex;gap:20px;margin-top:8px}
+.sheet.resume .bin-classic-project-links a{display:inline-flex;align-items:center;gap:5px;font-size:14px;line-height:1.5;color:#245f95}
+.sheet.resume .bin-classic-project-links svg{width:13px;height:13px;stroke:currentColor;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .sheet.resume .bin-classic-continuation{font-size:13px;color:#66717d;font-weight:400;margin-left:8px;letter-spacing:0}
 .sheet.resume .bin-classic-role-line{margin-top:10px;font-size:18px;line-height:1.55}
 .sheet.resume .bin-classic-role-line>strong{display:block;margin-bottom:4px;font-size:15px;line-height:1.5}

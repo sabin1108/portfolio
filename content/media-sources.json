@@ -7,8 +7,8 @@
   },
   "architecture": {
     "source": "E:/project/potfoilo/drafts/frontend-20261116/diagrams/moa-frontend-architecture.svg",
-    "output": "/media/moa-architecture-dark.svg",
-    "changes": "Palette only; all37 text nodes and22 paths retained."
+    "output": "/media/moa-architecture.svg",
+    "changes": "Warm neutral palette only; all37 text nodes and22 paths retained."
   },
-  "notes": "Screens use example data. Original screenshot files are unchanged; CSS frames control placement. Folder-tree HTML structure stays unchanged; only palette and its existing reading size are retained."
+  "notes": "Screens use example data. Original screenshot files are unchanged and shown without cropping. Folder-tree names and branches remain, with three ellipsis rows indicating actual omitted content."
 }
