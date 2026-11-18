@@ -17,7 +17,7 @@ try{
     for(const route of ['/','/GYEOLSOFT']){
       await page.goto(base+route);
       await page.locator('.document-page').first().waitFor();
-      await page.locator('.page-image-button img').first().evaluate(img=>img.decode());
+      await page.locator('.page-image-button img').evaluateAll(images=>Promise.all(images.map(image=>{image.loading='eager';return image.decode();})));
       assert.equal(await page.locator('.document-page').count(),route==='/'?6:13);
       const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth);
       assert(!overflow,`${route} ${width} overflow`);
@@ -31,6 +31,7 @@ try{
       if(route==='/GYEOLSOFT'){
         await page.getByRole('tab',{name:'이력서',exact:true}).click();
         await page.waitForFunction(()=>document.querySelectorAll('.document-page').length===2);
+        await page.locator('.page-image-button img').evaluateAll(images=>Promise.all(images.map(image=>{image.loading='eager';return image.decode();})));
         assert.equal(new URL(page.url()).pathname,'/GYEOLSOFT');
         assert.equal(await page.getByRole('tab',{name:'이력서',exact:true}).getAttribute('aria-selected'),'true');
         assert(!(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth)));
