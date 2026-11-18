@@ -2,7 +2,7 @@ import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import type {KeyboardEvent} from 'react';
 import {ArrowDownToLine, ArrowUpRight, ChevronLeft, FileText, Menu, Minus, Plus, X, ZoomIn} from 'lucide-react';
 
-type DocumentPage = {id: string; title: string; html: string; width: number; height: number};
+type DocumentPage = {id: string; title: string; html: string; width: number; height: number; kind?: string; visual?: string};
 type PortfolioDocument = {id: string; title: string; pdf: string; pages: DocumentPage[]};
 type Manifest = {
   profile: {name: string; role: string; email: string; github: string};
@@ -158,8 +158,9 @@ function Viewer({manifest, company}: {manifest: Manifest; company: boolean}) {
         <a className="button download" href={doc.pdf} download><ArrowDownToLine size={16}/><span>PDF 다운로드</span></a>
       </div>
     </div>
-    <div className="workspace">
+    <div className={`workspace ${doc.id === 'resume' ? 'resume-workspace' : 'portfolio-workspace'}`}>
       <aside className={`page-index ${menu ? 'is-open' : ''}`} aria-label="문서 목차">
+        {doc.id !== 'resume' && <div className="index-project"><div className="index-project-name"><span>01</span>Project_Moa</div><figure><img src={doc.pages[active]?.visual || '/media/moa-workspace.png'} alt="예시 자료로 보는 모아 화면"/><figcaption>예시 자료로 보는 모아 화면</figcaption></figure></div>}
         <div className="index-header"><span>CONTENTS</span><span>{doc.pages.length} pages</span></div>
         <nav>{doc.pages.map((page, index) => <button key={page.id} type="button" className={active === index ? 'is-active' : ''} onClick={() => move(index)} aria-current={active === index ? 'page' : undefined}><span className="page-number">{String(index + 1).padStart(2, '0')}</span><span>{page.title}</span></button>)}</nav>
         <a className="open-pdf" href={doc.pdf} target="_blank" rel="noreferrer"><FileText size={15}/>PDF로 열기<ArrowUpRight size={13}/></a>

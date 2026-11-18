@@ -9,6 +9,8 @@
 - 선별된 문서 데이터: `content/portfolio.json`
 - 개인정보: `content/profile.json`
 - PDF 조판: `scripts/build-documents.mjs`
+- 기존 포토맵·게임인포 디자인을 모아에 적용한 페이지 구성: `scripts/moa-legacy-layout.mjs`
+- 기존 흰색 이력서 양식: `scripts/moa-resume-theme.mjs`
 - 웹 문서 뷰어: `src/app/App.tsx`, `src/styles/index.css`
 
 원문 문장은 윤문하지 않는다. 공통 본문은 트러블슈팅 이전 부분, 결소프트는 공통 + 2·14·28·3·5·27번이다. 10번은 사용자가 원고에서 삭제했으므로 제외했다. 번호는 편집용 데이터에서만 사용하며 공개 제목에는 표시하지 않는다.
@@ -23,7 +25,7 @@
 4. `npm run dev -- --host 127.0.0.1 --port 4174` — 로컬 확인.
 5. `ego-browser skill`을 읽고 현재 작업의 TaskSpace에서 `scripts/verify-desktop.mjs?space=작업ID&base=http://127.0.0.1:4174`를 import한다. 선택·찾기·탭 히스토리·목차·확대·다운로드·기존 경로 차단을 검사한다. 이번 검토에서 모바일은 제외했다.
 
-PDF는 `public/documents`와 상위 작업 폴더의 `output/pdf/20261118`에 저장된다. 웹은 같은 원고의 HTML과 범위를 제한한 `public/documents/document.css`를 함께 사용한다. 기본 읽기 화면은 뷰어 CSS로 본문18px·자동 높이를 적용한다. PDF도 본문18px(13.5pt), 줄간격1.7, 가장자리10mm를 적용하고 글자를 줄이는 대신 페이지를 나눈다. 웹 섹션은 유지하고 실제 PDF 페이지 수는 `pdfPageCount`, 검토용 이미지는 `pdfPages`로 별도 기록한다. 확대창은 고정된 원고 미리보기를 사용한다. 본문은 실제 글자여서 확대·선택·복사·브라우저 찾기가 가능하다. 파일 구조도 HTML 트리와 벡터 아이콘으로 표시한다. 다른 구성도는 원본 해상도를 유지한다.
+PDF는 `public/documents`와 상위 작업 폴더의 `output/pdf/20261118`에 저장된다. 기존 포토맵·게임인포의 검은 배경·코랄/블루·왼쪽 화면/목차·오른쪽 설명 구성을 재사용한다. 메인은10장, 결소프트는공통10장+사례12장+파일구조1장, 이력서는2장이다. 원문은 그대로 두고 의미 단위로 페이지를 구성한다. 본문은18px(13.5pt)이며 자동 분할로 설명이 고아 페이지에 남지 않도록 조판한다. 웹도 같은 HTML을 사용하되 읽기 화면은 자동 높이와18px 글씨를 유지한다. 실제 PDF 페이지 수는 `pdfPageCount`, 검토용 이미지는 `pdfPages`로 기록한다. 아키텍처는 원본 SVG의 연결·문구를 보존한 색상 변경본이며, 파일 구조는 기존 HTML 모양을 유지하고 색상만 바꾼다. 화면 사진은 실제 모아 샘플 자료 화면이며, 출처는 `content/media-sources.json`에 기록했다.
 
 `scripts/review-pdfs.py`는 실제 PDF의 원문 누락, 글자 수 감소, 본문13.5pt, 용지 밖 잘림을 검사하고 검토용 전체 이미지를 만든다.
 

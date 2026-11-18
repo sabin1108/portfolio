@@ -1,0 +1,14 @@
+{
+  "screenshots": {
+    "/media/moa-workspace.png": "E:/project/ai_folder_project/.omx/verification/demo-conversation-parity-20261117/production-1440.png",
+    "/media/moa-chat.png": "E:/project/ai_folder_project/.omx/verification/demo-full-qa-20261118/final-chat-1440.png",
+    "/media/moa-review.png": "E:/project/ai_folder_project/.omx/verification/demo-product-ui-20261116/sample-browser/review-1440.png",
+    "/media/moa-files.png": "E:/project/ai_folder_project/.omx/verification/resume-fixes-20261118/files-1440.png"
+  },
+  "architecture": {
+    "source": "E:/project/potfoilo/drafts/frontend-20261116/diagrams/moa-frontend-architecture.svg",
+    "output": "/media/moa-architecture-dark.svg",
+    "changes": "Palette only; all37 text nodes and22 paths retained."
+  },
+  "notes": "Screens use example data. Original screenshot files are unchanged; CSS frames control placement. Folder-tree HTML structure stays unchanged; only palette and its existing reading size are retained."
+}

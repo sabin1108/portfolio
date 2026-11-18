@@ -14,6 +14,10 @@ await page.events();
 const output=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../tmp/desktop-review-20261118');
 await fs.mkdir(output,{recursive:true});
 const results=[];
+const expected=JSON.parse(await fs.readFile(path.join(rootPath(),'public/documents/manifest.json'),'utf8')).documents;
+function rootPath(){return path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');}
+const portfolioCount=expected.gyeolsoft.pages.length;
+const treeIndex=expected.gyeolsoft.pages.findIndex(page=>page.title==='파일 구조');
 async function check(name,run){
   try{await run();results.push({name,passed:true});}
   catch(error){results.push({name,passed:false,error:error.message});}
@@ -58,13 +62,13 @@ await check('tabs support Back, Forward, hash links and keyboard',async()=>{
   await page.waitForFunction(()=>document.querySelectorAll('.document-page').length===2);
   assert.equal(await page.evaluate(()=>location.hash),'#resume');
   await page.evaluate(()=>history.back());
-  await page.waitForFunction(()=>document.querySelectorAll('.document-page').length===13);
+  await page.waitForFunction(n=>document.querySelectorAll('.document-page').length===n,portfolioCount);
   assert.equal(await page.evaluate(()=>location.hash),'');
   await page.evaluate(()=>history.forward());
   await page.waitForFunction(()=>document.querySelectorAll('.document-page').length===2);
   await page.focus('loc=css:#tab-resume');
   await page.keyboard.press('ArrowLeft');
-  await page.waitForFunction(()=>document.querySelectorAll('.document-page').length===13);
+  await page.waitForFunction(n=>document.querySelectorAll('.document-page').length===n,portfolioCount);
   assert.equal(await page.evaluate(()=>document.activeElement.id),'tab-portfolio');
   await page.keyboard.press('End');
   await page.waitForFunction(()=>document.querySelectorAll('.document-page').length===2);
@@ -73,7 +77,7 @@ await check('tabs support Back, Forward, hash links and keyboard',async()=>{
 
 for(const [width,height,dpr] of [[1280,900,1],[1440,1000,1],[1920,1080,2],[1024,720,1.25],[960,540,2]]){
   await page.cdp('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:dpr,mobile:false});
-  for(const [route,count,label] of [['/',6,'main'],['/GYEOLSOFT',13,'gyeolsoft'],['/GYEOLSOFT#resume',2,'resume']]){
+  for(const [route,count,label] of [['/',expected.main.pages.length,'main'],['/GYEOLSOFT',portfolioCount,'gyeolsoft'],['/GYEOLSOFT#resume',expected.resume.pages.length,'resume']]){
     await check(`desktop layout ${label} ${width}px DPR${dpr}`,async()=>{
       await open(route);
       await page.waitForFunction(n=>document.querySelectorAll('.document-page').length===n,count);
@@ -85,12 +89,13 @@ for(const [width,height,dpr] of [[1280,900,1],[1440,1000,1],[1920,1080,2],[1024,
         pages:[...document.querySelectorAll('.document-pages .document-sheet')].map(element=>{
           const sheet=element.querySelector('.sheet');
           const content=sheet.querySelector('.page-content').getBoundingClientRect();
-          const footer=sheet.querySelector('footer').getBoundingClientRect();
+          const footer=sheet.querySelector('footer');
+          const footerBounds=footer.getBoundingClientRect();
           const bounds=sheet.getBoundingClientRect();
           const frame=element.closest('.document-surface').getBoundingClientRect();
           const scale=new DOMMatrix(getComputedStyle(element).transform).a;
-          const bodyFonts=[...sheet.querySelectorAll('.body>p,.block,.experience p,.stack p')].map(node=>parseFloat(getComputedStyle(node).fontSize)*scale);
-          return{text:sheet.innerText.replace(/\s+/g,' ').trim(),gap:footer.top-content.bottom,extraWidth:bounds.width-frame.width,extraHeight:bounds.height-frame.height,bodyFonts};
+          const bodyFonts=[...sheet.querySelectorAll('.body>p,.block,.experience p,.stack p,.legacy-item>div,.legacy-cover-copy p')].map(node=>parseFloat(getComputedStyle(node).fontSize)*scale);
+          return{text:sheet.textContent.replace(/\s+/g,' ').trim(),gap:getComputedStyle(footer).display==='none'?bounds.bottom-content.bottom:footerBounds.top-content.bottom,extraWidth:bounds.width-frame.width,extraHeight:bounds.height-frame.height,bodyFonts};
         })
       }));
       assert(!state.overflow,'Horizontal browser overflow');
@@ -101,7 +106,8 @@ for(const [width,height,dpr] of [[1280,900,1],[1440,1000,1],[1920,1080,2],[1024,
       assert(state.pages.every(p=>p.gap>=6&&p.extraWidth<=1&&p.extraHeight<=1),'Page content is clipped or overlaps footer');
       const manifest=(await page.fetch('/documents/manifest.json')).body;
       const documentData=typeof manifest==='string'?JSON.parse(manifest):manifest;
-      assert.deepEqual(state.pages.map(p=>p.text),documentData.documents[label].pages.map(p=>p.text.replace(/\s+/g,' ').trim()),'Web text differs from PDF authoring');
+      const sourceText=await page.evaluate(pages=>pages.map(p=>new DOMParser().parseFromString(p.html,'text/html').querySelector('.sheet').textContent.replace(/\s+/g,' ').trim()),documentData.documents[label].pages);
+      assert.deepEqual(state.pages.map(p=>p.text),sourceText,'Web text differs from authored source');
       const downloadPath=await page.evaluate(()=>document.querySelector('a.download').getAttribute('href'));
       const response=await page.fetch(downloadPath,{saveAs:path.join(output,`${label}.pdf`)});
       assert.equal(response.status,200);
@@ -125,7 +131,7 @@ await check('Find targets real visible text',async()=>{
 
 await check('table of contents follows all pages while scrolling',async()=>{
   await open();
-  for(const index of [0,4,8,9,12,5,1]){
+  for(const index of [0,4,8,treeIndex,portfolioCount-1,5,1]){
     await page.click(`loc=css:.page-index nav button >> nth=${index}`);
     await page.waitForFunction(n=>document.querySelector('.page-index [aria-current] .page-number')?.textContent===String(n+1).padStart(2,'0'),index);
     const visible=await page.evaluate(()=>{
@@ -147,8 +153,8 @@ await check('table of contents follows all pages while scrolling',async()=>{
 
 await check('zoom preserves text, reading position and launcher focus',async()=>{
   await open();
-  await page.click('loc=css:.page-index nav button >> nth=9');
-  const launcher='loc=css:.page-zoom-button >> nth=9';
+  await page.click(`loc=css:.page-index nav button >> nth=${treeIndex}`);
+  const launcher=`loc=css:.page-zoom-button >> nth=${treeIndex}`;
   await page.focus(launcher);
   const before=await page.evaluate(()=>scrollY);
   await page.keyboard.press('Enter');
@@ -164,7 +170,7 @@ await check('zoom preserves text, reading position and launcher focus',async()=>
   await page.waitForFunction(()=>!document.querySelector('dialog'));
   const after=await page.evaluate(()=>({scrollY,focus:document.activeElement.getAttribute('aria-label'),overflow:document.body.style.overflow}));
   assert.equal(after.scrollY,before);
-  assert(after.focus.startsWith('10페이지'));
+  assert(after.focus.startsWith(`${treeIndex+1}페이지`));
   assert.equal(after.overflow,'');
 });
 
