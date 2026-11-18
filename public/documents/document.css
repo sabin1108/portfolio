@@ -181,14 +181,14 @@
 .document-sheet .sheet.resume a{color: rgb(56, 84, 114); text-decoration: none;}
 .document-sheet .sheet.resume strong{color: rgb(37, 49, 61); font-weight: 600;}
 .document-sheet .sheet.resume h1,.document-sheet .sheet.resume h2,.document-sheet .sheet.resume h3,.document-sheet .sheet.resume h4{color: rgb(37, 49, 61); letter-spacing: -0.025em;}
-.document-sheet .sheet.resume .bin-classic-header{display: grid; grid-template-columns: minmax(0px, 1fr) auto 68px; align-items: center; gap: 20px; padding: 18px 20px; border-left: 4px solid rgb(44, 67, 94); background: rgb(242, 245, 248); margin-bottom: 0px;}
+.document-sheet .sheet.resume .bin-classic-header{display: grid; grid-template-columns: minmax(0px, 1fr) auto 108px; align-items: center; gap: 20px; padding: 16px 20px; border-left: 4px solid rgb(44, 67, 94); background: rgb(242, 245, 248); margin-bottom: 0px;}
 .document-sheet .sheet.resume .bin-classic-identity{min-width: 0px;}
 .document-sheet .sheet.resume .bin-classic-header h1{font-size: 34px; line-height: 1.15; letter-spacing: -0.05em; font-weight: 700; margin: 0px; color: rgb(34, 59, 85);}
 .document-sheet .sheet.resume .bin-classic-role{font-size: 14px; line-height: 1.5; font-weight: 500; margin-top: 6px; color: rgb(99, 112, 124); letter-spacing: 0.045em;}
 .document-sheet .sheet.resume .bin-classic-contact{display: flex; flex-direction: column; align-items: flex-start; gap: 3px; min-width: 0px;}
 .document-sheet .sheet.resume .bin-classic-contact a{display: inline-flex; align-items: center; gap: 7px; color: rgb(83, 100, 119); font-size: 12.5px; line-height: 1.6; white-space: nowrap;}
 .document-sheet .sheet.resume .bin-classic-contact svg{width: 12px; height: 12px; stroke: currentcolor; stroke-width: 1.6; fill: none; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0;}
-.document-sheet .sheet.resume .bin-classic-photo{width: 68px; height: 86px; object-fit: cover; flex-shrink: 0; border-radius: 2px; background: rgb(255, 255, 255);}
+.document-sheet .sheet.resume .bin-classic-photo{width: 108px; height: 138px; object-fit: cover; flex-shrink: 0; border-radius: 2px; background: rgb(255, 255, 255);}
 .document-sheet .sheet.resume .bin-classic-intro{margin-top: 0px; font-size: 16px; line-height: 1.5;}
 .document-sheet .sheet.resume .bin-classic-intro p::first-line{font-weight: 500; color: rgb(45, 59, 71);}
 .document-sheet .sheet.resume .bin-classic-intro p + p{margin-top: 6px;}
@@ -241,7 +241,7 @@
 .document-sheet .sheet.resume.paper-a3 .bin-classic-a3-columns > main,.document-sheet .sheet.resume.paper-a3 .bin-classic-a3-columns > aside{min-width: 0px;}
 .document-sheet .sheet.resume.paper-a3 .bin-classic-a3-columns > aside{padding-left: 22px; border-left: 1px solid rgb(219, 226, 233);}
 .document-sheet .sheet.resume.paper-a3 .bin-classic-a3-columns > main > .bin-classic-section:first-child,.document-sheet .sheet.resume.paper-a3 .bin-classic-a3-columns > aside > .bin-classic-section:first-child{margin-top: 0px;}
-.document-sheet .sheet.resume.paper-a3 .bin-classic-header{margin-bottom: 16px;}
+.document-sheet .sheet.resume.paper-a3 .bin-classic-header{padding: 12px 20px; margin-bottom: 16px;}
 .document-sheet .sheet.resume.paper-a3 .bin-classic-summary{margin-top: 0px;}
 .document-sheet .sheet.resume.paper-a3 .bin-classic-summary > .bin-classic-section{margin: 0px; grid-template-columns: 70px minmax(0px, 1fr); gap: 16px; padding: 12px 0px;}
 .document-sheet .sheet.resume.paper-a3 .bin-classic-summary > .bin-classic-section > h2{margin: 0px;}

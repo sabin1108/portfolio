@@ -59,14 +59,14 @@ export const legacyResumeCss = `
 .sheet.resume a{color:#385472;text-decoration:none}
 .sheet.resume strong{color:#25313d;font-weight:600}
 .sheet.resume h1,.sheet.resume h2,.sheet.resume h3,.sheet.resume h4{color:#25313d;letter-spacing:-.025em}
-.sheet.resume .bin-classic-header{display:grid;grid-template-columns:minmax(0,1fr) auto 68px;align-items:center;gap:20px;padding:18px 20px;border-left:4px solid #2c435e;background:#f2f5f8;margin-bottom:0}
+.sheet.resume .bin-classic-header{display:grid;grid-template-columns:minmax(0,1fr) auto 108px;align-items:center;gap:20px;padding:16px 20px;border-left:4px solid #2c435e;background:#f2f5f8;margin-bottom:0}
 .sheet.resume .bin-classic-identity{min-width:0}
 .sheet.resume .bin-classic-header h1{font-size:34px;line-height:1.15;letter-spacing:-.05em;font-weight:700;margin:0;color:#223b55}
 .sheet.resume .bin-classic-role{font-size:14px;line-height:1.5;font-weight:500;margin-top:6px;color:#63707c;letter-spacing:.045em}
 .sheet.resume .bin-classic-contact{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0}
 .sheet.resume .bin-classic-contact a{display:inline-flex;align-items:center;gap:7px;color:#536477;font-size:12.5px;line-height:1.6;white-space:nowrap}
 .sheet.resume .bin-classic-contact svg{width:12px;height:12px;stroke:currentColor;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-.sheet.resume .bin-classic-photo{width:68px;height:86px;object-fit:cover;flex-shrink:0;border-radius:2px;background:#fff}
+.sheet.resume .bin-classic-photo{width:108px;height:138px;object-fit:cover;flex-shrink:0;border-radius:2px;background:#fff}
 .sheet.resume .bin-classic-intro{margin-top:0;font-size:16px;line-height:1.5}
 .sheet.resume .bin-classic-intro p::first-line{font-weight:500;color:#2d3b47}
 .sheet.resume .bin-classic-intro p+p{margin-top:6px}
@@ -119,7 +119,7 @@ export const legacyResumeCss = `
 .sheet.resume.paper-a3 .bin-classic-a3-columns>main,.sheet.resume.paper-a3 .bin-classic-a3-columns>aside{min-width:0}
 .sheet.resume.paper-a3 .bin-classic-a3-columns>aside{padding-left:22px;border-left:1px solid #dbe2e9}
 .sheet.resume.paper-a3 .bin-classic-a3-columns>main>.bin-classic-section:first-child,.sheet.resume.paper-a3 .bin-classic-a3-columns>aside>.bin-classic-section:first-child{margin-top:0}
-.sheet.resume.paper-a3 .bin-classic-header{margin-bottom:16px}
+.sheet.resume.paper-a3 .bin-classic-header{padding:12px 20px;margin-bottom:16px}
 .sheet.resume.paper-a3 .bin-classic-summary{margin-top:0}
 .sheet.resume.paper-a3 .bin-classic-summary>.bin-classic-section{margin:0;grid-template-columns:70px minmax(0,1fr);gap:16px;padding:12px 0}
 .sheet.resume.paper-a3 .bin-classic-summary>.bin-classic-section>h2{margin:0}
