@@ -60,9 +60,12 @@ minsabin1108@gmail.com · [GitHub](https://github.com/sabin1108) · [포트폴�
 
 ## 기술 역량
 
-**Frontend:** React, TypeScript, Next.js  
-**State/API:** Context API, Fetch API, Better Auth  
-**Style/UI:** CSS Modules  
+**Frontend:** React, TypeScript, Next.js
+
+**State/API:** Context API, Fetch API, Better Auth
+
+**Style/UI:** CSS Modules
+
 **Quality:** Vitest, ESLint, Lighthouse
 
 ## 학력 · 자격 · 교육
