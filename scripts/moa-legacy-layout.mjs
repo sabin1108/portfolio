@@ -33,7 +33,7 @@ export function createLegacyPages(sourcePages, {renderTokens, lex, inline, folde
   assert.equal(introParagraphs.length, 4, 'Intro layout expects the four preserved manuscript paragraphs');
   assert(metrics, 'Intro measurement table missing');
   add({id: intro.id, title: intro.title, kind: 'intro', chapter: 0, wide: true,
-    content: `<div class="legacy-cover-grid"><div class="legacy-cover-title"><span class="legacy-eyebrow">project_moa</span><h1>${escape(intro.title)}</h1>${picture('/media/moa-workspace.png')}</div><div class="legacy-cover-copy">${html(introParagraphs.slice(1), 'intro')}</div></div><div class="legacy-cover-flow">${html(introParagraphs.slice(0, 1), 'intro')}</div>${html([metrics], 'intro')}`});
+    content: `<div class="legacy-cover-grid"><div class="legacy-cover-title"><div class="legacy-project-name"><span>01</span>Project_Moa</div>${picture('/media/moa-workspace.png')}</div><div class="legacy-cover-copy"><span class="legacy-eyebrow">project_moa</span><h1>${escape(intro.title)}</h1>${html(introParagraphs.slice(1), 'intro')}</div></div><div class="legacy-cover-flow">${html(introParagraphs.slice(0, 1), 'intro')}</div>${html([metrics], 'intro')}`});
 
   const overview = byKind('overview');
   add({id: overview.id, title: overview.title, chapter: 0, content: html(tokens(overview), 'overview')});
@@ -121,10 +121,9 @@ export const legacyPortfolioCss = `
 .legacy-sheet .legacy-project-name{display:flex;align-items:center;gap:12px;font-size:15px;font-weight:650;margin-bottom:18px}
 .legacy-sheet .legacy-project-name>span{font-size:11px;color:var(--legacy-accent)}
 .legacy-sheet .legacy-picture{margin:0}
-.legacy-sheet .legacy-picture img{display:block;width:100%;height:222px;object-fit:contain;object-position:center;background:var(--legacy-panel);border:1px solid #ffffff24;border-radius:10px}
-.legacy-sheet .legacy-picture img[src$="moa-review.png"]{object-fit:cover;object-position:50% 0}
+.legacy-sheet .legacy-picture img{display:block;width:100%;height:300px;object-fit:contain;object-position:center;background:var(--legacy-panel);border:1px solid #ffffff24;border-radius:10px}
 .legacy-sheet .legacy-picture figcaption{font-size:11px;line-height:1.6;color:#a7b4ad;margin-top:9px}
-.legacy-sheet .legacy-chapters{margin-top:22px;padding-top:9px;border-top:1px solid var(--legacy-line)}
+.legacy-sheet .legacy-chapters{display:none;margin-top:22px;padding-top:9px;border-top:1px solid var(--legacy-line)}
 .legacy-sheet .legacy-chapters>div{display:flex;align-items:baseline;gap:12px;border-left:2px solid transparent;padding:8px 10px;color:var(--legacy-muted);font-size:12px;line-height:1.6}
 .legacy-sheet .legacy-chapters>div>span{font-size:10px}
 .legacy-sheet .legacy-chapters .is-current{color:var(--legacy-accent);border-left-color:var(--legacy-accent);background:color-mix(in srgb,var(--legacy-accent) 7%,transparent)}
@@ -132,9 +131,8 @@ export const legacyPortfolioCss = `
 .legacy-sheet .legacy-item h3{font-size:14px;color:var(--legacy-accent);margin:0 0 10px;line-height:1.5}
 .legacy-sheet .legacy-result{padding:14px 18px;border-top:0;border-left:2px solid var(--legacy-accent);background:color-mix(in srgb,var(--legacy-accent) 7%,transparent)}
 .legacy-sheet .legacy-cover-grid{display:grid;grid-template-columns:310px minmax(0,1fr);gap:44px;align-items:start}
-.legacy-sheet .legacy-cover-title h1{font-size:39px;line-height:1.23;margin-top:13px;margin-bottom:22px}
-.legacy-sheet .legacy-cover-title .legacy-picture img{height:200px}
-.legacy-sheet .legacy-cover-copy{padding-top:26px}
+.legacy-sheet .legacy-cover-copy h1{font-size:39px;line-height:1.23;margin-top:13px;margin-bottom:22px}
+.legacy-sheet .legacy-cover-copy{padding-top:0}
 .legacy-sheet .legacy-cover-copy p{font-size:18px;line-height:1.65;margin-bottom:18px}
 .legacy-sheet .legacy-cover-flow{border-left:2px solid var(--legacy-accent);padding:0 0 0 15px;margin:23px 0 0}
 .legacy-sheet .legacy-cover-flow p{font-size:17px;line-height:1.6;margin:0;color:var(--legacy-accent)}

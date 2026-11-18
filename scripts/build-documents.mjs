@@ -4,7 +4,7 @@ import {fileURLToPath,pathToFileURL} from 'node:url';
 import assert from 'node:assert/strict';
 import {spawnSync} from 'node:child_process';
 import {legacyPortfolioCss,createLegacyPages} from './moa-legacy-layout.mjs';
-import {legacyResumeCss} from './moa-resume-theme.mjs';
+import {legacyResumeCss,createResumeSheets} from './moa-resume-theme.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const bundle='C:/Program Files/WindowsApps/OpenAI.CodexPrimaryRuntime.v26-1116-1210-0_26.1116.1210.0_x64__3k8sg7r9htsxt/dependencies';
 const {marked}=await import(pathToFileURL(bundle+'/node/node_modules/marked/lib/marked.esm.js'));
@@ -61,7 +61,8 @@ const css=`
 `+legacyPortfolioCss+`
 .legacy-sheet .tree-diagram{height:auto;padding:10px 0}.legacy-sheet .folder-tree{font-size:18px}.legacy-sheet .tree-description{font-size:17px}.legacy-sheet .tree-row{min-height:44px}
 `+legacyResumeCss;
-function resumeSheets(){
+// Keep the prior resume's text as an independent preservation check for layout changes.
+function expectedResumeSource(){
   const paragraphs=data.common[0].markdown.split(/\n\s*\n/).filter(Boolean);
   const intro=paragraphs[1], role=paragraphs[2],skills=data.common[1].markdown.match(/\*\*Frontend:[\s\S]*?(?=\n\s*!\[\[|$)/)?.[0]||'';
   assert(intro&&role);
@@ -76,6 +77,7 @@ function resumeSheets(){
     {id:'resume-experience',title:'프로젝트 경험',html:`<h1>프로젝트 경험</h1>${entries.join('')}`}
   ].map((p,index)=>({...p,kind:'resume',markup:`<section class="sheet resume" data-page-id="${p.id}"><header><span>${profile.name} / ${profile.role}</span><span>GYEOLSOFT · RESUME</span></header><div class="page-content"><div class="body">${p.html}</div></div><footer><span>${profile.email}</span><span>${index+1} / 2</span></footer></section>`}));
 }
+function resumeSheets(){return createResumeSheets(data,profile,{inline,marked,escape,portraitUrl:pathToFileURL(path.join(root,'public/media/portrait.jpg')).href});}
 const layoutHelpers={renderTokens,lex:markdown=>marked.lexer(markdown,{gfm:true,breaks:true}),inline,folderTree,profile};
 const documents=[
   {id:'main',title:'포트폴리오',file:'main-portfolio.pdf',pages:createLegacyPages(data.common,layoutHelpers)},
@@ -98,7 +100,7 @@ function manuscriptContent(pages){
     return `<div class="page-content"><h1>${escape(source.title)}</h1>${renderTokens(marked.lexer(markdown,{gfm:true,breaks:true}),source.kind)}${figures}</div>`;
   });
 }
-const sourceCatalog={main:manuscriptContent(data.common),gyeolsoft:manuscriptContent(data.gyeol),resume:resumeSheets().map(page=>page.markup)};
+const sourceCatalog={main:manuscriptContent(data.common),gyeolsoft:manuscriptContent(data.gyeol),resume:expectedResumeSource().map(page=>page.markup)};
 let documentCss='';
 try{
   const page=await browser.newPage({viewport:{width:1400,height:1000}});
@@ -159,7 +161,7 @@ try{
     },pathToFileURL(path.join(root,'public')+path.sep).href);
     if(documentCss)assert.equal(webDocument.css,documentCss,'All documents must share authoring styles');
     else documentCss=webDocument.css;
-    assert(webDocument.pages.every(p=>p.width>0&&p.height>0&&p.html.includes('class="body"')));
+    assert(webDocument.pages.every(p=>p.width>0&&p.height>0&&/class="[^"]*\bbody\b[^"]*"/.test(p.html)));
     const newSourceText={units:webDocument.pages.flatMap(p=>p.sourceText.units),bodyText:webDocument.pages.map(p=>p.sourceText.bodyText).join('\n')};
     const flat=value=>value.replace(/\s+/g,'');
     const missing=baselineSources[doc.id].units.filter(unit=>!flat(newSourceText.bodyText).includes(flat(unit)));
@@ -185,7 +187,7 @@ try{
     await page.evaluate(async()=>{await document.fonts.ready;await Promise.all([...document.images].map(image=>image.decode()));});
     const printState=await page.evaluate(()=>({
       bodyText:[...document.querySelectorAll('.sheet .page-content')].map(element=>element.textContent).join('\n'),
-      fonts:[...document.querySelectorAll('.body>p,.block,.experience p,.stack p')].map(element=>parseFloat(getComputedStyle(element).fontSize))
+      fonts:[...document.querySelectorAll('.body>p,.block,.experience p,.stack p,.legacy-item>div,.bin-classic-achievements p,.bin-classic-intro,.bin-classic-role-line,.bin-classic-skill-row dd')].map(element=>parseFloat(getComputedStyle(element).fontSize))
     }));
     assert.equal(printState.bodyText,newSourceText.bodyText,'Print styling changed content');
     assert(printState.fonts.every(size=>size>=18),'Print primary text must be18px or larger');

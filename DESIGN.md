@@ -3,7 +3,7 @@
 ## Source of truth
 - Status: Active
 - Last refreshed: 2026-11-18
-- Latest direction: reuse the archived PhotoMap/GameInfo design and replace its content with Moa. The user rejected the generic light layout and fragmented PDF4/5. Folder-tree geometry must stay intact; recolor only. Update resume using the existing classic resume design.
+- Latest direction: reuse the archived PhotoMap/GameInfo design with Moa content. Show one portfolio page at a time, with a slim far-left contents rail and large upper-left execution image. Restore the actual BinClassicResume hierarchy. Folder-tree geometry stays intact; recolor only.
 - Visual references: archive/legacy-20261118/_workspace/presentation-reference/new-page-4.jpg and new-page-5.jpg; archived ProjectPresentation.tsx, project-presentation.css, BinClassicResume.tsx and bin-resume.css.
 - Primary surfaces: `/` and `/GYEOLSOFT` only. The latter has portfolio/resume tabs on the same pathname.
 - User manuscript: `D:/sabin/note/일단 작성할 포트폴리오.md`. Preserve prose verbatim, including the user's edits. Remove only troubleshooting heading numbers and editorial fence/section markers outside the selected text.
@@ -11,7 +11,7 @@
 - Existing `src`, `public` and prior design guidance are preserved under `archive/legacy-20261118/`. Old projects/company pages must not be bundled or published.
 
 ## Brand
-- Reuse the existing personal portfolio identity: dark editorial pages, a project screenshot and chapter list on the left, narrative on the right. Resume stays classic white paper.
+- Reuse the existing personal portfolio identity: dark editorial pages, a large project screenshot on the left, narrative on the right. Contents is a separate slim web rail; hide the repeated chapter list in PDF. Resume stays classic white paper.
 - Trust signals: actual manuscript, existing personal profile/photo, actual diagrams, unaltered measurements.
 - Avoid gradients, decorative dashboards, animated counters, generic marketing slogans, invented achievements, new editorial copy.
 
@@ -23,7 +23,7 @@
 
 ## Personas and jobs
 - Frontend hiring reviewers scanning the project, then reading decisions and troubleshooting.
-- Desktop document review and mobile link opening; download/open PDF for larger reading.
+- Desktop document review; download/open PDF for larger reading. Mobile review is excluded by user request.
 
 ## Information architecture
 - `/`: common portfolio, profile name, contact, common PDF download.
@@ -38,7 +38,8 @@
 ## Visual language
 - Portfolio: background#0c1010, panel#131a1a, warm text#f2f0ea, muted#b5beb8, coral#e39a80, blue#87c5dc, rules#2c3533. Resume: white, ink#20262e, muted#4e5968 and blue#245f95.
 - System Korean sans-serif with an available local Korean font embedded/used in PDF generation. No remote font dependency.
-- Portfolio uses authored fixed A4 landscape scenes; resume uses two A4 portrait pages. Both retain18px/13.5pt body. Each authored scene maps to one PDF page and one web section. Web text reflows without shrinking; explicit zoom shows the authored page.
+- Portfolio uses authored fixed A4 landscape scenes; resume uses two A4 portrait pages. Both retain18px/13.5pt body. Each authored scene maps to one PDF page and one web slide. Only the current portfolio slide is mounted; text reflows without shrinking and zoom shows the authored page.
+- Resume restores introduction/contact with photo on the right, project/role, two featured achievements side by side followed by full-width achievements, then skill rows and education. Preserve current text units and personal facts.
 - Architecture reuses the exact original SVG topology/labels with the dark palette and genuine brand marks. File-tree HTML, names, indentation and connector geometry are retained with coral/blue recoloring. Actual Moa sample-data screenshots are framed consistently; do not manufacture before/after images or service screens.
 - Borders and small radii only on controls; no floating decorative cards.
 - No entrance animation, forced scroll, wheel interception, or carousel autoplay.
@@ -51,12 +52,12 @@
 ## Accessibility
 - Semantic navigation, headings, buttons; visible keyboard focus.
 - Selected tabs follow URL hash and browser history; keyboard arrow navigation. Escape closes zoom, restores focus and reading position; background scrolling is locked. Native visible text supports selection and browser Find.
-- Normal native scrolling. Reduced-motion preference respected by having no essential motion.
+- Portfolio uses explicit previous/next buttons and Left/Right keys, with one visible slide. Do not intercept the mouse wheel. Resume retains native vertical scrolling. Reduced-motion preference is respected by having no essential motion.
 
 ## Responsive behavior
-- Desktop portfolio: large actual screenshot and interactive page index on the left, reading content on the right. The PDF's static left index is hidden only in web reading mode to avoid duplicate sidebars. Resume uses its own white paper with photo right. All body stays18px; narrow desktop work areas reflow instead of shrinking.
-- Mobile: compact controls, single-column pages, tap page to inspect at readable zoom.
-- Current review scope: desktop only, per user. Check 1280/1440/1920px, DPR2, browser zoom, keyboard use, old-route rejection and PDF downloads. Mobile behavior is preserved but excluded from this review.
+- Desktop portfolio:64px button rail at the far left. Menu expands to264px as an overlay without shifting the slide. Actual execution screenshot is large in the active slide's upper-left; the app's own menu in the image is not hidden. Body remains18px. One page occupies the viewer between header and page controls; neighboring pages never show together.
+- PDF: hide the repeated chapter list while retaining the screenshot/narrative composition. Resume uses its original white paper structure with photo right and normal vertical reading on web.
+- Current review scope: desktop only, per user. Check every slide at1280/1440/1920px, DPR2, keyboard use, old-route rejection and PDF downloads. Mobile behavior is excluded from review.
 
 ## Interaction states
 - Loading: short document-loading status.
@@ -73,7 +74,7 @@
 - React18 + Vite6 existing toolchain. No dependency upgrades or new framework.
 - Generated content must record source hashes and selected/excluded case IDs.
 - Old files with uncommitted user edits stay intact in archive.
-- Build and route checks, PDF text-preservation checks, raster inspection and desktop/mobile viewer checks before deployment.
+- Build and route checks, PDF text-preservation checks, raster inspection and desktop viewer checks before deployment.
 
 ## Open questions
 - None blocking. User will revise prose after viewing; editable manuscript snapshot and source mapping remain local.

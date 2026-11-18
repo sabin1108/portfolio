@@ -69,8 +69,9 @@ function Viewer({manifest, company}: {manifest: Manifest; company: boolean}) {
   const [active, setActive] = useState(0);
   const [menu, setMenu] = useState(false);
   const [expanded, setExpanded] = useState<DocumentPage | null>(null);
-  const bar = useRef<HTMLDivElement>(null);
   const doc = company ? (tab === 'resume' ? manifest.documents.resume : manifest.documents.gyeolsoft) : manifest.documents.main;
+  const resume = doc.id === 'resume';
+  const current = doc.pages[Math.min(active, doc.pages.length - 1)];
   const {profile} = manifest;
 
   useEffect(() => {
@@ -88,42 +89,64 @@ function Viewer({manifest, company}: {manifest: Manifest; company: boolean}) {
   }, [company]);
 
   useLayoutEffect(() => {
-    document.title = `${company ? '결소프트 · ' : ''}${tab === 'resume' ? '이력서' : '포트폴리오'} | ${profile.name}`;
+    document.title = `${company ? '결소프트 · ' : ''}${resume ? '이력서' : '포트폴리오'} | ${profile.name}`;
     setActive(0);
     setMenu(false);
     setExpanded(null);
     window.scrollTo({top: 0});
-  }, [doc.id, company, profile.name, tab]);
+  }, [doc.id, company, profile.name, resume]);
 
   useEffect(() => {
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const top = Math.max(0, bar.current?.getBoundingClientRect().bottom || 0);
-      const bottom = window.innerHeight;
-      let best = 0;
-      let largest = -1;
-      // Compare all pages; observer callbacks contain only the entries that changed.
-      document.querySelectorAll<HTMLElement>('.document-page').forEach((element, index) => {
-        const bounds = element.getBoundingClientRect();
-        const overlap = Math.max(0, Math.min(bounds.bottom, bottom) - Math.max(bounds.top, top));
-        if (overlap > largest) {largest = overlap; best = index;}
+    if (resume) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {document.body.style.overflow = previousOverflow;};
+  }, [resume]);
+
+  useLayoutEffect(() => {
+    document.querySelectorAll('.slide-document .legacy-copy,.slide-document .legacy-wide-content,.slide-document .slide-reader').forEach(element => {element.scrollTop = 0;});
+  }, [active, doc.id]);
+
+  useEffect(() => {
+    if (!resume) return;
+    const syncPage = () => {
+      let index = 0;
+      document.querySelectorAll('.resume-page').forEach((element, pageIndex) => {
+        if (element.getBoundingClientRect().top <= innerHeight * .4) index = pageIndex;
       });
-      setActive(best);
+      setActive(index);
     };
-    const schedule = () => {if (!frame) frame = requestAnimationFrame(update);};
-    const observer = new ResizeObserver(schedule);
-    document.querySelectorAll('.document-page').forEach(element => observer.observe(element));
-    window.addEventListener('scroll', schedule, {passive: true});
-    window.addEventListener('resize', schedule);
-    schedule();
+    syncPage();
+    window.addEventListener('scroll', syncPage, {passive: true});
+    window.addEventListener('resize', syncPage);
     return () => {
-      cancelAnimationFrame(frame);
-      observer.disconnect();
-      window.removeEventListener('scroll', schedule);
-      window.removeEventListener('resize', schedule);
+      window.removeEventListener('scroll', syncPage);
+      window.removeEventListener('resize', syncPage);
     };
-  }, [doc.id]);
+  }, [doc.id, resume]);
+
+  useEffect(() => {
+    const handleKey = (event: globalThis.KeyboardEvent) => {
+      const target = event.target;
+      if (event.defaultPrevented || document.querySelector('dialog[open]')) return;
+      if (menu) {
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          setMenu(false);
+          document.querySelector<HTMLButtonElement>('.toc-toggle')?.focus();
+        }
+        return;
+      }
+      if (resume || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+      if (target instanceof Element && target.closest('input,textarea,select,[contenteditable=true],[role=tab]')) return;
+      if (window.getSelection()?.type === 'Range') return;
+      if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+      event.preventDefault();
+      setActive(index => Math.max(0, Math.min(doc.pages.length - 1, index + (event.key === 'ArrowRight' ? 1 : -1))));
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [doc.id, doc.pages.length, resume, menu]);
 
   function selectTab(next: Tab) {
     if (next === tab) return;
@@ -138,45 +161,48 @@ function Viewer({manifest, company}: {manifest: Manifest; company: boolean}) {
     document.getElementById(`tab-${next}`)?.focus();
   }
   function move(index: number) {
-    const element = document.getElementById(`${doc.id}-${index}`);
-    if (!element) return;
-    const offset = (bar.current?.getBoundingClientRect().height || 0) + 20;
-    window.scrollTo({top: window.scrollY + element.getBoundingClientRect().top - offset, behavior: 'instant'});
-    setActive(index);
+    const next = Math.max(0, Math.min(doc.pages.length - 1, index));
+    setActive(next);
     setMenu(false);
+    if (resume) document.getElementById(`${doc.id}-${next}`)?.scrollIntoView({block: 'start', behavior: 'instant'});
+  }
+  function renderPage(page: DocumentPage, index: number) {
+    return <section key={page.id} id={`${doc.id}-${index}`} className={`document-page ${resume ? 'resume-page' : 'slide-reader'}`} data-page={index} aria-label={page.title}>
+      <DocumentSurface page={page}/>
+      {resume && <div className="page-caption"><span>{page.title}</span><div className="page-caption-actions"><span>{index + 1} / {doc.pages.length}</span><button className="page-zoom-button" type="button" onClick={() => setExpanded(page)} aria-label={`${index + 1}페이지 ${page.title} 확대 보기`}><ZoomIn size={14}/>확대</button></div></div>}
+    </section>;
   }
 
-  return <>
+  return <div className={`viewer-shell ${resume ? 'resume-view' : 'deck-view'}`}>
     <a className="skip-link" href="#document" onClick={event => {event.preventDefault(); document.getElementById('document')?.focus();}}>본문으로 이동</a>
+    <aside className={`page-index toc-rail ${menu ? 'is-open' : ''}`} aria-label="문서 목차">
+      <button className="toc-toggle" type="button" aria-expanded={menu} aria-label={menu ? '목차 접기' : '목차 펼치기'} onClick={() => setMenu(!menu)}>{menu ? <X size={20}/> : <Menu size={20}/>}</button>
+      <div className="index-header"><span>CONTENTS</span><span>{doc.pages.length} pages</span></div>
+      <nav>{doc.pages.map((page, index) => <button key={page.id} type="button" className={active === index ? 'is-active' : ''} onClick={() => move(index)} aria-current={active === index ? 'page' : undefined} aria-label={`${index + 1}페이지 ${page.title}`} title={page.title}><span className="page-number">{String(index + 1).padStart(2, '0')}</span><span className="toc-label">{page.title}</span></button>)}</nav>
+      <a className="open-pdf" href={doc.pdf} target="_blank" rel="noreferrer" aria-label="PDF로 열기"><FileText size={17}/><span>PDF로 열기</span></a>
+    </aside>
+    {menu && <button type="button" className="toc-backdrop" aria-label="목차 닫기" onClick={() => setMenu(false)}/>}
     <header className="site-header"><div className="identity"><a href="/">{profile.name}</a><span>{profile.role}</span></div><div className="header-links"><a href={`mailto:${profile.email}`}>Email<ArrowUpRight size={13}/></a><a href={profile.github} target="_blank" rel="noreferrer">GitHub<ArrowUpRight size={13}/></a></div></header>
-    <div className="document-bar" ref={bar}>
+    <div className="document-bar">
       <div className="document-heading"><span className="document-context">{company ? 'GYEOLSOFT' : 'PORTFOLIO'}</span><h1>{doc.title}</h1></div>
       <div className="document-actions">
-        {company && <div className="document-tabs" role="tablist" aria-label="문서 선택">
-          {(['portfolio', 'resume'] as const).map(value => <button key={value} id={`tab-${value}`} type="button" role="tab" aria-selected={tab === value} aria-controls="document" tabIndex={tab === value ? 0 : -1} onClick={() => selectTab(value)} onKeyDown={handleTabKey}>{value === 'portfolio' ? '포트폴리오' : '이력서'}</button>)}
-        </div>}
+        {company && <div className="document-tabs" role="tablist" aria-label="문서 선택">{(['portfolio', 'resume'] as const).map(value => <button key={value} id={`tab-${value}`} type="button" role="tab" aria-selected={tab === value} aria-controls="document" tabIndex={tab === value ? 0 : -1} onClick={() => selectTab(value)} onKeyDown={handleTabKey}>{value === 'portfolio' ? '포트폴리오' : '이력서'}</button>)}</div>}
         <a className="button download" href={doc.pdf} download><ArrowDownToLine size={16}/><span>PDF 다운로드</span></a>
       </div>
     </div>
-    <div className={`workspace ${doc.id === 'resume' ? 'resume-workspace' : 'portfolio-workspace'}`}>
-      <aside className={`page-index ${menu ? 'is-open' : ''}`} aria-label="문서 목차">
-        {doc.id !== 'resume' && <div className="index-project"><div className="index-project-name"><span>01</span>Project_Moa</div><figure><img src={doc.pages[active]?.visual || '/media/moa-workspace.png'} alt="예시 자료로 보는 모아 화면"/><figcaption>예시 자료로 보는 모아 화면</figcaption></figure></div>}
-        <div className="index-header"><span>CONTENTS</span><span>{doc.pages.length} pages</span></div>
-        <nav>{doc.pages.map((page, index) => <button key={page.id} type="button" className={active === index ? 'is-active' : ''} onClick={() => move(index)} aria-current={active === index ? 'page' : undefined}><span className="page-number">{String(index + 1).padStart(2, '0')}</span><span>{page.title}</span></button>)}</nav>
-        <a className="open-pdf" href={doc.pdf} target="_blank" rel="noreferrer"><FileText size={15}/>PDF로 열기<ArrowUpRight size={13}/></a>
-      </aside>
-      <main id="document" tabIndex={-1} className="document-pages" aria-label={doc.title} role={company ? 'tabpanel' : undefined} aria-labelledby={company ? `tab-${tab}` : undefined}>
-        <div className="reader-note"><span>본문을 선택하거나 검색할 수 있습니다. 크게 보려면 확대를 누르세요.</span><span>{doc.pages.length} pages</span></div>
-        {doc.pages.map((page, index) => <section key={page.id} id={`${doc.id}-${index}`} className={`document-page ${doc.id === 'resume' ? 'resume-page' : ''}`} data-page={index} aria-label={page.title}>
-          <DocumentSurface page={page}/>
-          <div className="page-caption"><span>{page.title}</span><div className="page-caption-actions"><span>{index + 1} / {doc.pages.length}</span><button className="page-zoom-button" type="button" onClick={() => setExpanded(page)} aria-label={`${index + 1}페이지 ${page.title} 확대 보기`}><ZoomIn size={14}/>확대</button></div></div>
-        </section>)}
+    <div className={`workspace ${resume ? 'resume-workspace' : 'portfolio-workspace'}`}>
+      <main id="document" tabIndex={-1} className={`document-pages ${resume ? '' : 'slide-document'}`} aria-label={doc.title} role={company ? 'tabpanel' : undefined} aria-labelledby={company ? `tab-${tab}` : undefined}>
+        {resume ? doc.pages.map(renderPage) : renderPage(current, Math.min(active, doc.pages.length - 1))}
       </main>
     </div>
-    <button className="mobile-index-toggle" type="button" aria-expanded={menu} onClick={() => setMenu(!menu)}>{menu ? <X size={17}/> : <Menu size={17}/>}<span>{active + 1} / {doc.pages.length}</span><span>목차</span></button>
-    <footer className="site-footer"><span>{profile.name}</span><a href={`mailto:${profile.email}`}>{profile.email}</a></footer>
+    {!resume && <div className="slide-controls">
+      <button className="previous-page" type="button" onClick={() => move(active - 1)} disabled={active === 0}><ChevronLeft size={18}/>이전</button>
+      <div className="slide-status" role="status"><span>{String(active + 1).padStart(2, '0')} / {String(doc.pages.length).padStart(2, '0')}</span><span>{current.title}</span></div>
+      <div className="slide-control-actions"><button className="page-zoom-button" type="button" onClick={() => setExpanded(current)} aria-label={`${active + 1}페이지 ${current.title} 확대 보기`}><ZoomIn size={14}/>확대</button><button className="next-page" type="button" onClick={() => move(active + 1)} disabled={active === doc.pages.length - 1}>다음<ChevronLeft className="next-icon" size={18}/></button></div>
+    </div>}
+    {resume && <footer className="site-footer"><span>{profile.name}</span><a href={`mailto:${profile.email}`}>{profile.email}</a></footer>}
     {expanded && <ExpandedPage page={expanded} onClose={() => setExpanded(null)}/>}
-  </>;
+  </div>;
 }
 
 export default function App() {
