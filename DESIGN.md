@@ -36,7 +36,7 @@
 ## Visual language
 - Paper #fffefa, ink #172335, muted #667085, blue #2d4e91, fine rules #d9dfe7. Web background #f3f4f6.
 - System Korean sans-serif with an available local Korean font embedded/used in PDF generation. No remote font dependency.
-- Landscape A4 portfolio pages; portrait A4 resume. Screen viewer displays the generated PDF pages, with text alternatives.
+- Landscape A4 portfolio pages; portrait A4 resume. Screen viewer reuses the exact PDF authoring HTML and scoped CSS: selectable native text rather than rasterized pages. Diagram originals stay at full resolution; file structure uses a native HTML tree with vector icons.
 - Borders and small radii only on controls; no floating decorative cards.
 - No entrance animation, forced scroll, wheel interception, or carousel autoplay.
 
@@ -47,13 +47,13 @@
 
 ## Accessibility
 - Semantic navigation, headings, buttons; visible keyboard focus.
-- Selected tab states, Escape closes zoom, dialog focus restoration, image text alternatives.
+- Selected tabs follow URL hash and browser history; keyboard arrow navigation. Escape closes zoom, restores focus and reading position; background scrolling is locked. Native visible text supports selection and browser Find.
 - Normal native scrolling. Reduced-motion preference respected by having no essential motion.
 
 ## Responsive behavior
 - Desktop: narrow page index beside a central document canvas.
 - Mobile: compact controls, single-column pages, tap page to inspect at readable zoom.
-- Check 390/768/1440/1920px, keyboard use, old-route rejection, PDF downloads.
+- Current review scope: desktop only, per user. Check 1280/1440/1920px, DPR2, browser zoom, keyboard use, old-route rejection and PDF downloads. Mobile behavior is preserved but excluded from this review.
 
 ## Interaction states
 - Loading: short document-loading status.

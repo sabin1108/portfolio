@@ -18,12 +18,12 @@
 ## 다시 만들기
 
 1. `node scripts/import-moa-source.mjs` — 현재 D 원고를 다시 가져온다.
-2. `node scripts/build-documents.mjs` — 설치된 Codex runtime의 Markdown/PDF 도구와 Chrome으로 PDF 및 웹용 페이지 이미지를 만든다.
+2. `node scripts/build-documents.mjs` — PDF와 동일한 웹용 HTML·문서 전용 CSS를 만든다. 페이지 이미지는 PDF 조판 검토용으로만 보관한다.
 3. `npm run build` — 웹 배포 파일을 만든다.
 4. `npm run dev -- --host 127.0.0.1 --port 4174` — 로컬 확인.
-5. `node scripts/verify-moa-site.mjs http://127.0.0.1:4174` — 문서 표시·탭·확대·다운로드·기존 경로 차단 검사.
+5. `ego-browser skill`을 읽고 현재 작업의 TaskSpace에서 `scripts/verify-desktop.mjs?space=작업ID&base=http://127.0.0.1:4174`를 import한다. 선택·찾기·탭 히스토리·목차·확대·다운로드·기존 경로 차단을 검사한다. 이번 검토에서 모바일은 제외했다.
 
-PDF는 `public/documents`와 상위 작업 폴더의 `output/pdf/20261118`에 저장된다. 웹은 같은 PDF를 렌더링한 페이지 이미지를 보여주며, 페이지별 텍스트도 화면 읽기 프로그램에서 접근할 수 있다.
+PDF는 `public/documents`와 상위 작업 폴더의 `output/pdf/20261118`에 저장된다. 웹은 PDF 제작에 사용한 HTML과 범위를 제한한 `public/documents/document.css`를 함께 사용한다. 본문은 실제 글자여서 확대·선택·복사·브라우저 찾기가 가능하다. 파일 구조도 HTML 트리와 벡터 아이콘으로 표시한다. 다른 구성도는 원본 해상도를 유지한다.
 
 ## 기존 자료 보관
 
