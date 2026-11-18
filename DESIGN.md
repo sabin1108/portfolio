@@ -3,7 +3,7 @@
 ## Source of truth
 - Status: Active
 - Last refreshed: 2026-11-18
-- Latest direction: preserve prose and add evidence-based illustrations, prominent numeric outcome cards and a warm neutral palette. Rebalance technology pages to use their lower area at large desktop sizes. Mark omitted file-tree branches with ellipses. Keep one-wheel-gesture paging, the slim rail and classic resume hierarchy.
+- Latest direction: keep the portfolio unchanged; refine the resume into a quiet editorial print design. Preserve all prose, contact links, motivation directly after introduction, A4 portrait2 pages and A3 landscape1 page. Use Noto Sans KR from the installed system, charcoal typography, muted teal evidence accents, whitespace instead of repeated rules, plain research labels and a compact identity/contact/photo header. No decorative cards, skill ratings or added copy.
 - Visual references: archive/legacy-20261118/_workspace/presentation-reference/new-page-4.jpg and new-page-5.jpg; archived ProjectPresentation.tsx, project-presentation.css, BinClassicResume.tsx and bin-resume.css.
 - Current composition reference: `C:/Users/sabin/Desktop/임시 c드라이브 파일/포트폴리오/학습용/해준이 포폴.pdf`, all12 pages rendered; especially flow/page3, technology/page4, features/page5 and troubleshooting/pages6–9. Evidence and plan: `docs/portfolio-wheel-layout-plan.md`.
 - Primary surfaces: `/` and `/GYEOLSOFT` only. The latter has portfolio/resume tabs on the same pathname.
@@ -75,6 +75,8 @@
 - No case numbers in published troubleshooting headings.
 - Resume uses existing personal facts and verbatim manuscript extracts; no invented job motivation or old project claims.
 - Resume content revision (2026-11-18): the user now authorizes a trust-focused introduction, separate Gyeolsoft UX motivation, concise implementation descriptions with recorded metrics, and verified training/research/patent/award history. Edit these in `content/resume.json`; keep the portfolio manuscript unchanged. Remove running headers and the repeated project title/date on page2. Resume PDF uses standard12pt body and web uses18px; both stay2 pages with no text clipping. This overrides the earlier18px resume and verbatim-extract requirements.
+- Latest paper/layout correction: A4 portrait210×297mm stays2 pages; A3 landscape420×297mm uses1 page with two native columns. A3 is separately composed in HTML with12pt body, not a PDF enlargement. Motivation directly follows the introduction. All case headings and separators use the same style; the earlier two blue featured rules are removed. A4 uses full-width case paragraphs and balanced print margins. Preserve all content and links.
+- Resume form redesign (2026-11-18, latest user correction): the quiet editorial version read as an unstructured text list. Keep the manuscript but make the hiring-resume hierarchy explicit: pale slate identity band, separate labeled rows for introduction and motivation, aligned project metadata, consistent experience entries, paired skills/education areas on A4 page2, and categorized research records. Use restrained navy, fine gray rules and pale result highlights. Keep12pt body, A4 two pages and independently composed A3 landscape two columns. Preserve all78 source units and6 links; check paper dimensions, overflow and rendered pages. Installed Noto Sans KR is used for PDF generation; no font file is copied or remotely loaded.
 
 ## Implementation constraints
 - React18 + Vite6 existing toolchain. No dependency upgrades or new framework.

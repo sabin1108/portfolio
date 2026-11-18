@@ -27,6 +27,7 @@
 
 1. `node scripts/import-moa-source.mjs` — 현재 D 원고를 다시 가져온다.
 2. `node scripts/build-documents.mjs` — PDF와 동일한 웹용 HTML·문서 전용 CSS를 만든다. 페이지 이미지는 PDF 조판 검토용으로만 보관한다.
+   이력서는 A4 세로2쪽과 A3 가로1쪽을 `output/pdf/20261118`에 함께 만든다. A3는 프로젝트 사례와 소개·지원동기·이력을 두 단에 배치한 별도 HTML 양식이며, PDF 확대 변환을 사용하지 않는다. 두 양식 모두 지원동기를 자기소개 다음에 두고, 사례 제목과 구분선 형식을 통일한다. 본문12pt와 클릭 가능한 링크를 유지한다. 크기·본문 보존·링크·잘림 검사는 `scripts/review-resume-paper-sizes.py`에서 처리한다.
 3. `npm run build` — 웹 배포 파일을 만든다.
 4. `npm run dev -- --host 127.0.0.1 --port 4174` — 로컬 확인.
 5. `ego-browser skill`을 읽고 현재 작업의 TaskSpace에서 `scripts/verify-desktop.mjs?space=작업ID&base=http://127.0.0.1:4174`를 import한다. 한 페이지 표시·목차·원문·잘리지 않은 이미지·휠 이동/관성/본문 경계·찾기·탭 히스토리·확대·다운로드·기존 경로 차단을 검사한다. 960/1280/1440/1920/2560px 전체 페이지와960×700 작은 창을 검사한다. 모바일은 제외한다.

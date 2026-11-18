@@ -77,7 +77,7 @@ function expectedResumeSource(){
   const entries=data.gyeol.filter(p=>p.kind==='case').map(p=>{
     const table=marked.lexer(p.markdown).find(t=>t.type==='table');
     assert(table,`Case table missing ${p.id}`);
-    return `<article class="experience"><h3>${escape(p.title)}</h3><p>${inline(resume.caseOverrides?.[p.id]||table.rows[0][0].text)}</p></article>`;
+    return `<article class="experience"><h3>${escape(resume.caseTitles?.[p.id]||p.title)}</h3><p>${inline(resume.caseOverrides?.[p.id]||table.rows[0][0].text)}</p>${resume.caseNotes?.[p.id]?`<small>${escape(resume.caseNotes[p.id])}</small>`:''}</article>`;
   });
   return [
     {id:'resume-profile',title:'프로필 · 모아 프로젝트',html:body1},
@@ -111,6 +111,18 @@ const sourceCatalog={main:manuscriptContent(data.common),gyeolsoft:manuscriptCon
 let documentCss='';
 try{
   const page=await browser.newPage({viewport:{width:1400,height:1000}});
+  const assertResumeLayout=async()=>{
+    const state=await page.evaluate(()=>{
+      const intro=document.querySelector('.bin-classic-intro');
+      const introBlock=intro.closest('.bin-classic-section')||intro;
+      const items=[...document.querySelectorAll('.bin-classic-achievements li')];
+      const headings=items.map(item=>{const style=getComputedStyle(item.querySelector('h4'));return[style.fontSize,style.fontWeight,style.lineHeight].join('/');});
+      return{motivationBelowIntro:introBlock.nextElementSibling.querySelector('h2')?.textContent==='지원동기',count:items.length,headings,ruleWidths:items.map(item=>parseFloat(getComputedStyle(item).borderTopWidth))};
+    });
+    assert(state.motivationBelowIntro,'Motivation must directly follow the introduction');
+    assert.equal(state.count,6);assert.equal(new Set(state.headings).size,1,'Case heading styles differ');
+    assert(state.ruleWidths.every(width=>width<=1),'A case has a thicker separator');
+  };
   for(const [id,sourcePages] of Object.entries(sourceCatalog)){
     baselineSources[id]=await page.evaluate(pages=>{
       const units=[];let bodyText='';
@@ -130,6 +142,7 @@ try{
     const htmlPath=path.join(work,doc.id+'.html');await fs.writeFile(htmlPath,html);
     await page.goto(pathToFileURL(htmlPath).href);
     await page.evaluate(async()=>{await document.fonts.ready;await Promise.all([...document.images].map(img=>img.decode()));});
+    if(doc.id==='resume')await assertResumeLayout();
     const metrics=await page.evaluate(()=>[...document.querySelectorAll('.sheet')].map(sheet=>{
       const box=sheet.getBoundingClientRect(),content=sheet.querySelector('.page-content').getBoundingClientRect(),footer=sheet.querySelector('footer').getBoundingClientRect();
       return{id:sheet.dataset.pageId,bottom:content.bottom-box.top,footer:footer.top-box.top,overflow:content.bottom>footer.top-12};
@@ -210,7 +223,27 @@ try{
     printChecks.push({document:doc.id,minimumBodyPx:Math.min(...printState.fonts),textPreserved:true});
     await page.pdf({path:path.join(output,doc.file),preferCSSPageSize:true,printBackground:true,tagged:true});
   }
+  const [a3]=createResumeSheets(data,profile,resume,{inline,marked,escape,portraitUrl:pathToFileURL(path.join(root,'public/media/portrait.jpg')).href,paper:'A3'});
+  const a3HtmlPath=path.join(work,'resume-a3.html');
+  await fs.writeFile(a3HtmlPath,`<!doctype html><html lang="ko"><meta charset="utf-8"><title>${profile.name} · 결소프트 이력서 · A3</title><style>${css}@page{size:A3 landscape}</style><body>${a3.markup}</body></html>`);
+  await page.goto(pathToFileURL(a3HtmlPath).href);
+  await page.evaluate(async()=>{await document.fonts.ready;await Promise.all([...document.images].map(image=>image.decode()));});
+  await assertResumeLayout();
+  const a3State=await page.evaluate(()=>{
+    const sheet=document.querySelector('.sheet'),box=sheet.getBoundingClientRect(),content=sheet.querySelector('.page-content').getBoundingClientRect(),footer=sheet.querySelector('footer').getBoundingClientRect();
+    const columns=[...sheet.querySelectorAll('.bin-classic-a3-columns>main,.bin-classic-a3-columns>aside')].map(element=>({...element.getBoundingClientRect().toJSON(),sections:[...element.children].map(child=>({title:child.querySelector('h2,h1')?.textContent,height:child.getBoundingClientRect().height,bottom:child.getBoundingClientRect().bottom}))}));
+    return{bottom:content.bottom-box.top,footer:footer.top-box.top,overflow:content.bottom>footer.top-12,horizontal:sheet.scrollWidth>sheet.clientWidth+2,text:sheet.querySelector('.page-content').textContent,columns};
+  });
+  layout.push({document:'resume-a3',pages:[a3State]});
+  assert(!a3State.overflow&&!a3State.horizontal,`A3 content overflow: ${JSON.stringify({...a3State,text:undefined})}`);
+  assert.equal(a3State.columns.length,2);assert(a3State.columns[0].right<a3State.columns[1].left,'A3 must use two separate columns');
+  for(const unit of baselineSources.resume.units)assert(a3State.text.replace(/\s+/g,'').includes(unit.replace(/\s+/g,'')),`A3 text missing: ${unit}`);
+  await page.pdf({path:path.join(work,'gyeolsoft-resume-A3.pdf'),preferCSSPageSize:true,printBackground:true,tagged:true});
 }finally{await browser.close();await fs.writeFile(path.join(work,'layout-checks.json'),JSON.stringify(layout,null,2));}
+for(const [pdf,width,height] of [[path.join(output,'gyeolsoft-resume.pdf'),210,297],[path.join(work,'gyeolsoft-resume-A3.pdf'),420,297]]){
+  const normalize=spawnSync(bundle+'/python/python.exe',['-X','utf8',path.join(root,'scripts/normalize-pdf-paper-box.py'),pdf,String(width),String(height)],{encoding:'utf8'});
+  if(normalize.status!==0)throw Error(normalize.stderr||normalize.stdout);
+}
 await fs.writeFile(path.join(work,'pdf-source-text.json'),JSON.stringify(pdfSourceText,null,2));
 const renderReportPath=path.join(work,'pdf-render-report.json');
 const render=spawnSync(bundle+'/python/python.exe',['-X','utf8',path.join(root,'scripts/render-document-pages.py'),output,JSON.stringify(Object.fromEntries(documents.map(d=>[d.id,d.pages.length]))),renderReportPath],{encoding:'utf8'});
@@ -230,5 +263,10 @@ await fs.writeFile(path.join(output,'manifest.json'),JSON.stringify(manifest,nul
 await fs.writeFile(path.join(output,'document.css'),documentCss+'\n');
 const exportPath=path.resolve(root,'../output/pdf/20261118');await fs.mkdir(exportPath,{recursive:true});
 for(const doc of documents)await fs.copyFile(path.join(output,doc.file),path.join(exportPath,doc.file));
+await fs.copyFile(path.join(output,'gyeolsoft-resume.pdf'),path.join(exportPath,'gyeolsoft-resume-A4.pdf'));
+await fs.copyFile(path.join(work,'gyeolsoft-resume-A3.pdf'),path.join(exportPath,'gyeolsoft-resume-A3.pdf'));
+const paperReview=spawnSync(bundle+'/python/python.exe',['-X','utf8',path.join(root,'scripts/review-resume-paper-sizes.py'),exportPath,path.join(work,'pdf-source-text.json'),path.join(work,'paper-review')],{encoding:'utf8'});
+if(paperReview.status!==0)throw Error(paperReview.stderr||paperReview.stdout);
+const paperSizes=JSON.parse(paperReview.stdout);
 await fs.writeFile(path.join(root,'content/build-report.json'),JSON.stringify({source:data.source,selectedCases:data.selectedCases,documents:documents.map(d=>({id:d.id,webSections:d.pages.length,pdfPages:rendered[d.id].pdfPageCount,pdf:d.file})),layoutChecks:layout,printChecks},null,2));
-console.log(JSON.stringify({documents:documents.map(d=>({id:d.id,webSections:d.pages.length,pdfPages:rendered[d.id].pdfPageCount})),pdfDirectory:exportPath,render:render.stdout.trim()}));
+console.log(JSON.stringify({documents:documents.map(d=>({id:d.id,webSections:d.pages.length,pdfPages:rendered[d.id].pdfPageCount})),pdfDirectory:exportPath,paperSizes,render:render.stdout.trim()}));
