@@ -16,14 +16,15 @@ const innerScrolling=[];
 async function check(name,run){try{await run();results.push({name,passed:true});}catch(error){results.push({name,passed:false,error:error.message});}}
 async function open(route='/GYEOLSOFT'){await page.goto(base+route);await page.waitForSelector('.document-page');}
 async function select(index){await page.click(`loc=css:.toc-rail nav button >> nth=${index}`);await page.waitForFunction(n=>Number(document.querySelector('.document-page').dataset.page)===n,index);}
+async function wheel(delta){const frame=await page.evaluate(()=>document.querySelector('.slide-reader').getBoundingClientRect().toJSON());await page.mouse.move(frame.left+frame.width/2,frame.top+Math.min(frame.height/2,240));await page.mouse.wheel(0,delta);}
+const currentPage=()=>page.evaluate(()=>Number(document.querySelector('.document-page').dataset.page));
 
-await check('one page, narrow rail at far left, large upper-left execution screen',async()=>{
+await check('one page, narrow far-left rail and introduction metrics',async()=>{
   await open();
-  const state=await page.evaluate(()=>({count:document.querySelectorAll('.document-page').length,rail:document.querySelector('.toc-rail')?.getBoundingClientRect().toJSON(),picture:document.querySelector('.legacy-picture img')?.getBoundingClientRect().toJSON(),width:innerWidth,height:innerHeight}));
+  const state=await page.evaluate(()=>({count:document.querySelectorAll('.document-page').length,rail:document.querySelector('.toc-rail')?.getBoundingClientRect().toJSON(),cover:!!document.querySelector('.layout-cover'),metrics:document.querySelectorAll('.metrics>div').length}));
   assert.equal(state.count,1,'Two document pages are present at once');
   assert(state.rail&&state.rail.left===0&&state.rail.width<=72,'Contents is not a thin left rail');
-  assert(state.picture.width>=state.width*.3&&state.picture.height>=state.height*.32,'Execution screenshot is still too small');
-  assert(state.picture.left<state.width*.2&&state.picture.top<state.height*.35,'Screenshot is not upper-left');
+  assert(state.cover&&state.metrics===4,'Introduction structure is missing');
 });
 await check('contents opens as overlay without shifting the slide',async()=>{
   const before=await page.evaluate(()=>document.querySelector('.document-page').getBoundingClientRect().left);
@@ -52,10 +53,10 @@ await check('previous/next, keyboard and endpoint bounds',async()=>{
   assert.equal(await page.evaluate(()=>document.querySelector('.next-page').disabled),true);
 });
 
-for(const [width,height,dpr] of [[1280,900,1],[1440,1000,1],[1920,1080,2]]){
+for(const [width,height,dpr] of [[960,1080,1],[1280,900,1],[1280,1440,1],[1366,768,1],[1440,1000,1],[1920,1080,2],[2560,1440,1]]){
   await page.cdp('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:dpr,mobile:false});
   for(const [route,id] of [['/','main'],['/GYEOLSOFT','gyeolsoft']]){
-    await check(`all ${id} slides, ${width}px DPR${dpr}`,async()=>{
+    await check(`all ${id} slides, ${width}x${height} DPR${dpr}`,async()=>{
       await open(route);
       for(const [index,source] of documents[id].pages.entries()){
         await select(index);
@@ -66,8 +67,10 @@ for(const [width,height,dpr] of [[1280,900,1],[1440,1000,1],[1920,1080,2]]){
           const frame=document.querySelector('.document-page').getBoundingClientRect();
           const source=new DOMParser().parseFromString(html,'text/html').querySelector('.sheet');
           const normalize=value=>value.replace(/\s+/g,'').trim();
-          const fonts=[...sheet.querySelectorAll('.legacy-copy p,.legacy-item>div,.legacy-cover-copy p')].map(node=>parseFloat(getComputedStyle(node).fontSize));
-          return{count:document.querySelectorAll('.document-page').length,sameText:normalize(sheet.textContent)===normalize(source.textContent),horizontal:document.documentElement.scrollWidth>innerWidth,bodyScroll:document.documentElement.scrollHeight>innerHeight+1,frame:frame.toJSON(),width:innerWidth,height:innerHeight,fonts,inner:[...sheet.querySelectorAll('.legacy-copy,.legacy-wide-content')].filter(element=>element.scrollHeight>element.clientHeight+3).map(element=>({className:element.className,extra:element.scrollHeight-element.clientHeight,overflow:getComputedStyle(element).overflowY})),clippedX:sheet.scrollWidth>sheet.clientWidth+2};
+          const fonts=[...sheet.querySelectorAll('.body p,.legacy-item>div')].filter(node=>!node.closest('.overview-meta,.overview-stack')).map(node=>parseFloat(getComputedStyle(node).fontSize));
+          const reader=sheet.closest('.document-page');
+          const media=sheet.querySelector('.legacy-media-row'),details=media?.nextElementSibling;
+          return{count:document.querySelectorAll('.document-page').length,sameText:normalize(sheet.textContent)===normalize(source.textContent),horizontal:document.documentElement.scrollWidth>innerWidth,bodyScroll:document.documentElement.scrollHeight>innerHeight+1,frame:frame.toJSON(),width:innerWidth,height:innerHeight,fonts,inner:[reader].filter(element=>element.scrollHeight>element.clientHeight+3).map(element=>({className:element.className,extra:element.scrollHeight-element.clientHeight,overflow:getComputedStyle(element).overflowY})),clippedX:sheet.scrollWidth>sheet.clientWidth+2,layout:[...sheet.classList].some(name=>name.startsWith('layout-')),uncropped:[...sheet.querySelectorAll('img')].every(image=>getComputedStyle(image).objectFit==='contain'),screensAboveText:!media||media.getBoundingClientRect().bottom<=details.getBoundingClientRect().top+2};
         },source.html);
         assert.equal(state.count,1);
         assert(state.sameText,'Current page content changed');
@@ -75,15 +78,69 @@ for(const [width,height,dpr] of [[1280,900,1],[1440,1000,1],[1920,1080,2]]){
         assert(state.frame.top>=100&&state.frame.bottom<=height-50,'Slide escapes its screen slot');
         assert(state.fonts.every(size=>size>=18),'Primary body shrunk below18px');
         assert(state.inner.every(element=>element.overflow==='auto'||element.overflow==='scroll'),'Long text is inaccessible');
+        assert(state.layout&&state.uncropped&&state.screensAboveText,'Page layout or full-image placement is wrong');
         if(state.inner.length)innerScrolling.push({document:id,page:index+1,width,extra:state.inner});
         if(width===1440&&[0,3,16].includes(index))await page.screenshot({path:path.join(output,`${id}-${index+1}-${width}.png`)});
       }
     });
   }
 }
+await check('wheel gesture advances once, locks inertia and allows a fresh reverse gesture',async()=>{
+  await open();
+  await wheel(120);await page.waitForFunction(()=>document.querySelector('.document-page').dataset.page==='1');
+  await wheel(120);assert.equal(await currentPage(),1,'Immediate second input skipped a page');
+  await open();
+  await page.evaluate(async()=>{
+    for(let index=0;index<45;index++){
+      document.querySelector('.slide-reader').dispatchEvent(new WheelEvent('wheel',{deltaY:48,bubbles:true,cancelable:true}));
+      await new Promise(resolve=>setTimeout(resolve,30));
+    }
+  });
+  assert.equal(await currentPage(),1,'One long inertia burst skipped multiple pages');
+  // These pauses are the timing contract under test, rather than a page-load wait.
+  await page.waitForTimeout(220);await wheel(120);
+  await page.waitForFunction(()=>document.querySelector('.document-page').dataset.page==='2');
+  await wheel(-120);assert.equal(await currentPage(),2);
+  await page.waitForTimeout(700);await wheel(-120);
+  await page.waitForFunction(()=>document.querySelector('.document-page').dataset.page==='1');
+});
+await check('wheel units, zoom modifier, horizontal input and contents isolation',async()=>{
+  for(const [deltaY,deltaMode]of [[3,1],[1,2]]){
+    await open();await page.evaluate(({deltaY,deltaMode})=>document.querySelector('.slide-reader').dispatchEvent(new WheelEvent('wheel',{deltaY,deltaMode,bubbles:true,cancelable:true})),{deltaY,deltaMode});
+    await page.waitForFunction(()=>document.querySelector('.document-page').dataset.page==='1');
+  }
+  await open();
+  const bypassed=await page.evaluate(()=>[ {deltaY:120,ctrlKey:true}, {deltaY:80,deltaX:120} ].map(options=>document.querySelector('.slide-reader').dispatchEvent(new WheelEvent('wheel',{...options,bubbles:true,cancelable:true}))));
+  assert(bypassed.every(Boolean));assert.equal(await currentPage(),0);
+  await page.click('loc=css:.toc-toggle');await wheel(120);assert.equal(await currentPage(),0);await page.keyboard.press('Escape');
+  await wheel(-120);assert.equal(await currentPage(),0,'First-page upper boundary is not fixed');
+});
+await check('landing on a long page stays fixed through trailing wheel input',async()=>{
+  await page.cdp('Emulation.setDeviceMetricsOverride',{width:960,height:700,deviceScaleFactor:1,mobile:false});
+  await open();await select(7);await page.waitForTimeout(700);
+  await page.evaluate(()=>{const reader=document.querySelector('.slide-reader');reader.scrollTop=reader.scrollHeight;});
+  await wheel(120);await page.waitForFunction(()=>document.querySelector('.document-page').dataset.page==='8');
+  await wheel(120);await page.waitForTimeout(180);assert.equal(await page.evaluate(()=>document.querySelector('.slide-reader').scrollTop),0,'Inertia scrolled the newly opened page');
+});
+await check('small-window content scrolls first and needs a fresh gesture at either boundary',async()=>{
+  await page.cdp('Emulation.setDeviceMetricsOverride',{width:960,height:700,deviceScaleFactor:1,mobile:false});
+  await open();await select(8);await page.waitForTimeout(700);
+  assert(await page.evaluate(()=>document.querySelector('.slide-reader').scrollHeight>document.querySelector('.slide-reader').clientHeight+100));
+  await wheel(120);await page.waitForFunction(()=>document.querySelector('.slide-reader').scrollTop>20);assert.equal(await currentPage(),8);
+  await page.evaluate(()=>{const reader=document.querySelector('.slide-reader');reader.dispatchEvent(new WheelEvent('wheel',{deltaY:40,bubbles:true,cancelable:true}));reader.scrollTop=reader.scrollHeight;reader.dispatchEvent(new WheelEvent('wheel',{deltaY:120,bubbles:true,cancelable:true}));});
+  assert.equal(await currentPage(),8,'Reading inertia crossed the lower boundary');
+  await page.waitForTimeout(220);await wheel(120);await page.waitForFunction(()=>document.querySelector('.document-page').dataset.page==='9');
+  assert.equal(await page.evaluate(()=>document.querySelector('.slide-reader').scrollTop),0);
+  await select(8);await page.waitForTimeout(700);await page.evaluate(()=>{document.querySelector('.slide-reader').scrollTop=180;});
+  await wheel(-80);await page.waitForFunction(()=>document.querySelector('.slide-reader').scrollTop<160);assert.equal(await currentPage(),8);
+  await page.evaluate(()=>{const reader=document.querySelector('.slide-reader');reader.dispatchEvent(new WheelEvent('wheel',{deltaY:-40,bubbles:true,cancelable:true}));reader.scrollTop=0;reader.dispatchEvent(new WheelEvent('wheel',{deltaY:-120,bubbles:true,cancelable:true}));});
+  assert.equal(await currentPage(),8,'Reading inertia crossed the upper boundary');
+  await page.waitForTimeout(220);await wheel(-120);await page.waitForFunction(()=>document.querySelector('.document-page').dataset.page==='7');
+  await page.cdp('Emulation.setDeviceMetricsOverride',{width:1920,height:1080,deviceScaleFactor:1,mobile:false});
+});
 await check('text selection and Find apply to current visible slide',async()=>{
   await open('/');
-  const selected=await page.evaluate(()=>{const p=document.querySelector('.legacy-cover-copy p');const range=document.createRange();range.selectNodeContents(p);getSelection().removeAllRanges();getSelection().addRange(range);return{length:getSelection().toString().length,width:range.getBoundingClientRect().width};});
+  const selected=await page.evaluate(()=>{const p=document.querySelector('.cover-lead p');const range=document.createRange();range.selectNodeContents(p);getSelection().removeAllRanges();getSelection().addRange(range);return{length:getSelection().toString().length,width:range.getBoundingClientRect().width};});
   assert(selected.length>20&&selected.width>30);
   assert.equal(await page.evaluate(()=>{getSelection().removeAllRanges();return window.find('폴더 연결, 자료 검색과 질문');}),true);
 });
@@ -132,4 +189,4 @@ await check('old routes stay blocked',async()=>{
 });
 await check('no uncaught browser errors',async()=>{const events=await page.events();assert.deepEqual(events.filter(event=>event.method==='Runtime.exceptionThrown'||(event.method==='Runtime.consoleAPICalled'&&event.params.type==='error')),[]);});
 await fs.writeFile(path.join(output,'checks.json'),JSON.stringify({base,results,innerScrolling},null,2));
-console.log(JSON.stringify({base,results,innerScrolling}));assert(results.every(result=>result.passed),'Desktop regressions failed');
+console.log(JSON.stringify({base,results,scrollingPages:innerScrolling.length}));assert(results.every(result=>result.passed),'Desktop regressions failed');

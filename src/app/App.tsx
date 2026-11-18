@@ -1,6 +1,7 @@
 import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import type {KeyboardEvent} from 'react';
 import {ArrowDownToLine, ArrowUpRight, ChevronLeft, FileText, Menu, Minus, Plus, X, ZoomIn} from 'lucide-react';
+import {createWheelNavigation, wheelPixels} from './wheel-navigation';
 
 type DocumentPage = {id: string; title: string; html: string; width: number; height: number; kind?: string; visual?: string};
 type PortfolioDocument = {id: string; title: string; pdf: string; pages: DocumentPage[]};
@@ -69,6 +70,8 @@ function Viewer({manifest, company}: {manifest: Manifest; company: boolean}) {
   const [active, setActive] = useState(0);
   const [menu, setMenu] = useState(false);
   const [expanded, setExpanded] = useState<DocumentPage | null>(null);
+  const [wheelNavigation] = useState(createWheelNavigation);
+  const viewport = useRef<HTMLDivElement>(null);
   const doc = company ? (tab === 'resume' ? manifest.documents.resume : manifest.documents.gyeolsoft) : manifest.documents.main;
   const resume = doc.id === 'resume';
   const current = doc.pages[Math.min(active, doc.pages.length - 1)];
@@ -93,8 +96,37 @@ function Viewer({manifest, company}: {manifest: Manifest; company: boolean}) {
     setActive(0);
     setMenu(false);
     setExpanded(null);
+    wheelNavigation.reset();
     window.scrollTo({top: 0});
-  }, [doc.id, company, profile.name, resume]);
+  }, [doc.id, company, profile.name, resume, wheelNavigation]);
+
+  useEffect(() => {
+    if (resume || menu || expanded) return;
+    const element = viewport.current;
+    if (!element) return;
+    const handleWheel = (event: WheelEvent) => {
+      if (event.ctrlKey || event.metaKey || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+      const delta = wheelPixels(event.deltaY, event.deltaMode, element.clientHeight);
+      if (!delta) return;
+      const now = performance.now();
+      let target = event.target instanceof Element ? event.target : null;
+      while (target && element.contains(target)) {
+        const style = getComputedStyle(target);
+        const scrollable = /auto|scroll/.test(style.overflowY) && target.scrollHeight > target.clientHeight + 2;
+        const canRead = delta > 0 ? target.scrollTop + target.clientHeight < target.scrollHeight - 2 : target.scrollTop > 2;
+        if (scrollable && canRead) {
+          if (!wheelNavigation.allowReading(now)) event.preventDefault();
+          return;
+        }
+        target = target.parentElement;
+      }
+      event.preventDefault();
+      const direction = wheelNavigation.push(delta, now);
+      if (direction) setActive(index => Math.max(0, Math.min(doc.pages.length - 1, index + direction)));
+    };
+    element.addEventListener('wheel', handleWheel, {passive: false});
+    return () => element.removeEventListener('wheel', handleWheel);
+  }, [doc.id, doc.pages.length, resume, menu, expanded, wheelNavigation]);
 
   useEffect(() => {
     if (resume) return;
@@ -142,11 +174,12 @@ function Viewer({manifest, company}: {manifest: Manifest; company: boolean}) {
       if (window.getSelection()?.type === 'Range') return;
       if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
       event.preventDefault();
+      wheelNavigation.lock(performance.now());
       setActive(index => Math.max(0, Math.min(doc.pages.length - 1, index + (event.key === 'ArrowRight' ? 1 : -1))));
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [doc.id, doc.pages.length, resume, menu]);
+  }, [doc.id, doc.pages.length, resume, menu, wheelNavigation]);
 
   function selectTab(next: Tab) {
     if (next === tab) return;
@@ -164,6 +197,7 @@ function Viewer({manifest, company}: {manifest: Manifest; company: boolean}) {
     const next = Math.max(0, Math.min(doc.pages.length - 1, index));
     setActive(next);
     setMenu(false);
+    wheelNavigation.lock(performance.now());
     if (resume) document.getElementById(`${doc.id}-${next}`)?.scrollIntoView({block: 'start', behavior: 'instant'});
   }
   function renderPage(page: DocumentPage, index: number) {
@@ -190,14 +224,14 @@ function Viewer({manifest, company}: {manifest: Manifest; company: boolean}) {
         <a className="button download" href={doc.pdf} download><ArrowDownToLine size={16}/><span>PDF 다운로드</span></a>
       </div>
     </div>
-    <div className={`workspace ${resume ? 'resume-workspace' : 'portfolio-workspace'}`}>
+    <div ref={viewport} className={`workspace ${resume ? 'resume-workspace' : 'portfolio-workspace'}`}>
       <main id="document" tabIndex={-1} className={`document-pages ${resume ? '' : 'slide-document'}`} aria-label={doc.title} role={company ? 'tabpanel' : undefined} aria-labelledby={company ? `tab-${tab}` : undefined}>
         {resume ? doc.pages.map(renderPage) : renderPage(current, Math.min(active, doc.pages.length - 1))}
       </main>
     </div>
     {!resume && <div className="slide-controls">
       <button className="previous-page" type="button" onClick={() => move(active - 1)} disabled={active === 0}><ChevronLeft size={18}/>이전</button>
-      <div className="slide-status" role="status"><span>{String(active + 1).padStart(2, '0')} / {String(doc.pages.length).padStart(2, '0')}</span><span>{current.title}</span></div>
+      <div className="slide-status" role="status"><span>{String(active + 1).padStart(2, '0')} / {String(doc.pages.length).padStart(2, '0')}</span><span>{current.title}</span><span className="wheel-hint">휠로 넘기기</span></div>
       <div className="slide-control-actions"><button className="page-zoom-button" type="button" onClick={() => setExpanded(current)} aria-label={`${active + 1}페이지 ${current.title} 확대 보기`}><ZoomIn size={14}/>확대</button><button className="next-page" type="button" onClick={() => move(active + 1)} disabled={active === doc.pages.length - 1}>다음<ChevronLeft className="next-icon" size={18}/></button></div>
     </div>}
     {resume && <footer className="site-footer"><span>{profile.name}</span><a href={`mailto:${profile.email}`}>{profile.email}</a></footer>}
