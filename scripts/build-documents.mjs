@@ -70,6 +70,40 @@ const css=`
 @page{size:A4 landscape;margin:0}*{box-sizing:border-box}html,body{margin:0;background:#fffefa;color:#172335;font-family:'Malgun Gothic','Noto Sans KR',Arial,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}a{color:inherit;text-decoration:none}.sheet{position:relative;width:297mm;height:210mm;padding:35px 56px 40px;break-after:page;background:#fffefa}.sheet:last-child{break-after:auto}header,footer{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:#647084;letter-spacing:.06em}header{border-bottom:1px solid #d9dfe7;padding-bottom:13px}header b,footer b{font-weight:400;margin:0 7px;color:#b4bdca}footer{position:absolute;bottom:25px;left:56px;right:56px;border-top:1px solid #d9dfe7;padding-top:11px}.page-content{padding-top:25px}h1{font-size:30px;line-height:1.45;letter-spacing:-.06em;margin:0 0 22px;font-weight:750;max-width:98%}.body{font-size:14px;line-height:1.8;word-break:keep-all;overflow-wrap:break-word}p{margin:0 0 14px}strong{font-weight:700}h2,h3,h4{margin:15px 0 10px;line-height:1.5;font-size:16px;letter-spacing:-.025em}h3:first-child{margin-top:0}.blocks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px;margin:18px 0}.blocks.columns-3{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.block{border-top:1px solid #cfd6e2;padding:14px 0 16px;break-inside:avoid;font-size:13px;line-height:1.8}.block h3{color:#2d4e91;font-size:15px;margin:0 0 10px}.block strong{color:#172335}.block br+br{display:block;content:'';margin-top:9px}.steps{display:flex;border-top:1px solid #cfd6e2;border-bottom:1px solid #cfd6e2;padding:13px 0;gap:12px;margin:22px 0}.steps>div{flex:1}.steps span{display:block;color:#2d4e91;font-size:12px;margin-bottom:8px}.steps strong{font-size:13px}.intro h1{font-size:45px;margin-top:23px;margin-bottom:25px;max-width:760px}.intro .body{max-width:930px;font-size:15px;line-height:1.9}.intro .body>p:first-child{color:#2d4e91;font-size:15px;border-left:3px solid #2d4e91;padding-left:16px;margin:26px 0}.metrics{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #cfd6e2;margin-top:30px;padding-top:20px}.metrics>div+div{border-left:1px solid #d9dfe7;padding-left:20px}.metrics strong{display:block;font-size:32px;letter-spacing:-.04em;line-height:1.25}.metrics span{display:block;font-size:12px;color:#647084;margin-top:10px}.case h1{font-size:29px;max-width:970px;margin-bottom:18px}.case .body>p:first-child{font-size:14px;color:#647084}.case .blocks{margin-top:17px}.case .block{font-size:13.4px}.case .body>p{margin-bottom:10px}.diagram h1{font-size:25px;margin-bottom:10px}.diagram figure{margin:0;display:flex;justify-content:center;align-items:center;height:586px}.diagram img{max-width:100%;max-height:100%;object-fit:contain}.decisions .blocks{gap:0 25px;margin:11px 0}.decisions .block{font-size:12.8px;line-height:1.72;padding-top:11px;padding-bottom:12px}.decisions .body>p{font-size:13.2px;line-height:1.7;margin-bottom:10px}.role .block{font-size:12.6px;line-height:1.75}.implementation .block{font-size:14px;line-height:1.9;padding-top:18px;padding-bottom:23px}.overview .body{font-size:15px;line-height:1.85;max-width:950px}.overview .body>p{margin-bottom:25px}.resume{width:210mm;height:297mm;padding:36px 48px 45px}.resume footer{left:48px;right:48px}.resume h1{font-size:32px;letter-spacing:-.04em}.resume .page-content{padding-top:23px}.resume .body{font-size:13px;line-height:1.85}.profile-top{display:flex;gap:25px;align-items:flex-start;margin-bottom:25px}.portrait{width:86px;height:108px;object-fit:cover}.profile-top h1{margin:0 0 5px}.profile-top p{margin:0 0 5px;font-size:12px}.resume h2{font-size:17px;color:#2d4e91;border-top:1px solid #cfd6e2;padding-top:12px;margin-top:23px}.resume .experience{border-top:1px solid #d9dfe7;margin-top:16px;padding-top:10px}.resume .experience h3{font-size:14px;margin:0 0 7px}.resume .experience p{font-size:12.4px;line-height:1.75;margin:0}.education{display:grid;grid-template-columns:1fr 1fr;gap:15px;font-size:12px}.resume .stack p{margin:0;font-size:12px}
 .tree-diagram{height:586px;display:flex;align-items:center;padding:14px 25px}.folder-tree,.tree-children{list-style:none;padding:0;margin:0;width:100%}.folder-tree{font-family:Consolas,'Courier New',monospace;font-size:17px;line-height:1.4}.folder-tree li{position:relative;margin:0;padding:0}.tree-row{display:grid;grid-template-columns:calc(430px - var(--depth)*36px) minmax(0,1fr);align-items:center;min-height:40px;gap:24px}.tree-name{display:flex;align-items:center;gap:12px;white-space:nowrap;color:#253b60}.tree-name svg{width:20px;height:20px;flex-shrink:0;stroke:#7083a0;stroke-width:1.5;fill:#edf1f7;stroke-linecap:round;stroke-linejoin:round}.tree-description{font-family:'Malgun Gothic','Noto Sans KR',Arial,sans-serif;font-size:14px;color:#697587;letter-spacing:-.02em}.tree-children{margin-left:10px;padding-left:25px;border-left:1px solid #d4dce8;width:calc(100% - 10px)}.tree-children>li:before{content:'';position:absolute;left:-25px;top:20px;width:23px;border-top:1px solid #d4dce8}.tree-children>li:last-child:after{content:'';position:absolute;left:-26px;top:21px;bottom:0;width:1px;background:#fffefa}.folder-tree>.tree-row,.folder-tree>li>.tree-row{font-weight:700}.folder-tree>li>.tree-row .tree-description{font-weight:400}
 `;
+// Print can span multiple physical pages; web sections retain their existing HTML and layout.
+const pdfCss=`
+@page{margin:10mm}
+.sheet,.sheet.resume{width:auto;height:auto;padding:0;break-after:page}
+.sheet:last-child{break-after:auto}
+.sheet>header,.sheet>footer{display:none}
+.sheet .page-content{padding-top:0}
+.sheet h1{font-size:32px;line-height:1.4;max-width:none;margin:0 0 22px;break-after:avoid}
+.sheet.intro h1{font-size:40px;margin:8px 0 24px;max-width:none}
+.sheet h2,.sheet h3,.sheet h4{font-size:20px;line-height:1.5;break-after:avoid}
+.sheet .body,.sheet.intro .body,.sheet.overview .body,.sheet.resume .body{font-size:18px;line-height:1.7;max-width:none}
+.sheet .body>p,.sheet.intro .body>p:first-child,.sheet.case .body>p:first-child,.sheet.decisions .body>p{font-size:18px;line-height:1.7;margin:0 0 16px;orphans:3;widows:3}
+.sheet.intro .body>p:first-child{margin:0 0 24px}
+.sheet .blocks,.sheet .blocks.columns-3{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px;margin:12px 0 0}
+.sheet .block,.sheet.case .block,.sheet.decisions .block,.sheet.role .block,.sheet.implementation .block{font-size:18px;line-height:1.7;padding:10px 0;break-inside:avoid}
+.sheet .block:last-child:nth-child(odd){grid-column:1/-1}
+.sheet .block h3{font-size:20px;margin-bottom:10px}
+.sheet .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 24px;margin:22px 0;padding:16px 0;break-inside:avoid}
+.sheet .steps span{font-size:14px}.sheet .steps strong{font-size:17px}
+.sheet .metrics{margin-top:26px;padding-top:20px;break-inside:avoid}
+.sheet .metrics strong{font-size:36px}.sheet .metrics span{font-size:15px;line-height:1.6}
+.sheet.diagram figure{height:auto;break-inside:avoid}.sheet.diagram img{width:100%;height:auto;max-height:none}
+.sheet .tree-diagram{height:auto;padding:10px 0;break-inside:avoid}
+.sheet .folder-tree{font-size:18px}.sheet .tree-description{font-size:17px}.sheet .tree-row{min-height:44px}
+.sheet.resume .profile-top{margin-bottom:24px;break-inside:avoid}
+.sheet.resume .profile-top h1{margin:0 0 8px}
+.sheet.resume .profile-top p{font-size:16px;line-height:1.7;margin-bottom:6px}
+.sheet.resume .portrait{width:96px;height:120px}
+.sheet.resume h2{font-size:20px;margin-top:24px;padding-top:14px}
+.sheet.resume .experience{margin-top:12px;padding-top:10px;break-inside:avoid}
+.sheet.resume .experience h3{font-size:20px;line-height:1.4;margin-bottom:8px}
+.sheet.resume .experience p,.sheet.resume .stack p,.sheet.resume .education{font-size:18px;line-height:1.7}
+.sheet.resume .education{break-inside:avoid}.sheet.resume .education p{margin:6px 0 0}
+`;
 function resumeSheets(){
   const paragraphs=data.common[0].markdown.split(/\n\s*\n/).filter(Boolean);
   const intro=paragraphs[1], role=paragraphs[2],skills=data.common[1].markdown.match(/\*\*Frontend:[\s\S]*?(?=\n\s*!\[\[|$)/)?.[0]||'';
@@ -94,6 +128,8 @@ const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chr
 const {source:profileSource,...publicProfile}=profile;
 const manifest={profile:publicProfile,sourceSha256:data.source.sha256,stylesheet:'/documents/document.css',documents:{}};
 const layout=[];
+const pdfSourceText={};
+const printChecks=[];
 let documentCss='';
 try{
   const page=await browser.newPage({viewport:{width:1400,height:1000}});
@@ -108,7 +144,6 @@ try{
     }));
     layout.push({document:doc.id,pages:metrics});
     if(metrics.some(m=>m.overflow)){console.log(JSON.stringify({overflow:doc.id,pages:metrics}));throw Error('Document content overflow');}
-    await page.pdf({path:path.join(output,doc.file),preferCSSPageSize:true,printBackground:true,tagged:true});
     const webDocument=await page.evaluate(publicUrl=>{
       const rules=[...document.styleSheets[0].cssRules].filter(rule=>rule.type===CSSRule.STYLE_RULE);
       const scopedRules=rules.map(rule=>{
@@ -132,14 +167,21 @@ try{
         if(clone.textContent!==sheet.textContent)throw Error('Web text differs from PDF authoring text');
         const html=clone.outerHTML;
         if(/file:\/\//i.test(html))throw Error('Local file URL in public HTML');
-        return {html,text:sheet.innerText,width:bounds.width,height:bounds.height};
+        const content=sheet.querySelector('.page-content');
+        const walker=document.createTreeWalker(content,NodeFilter.SHOW_TEXT);
+        const units=[];while(walker.nextNode()){if(walker.currentNode.textContent.trim())units.push(walker.currentNode.textContent);}
+        return {html,text:sheet.innerText,width:bounds.width,height:bounds.height,sourceText:{units,bodyText:content.textContent}};
       });
       return {css:scopedRules.join('\n'),pages};
     },pathToFileURL(path.join(root,'public')+path.sep).href);
     if(documentCss)assert.equal(webDocument.css,documentCss,'All documents must share authoring styles');
     else documentCss=webDocument.css;
     assert(webDocument.pages.every(p=>p.width>0&&p.height>0&&p.html.includes('class="body"')));
-    manifest.documents[doc.id]={id:doc.id,title:doc.title,pdf:'/documents/'+doc.file,pages:doc.pages.map((p,i)=>({id:p.id,title:p.title,image:`/documents/${doc.id}/page-${String(i+1).padStart(2,'0')}.webp`,...webDocument.pages[i]}))};
+    pdfSourceText[doc.id]={units:webDocument.pages.flatMap(p=>p.sourceText.units),bodyText:webDocument.pages.map(p=>p.sourceText.bodyText).join('\n')};
+    manifest.documents[doc.id]={id:doc.id,title:doc.title,pdf:'/documents/'+doc.file,pages:doc.pages.map((p,i)=>{
+      const {sourceText,...webPage}=webDocument.pages[i];
+      return {id:p.id,title:p.title,image:`/documents/${doc.id}/page-${String(i+1).padStart(2,'0')}.webp`,...webPage};
+    })};
     await page.setContent(`<!doctype html><html lang="ko"><style>body{margin:0}#scope-sentinel{color:rgb(1,2,3);display:block}${documentCss}</style><body><header id="scope-sentinel">Viewer chrome</header>${webDocument.pages.map(p=>`<div class="document-sheet">${p.html}</div>`).join('')}</body></html>`);
     const webChecks=await page.evaluate(()=>({
       selectors:[...document.styleSheets[0].cssRules].slice(2).map(rule=>rule.selectorText),
@@ -150,14 +192,43 @@ try{
     assert(webChecks.selectors.every(selector=>selector.split(',').every(value=>value.trim().startsWith('.document-sheet'))),'Unscoped document CSS');
     assert.equal(webChecks.sentinel,'rgb(1, 2, 3)');
     assert.equal(webChecks.localFiles,0);
-    assert.deepEqual(webChecks.sheets,webDocument.pages.map(({width,height,text})=>({width,height,text})),'Web/PDF text or page dimensions differ');
+    assert.deepEqual(webChecks.sheets,webDocument.pages.map(({width,height,text})=>({width,height,text})),'Web text or authoring dimensions differ');
+    await page.goto(pathToFileURL(htmlPath).href);
+    await page.addStyleTag({content:pdfCss});
+    await page.evaluate(async()=>{await document.fonts.ready;await Promise.all([...document.images].map(image=>image.decode()));});
+    const printState=await page.evaluate(()=>({
+      bodyText:[...document.querySelectorAll('.sheet .page-content')].map(element=>element.textContent).join('\n'),
+      fonts:[...document.querySelectorAll('.body>p,.block,.experience p,.stack p')].map(element=>parseFloat(getComputedStyle(element).fontSize))
+    }));
+    assert.equal(printState.bodyText,pdfSourceText[doc.id].bodyText,'Print styling changed content');
+    assert(printState.fonts.every(size=>size>=18),'Print primary text must be18px or larger');
+    printChecks.push({document:doc.id,minimumBodyPx:Math.min(...printState.fonts),textPreserved:true});
+    const headerTemplate=`<div style="font-family:Arial,sans-serif;font-size:11px;color:#647084;width:100%;padding:0 10mm;display:flex;justify-content:space-between"><span>${escape(profile.name)} / ${escape(profile.role)}</span><span>${escape(doc.title)}</span></div>`;
+    const footerTemplate=`<div style="font-family:Arial,sans-serif;font-size:11px;color:#647084;width:100%;padding:0 10mm;display:flex;justify-content:space-between"><span>${escape(profile.email)}</span><span><span class="pageNumber"></span> / <span class="totalPages"></span></span></div>`;
+    await page.pdf({path:path.join(output,doc.file),preferCSSPageSize:true,printBackground:true,tagged:true,displayHeaderFooter:true,headerTemplate,footerTemplate});
   }
 }finally{await browser.close();await fs.writeFile(path.join(work,'layout-checks.json'),JSON.stringify(layout,null,2));}
-const render=spawnSync(bundle+'/python/python.exe',['-X','utf8',path.join(root,'scripts/render-document-pages.py'),output,JSON.stringify(Object.fromEntries(documents.map(d=>[d.id,d.pages.length])))],{encoding:'utf8'});
+await fs.writeFile(path.join(work,'pdf-source-text.json'),JSON.stringify(pdfSourceText,null,2));
+const renderReportPath=path.join(work,'pdf-render-report.json');
+const render=spawnSync(bundle+'/python/python.exe',['-X','utf8',path.join(root,'scripts/render-document-pages.py'),output,JSON.stringify(Object.fromEntries(documents.map(d=>[d.id,d.pages.length]))),renderReportPath],{encoding:'utf8'});
 if(render.status!==0)throw Error(render.stderr||render.stdout);
+const rendered=JSON.parse(await fs.readFile(renderReportPath,'utf8'));
+const normalized=value=>value.replace(/\s+/g,'');
+for(const doc of documents){
+  const actual=rendered[doc.id];
+  manifest.documents[doc.id].pdfPageCount=actual.pdfPageCount;
+  manifest.documents[doc.id].pdfPages=actual.pages.map(({text,...preview})=>preview);
+  let start=0;
+  for(const logical of manifest.documents[doc.id].pages){
+    const found=actual.pages.findIndex((p,i)=>i>=start&&normalized(p.text).includes(normalized(logical.title)));
+    if(found>=0)start=found;
+    logical.image=actual.pages[start].image;
+    logical.pdfStartPage=start+1;
+  }
+}
 await fs.writeFile(path.join(output,'manifest.json'),JSON.stringify(manifest,null,2));
 await fs.writeFile(path.join(output,'document.css'),documentCss+'\n');
 const exportPath=path.resolve(root,'../output/pdf/20261118');await fs.mkdir(exportPath,{recursive:true});
 for(const doc of documents)await fs.copyFile(path.join(output,doc.file),path.join(exportPath,doc.file));
-await fs.writeFile(path.join(root,'content/build-report.json'),JSON.stringify({source:data.source,selectedCases:data.selectedCases,documents:documents.map(d=>({id:d.id,pages:d.pages.length,pdf:d.file})),layoutChecks:layout},null,2));
-console.log(JSON.stringify({documents:documents.map(d=>({id:d.id,pages:d.pages.length})),pdfDirectory:exportPath,render:render.stdout.trim()}));
+await fs.writeFile(path.join(root,'content/build-report.json'),JSON.stringify({source:data.source,selectedCases:data.selectedCases,documents:documents.map(d=>({id:d.id,webSections:d.pages.length,pdfPages:rendered[d.id].pdfPageCount,pdf:d.file})),layoutChecks:layout,printChecks},null,2));
+console.log(JSON.stringify({documents:documents.map(d=>({id:d.id,webSections:d.pages.length,pdfPages:rendered[d.id].pdfPageCount})),pdfDirectory:exportPath,render:render.stdout.trim()}));

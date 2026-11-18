@@ -36,7 +36,7 @@
 ## Visual language
 - Paper #fffefa, ink #172335, muted #667085, blue #2d4e91, fine rules #d9dfe7. Web background #f3f4f6.
 - System Korean sans-serif with an available local Korean font embedded/used in PDF generation. No remote font dependency.
-- Landscape A4 portfolio pages; portrait A4 resume. Web reuses the PDF authoring HTML with an auto-height reading layout:18px main text,1.85 line height,17px minimum primary text,38px inner margins and two-column sections. Document text does not shrink to fit a fixed page. PDF download and explicit zoom retain the original fixed-page layout. Diagram originals stay at full resolution; file structure uses a native HTML tree with vector icons.
+- Landscape A4 portfolio pages; portrait A4 resume. Web reuses authoring HTML with an auto-height reading layout:18px main text,1.85 line height,17px minimum primary text,38px inner margins and two-column sections. Document text does not shrink to fit a fixed page. Downloaded PDFs use18px/13.5pt body,1.7 line height,10mm margins and native page breaks that keep headings with their text. Physical PDF pages are counted separately from web sections. Explicit zoom retains the fixed authoring preview. Diagram originals stay at full resolution; file structure uses a native HTML tree with vector icons.
 - Borders and small radii only on controls; no floating decorative cards.
 - No entrance animation, forced scroll, wheel interception, or carousel autoplay.
 
