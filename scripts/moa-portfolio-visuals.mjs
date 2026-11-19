@@ -9,6 +9,12 @@ const figure = (id, title, content, variant) => `<figure class="portfolio-visual
 // Labels summarize only the source records mapped in docs/portfolio-visual-evidence.md.
 export function caseVisual(entry) {
   switch (entry.id) {
+    case 'case-13':
+      return {side:'left',markup:figure(entry.id,'수신 조각과 완성된 이벤트 구분',`${flow(['나뉜 데이터','수신 버퍼','완성 이벤트'])}${flow(['형식·순서 확인','본문·완료·오류','상태 반영'])}<div class="diagram-note">완성되지 않은 조각은 다음 수신까지 보관</div>`,'visual-stream')};
+    case 'case-12':
+      return {side:'right',markup:figure(entry.id,'수신 완료와 화면 표시 완료 분리',`${flow(['수신한 본문','표시 길이 관리','순차 표시'])}<div class="diagram-note">완료 이벤트 뒤에도 남은 본문을 이어서 표시</div>${flow(['중지·오류','남은 표시 작업 정리'])}`,'visual-stream')};
+    case 'case-6':
+      return {side:'left',markup:figure(entry.id,'추출 전에 재사용 여부 확인',`${flow(['현재 원본 확인','내용·추출 조건 비교','본문 캐시 조회'])}${flow(['같으면 본문 재사용','다르면 다시 추출'])}<div class="diagram-note">원본 미변경 · Worker 재사용 조건의 반복 처리 비교</div>`,'visual-stream')};
     case 'case-2':
       return {side:'left', markup:figure(entry.id, '폴더 이동 시 조작하던 화면 유지', `<div class="window-comparison"><div class="mini-window before-window"><b>기존</b><div class="wire-input">경로 변경</div><div class="wire-list is-empty">기존 목록 제거</div></div><div class="mini-window after-window"><b>개선</b><div class="wire-input">입력창 유지</div><div class="wire-list"><i aria-hidden="true"></i><span>기존 목록 유지</span></div></div></div><div class="diagram-note">읽는 중 표시 → 새 목록 준비 후 내용 교체</div>`, 'visual-flicker')};
     case 'case-14':
@@ -48,6 +54,12 @@ export const portfolioVisualCss = `
 .portfolio-visual .diagram-note{font-size:11px;line-height:1.5;color:#596e67;text-align:center}
 .portfolio-visual .diagram-flow{display:flex;align-items:center;justify-content:center;gap:6px}
 .portfolio-visual .diagram-flow .diagram-node{flex:1;padding:6px 5px}
+.portfolio-visual[data-visual="case-13"]{height:160px}
+.legacy-sheet[data-page-id="case-6"] .proof-card strong{display:inline;margin:0;font-size:24px;line-height:1.25;color:#2e6651}
+.pdf-metric-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-top:12px}
+.pdf-metric-row>span{font-size:15px;white-space:nowrap}
+.pdf-metric-row>div{white-space:nowrap}
+.pdf-metric-row>div>span{font-size:14px}
 .portfolio-visual .window-comparison{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .portfolio-visual .mini-window{padding:8px;border:1px solid #c3cec7;border-radius:5px;background:#f8f7f2;min-width:0}
 .portfolio-visual .mini-window>b{font-size:12px;line-height:1.4;display:block;margin-bottom:5px;color:#586e67}

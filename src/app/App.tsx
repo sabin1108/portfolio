@@ -7,7 +7,7 @@ type DocumentPage = {id: string; title: string; html: string; width: number; hei
 type PortfolioDocument = {id: string; title: string; pdf: string; pages: DocumentPage[]};
 type Manifest = {
   profile: {name: string; role: string; email: string; github: string; project?: {github: string; demo: string}};
-  documents: {main: PortfolioDocument; gyeolsoft: PortfolioDocument; resume: PortfolioDocument};
+  documents: {main: PortfolioDocument; gyeolsoft: PortfolioDocument; resume: PortfolioDocument; voltaon: PortfolioDocument; voltaonResume: PortfolioDocument};
 };
 type Tab = 'portfolio' | 'resume';
 
@@ -65,15 +65,17 @@ function MissingPage() {
   return <main className="missing-page"><p className="overline">404</p><h1>페이지를 찾을 수 없습니다.</h1><p>현재 공개된 포트폴리오에서 확인해 주세요.</p><a className="button primary" href="/"><ChevronLeft size={16}/>메인 포트폴리오</a></main>;
 }
 
-function Viewer({manifest, company}: {manifest: Manifest; company: boolean}) {
+function Viewer({manifest, company}: {manifest: Manifest; company: 'gyeolsoft' | 'voltaon' | null}) {
   const [tab, setTab] = useState<Tab>(company && location.hash === '#resume' ? 'resume' : 'portfolio');
   const [active, setActive] = useState(0);
   const [menu, setMenu] = useState(false);
   const [expanded, setExpanded] = useState<DocumentPage | null>(null);
   const [wheelNavigation] = useState(createWheelNavigation);
   const viewport = useRef<HTMLDivElement>(null);
-  const doc = company ? (tab === 'resume' ? manifest.documents.resume : manifest.documents.gyeolsoft) : manifest.documents.main;
-  const resume = doc.id === 'resume';
+  const companyRoute = company === 'voltaon' ? '/VoltaON' : '/GYEOLSOFT';
+  const companyName = company === 'voltaon' ? '볼타온' : '결소프트';
+  const doc = company === 'voltaon' ? (tab === 'resume' ? manifest.documents.voltaonResume : manifest.documents.voltaon) : company ? (tab === 'resume' ? manifest.documents.resume : manifest.documents.gyeolsoft) : manifest.documents.main;
+  const resume = doc.id === 'resume' || doc.id === 'voltaonResume';
   const current = doc.pages[Math.min(active, doc.pages.length - 1)];
   const {profile} = manifest;
 
@@ -92,13 +94,13 @@ function Viewer({manifest, company}: {manifest: Manifest; company: boolean}) {
   }, [company]);
 
   useLayoutEffect(() => {
-    document.title = `${company ? '결소프트 · ' : ''}${resume ? '이력서' : '포트폴리오'} | ${profile.name}`;
+    document.title = `${company ? companyName+' · ' : ''}${resume ? '이력서' : '포트폴리오'} | ${profile.name}`;
     setActive(0);
     setMenu(false);
     setExpanded(null);
     wheelNavigation.reset();
     window.scrollTo({top: 0});
-  }, [doc.id, company, profile.name, resume, wheelNavigation]);
+  }, [doc.id, company, companyName, profile.name, resume, wheelNavigation]);
 
   useEffect(() => {
     if (resume || menu || expanded) return;
@@ -183,7 +185,7 @@ function Viewer({manifest, company}: {manifest: Manifest; company: boolean}) {
 
   function selectTab(next: Tab) {
     if (next === tab) return;
-    history.pushState(null, '', next === 'resume' ? '/GYEOLSOFT#resume' : '/GYEOLSOFT');
+    history.pushState(null, '', next === 'resume' ? companyRoute+'#resume' : companyRoute);
     setTab(next);
   }
   function handleTabKey(event: KeyboardEvent<HTMLButtonElement>) {
@@ -218,7 +220,7 @@ function Viewer({manifest, company}: {manifest: Manifest; company: boolean}) {
     {menu && <button type="button" className="toc-backdrop" aria-label="목차 닫기" onClick={() => setMenu(false)}/>}
     <header className="site-header"><div className="identity"><a href="/">{profile.name}</a><span>{profile.role}</span></div><div className="header-links"><a href={`mailto:${profile.email}`}>Email<ArrowUpRight size={13}/></a><a href={profile.project?.github||profile.github} target="_blank" rel="noreferrer">{profile.project?'Moa GitHub':'GitHub'}<ArrowUpRight size={13}/></a>{profile.project&&<a href={profile.project.demo} target="_blank" rel="noreferrer">데모 체험<ArrowUpRight size={13}/></a>}</div></header>
     <div className="document-bar">
-      <div className="document-heading"><span className="document-context">{company ? 'GYEOLSOFT' : 'PORTFOLIO'}</span><h1>{doc.title}</h1></div>
+      <div className="document-heading"><span className="document-context">{company ? company === 'voltaon' ? 'VOLTAON' : 'GYEOLSOFT' : 'PORTFOLIO'}</span><h1>{doc.title}</h1></div>
       <div className="document-actions">
         {company && <div className="document-tabs" role="tablist" aria-label="문서 선택">{(['portfolio', 'resume'] as const).map(value => <button key={value} id={`tab-${value}`} type="button" role="tab" aria-selected={tab === value} aria-controls="document" tabIndex={tab === value ? 0 : -1} onClick={() => selectTab(value)} onKeyDown={handleTabKey}>{value === 'portfolio' ? '포트폴리오' : '이력서'}</button>)}</div>}
         <a className="button download" href={doc.pdf} download><ArrowDownToLine size={16}/><span>PDF 다운로드</span></a>
@@ -241,7 +243,7 @@ function Viewer({manifest, company}: {manifest: Manifest; company: boolean}) {
 
 export default function App() {
   const path = window.location.pathname;
-  const allowed = (path === '/' || path === '/GYEOLSOFT') && !window.location.search;
+  const allowed = (path === '/' || path === '/GYEOLSOFT' || path === '/VoltaON') && !window.location.search;
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
@@ -255,7 +257,7 @@ export default function App() {
         return response.json();
       })
       .then(value => {
-        const documents = [value?.documents?.main, value?.documents?.gyeolsoft, value?.documents?.resume];
+        const documents = [value?.documents?.main, value?.documents?.gyeolsoft, value?.documents?.resume, value?.documents?.voltaon, value?.documents?.voltaonResume];
         if (documents.some(doc => !doc?.pages?.length || doc.pages.some((page: DocumentPage) => !page.html || !(page.width > 0) || !(page.height > 0)))) throw Error('Invalid documents');
         setManifest(value);
       })
@@ -265,5 +267,5 @@ export default function App() {
   if (!allowed) return <MissingPage/>;
   if (failed) return <main className="loading-state"><h1>문서를 불러오지 못했습니다.</h1><button className="button primary" type="button" onClick={() => setAttempt(attempt + 1)}>다시 불러오기</button></main>;
   if (!manifest) return <main className="loading-state" role="status">포트폴리오를 불러오고 있습니다.</main>;
-  return <Viewer manifest={manifest} company={path === '/GYEOLSOFT'}/>;
+  return <Viewer manifest={manifest} company={path === '/VoltaON' ? 'voltaon' : path === '/GYEOLSOFT' ? 'gyeolsoft' : null}/>;
 }

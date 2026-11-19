@@ -1,24 +1,26 @@
 import assert from 'node:assert/strict';
 
 // Shared content, separately composed A4 and A3 print layouts.
-export function createResumeSheets(data, profile, resume, {inline, marked, escape, portraitUrl, paper='A4'}) {
+export function createResumeSheets(data, profile, resume, {inline, marked, escape, portraitUrl, paper='A4',variant='gyeolsoft'}) {
   assert(['A4','A3'].includes(paper),'Unsupported resume paper');
+  assert(['gyeolsoft','voltaon'].includes(variant),'Unsupported resume variant');
+  const voltaon=variant==='voltaon',companyName=voltaon?'볼타온':'결소프트',companyRoute=voltaon?'/VoltaON':'/GYEOLSOFT';
   const paragraphs=data.common[0].markdown.split(/\n\s*\n/).filter(Boolean);
   const intro=resume.projectSummary||paragraphs[1];
   const role=resume.role||paragraphs[2];
   const skills=data.common[1].markdown.match(/\*\*Frontend:[\s\S]*?(?=\n\s*!\[\[|$)/)?.[0]||'';
   assert(intro&&role&&skills, 'Resume manuscript sections missing');
-  const cases=data.gyeol.filter(page=>page.kind==='case').map(page=>{
+  const cases=(voltaon?data.voltaon:data.gyeol).filter(page=>page.kind==='case').map(page=>{
     const table=marked.lexer(page.markdown,{gfm:true}).find(token=>token.type==='table');
     assert(table?.rows[0]?.[0]?.text, `Resume choice missing: ${page.id}`);
     return {id:page.id,title:resume.caseTitles?.[page.id]||page.title, text:resume.caseOverrides?.[page.id]||table.rows[0][0].text, note:resume.caseNotes?.[page.id]};
   });
-  assert.equal(cases.length,6,'Resume layout expects the six selected manuscript cases');
+  assert.equal(cases.length,voltaon?8:6,'Unexpected selected manuscript cases');
   const icon=type=>`<svg viewBox="0 0 24 24" aria-hidden="true">${type==='mail'?'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/>':type==='github'?'<path d="M9 19c-4.3 1.3-4.3-2.2-6-2.7M15 22v-3.9c0-1.1-.1-1.5-.6-2 3.3-.4 6.6-1.6 6.6-7.3a5.8 5.8 0 0 0-1.6-4 5.2 5.2 0 0 0-.1-4s-1.3-.4-4.2 1.6a14.4 14.4 0 0 0-7.6 0C4.6.4 3.3.8 3.3.8a5.2 5.2 0 0 0-.1 4 5.8 5.8 0 0 0-1.6 4c0 5.7 3.3 6.9 6.6 7.3-.4.4-.6 1-.6 2V22"/>':'<path d="M14 3h7v7M10 14 21 3M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/>'}</svg>`;
   const achievements=items=>`<ul class="bin-classic-achievements">${items.map(entry=>`<li data-case-id="${entry.id}"><h4>${escape(entry.title)}</h4><p>${inline(entry.text)}</p>${entry.note?`<small class="bin-classic-measurement-note">${escape(entry.note)}</small>`:''}</li>`).join('')}</ul>`;
   const section=(title,body,className='')=>`<section class="bin-classic-section ${className}"><h2>${title}</h2>${body}</section>`;
   const projectHeading=`<div class="bin-classic-project-heading"><div><h3>Project_Moa</h3></div><span>2026.09~2026.11 · 1인</span></div>${profile.project?`<div class="bin-classic-project-links"><a href="${escape(profile.project.github)}" target="_blank" rel="noreferrer">${icon('github')}프로젝트 GitHub</a><a href="${escape(profile.project.demo)}" target="_blank" rel="noreferrer">${icon('external')}데모 체험</a></div>`:''}`;
-  const contacts=`<div class="bin-classic-contact"><a href="mailto:${escape(profile.email)}">${icon('mail')}${escape(profile.email)}</a><a href="${escape(profile.github)}">${icon('github')}${escape(profile.github)}</a><a href="https://www.binportfolio.site/GYEOLSOFT">${icon('external')}포트폴리오</a></div>`;
+  const contacts=`<div class="bin-classic-contact"><a href="mailto:${escape(profile.email)}">${icon('mail')}${escape(profile.email)}</a><a href="${escape(profile.github)}">${icon('github')}${escape(profile.github)}</a><a href="https://www.binportfolio.site${companyRoute}">${icon('external')}포트폴리오</a></div>`;
   const profileHeader=`<div class="bin-classic-header"><div class="bin-classic-identity"><h1>${escape(profile.name)}</h1><p class="bin-classic-role">${escape(profile.role)}</p></div>${contacts}<img class="bin-classic-photo portrait" src="${escape(portraitUrl)}" alt="${escape(profile.name)}"></div>`;
   const paperText=text=>paper==='A3'?text.replace(/\\\r?\n/g,' '):text;
   const introduction=resume.introduction?`<div class="bin-classic-intro">${marked.parse(paperText(resume.introduction))}</div>`:'';
@@ -26,7 +28,6 @@ export function createResumeSheets(data, profile, resume, {inline, marked, escap
   const project=entries=>`<article class="bin-classic-project">${projectHeading}${projectDescription}${achievements(entries)}</article>`;
   const motivation=section('지원동기',`<p class="bin-classic-motivation">${inline(paperText(resume.motivation))}</p>`);
   const summary=`<div class="bin-classic-summary">${section('자기소개',introduction)}${motivation}</div>`;
-  const page1=profileHeader+summary+section('프로젝트 경험',project(cases.slice(0,3)));
   const skillTokens=skills.split(/\r?\n/).map(text=>({text:text.trim()})).filter(token=>token.text);
   const skillRows=skillTokens.map(token=>{
     const match=token.text.match(/^\*\*([^*]+)\*\*\s*([\s\S]+)$/);
@@ -41,12 +42,15 @@ export function createResumeSheets(data, profile, resume, {inline, marked, escap
   const educationSection=section('학력 · 자격 · 교육',education+`<div class="bin-classic-training">${training}</div>`);
   const recordsSection=section('연구 · 특허 · 수상',`<ul class="bin-classic-records">${records}</ul>`);
   const credentials=`<div class="bin-classic-credentials">${skillsSection}${educationSection}</div>`;
-  const page2=`<article class="bin-classic-project bin-classic-project-continuation">${achievements(cases.slice(3))}</article>`+credentials+recordsSection;
-  const pages=paper==='A3'?[{id:'resume-a3',title:'결소프트 이력서 · A3 가로',body:`<div class="bin-classic-a3-columns"><main>${profileHeader}${section('프로젝트 경험',project(cases))}</main><aside>${summary}${skillsSection}${educationSection}${recordsSection}</aside></div>`}]:[
+  const split=voltaon?2:3;
+  const page1=profileHeader+summary+section('프로젝트 경험',project(cases.slice(0,split)))+(voltaon?credentials:'');
+  const page2=`<article class="bin-classic-project bin-classic-project-continuation">${achievements(cases.slice(split))}</article>`+(voltaon?'':credentials)+recordsSection;
+  const a3Body=voltaon?`<main>${page1}</main><aside>${page2}</aside>`:`<main>${profileHeader}${section('프로젝트 경험',project(cases))}</main><aside>${summary}${skillsSection}${educationSection}${recordsSection}</aside>`;
+  const pages=paper==='A3'?[{id:'resume-a3',title:`${companyName} 이력서 · A3 가로`,body:`<div class="bin-classic-a3-columns">${a3Body}</div>`}]:[
     {id:'resume-profile',title:'프로필 · 지원동기 · 프로젝트 경험',body:page1},
     {id:'resume-experience',title:'구현 경험 · 기술 · 교육 · 연구·수상',body:page2}
   ];
-  return pages.map((page,index)=>({id:page.id,title:page.title,kind:'resume',markup:`<section class="sheet resume bin-classic-page${paper==='A3'?' paper-a3':''}" data-page-id="${page.id}"><div class="page-content"><div class="body bin-classic-resume">${page.body}</div></div><footer><span>${escape(profile.email)}</span><span>${index+1} / ${pages.length}</span></footer></section>`}));
+  return pages.map((page,index)=>({id:page.id,title:page.title,kind:'resume',markup:`<section class="sheet resume bin-classic-page${voltaon?' voltaon-resume':''}${paper==='A3'?' paper-a3':''}" data-page-id="${page.id}"><div class="page-content"><div class="body bin-classic-resume">${page.body}</div></div><footer><span>${escape(profile.email)}</span><span>${index+1} / ${pages.length}</span></footer></section>`}));
 }
 
 export const legacyResumeCss = `
@@ -127,4 +131,8 @@ export const legacyResumeCss = `
 .sheet.resume.paper-a3 .bin-classic-section>h2{margin-bottom:9px}
 .sheet.resume.paper-a3 .bin-classic-skill-row{grid-template-columns:90px minmax(0,1fr);gap:16px;padding:3px 0}
 .sheet.resume.paper-a3 .bin-classic-records{gap:8px}
+.sheet.resume.voltaon-resume .bin-classic-header{padding:12px 20px}
+.sheet.resume.voltaon-resume .bin-classic-achievements li+li{margin-top:14px}
+.sheet.resume.paper-a3.voltaon-resume .bin-classic-a3-columns{grid-template-columns:1fr 1fr}
+.sheet.resume.paper-a3.voltaon-resume .bin-classic-credentials>.bin-classic-section{margin-top:0}
 `;

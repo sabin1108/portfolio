@@ -13,6 +13,8 @@ const {chromium}=await import(pathToFileURL(bundle+'/node/node_modules/playwrigh
 const data=JSON.parse(await fs.readFile(path.join(root,'content/portfolio.json'),'utf8'));
 const profile=JSON.parse(await fs.readFile(path.join(root,'content/profile.json'),'utf8'));
 const resume=JSON.parse(await fs.readFile(path.join(root,'content/resume.json'),'utf8'));
+const voltaon=JSON.parse(await fs.readFile(path.join(root,'content/voltaon.json'),'utf8'));
+const voltaonResume=JSON.parse(await fs.readFile(path.join(root,'content/voltaon-resume.json'),'utf8'));
 if(profile.project)for(const url of Object.values(profile.project))assert.equal(new URL(url).protocol,'https:','Project links must use HTTPS');
 const output=path.join(root,'public/documents');
 const work=path.join(root,'tmp/moa-documents-20261118');
@@ -69,12 +71,13 @@ const css=`
 .legacy-sheet .tree-diagram{height:auto;padding:8px 0}.legacy-sheet .folder-tree{font-size:18px}.legacy-sheet .tree-description{font-size:17px}.legacy-sheet .tree-row{min-height:40px}.legacy-sheet .tree-ellipsis .tree-row{min-height:20px;line-height:20px}.legacy-sheet .tree-ellipsis:before{top:10px}.legacy-sheet .tree-ellipsis:last-child:after{top:11px}.legacy-sheet .tree-omission-note{font-size:12px;line-height:1.4;color:#5c6d6b;margin-top:6px}
 `+legacyResumeCss;
 // Preserve project prose independently; resume-only additions have a separate editable source.
-function expectedResumeSource(){
+function expectedResumeSource(sourceData=data,sourceResume=resume){
+  const data=sourceData,resume=sourceResume;
   const paragraphs=data.common[0].markdown.split(/\n\s*\n/).filter(Boolean);
   const intro=resume.projectSummary||paragraphs[1], role=resume.role||paragraphs[2],skills=data.common[1].markdown.match(/\*\*Frontend:[\s\S]*?(?=\n\s*!\[\[|$)/)?.[0]||'';
   assert(intro&&role);
   const body1=`<div class="profile-top"><img class="portrait" src="${pathToFileURL(path.join(root,'public/media/portrait.jpg'))}" alt="${profile.name}"><div><h1>${profile.name}</h1><p>${profile.role}</p><p><a href="mailto:${profile.email}">${profile.email}</a></p><p><a href="${profile.github}">${profile.github}</a></p></div></div><h2>Project_Moa</h2><p>2026.09~2026.11 · 1인</p><p>${inline(intro)}</p><p>${inline(role)}</p><h2>기술</h2><div class="stack">${marked.parse(skills,{gfm:true,breaks:true})}</div><h2>학력 · 자격</h2><div class="education"><div><strong>${profile.education.school}</strong><p>${profile.education.degree} · ${profile.education.status}<br>${profile.education.period}<br>${profile.education.gpa}</p></div><div><strong>${profile.certificates[0].name}</strong><p>${profile.certificates[0].issuer}<br>${profile.certificates[0].date}</p></div></div>`;
-  const entries=data.gyeol.filter(p=>p.kind==='case').map(p=>{
+  const entries=(data.gyeol||data.voltaon).filter(p=>p.kind==='case').map(p=>{
     const table=marked.lexer(p.markdown).find(t=>t.type==='table');
     assert(table,`Case table missing ${p.id}`);
     return `<article class="experience"><h3>${escape(resume.caseTitles?.[p.id]||p.title)}</h3><p>${inline(resume.caseOverrides?.[p.id]||table.rows[0][0].text)}</p>${resume.caseNotes?.[p.id]?`<small>${escape(resume.caseNotes[p.id])}</small>`:''}</article>`;
@@ -89,7 +92,9 @@ const layoutHelpers={renderTokens,lex:markdown=>marked.lexer(markdown,{gfm:true,
 const documents=[
   {id:'main',title:'포트폴리오',file:'main-portfolio.pdf',pages:createLegacyPages(data.common,layoutHelpers)},
   {id:'gyeolsoft',title:'결소프트 포트폴리오',file:'gyeolsoft-portfolio.pdf',pages:createLegacyPages(data.gyeol,layoutHelpers)},
-  {id:'resume',title:'결소프트 이력서',file:'gyeolsoft-resume.pdf',pages:resumeSheets()}
+  {id:'resume',title:'결소프트 이력서',file:'gyeolsoft-resume.pdf',pages:resumeSheets(),isResume:true,variant:'gyeolsoft',sourceData:data,sourceResume:resume},
+  {id:'voltaon',title:'볼타온 포트폴리오',file:'voltaon-portfolio.pdf',pages:createLegacyPages(voltaon.voltaon,layoutHelpers)},
+  {id:'voltaonResume',title:'볼타온 이력서',file:'voltaon-resume.pdf',isResume:true,variant:'voltaon',sourceData:voltaon,sourceResume:voltaonResume,pages:createResumeSheets(voltaon,profile,voltaonResume,{inline,marked,escape,portraitUrl:pathToFileURL(path.join(root,'public/media/portrait.jpg')).href,variant:'voltaon'})}
 ];
 const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true,args:['--no-first-run','--disable-gpu']});
 const {source:profileSource,...publicProfile}=profile;
@@ -107,11 +112,11 @@ function manuscriptContent(pages){
     return `<div class="page-content"><h1>${escape(source.title)}</h1>${renderTokens(marked.lexer(markdown,{gfm:true,breaks:true}),source.kind)}${figures}</div>`;
   });
 }
-const sourceCatalog={main:manuscriptContent(data.common),gyeolsoft:manuscriptContent(data.gyeol),resume:expectedResumeSource().map(page=>page.markup)};
+const sourceCatalog={main:manuscriptContent(data.common),gyeolsoft:manuscriptContent(data.gyeol),resume:expectedResumeSource().map(page=>page.markup),voltaon:manuscriptContent(voltaon.voltaon),voltaonResume:expectedResumeSource(voltaon,voltaonResume).map(page=>page.markup)};
 let documentCss='';
 try{
   const page=await browser.newPage({viewport:{width:1400,height:1000}});
-  const assertResumeLayout=async()=>{
+  const assertResumeLayout=async(expectedCount=6)=>{
     const state=await page.evaluate(()=>{
       const intro=document.querySelector('.bin-classic-intro');
       const introBlock=intro.closest('.bin-classic-section')||intro;
@@ -120,7 +125,7 @@ try{
       return{motivationBelowIntro:introBlock.nextElementSibling.querySelector('h2')?.textContent==='지원동기',count:items.length,headings,ruleWidths:items.map(item=>parseFloat(getComputedStyle(item).borderTopWidth))};
     });
     assert(state.motivationBelowIntro,'Motivation must directly follow the introduction');
-    assert.equal(state.count,6);assert.equal(new Set(state.headings).size,1,'Case heading styles differ');
+    assert.equal(state.count,expectedCount);assert.equal(new Set(state.headings).size,1,'Case heading styles differ');
     assert(state.ruleWidths.every(width=>width<=1),'A case has a thicker separator');
   };
   for(const [id,sourcePages] of Object.entries(sourceCatalog)){
@@ -138,11 +143,11 @@ try{
   }
   for(const doc of documents){
     const markup=doc.pages.map(p=>p.markup).join('').replaceAll('src="/media/',`src="${pathToFileURL(path.join(root,'public/media')+path.sep).href}`);
-    const html=`<!doctype html><html lang="ko"><meta charset="utf-8"><title>${profile.name} · ${doc.title}</title><style>${css}${doc.id==='resume'?'@page{size:A4 portrait}':''}</style><body>${markup}</body></html>`;
+    const html=`<!doctype html><html lang="ko"><meta charset="utf-8"><title>${profile.name} · ${doc.title}</title><style>${css}${doc.isResume?'@page{size:A4 portrait}':''}</style><body>${markup}</body></html>`;
     const htmlPath=path.join(work,doc.id+'.html');await fs.writeFile(htmlPath,html);
     await page.goto(pathToFileURL(htmlPath).href);
     await page.evaluate(async()=>{await document.fonts.ready;await Promise.all([...document.images].map(img=>img.decode()));});
-    if(doc.id==='resume')await assertResumeLayout();
+    if(doc.isResume)await assertResumeLayout(doc.sourceData.selectedCases.length);
     const metrics=await page.evaluate(()=>[...document.querySelectorAll('.sheet')].map(sheet=>{
       const box=sheet.getBoundingClientRect(),content=sheet.querySelector('.page-content').getBoundingClientRect(),footer=sheet.querySelector('footer').getBoundingClientRect();
       return{id:sheet.dataset.pageId,bottom:content.bottom-box.top,footer:footer.top-box.top,overflow:content.bottom>footer.top-12};
@@ -218,35 +223,37 @@ try{
       fonts:[...document.querySelectorAll('.body>p,.block,.experience p,.stack p,.legacy-item>div,.bin-classic-achievements p,.bin-classic-intro,.bin-classic-role-line,.bin-classic-skill-row dd')].map(element=>parseFloat(getComputedStyle(element).fontSize))
     }));
     assert.equal(printState.bodyText,newSourceText.bodyText,'Print styling changed content');
-    const minimumBodyPx=doc.id==='resume'?16:18;
+    const minimumBodyPx=doc.isResume?16:18;
     assert(printState.fonts.every(size=>size>=minimumBodyPx),`${doc.id}: primary text is below ${minimumBodyPx}px`);
     printChecks.push({document:doc.id,minimumBodyPx:Math.min(...printState.fonts),textPreserved:true});
     await page.pdf({path:path.join(output,doc.file),preferCSSPageSize:true,printBackground:true,tagged:true});
   }
-  const [a3]=createResumeSheets(data,profile,resume,{inline,marked,escape,portraitUrl:pathToFileURL(path.join(root,'public/media/portrait.jpg')).href,paper:'A3'});
-  const a3HtmlPath=path.join(work,'resume-a3.html');
-  await fs.writeFile(a3HtmlPath,`<!doctype html><html lang="ko"><meta charset="utf-8"><title>${profile.name} · 결소프트 이력서 · A3</title><style>${css}@page{size:A3 landscape}</style><body>${a3.markup}</body></html>`);
+  for(const doc of documents.filter(doc=>doc.isResume)){
+  const [a3]=createResumeSheets(doc.sourceData,profile,doc.sourceResume,{inline,marked,escape,portraitUrl:pathToFileURL(path.join(root,'public/media/portrait.jpg')).href,paper:'A3',variant:doc.variant});
+  const a3HtmlPath=path.join(work,doc.id+'-a3.html');
+  await fs.writeFile(a3HtmlPath,`<!doctype html><html lang="ko"><meta charset="utf-8"><title>${profile.name} · ${doc.title} · A3</title><style>${css}@page{size:A3 landscape}</style><body>${a3.markup}</body></html>`);
   await page.goto(pathToFileURL(a3HtmlPath).href);
   await page.evaluate(async()=>{await document.fonts.ready;await Promise.all([...document.images].map(image=>image.decode()));});
-  await assertResumeLayout();
+  await assertResumeLayout(doc.sourceData.selectedCases.length);
   const a3State=await page.evaluate(()=>{
     const sheet=document.querySelector('.sheet'),box=sheet.getBoundingClientRect(),content=sheet.querySelector('.page-content').getBoundingClientRect(),footer=sheet.querySelector('footer').getBoundingClientRect();
     const columns=[...sheet.querySelectorAll('.bin-classic-a3-columns>main,.bin-classic-a3-columns>aside')].map(element=>({...element.getBoundingClientRect().toJSON(),sections:[...element.children].map(child=>({title:child.querySelector('h2,h1')?.textContent,height:child.getBoundingClientRect().height,bottom:child.getBoundingClientRect().bottom}))}));
     return{bottom:content.bottom-box.top,footer:footer.top-box.top,overflow:content.bottom>footer.top-12,horizontal:sheet.scrollWidth>sheet.clientWidth+2,text:sheet.querySelector('.page-content').textContent,columns};
   });
-  layout.push({document:'resume-a3',pages:[a3State]});
+  layout.push({document:doc.id+'-a3',pages:[a3State]});
   assert(!a3State.overflow&&!a3State.horizontal,`A3 content overflow: ${JSON.stringify({...a3State,text:undefined})}`);
   assert.equal(a3State.columns.length,2);assert(a3State.columns[0].right<a3State.columns[1].left,'A3 must use two separate columns');
-  for(const unit of baselineSources.resume.units)assert(a3State.text.replace(/\s+/g,'').includes(unit.replace(/\s+/g,'')),`A3 text missing: ${unit}`);
-  await page.pdf({path:path.join(work,'gyeolsoft-resume-A3.pdf'),preferCSSPageSize:true,printBackground:true,tagged:true});
+  for(const unit of baselineSources[doc.id].units)assert(a3State.text.replace(/\s+/g,'').includes(unit.replace(/\s+/g,'')),`A3 text missing: ${unit}`);
+  await page.pdf({path:path.join(work,doc.variant+'-resume-A3.pdf'),preferCSSPageSize:true,printBackground:true,tagged:true});
+  }
 }finally{await browser.close();await fs.writeFile(path.join(work,'layout-checks.json'),JSON.stringify(layout,null,2));}
-for(const [pdf,width,height] of [[path.join(output,'gyeolsoft-resume.pdf'),210,297],[path.join(work,'gyeolsoft-resume-A3.pdf'),420,297]]){
+for(const [pdf,width,height] of documents.filter(doc=>doc.isResume).flatMap(doc=>[[path.join(output,doc.file),210,297],[path.join(work,doc.variant+'-resume-A3.pdf'),420,297]])){
   const normalize=spawnSync(bundle+'/python/python.exe',['-X','utf8',path.join(root,'scripts/normalize-pdf-paper-box.py'),pdf,String(width),String(height)],{encoding:'utf8'});
   if(normalize.status!==0)throw Error(normalize.stderr||normalize.stdout);
 }
 await fs.writeFile(path.join(work,'pdf-source-text.json'),JSON.stringify(pdfSourceText,null,2));
 const renderReportPath=path.join(work,'pdf-render-report.json');
-const render=spawnSync(bundle+'/python/python.exe',['-X','utf8',path.join(root,'scripts/render-document-pages.py'),output,JSON.stringify(Object.fromEntries(documents.map(d=>[d.id,d.pages.length]))),renderReportPath],{encoding:'utf8'});
+const render=spawnSync(bundle+'/python/python.exe',['-X','utf8',path.join(root,'scripts/render-document-pages.py'),output,JSON.stringify(Object.fromEntries(documents.map(d=>[d.id,{file:d.file,pages:d.pages.length}]))),renderReportPath],{encoding:'utf8'});
 if(render.status!==0)throw Error(render.stderr||render.stdout);
 const rendered=JSON.parse(await fs.readFile(renderReportPath,'utf8'));
 for(const doc of documents){
@@ -262,11 +269,16 @@ for(const doc of documents){
 await fs.writeFile(path.join(output,'manifest.json'),JSON.stringify(manifest,null,2));
 await fs.writeFile(path.join(output,'document.css'),documentCss+'\n');
 const exportPath=path.resolve(root,'../output/pdf/20261118');await fs.mkdir(exportPath,{recursive:true});
-for(const doc of documents)await fs.copyFile(path.join(output,doc.file),path.join(exportPath,doc.file));
-await fs.copyFile(path.join(output,'gyeolsoft-resume.pdf'),path.join(exportPath,'gyeolsoft-resume-A4.pdf'));
-await fs.copyFile(path.join(work,'gyeolsoft-resume-A3.pdf'),path.join(exportPath,'gyeolsoft-resume-A3.pdf'));
-const paperReview=spawnSync(bundle+'/python/python.exe',['-X','utf8',path.join(root,'scripts/review-resume-paper-sizes.py'),exportPath,path.join(work,'pdf-source-text.json'),path.join(work,'paper-review')],{encoding:'utf8'});
-if(paperReview.status!==0)throw Error(paperReview.stderr||paperReview.stdout);
-const paperSizes=JSON.parse(paperReview.stdout);
+const voltaExportPath=path.resolve(root,'../output/pdf/20261119');await fs.mkdir(voltaExportPath,{recursive:true});
+for(const doc of documents)await fs.copyFile(path.join(output,doc.file),path.join(doc.id.startsWith('voltaon')?voltaExportPath:exportPath,doc.file));
+const paperSizes=[];
+for(const doc of documents.filter(doc=>doc.isResume)){
+  const destination=doc.variant==='voltaon'?voltaExportPath:exportPath;
+  await fs.copyFile(path.join(output,doc.file),path.join(destination,doc.variant+'-resume-A4.pdf'));
+  await fs.copyFile(path.join(work,doc.variant+'-resume-A3.pdf'),path.join(destination,doc.variant+'-resume-A3.pdf'));
+  const paperReview=spawnSync(bundle+'/python/python.exe',['-X','utf8',path.join(root,'scripts/review-resume-paper-sizes.py'),destination,path.join(work,'pdf-source-text.json'),path.join(work,'paper-review',doc.variant),doc.variant,doc.id],{encoding:'utf8'});
+  if(paperReview.status!==0)throw Error(paperReview.stderr||paperReview.stdout);
+  paperSizes.push(...JSON.parse(paperReview.stdout));
+}
 await fs.writeFile(path.join(root,'content/build-report.json'),JSON.stringify({source:data.source,selectedCases:data.selectedCases,documents:documents.map(d=>({id:d.id,webSections:d.pages.length,pdfPages:rendered[d.id].pdfPageCount,pdf:d.file})),layoutChecks:layout,printChecks},null,2));
 console.log(JSON.stringify({documents:documents.map(d=>({id:d.id,webSections:d.pages.length,pdfPages:rendered[d.id].pdfPageCount})),pdfDirectory:exportPath,paperSizes,render:render.stdout.trim()}));

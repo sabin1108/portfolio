@@ -1,6 +1,6 @@
 # 민사빈 포트폴리오
 
-현재 공개 페이지는 `/`와 `/GYEOLSOFT` 두 개다. 결소프트의 포트폴리오와 이력서는 같은 페이지에서 탭으로 전환한다. 기존 회사별 URL은 새로 연결하지 않는다.
+공개 페이지는 `/`, `/GYEOLSOFT`, `/VoltaON`이다. 각 회사의 포트폴리오와 이력서는 같은 페이지에서 탭으로 전환하며, 이력서는 `#resume`으로 바로 연다. 다른 기존 회사별 URL은 연결하지 않는다.
 
 ## 원고와 수정 위치
 
@@ -10,6 +10,7 @@
 - 개인정보: `content/profile.json`
 - 이력서 자기소개·지원동기·담당 요약·추가 이력: `content/resume.json` (포트폴리오 원고와 별도로 수정)
 - 이력서 검토용 Markdown 사본: `drafts/gyeolsoft-resume-20261118.md`
+- 볼타온 원고와 이력서: `content/voltaon.json`, `content/voltaon-resume.json`. 검토용 Markdown과 출처: `drafts/voltaon-portfolio-20261119.md`, `drafts/voltaon-resume-20261119.md`, `docs/voltaon-content-evidence.md`.
 - 모아 저장소·데모 주소: `content/profile.json`의 `project.github` / `project.demo` (개인 GitHub와 구분)
 - PDF 조판: `scripts/build-documents.mjs`
 - 기존 포토맵·게임인포 디자인을 모아에 적용한 페이지 구성: `scripts/moa-legacy-layout.mjs`
@@ -20,6 +21,8 @@
 - 휠 제스처 판단과 검사: `src/app/wheel-navigation.ts`, `node --experimental-strip-types scripts/check-wheel-navigation.mjs`
 
 원문 문장은 윤문하지 않는다. 공통 본문은 트러블슈팅 이전 부분, 결소프트는 공통 + 2·14·28·3·5·27번이다. 10번은 사용자가 원고에서 삭제했으므로 제외했다. 번호는 편집용 데이터에서만 사용하며 공개 제목에는 표시하지 않는다.
+
+볼타온은 공통 +13·12·14·2·28·3·6·27번이다. 원고에 없는7·15번은 사용자 확인 후 제외했다. 공통 본문과 겹치는2·14·28·3·27번은 결소프트 확정본을 그대로 복사하며, 신규13·12·6번만 현재 D 원고에서 가져온다. `node scripts/import-voltaon-source.mjs`는 이 선별 데이터만 갱신하고, 결소프트나 수동 편집한 볼타온 이력서를 덮어쓰지 않는다. 볼타온 PDF는 상위 `output/pdf/20261119`에 생성한다.
 
 이력서는 자기소개 → 모아 프로젝트·구현 경험 → 지원동기 → 나머지 구현 경험·기술 → 학력·자격·교육 → 연구·특허·수상으로 구성한다. 작은 반복 머리말과2페이지의 프로젝트명·기간은 제거했다. 사용자 지시에 따라 기술 선택·검증에 근거한 자기소개와 결소프트 FMS UX 지원동기를 구분해 작성했다. 논문은 DOI·실제 PDF, 특허는 출원 자료, 수상은 상장을 확인했다. LG CNS AM Inspire Camp 7기는 교육 중으로 표시하고 확인되지 않은 기간은 쓰지 않는다.
 

@@ -2,11 +2,11 @@
 
 ## Source of truth
 - Status: Active
-- Last refreshed: 2026-11-18
-- Latest direction: keep the portfolio unchanged; refine the resume into a quiet editorial print design. Preserve all prose, contact links, motivation directly after introduction, A4 portrait2 pages and A3 landscape1 page. Use Noto Sans KR from the installed system, charcoal typography, muted teal evidence accents, whitespace instead of repeated rules, plain research labels and a compact identity/contact/photo header. No decorative cards, skill ratings or added copy.
+- Last refreshed: 2026-11-19
+- Latest direction: add VoltaON using the finalized Gyeolsoft portfolio/resume design and large portrait. Preserve existing published documents, shared prose and introduction. Only new cases13·12·6 come from the revised D manuscript; support motivation is specific to VoltaON. Retain12pt resume body, two A4 pages and one A3 landscape page. New layouts may distribute unchanged sections differently to remain readable.
 - Visual references: archive/legacy-20261118/_workspace/presentation-reference/new-page-4.jpg and new-page-5.jpg; archived ProjectPresentation.tsx, project-presentation.css, BinClassicResume.tsx and bin-resume.css.
 - Current composition reference: `C:/Users/sabin/Desktop/임시 c드라이브 파일/포트폴리오/학습용/해준이 포폴.pdf`, all12 pages rendered; especially flow/page3, technology/page4, features/page5 and troubleshooting/pages6–9. Evidence and plan: `docs/portfolio-wheel-layout-plan.md`.
-- Primary surfaces: `/` and `/GYEOLSOFT` only. The latter has portfolio/resume tabs on the same pathname.
+- Primary surfaces: `/`, `/GYEOLSOFT`, `/VoltaON`. Company portfolio/resume tabs share their pathname; `#resume` opens the resume directly.
 - User manuscript: `D:/sabin/note/일단 작성할 포트폴리오.md`. Preserve prose verbatim, including the user's edits. Remove only troubleshooting heading numbers and editorial fence/section markers outside the selected text.
 - Common portfolio: manuscript before `# 모아 트러블슈팅`. Gyeolsoft: common + cases 2,14,28,3,5,27 in that order. Case10 was intentionally removed and must remain excluded.
 - Existing `src`, `public` and prior design guidance are preserved under `archive/legacy-20261118/`. Old projects/company pages must not be bundled or published.
@@ -19,7 +19,7 @@
 ## Product goals
 - Deliver three PDFs first: common portfolio, Gyeolsoft portfolio, Gyeolsoft resume.
 - Web presents those documents with a readable document viewer and direct downloads.
-- Only `/` and `/GYEOLSOFT` are active HTML routes; old routes return 404.
+- Only `/`, `/GYEOLSOFT` and `/VoltaON` are active HTML routes; other old routes remain blocked.
 - Preserve every selected manuscript paragraph/cell; do not compress or rewrite prose to make it fit.
 
 ## Personas and jobs
@@ -29,6 +29,7 @@
 ## Information architecture
 - `/`: common portfolio, profile name, contact, common PDF download.
 - `/GYEOLSOFT`: same URL with portfolio/resume tabs, relevant PDF download, page index.
+- `/VoltaON`: same reader and design; common10 pages plus cases13·12·14·2·28·3·6·27 and the existing file-tree page, totaling19 portfolio pages. Missing7·15 remain excluded. The resume preserves the Gyeolsoft introduction and shared descriptions, with VoltaON motivation. Stream reception/display and PDF-cache diagrams summarize only the manuscript; no model latency improvement or video implementation is claimed.
 - Public assets: only new documents, manuscript images and portrait. Archive stays outside public and is excluded from Vercel upload.
 
 ## Design principles

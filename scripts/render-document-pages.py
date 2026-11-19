@@ -8,14 +8,14 @@ root = Path(sys.argv[1])
 expected = json.loads(sys.argv[2])
 report_path = Path(sys.argv[3])
 report = {}
-for doc_id, filename in [('main', 'main-portfolio.pdf'), ('gyeolsoft', 'gyeolsoft-portfolio.pdf'), ('resume', 'gyeolsoft-resume.pdf')]:
-    source = root / filename
+for doc_id, spec in expected.items():
+    source = root / spec['file']
     document = pdfium.PdfDocument(str(source))
     destination = root / doc_id
     destination.mkdir(exist_ok=True)
     reader = PdfReader(str(source))
     assert len(reader.pages) == len(document)
-    assert len(document) >= expected[doc_id], (doc_id, len(document), expected[doc_id])
+    assert len(document) == spec['pages'], (doc_id, len(document), spec['pages'])
     pages = []
     for old_page in destination.glob('page-*.webp'):
         if int(old_page.stem.split('-')[-1]) > len(document):

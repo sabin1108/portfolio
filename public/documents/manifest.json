@@ -549,6 +549,383 @@
           "height": 1684
         }
       ]
+    },
+    "voltaon": {
+      "id": "voltaon",
+      "title": "볼타온 포트폴리오",
+      "pdf": "/documents/voltaon-portfolio.pdf",
+      "pages": [
+        {
+          "id": "common-1",
+          "title": "사용자 맞춤 폴더 관리 챗봇",
+          "kind": "intro",
+          "visual": "/media/moa-workspace.png",
+          "image": "/documents/voltaon/page-01.webp",
+          "html": "<section class=\"sheet legacy-sheet legacy-intro legacy-coral layout-cover\" data-page-id=\"common-1\"><header><span>민사빈 <b>/</b> Front-End Developer</span><span>Project_Moa</span></header><div class=\"page-content\"><div class=\"legacy-wide-content\"><div class=\"legacy-heading\"><div class=\"legacy-eyebrow\">서비스 소개</div><h1>사용자 맞춤 폴더 관리 챗봇</h1></div><div class=\"body\"><nav class=\"project-links\" aria-label=\"모아 프로젝트 링크\"><a href=\"https://github.com/sabin1108/file_moa\" target=\"_blank\" rel=\"noreferrer\">프로젝트 GitHub <span aria-hidden=\"true\">↗</span></a><a class=\"project-demo-link\" href=\"https://web-eight-rho-72.vercel.app/demo/access/mfxu_c866qhA9f4qsigenuyliEzVKH0ZY8ByEzSfr78\" target=\"_blank\" rel=\"noreferrer\">데모 체험 <span aria-hidden=\"true\">↗</span></a></nav><div class=\"cover-lead\"><p>React, TypeScript, Next.js를 기반으로 로컬 자료 탐색과 파일 정리를 하나의 흐름으로 연결한 웹 서비스입니다.</p></div><div class=\"editorial-grid\"><div><p>저는 이 프로젝트에서 프론트엔드 개발을 중심으로 폴더 연결, 자료 검색과 질문, 정리 계획 검토, 파일 작업 실행, 결과 확인 흐름을 구현했습니다. 사용자가 자신의 자료를 이해하고, 변경 전에 계획을 확인하며, 실패한 뒤에도 작업을 이어갈 수 있도록 화면과 상태를 설계하는 데 집중했습니다.</p></div><div><p>이 프로젝트를 통해 Better Auth 기반 인증과 API 연동, URL 기반 상태 관리, 재사용 가능한 컴포넌트 설계, 캐싱을 통한 반복 처리 개선을 경험했습니다. 또한 복잡한 작업을 Stepper 구조로 안내하고 입력과 화면 전환의 안정성을 높이며 사용자 경험을 개선했습니다.</p></div></div><div class=\"legacy-cover-flow\"><p><strong>내 자료 연결 → 대화로 정리 및 파일 탐색 → 변경 전 계획 검토 → 동의한 작업 실행 → 파일 작업 완료</strong></p></div><div class=\"metrics\"><div><strong><strong>56.2% ↓</strong></strong><span>설정 재진입 대기 시간</span></div><div><strong><strong>70.0% ↓</strong></strong><span>설정 화면 밀림 · CLS</span></div><div><strong><strong>100점</strong></strong><span>Desktop Lighthouse 성능</span></div><div><strong><strong>99점</strong></strong><span>Mobile Lighthouse 성능</span></div></div></div></div></div><footer><span>01 <b>/</b> 19 · 서비스 소개</span><span>minsabin1108@gmail.com</span></footer></section>",
+          "text": "민사빈 / Front-End Developer\nProject_Moa\n서비스 소개\n사용자 맞춤 폴더 관리 챗봇\n프로젝트 GitHub\n↗\n데모 체험\n↗\n\nReact, TypeScript, Next.js를 기반으로 로컬 자료 탐색과 파일 정리를 하나의 흐름으로 연결한 웹 서비스입니다.\n\n저는 이 프로젝트에서 프론트엔드 개발을 중심으로 폴더 연결, 자료 검색과 질문, 정리 계획 검토, 파일 작업 실행, 결과 확인 흐름을 구현했습니다. 사용자가 자신의 자료를 이해하고, 변경 전에 계획을 확인하며, 실패한 뒤에도 작업을 이어갈 수 있도록 화면과 상태를 설계하는 데 집중했습니다.\n\n이 프로젝트를 통해 Better Auth 기반 인증과 API 연동, URL 기반 상태 관리, 재사용 가능한 컴포넌트 설계, 캐싱을 통한 반복 처리 개선을 경험했습니다. 또한 복잡한 작업을 Stepper 구조로 안내하고 입력과 화면 전환의 안정성을 높이며 사용자 경험을 개선했습니다.\n\n내 자료 연결 → 대화로 정리 및 파일 탐색 → 변경 전 계획 검토 → 동의한 작업 실행 → 파일 작업 완료\n\n56.2% ↓\n설정 재진입 대기 시간\n70.0% ↓\n설정 화면 밀림 · CLS\n100점\nDesktop Lighthouse 성능\n99점\nMobile Lighthouse 성능\n01 / 19 · 서비스 소개\nminsabin1108@gmail.com",
+          "width": 1122.515625,
+          "height": 793.6875,
+          "pdfStartPage": 1
+        },
+        {
+          "id": "common-2",
+          "title": "프로젝트 소개",
+          "kind": "story",
+          "visual": "/media/moa-workspace.png",
+          "image": "/documents/voltaon/page-02.webp",
+          "html": "<section class=\"sheet legacy-sheet legacy-story legacy-coral layout-overview\" data-page-id=\"common-2\"><header><span>민사빈 <b>/</b> Front-End Developer</span><span>Project_Moa</span></header><div class=\"page-content\"><div class=\"legacy-wide-content\"><div class=\"legacy-heading\"><div class=\"legacy-eyebrow\">서비스 소개</div><h1>프로젝트 소개</h1></div><div class=\"body\"><div class=\"overview-meta\"><p>사용자 맞춤 폴더 관리 챗봇<br>기간: 2026.09~2026.11 | 인원: 1인<br>프로젝트 소개 </p></div><div class=\"editorial-grid\"><div><p>Project_Moa는 처음 사용하는 사용자도 쉽게 접근이 가능해 다양한 사람들의 폴더를 관리하도록 도와주는 쳇봇입니다. 사용자는 웹사이트에서 지정한 폴더를 이동, 복사, 삭제 같은 작업도 가능하며,  정리하기 부담스러운 폴더는 ai 쳇봇을 통해 정리하는 방법을 검토 및 수행하거나 자료를 찾거나 자료를 기반으로 질문하여 답을 받습니다.</p></div><div><p>문제 정의<br>자료가 쌓일수록 필요한 파일의 위치를 기억하기 어렵고, 내용을 확인하려면 여러 문서를 하나하나 다 확인해야 하는 경우가 태반입니다. 정리할 때도 파일마다 분류 기준과 이동 위치를 판단해야 하며, 자동 정리는 무엇이 바뀌는지 알기 어려워 원본 변경에 대한 부담이 있습니다. 필요한 자료를 쉽게 찾으면서도, 변경 내용을 이해하고 직접 결정할 수 있는 흐름이 필요했습니다.</p></div></div><div class=\"overview-bottom\"><figure class=\"legacy-picture\"><img src=\"/media/moa-workspace.png\" alt=\"예시 자료로 보는 모아 화면\"><figcaption>예시 자료로 보는 모아 화면</figcaption></figure><div class=\"overview-stack\"><p><strong>Frontend:</strong> React, TypeScript, Next.js<br><strong>State/API:</strong> Context API, Fetch API, Better Auth<br><strong>Style/UI:</strong> CSS Modules<br><strong>Quality:</strong> Vitest, ESLint, Lighthouse</p></div></div></div></div></div><footer><span>02 <b>/</b> 19 · 서비스 소개</span><span>minsabin1108@gmail.com</span></footer></section>",
+          "text": "민사빈 / Front-End Developer\nProject_Moa\n서비스 소개\n프로젝트 소개\n\n사용자 맞춤 폴더 관리 챗봇\n기간: 2026.09~2026.11 | 인원: 1인\n프로젝트 소개\n\nProject_Moa는 처음 사용하는 사용자도 쉽게 접근이 가능해 다양한 사람들의 폴더를 관리하도록 도와주는 쳇봇입니다. 사용자는 웹사이트에서 지정한 폴더를 이동, 복사, 삭제 같은 작업도 가능하며, 정리하기 부담스러운 폴더는 ai 쳇봇을 통해 정리하는 방법을 검토 및 수행하거나 자료를 찾거나 자료를 기반으로 질문하여 답을 받습니다.\n\n문제 정의\n자료가 쌓일수록 필요한 파일의 위치를 기억하기 어렵고, 내용을 확인하려면 여러 문서를 하나하나 다 확인해야 하는 경우가 태반입니다. 정리할 때도 파일마다 분류 기준과 이동 위치를 판단해야 하며, 자동 정리는 무엇이 바뀌는지 알기 어려워 원본 변경에 대한 부담이 있습니다. 필요한 자료를 쉽게 찾으면서도, 변경 내용을 이해하고 직접 결정할 수 있는 흐름이 필요했습니다.\n\n예시 자료로 보는 모아 화면\n\nFrontend: React, TypeScript, Next.js\nState/API: Context API, Fetch API, Better Auth\nStyle/UI: CSS Modules\nQuality: Vitest, ESLint, Lighthouse\n\n02 / 19 · 서비스 소개\nminsabin1108@gmail.com",
+          "width": 1122.515625,
+          "height": 793.6875,
+          "pdfStartPage": 2
+        },
+        {
+          "id": "common-2-architecture",
+          "title": "서비스 구성도",
+          "kind": "diagram",
+          "visual": "/media/moa-workspace.png",
+          "image": "/documents/voltaon/page-03.webp",
+          "html": "<section class=\"sheet legacy-sheet legacy-diagram legacy-blue layout-diagram\" data-page-id=\"common-2-architecture\"><header><span>민사빈 <b>/</b> Front-End Developer</span><span>Project_Moa</span></header><div class=\"page-content\"><div class=\"legacy-wide-content\"><div class=\"legacy-heading\"><div class=\"legacy-eyebrow\">아키텍처</div><h1>서비스 구성도</h1></div><div class=\"body\"><figure class=\"legacy-full-diagram\"><img src=\"/media/moa-architecture.svg\" alt=\"모아 프론트엔드 아키텍처\"></figure></div></div></div><footer><span>03 <b>/</b> 19 · 아키텍처</span><span>minsabin1108@gmail.com</span></footer></section>",
+          "text": "민사빈 / Front-End Developer\nProject_Moa\n아키텍처\n서비스 구성도\n03 / 19 · 아키텍처\nminsabin1108@gmail.com",
+          "width": 1122.515625,
+          "height": 793.6875,
+          "pdfStartPage": 3
+        },
+        {
+          "id": "common-3-flow",
+          "title": "사용자 흐름과 담당 구현",
+          "kind": "story",
+          "visual": "/media/moa-workspace.png",
+          "image": "/documents/voltaon/page-04.webp",
+          "html": "<section class=\"sheet legacy-sheet legacy-story legacy-coral layout-flow\" data-page-id=\"common-3-flow\"><header><span>민사빈 <b>/</b> Front-End Developer</span><span>Project_Moa</span></header><div class=\"page-content\"><div class=\"legacy-wide-content\"><div class=\"legacy-heading\"><div class=\"legacy-eyebrow\">사용자 흐름</div><h1>사용자 흐름과 담당 구현</h1></div><div class=\"body\"><p>자료를 찾는 순간부터 변경 내용을 확인하고 파일을 정리하는 과정까지 하나의 사용자 흐름으로 연결했습니다.</p><div class=\"steps\"><div><span>01</span><strong><strong>로그인</strong></strong></div><div><span>02</span><strong><strong>폴더 연결</strong></strong></div><div><span>03</span><strong><strong>자료 탐색·질문</strong></strong></div><div><span>04</span><strong><strong>정리 계획 검토</strong></strong></div><div><span>05</span><strong><strong>파일 작업 실행</strong></strong></div><div><span>06</span><strong><strong>결과 확인·복구</strong></strong></div></div><div class=\"editorial-grid\"><article class=\"legacy-item\"><h3>인증 / 화면 이동</h3><div><strong>Better Auth</strong> 기반 로그인·소셜 로그인·계정 연결 흐름을 구성하고, 서버에서 현재 사용자를 확인해 인증된 화면에 접근하도록 했습니다.<br><br><strong>Next.js 공통 레이아웃</strong>에서 폴더 연결과 대화 상태를 공유하고, 계정이 바뀌면 이전 상태를 분리했습니다.</div></article><article class=\"legacy-item\"><h3>자료 탐색 / 질문</h3><div>연결한 폴더에서 파일을 탐색하고, 선택한 자료의 내용을 질문하는 흐름을 구현했습니다.<br><br><strong>Web Worker</strong>에서 문서를 추출하고 <strong>IndexedDB</strong>에 본문을 보관해, 원본이 같은 경우 재사용했습니다. 질문별 발췌는 다시 준비했습니다.</div></article></div></div></div></div><footer><span>04 <b>/</b> 19 · 사용자 흐름</span><span>minsabin1108@gmail.com</span></footer></section>",
+          "text": "민사빈 / Front-End Developer\nProject_Moa\n사용자 흐름\n사용자 흐름과 담당 구현\n\n자료를 찾는 순간부터 변경 내용을 확인하고 파일을 정리하는 과정까지 하나의 사용자 흐름으로 연결했습니다.\n\n01\n로그인\n02\n폴더 연결\n03\n자료 탐색·질문\n04\n정리 계획 검토\n05\n파일 작업 실행\n06\n결과 확인·복구\n인증 / 화면 이동\nBetter Auth 기반 로그인·소셜 로그인·계정 연결 흐름을 구성하고, 서버에서 현재 사용자를 확인해 인증된 화면에 접근하도록 했습니다.\n\nNext.js 공통 레이아웃에서 폴더 연결과 대화 상태를 공유하고, 계정이 바뀌면 이전 상태를 분리했습니다.\n자료 탐색 / 질문\n연결한 폴더에서 파일을 탐색하고, 선택한 자료의 내용을 질문하는 흐름을 구현했습니다.\n\nWeb Worker에서 문서를 추출하고 IndexedDB에 본문을 보관해, 원본이 같은 경우 재사용했습니다. 질문별 발췌는 다시 준비했습니다.\n04 / 19 · 사용자 흐름\nminsabin1108@gmail.com",
+          "width": 1122.515625,
+          "height": 793.6875,
+          "pdfStartPage": 4
+        },
+        {
+          "id": "common-3-structure",
+          "title": "계획 검토·실행과 구조 개선",
+          "kind": "story",
+          "visual": "/media/moa-workspace.png",
+          "image": "/documents/voltaon/page-05.webp",
+          "html": "<section class=\"sheet legacy-sheet legacy-story legacy-coral layout-structure\" data-page-id=\"common-3-structure\"><header><span>민사빈 <b>/</b> Front-End Developer</span><span>Project_Moa</span></header><div class=\"page-content\"><div class=\"legacy-wide-content\"><div class=\"legacy-heading\"><div class=\"legacy-eyebrow\">사용자 흐름</div><h1>계획 검토·실행과 구조 개선</h1></div><div class=\"body\"><article class=\"legacy-item\"><h3>계획 검토 / 실행</h3><div><strong>Stepper 구조</strong>로 계획 검토·목적지 선택·충돌 확인·실행 단계를 나눴습니다.<br><br>사용자가 변경 내용을 확인한 뒤 실행하도록 하고, 실패 시 입력과 작업 내용을 유지해 재시도하거나 복구할 수 있도록 했습니다.</div></article><div class=\"editorial-grid\"><article class=\"legacy-item\"><h3>핵심 구현</h3><div>폴더 연결부터 자료 탐색·질문, 정리 계획 검토와 실행까지 하나의 흐름으로 연결했습니다.<br><br><strong>searchParams</strong>로 현재 작업 단계와 초안 참조를 URL에 남기고, 실제 입력과 계획은 별도로 보관해 이동 후에도 작업을 이어가도록 했습니다.</div></article><article class=\"legacy-item\"><h3>구조 개선</h3><div><strong>React 컴포넌트와 커스텀 훅을 레고 부품처럼 나누어, 공통으로 사용할 부분과 작업마다 달라지는 부분을 구분했습니다.</strong><br><br>목적지 탐색·경로 입력·새 항목 생성은 필요한 곳에 조합해 재사용하고, 충돌 처리와 원본 보존처럼 작업마다 다른 규칙은 별도로 관리했습니다.</div></article></div></div></div></div><footer><span>05 <b>/</b> 19 · 사용자 흐름</span><span>minsabin1108@gmail.com</span></footer></section>",
+          "text": "민사빈 / Front-End Developer\nProject_Moa\n사용자 흐름\n계획 검토·실행과 구조 개선\n계획 검토 / 실행\nStepper 구조로 계획 검토·목적지 선택·충돌 확인·실행 단계를 나눴습니다.\n\n사용자가 변경 내용을 확인한 뒤 실행하도록 하고, 실패 시 입력과 작업 내용을 유지해 재시도하거나 복구할 수 있도록 했습니다.\n핵심 구현\n폴더 연결부터 자료 탐색·질문, 정리 계획 검토와 실행까지 하나의 흐름으로 연결했습니다.\n\nsearchParams로 현재 작업 단계와 초안 참조를 URL에 남기고, 실제 입력과 계획은 별도로 보관해 이동 후에도 작업을 이어가도록 했습니다.\n구조 개선\nReact 컴포넌트와 커스텀 훅을 레고 부품처럼 나누어, 공통으로 사용할 부분과 작업마다 달라지는 부분을 구분했습니다.\n\n목적지 탐색·경로 입력·새 항목 생성은 필요한 곳에 조합해 재사용하고, 충돌 처리와 원본 보존처럼 작업마다 다른 규칙은 별도로 관리했습니다.\n05 / 19 · 사용자 흐름\nminsabin1108@gmail.com",
+          "width": 1122.515625,
+          "height": 793.6875,
+          "pdfStartPage": 5
+        },
+        {
+          "id": "common-4-next",
+          "title": "기술 선택과 설계 판단",
+          "kind": "story",
+          "visual": "/media/moa-workspace.png",
+          "image": "/documents/voltaon/page-06.webp",
+          "html": "<section class=\"sheet legacy-sheet legacy-story legacy-coral layout-cards\" data-page-id=\"common-4-next\"><header><span>민사빈 <b>/</b> Front-End Developer</span><span>Project_Moa</span></header><div class=\"page-content\"><div class=\"legacy-wide-content\"><div class=\"legacy-heading\"><div class=\"legacy-eyebrow\">기술 선택</div><h1>기술 선택과 설계 판단</h1></div><div class=\"body\"><section class=\"decision-copy\"><p><strong>React SPA와 비교해 Next.js를 선택한 이유</strong></p><p><strong>React SPA로 구현하면 화면 외에 라우팅과 API 서버를 별도로 구성하고, 인증 흐름까지 연결해야 하는 부분</strong> Next.js는 파일 기반 라우팅과 서버 API 기능을 함께 제공해, Better Auth·Prisma를 활용한 인증·DB 처리를 화면과 같은 구성 부분에 대해서 비교하면서 <strong>여러 도구를 따로 조합하고 연결하는 부담을 줄일 수 있다고 판단해 Next.js를 선택했습니다.</strong></p></section><figure class=\"portfolio-visual technical-visual visual-tech-next\" data-visual=\"technical-next\"><figcaption class=\"diagram-caption\">화면·라우팅·API·인증의 구성 범위 비교</figcaption><div class=\"diagram-canvas\"><div class=\"technical-comparison\"><section class=\"tool-group\"><b>React SPA</b><div class=\"tool-pieces\"><div class=\"diagram-node \">화면</div><div class=\"diagram-node \">라우팅</div><div class=\"diagram-node \">별도 API 서버</div><div class=\"diagram-node \">인증 흐름</div></div><div class=\"diagram-note\">도구를 따로 구성하고 연결</div></section><section class=\"tool-group is-integrated\"><b>Next.js</b><div class=\"tool-pieces\"><div class=\"diagram-node \">화면 · 공통 레이아웃</div><div class=\"diagram-node \">파일 기반 라우팅</div><div class=\"diagram-node \">서버 API</div><div class=\"diagram-node \">Better Auth · Prisma</div></div><div class=\"diagram-note\">같은 앱에서 구성과 연결</div></section></div></div></figure><section class=\"decision-note\"><p><strong>같이 보이는 정보도 책임과 수명은 다르게 관리했습니다</strong><br>현재 화면의 위치, 보관할 작업 내용, 실제 실행 권한을 같은 상태로 취급하지 않고 역할에 맞게 나눴습니다.</p></section></div></div></div><footer><span>06 <b>/</b> 19 · 기술 선택</span><span>minsabin1108@gmail.com</span></footer></section>",
+          "text": "민사빈 / Front-End Developer\nProject_Moa\n기술 선택\n기술 선택과 설계 판단\n\nReact SPA와 비교해 Next.js를 선택한 이유\n\nReact SPA로 구현하면 화면 외에 라우팅과 API 서버를 별도로 구성하고, 인증 흐름까지 연결해야 하는 부분 Next.js는 파일 기반 라우팅과 서버 API 기능을 함께 제공해, Better Auth·Prisma를 활용한 인증·DB 처리를 화면과 같은 구성 부분에 대해서 비교하면서 여러 도구를 따로 조합하고 연결하는 부담을 줄일 수 있다고 판단해 Next.js를 선택했습니다.\n\n화면·라우팅·API·인증의 구성 범위 비교\nReact SPA\n화면\n라우팅\n별도 API 서버\n인증 흐름\n도구를 따로 구성하고 연결\nNext.js\n화면 · 공통 레이아웃\n파일 기반 라우팅\n서버 API\nBetter Auth · Prisma\n같은 앱에서 구성과 연결\n\n같이 보이는 정보도 책임과 수명은 다르게 관리했습니다\n현재 화면의 위치, 보관할 작업 내용, 실제 실행 권한을 같은 상태로 취급하지 않고 역할에 맞게 나눴습니다.\n\n06 / 19 · 기술 선택\nminsabin1108@gmail.com",
+          "width": 1122.515625,
+          "height": 793.6875,
+          "pdfStartPage": 6
+        },
+        {
+          "id": "common-4-auth-workflow",
+          "title": "인증과 작업 단계",
+          "kind": "story",
+          "visual": "/media/moa-workspace.png",
+          "image": "/documents/voltaon/page-07.webp",
+          "html": "<section class=\"sheet legacy-sheet legacy-story legacy-blue layout-cards\" data-page-id=\"common-4-auth-workflow\"><header><span>민사빈 <b>/</b> Front-End Developer</span><span>Project_Moa</span></header><div class=\"page-content\"><div class=\"legacy-wide-content\"><div class=\"legacy-heading\"><div class=\"legacy-eyebrow\">기술 선택</div><h1>인증과 작업 단계</h1></div><div class=\"body\"><div class=\"editorial-grid\"><article class=\"legacy-item\"><h3>Better Auth · 계정 연결 정책의 관리 위치</h3><div><strong>NextAuth/Supabase Auth·Better Auth</strong>를 가입·복구·계정 연결 흐름으로 비교했습니다.<br><br>관리형 인증의 편의도 고려했지만, 모아에서는 여러 계정에 대한 연동을 위한 앱 코드와 Prisma 구조에서 함께 조정하기 위해 <strong>Better Auth</strong>를 선택했습니다. 대신 메일·OAuth 설정과 인증 코드 업데이트를 관리할 책임이 남았습니다.</div></article><article class=\"legacy-item\"><h3>Stepper · searchParams의 역할 분리</h3><div>복사·이동 절차가 아래로 계속 쌓여 화면이 길어지고, 지금 해야 할 일을 찾기 어려웠습니다. 필요한 확인을 없애기보다 <strong>Stepper</strong>로 현재 단계의 작업을 중심에 두었습니다.<br><br><strong>searchParams</strong>에는 단계와 초안 참조만 남기고, 실제 입력·계획은 별도로 보관했습니다. URL로 위치를 복원해도 현재 파일과 권한은 다시 확인하도록 했습니다.</div></article></div><figure class=\"portfolio-visual technical-visual visual-tech-auth\" data-visual=\"technical-auth\"><figcaption class=\"diagram-caption\">인증 확인과 작업 단계의 역할 구분</figcaption><div class=\"diagram-canvas\"><div class=\"technical-comparison\"><section class=\"auth-lane\"><b>Better Auth</b><div class=\"diagram-flow\"><div class=\"diagram-node \">로그인·계정 연결</div><span class=\"diagram-arrow\" aria-hidden=\"true\">→</span><div class=\"diagram-node \">서버 사용자 확인</div><span class=\"diagram-arrow\" aria-hidden=\"true\">→</span><div class=\"diagram-node \">인증된 화면</div></div></section><section class=\"workflow-lane\"><b>Stepper</b><div class=\"diagram-flow\"><div class=\"diagram-node \">목적지</div><span class=\"diagram-arrow\" aria-hidden=\"true\">→</span><div class=\"diagram-node \">충돌 확인</div><span class=\"diagram-arrow\" aria-hidden=\"true\">→</span><div class=\"diagram-node \">실행</div><span class=\"diagram-arrow\" aria-hidden=\"true\">→</span><div class=\"diagram-node \">결과</div></div><div class=\"state-lanes\"><div class=\"diagram-node \">URL · 단계와 초안 참조</div><div class=\"diagram-node \">별도 초안 · 입력과 계획</div></div><div class=\"diagram-note\">복원 뒤 현재 파일·권한 재확인</div></section></div></div></figure></div></div></div><footer><span>07 <b>/</b> 19 · 기술 선택</span><span>minsabin1108@gmail.com</span></footer></section>",
+          "text": "민사빈 / Front-End Developer\nProject_Moa\n기술 선택\n인증과 작업 단계\nBetter Auth · 계정 연결 정책의 관리 위치\nNextAuth/Supabase Auth·Better Auth를 가입·복구·계정 연결 흐름으로 비교했습니다.\n\n관리형 인증의 편의도 고려했지만, 모아에서는 여러 계정에 대한 연동을 위한 앱 코드와 Prisma 구조에서 함께 조정하기 위해 Better Auth를 선택했습니다. 대신 메일·OAuth 설정과 인증 코드 업데이트를 관리할 책임이 남았습니다.\nStepper · searchParams의 역할 분리\n복사·이동 절차가 아래로 계속 쌓여 화면이 길어지고, 지금 해야 할 일을 찾기 어려웠습니다. 필요한 확인을 없애기보다 Stepper로 현재 단계의 작업을 중심에 두었습니다.\n\nsearchParams에는 단계와 초안 참조만 남기고, 실제 입력·계획은 별도로 보관했습니다. URL로 위치를 복원해도 현재 파일과 권한은 다시 확인하도록 했습니다.\n인증 확인과 작업 단계의 역할 구분\nBetter Auth\n로그인·계정 연결\n→\n서버 사용자 확인\n→\n인증된 화면\nStepper\n목적지\n→\n충돌 확인\n→\n실행\n→\n결과\nURL · 단계와 초안 참조\n별도 초안 · 입력과 계획\n복원 뒤 현재 파일·권한 재확인\n07 / 19 · 기술 선택\nminsabin1108@gmail.com",
+          "width": 1122.515625,
+          "height": 793.6875,
+          "pdfStartPage": 7
+        },
+        {
+          "id": "common-4-components-cache",
+          "title": "컴포넌트와 캐시",
+          "kind": "story",
+          "visual": "/media/moa-workspace.png",
+          "image": "/documents/voltaon/page-08.webp",
+          "html": "<section class=\"sheet legacy-sheet legacy-story legacy-coral layout-cards\" data-page-id=\"common-4-components-cache\"><header><span>민사빈 <b>/</b> Front-End Developer</span><span>Project_Moa</span></header><div class=\"page-content\"><div class=\"legacy-wide-content\"><div class=\"legacy-heading\"><div class=\"legacy-eyebrow\">기술 선택</div><h1>컴포넌트와 캐시</h1></div><div class=\"body\"><div class=\"editorial-grid\"><article class=\"legacy-item\"><h3>레고처럼 조합하는 컴포넌트와 공유 상태</h3><div>목적지 탐색·경로 입력·새 항목 생성이 여러 작업에서 반복돼, <strong>React 컴포넌트와 커스텀 훅</strong>을 공통 부품처럼 조합했습니다. <br><br>화면 사이의 공유 상태는 <strong>Context와 기존 저장소</strong>에서 관리하고, 계정이 바뀌면 이전 상태를 분리했습니다.</div></article><article class=\"legacy-item\"><h3>캐시의 범위와 갱신 기준</h3><div><strong>자주 바뀌지 않으면서 반복해서 조회되는 정보</strong>를 재사용하기 위해, 설정 표시 정보에 <strong>Next.js 캐시</strong>를 적용했습니다. 현재 인증은 요청마다 확인하고, 표시 정보는 사용자·로그인별로 재사용하되 변경되면 갱신하도록 했습니다.<br><br>PDF는 <strong>질문이 달라져도 원본이 같으면 추출한 본문은 동일하다</strong>는 점을 고려해 <strong>IndexedDB</strong>에 보관하고 재사용했습니다. 현재 원본이 같은지 확인한 뒤 본문을 재사용하고, 처음 읽거나 내용이 바뀌면 다시 추출하도록 했습니다.</div></article></div><figure class=\"portfolio-visual technical-visual visual-tech-components\" data-visual=\"technical-components\"><figcaption class=\"diagram-caption\">부품 조합과 재사용하는 데이터의 범위</figcaption><div class=\"diagram-canvas\"><div class=\"technical-comparison\"><section><b>공통 부품 조합</b><div class=\"component-pieces\"><div class=\"diagram-node \">목적지 탐색</div><div class=\"diagram-node \">경로 입력</div><div class=\"diagram-node \">새 항목 생성</div></div><span class=\"diagram-down\" aria-hidden=\"true\">↓</span><div class=\"diagram-node component-result\">필요한 부품을 조합한 작업 화면</div><div class=\"diagram-note\">충돌·원본 보존 규칙은 각 작업에 유지</div></section><section class=\"cache-lanes\"><b>데이터 재사용과 갱신</b><div class=\"diagram-flow\"><div class=\"diagram-node \">설정 표시 정보</div><span class=\"diagram-arrow\" aria-hidden=\"true\">→</span><div class=\"diagram-node \">반복 진입 재사용</div><span class=\"diagram-arrow\" aria-hidden=\"true\">→</span><div class=\"diagram-node \">변경 시 갱신</div></div><div class=\"diagram-flow\"><div class=\"diagram-node \">PDF 원본 확인</div><span class=\"diagram-arrow\" aria-hidden=\"true\">→</span><div class=\"diagram-node \">동일하면 본문 재사용</div><span class=\"diagram-arrow\" aria-hidden=\"true\">→</span><div class=\"diagram-node \">변경되면 재추출</div></div><div class=\"diagram-note\">현재 인증·권한은 캐시와 분리해 확인</div></section></div></div></figure></div></div></div><footer><span>08 <b>/</b> 19 · 기술 선택</span><span>minsabin1108@gmail.com</span></footer></section>",
+          "text": "민사빈 / Front-End Developer\nProject_Moa\n기술 선택\n컴포넌트와 캐시\n레고처럼 조합하는 컴포넌트와 공유 상태\n목적지 탐색·경로 입력·새 항목 생성이 여러 작업에서 반복돼, React 컴포넌트와 커스텀 훅을 공통 부품처럼 조합했습니다.\n\n화면 사이의 공유 상태는 Context와 기존 저장소에서 관리하고, 계정이 바뀌면 이전 상태를 분리했습니다.\n캐시의 범위와 갱신 기준\n자주 바뀌지 않으면서 반복해서 조회되는 정보를 재사용하기 위해, 설정 표시 정보에 Next.js 캐시를 적용했습니다. 현재 인증은 요청마다 확인하고, 표시 정보는 사용자·로그인별로 재사용하되 변경되면 갱신하도록 했습니다.\n\nPDF는 질문이 달라져도 원본이 같으면 추출한 본문은 동일하다는 점을 고려해 IndexedDB에 보관하고 재사용했습니다. 현재 원본이 같은지 확인한 뒤 본문을 재사용하고, 처음 읽거나 내용이 바뀌면 다시 추출하도록 했습니다.\n부품 조합과 재사용하는 데이터의 범위\n공통 부품 조합\n목적지 탐색\n경로 입력\n새 항목 생성\n↓\n필요한 부품을 조합한 작업 화면\n충돌·원본 보존 규칙은 각 작업에 유지\n데이터 재사용과 갱신\n설정 표시 정보\n→\n반복 진입 재사용\n→\n변경 시 갱신\nPDF 원본 확인\n→\n동일하면 본문 재사용\n→\n변경되면 재추출\n현재 인증·권한은 캐시와 분리해 확인\n08 / 19 · 기술 선택\nminsabin1108@gmail.com",
+          "width": 1122.515625,
+          "height": 793.6875,
+          "pdfStartPage": 8
+        },
+        {
+          "id": "common-5-files-chat",
+          "title": "핵심 기능 구현",
+          "kind": "story",
+          "visual": "/media/moa-workspace.png",
+          "image": "/documents/voltaon/page-09.webp",
+          "html": "<section class=\"sheet legacy-sheet legacy-story legacy-coral layout-features\" data-page-id=\"common-5-files-chat\"><header><span>민사빈 <b>/</b> Front-End Developer</span><span>Project_Moa</span></header><div class=\"page-content\"><div class=\"legacy-wide-content\"><div class=\"legacy-heading\"><div class=\"legacy-eyebrow\">핵심 기능</div><h1>핵심 기능 구현</h1></div><div class=\"body\"><p>사용자가 연결한 자료를 탐색하고 질문한 뒤, 변경 계획을 확인하고 파일 작업까지 이어갈 수 있도록 구현했습니다.</p><div class=\"legacy-media-row\"><figure class=\"legacy-picture\"><img src=\"/media/moa-files.png\" alt=\"예시 자료로 보는 모아 화면\"><figcaption>예시 자료로 보는 모아 화면</figcaption></figure><figure class=\"legacy-picture\"><img src=\"/media/moa-chat.png\" alt=\"예시 자료로 보는 모아 화면\"><figcaption>예시 자료로 보는 모아 화면</figcaption></figure></div><div class=\"editorial-grid\"><article class=\"legacy-item\"><h3>폴더 연결과 자료 탐색</h3><div><strong>File System Access API</strong>로 사용자가 선택한 폴더를 연결하고, 폴더 목록·경로 이동·파일 선택을 구현했습니다.<br><br>불러오는 중·빈 폴더·권한 오류를 서로 다른 상태로 표시했습니다. 목적지 폴더를 읽는 동안에는 이전 목록을 유지하고, 새 목록이 준비되기 전에는 선택 확정을 막았습니다.</div></article><article class=\"legacy-item\"><h3>자료 질문과 대화 표시</h3><div>선택한 자료의 발췌와 질문을 <strong>Server Actions</strong>로 전달하고, 답변에 표시된 출처를 통해 사용한 자료를 다시 확인하도록 연결했습니다.<br><br>일반 대화는 <strong>SSE</strong>로 받은 본문과 화면에 표시한 분량을 나눠 조금씩 보여주고, 중지·완료·오류 상태를 구분했습니다. 중지 뒤 늦게 도착한 응답은 현재 대화에 반영하지 않도록 했습니다.</div></article></div></div></div></div><footer><span>09 <b>/</b> 19 · 핵심 기능</span><span>minsabin1108@gmail.com</span></footer></section>",
+          "text": "민사빈 / Front-End Developer\nProject_Moa\n핵심 기능\n핵심 기능 구현\n\n사용자가 연결한 자료를 탐색하고 질문한 뒤, 변경 계획을 확인하고 파일 작업까지 이어갈 수 있도록 구현했습니다.\n\n예시 자료로 보는 모아 화면\n예시 자료로 보는 모아 화면\n폴더 연결과 자료 탐색\nFile System Access API로 사용자가 선택한 폴더를 연결하고, 폴더 목록·경로 이동·파일 선택을 구현했습니다.\n\n불러오는 중·빈 폴더·권한 오류를 서로 다른 상태로 표시했습니다. 목적지 폴더를 읽는 동안에는 이전 목록을 유지하고, 새 목록이 준비되기 전에는 선택 확정을 막았습니다.\n자료 질문과 대화 표시\n선택한 자료의 발췌와 질문을 Server Actions로 전달하고, 답변에 표시된 출처를 통해 사용한 자료를 다시 확인하도록 연결했습니다.\n\n일반 대화는 SSE로 받은 본문과 화면에 표시한 분량을 나눠 조금씩 보여주고, 중지·완료·오류 상태를 구분했습니다. 중지 뒤 늦게 도착한 응답은 현재 대화에 반영하지 않도록 했습니다.\n09 / 19 · 핵심 기능\nminsabin1108@gmail.com",
+          "width": 1122.515625,
+          "height": 793.6875,
+          "pdfStartPage": 9
+        },
+        {
+          "id": "common-5-execution-recovery",
+          "title": "정리 계획·실행과 편집·복구",
+          "kind": "story",
+          "visual": "/media/moa-workspace.png",
+          "image": "/documents/voltaon/page-10.webp",
+          "html": "<section class=\"sheet legacy-sheet legacy-story legacy-blue layout-features\" data-page-id=\"common-5-execution-recovery\"><header><span>민사빈 <b>/</b> Front-End Developer</span><span>Project_Moa</span></header><div class=\"page-content\"><div class=\"legacy-wide-content\"><div class=\"legacy-heading\"><div class=\"legacy-eyebrow\">핵심 기능</div><h1>정리 계획·실행과 편집·복구</h1></div><div class=\"body\"><div class=\"legacy-media-row\"><figure class=\"legacy-picture\"><img src=\"/media/moa-files.png\" alt=\"예시 자료로 보는 모아 화면\"><figcaption>예시 자료로 보는 모아 화면</figcaption></figure><figure class=\"legacy-picture\"><img src=\"/media/moa-workspace.png\" alt=\"예시 자료로 보는 모아 화면\"><figcaption>예시 자료로 보는 모아 화면</figcaption></figure></div><div class=\"editorial-grid\"><article class=\"legacy-item\"><h3>정리 계획과 단계별 실행</h3><div><strong>Stepper</strong>로 목적지 선택·충돌 확인·실행·결과를 연결하고, <strong>searchParams</strong>와 별도 초안에서 현재 작업을 복원했습니다. 복원된 주소만으로 파일 작업을 다시 실행하지 않도록 했습니다.<br><br>최초 정리 요청과 후속 답변의 입력 상태를 나눠, 답변을 작성하는 동안 선택한 자료를 유지했습니다. 답변을 반영하면 이전 제안과 전송 동의를 초기화해 변경된 조건으로 다시 확인하도록 했습니다.</div></article><article class=\"legacy-item\"><h3>편집·저장과 복구</h3><div>텍스트·Markdown 문서를 기존 미리보기 안에서 편집하고, 수동·주기 저장으로 연결했습니다. 미저장 내용이 있으면 편집을 닫기 전에 확인하고, 저장에 실패하면 작성 중인 내용을 유지했습니다.<br><br>덮어쓰기는 기존 파일의 복구 사본을 확보한 뒤 별도 확인을 거치도록 했습니다. 보관 목록·상세 확인·복원 화면을 연결해 변경 이후에도 자료를 확인하고 복구할 수 있도록 했습니다.</div></article></div></div></div></div><footer><span>10 <b>/</b> 19 · 핵심 기능</span><span>minsabin1108@gmail.com</span></footer></section>",
+          "text": "민사빈 / Front-End Developer\nProject_Moa\n핵심 기능\n정리 계획·실행과 편집·복구\n예시 자료로 보는 모아 화면\n예시 자료로 보는 모아 화면\n정리 계획과 단계별 실행\nStepper로 목적지 선택·충돌 확인·실행·결과를 연결하고, searchParams와 별도 초안에서 현재 작업을 복원했습니다. 복원된 주소만으로 파일 작업을 다시 실행하지 않도록 했습니다.\n\n최초 정리 요청과 후속 답변의 입력 상태를 나눠, 답변을 작성하는 동안 선택한 자료를 유지했습니다. 답변을 반영하면 이전 제안과 전송 동의를 초기화해 변경된 조건으로 다시 확인하도록 했습니다.\n편집·저장과 복구\n텍스트·Markdown 문서를 기존 미리보기 안에서 편집하고, 수동·주기 저장으로 연결했습니다. 미저장 내용이 있으면 편집을 닫기 전에 확인하고, 저장에 실패하면 작성 중인 내용을 유지했습니다.\n\n덮어쓰기는 기존 파일의 복구 사본을 확보한 뒤 별도 확인을 거치도록 했습니다. 보관 목록·상세 확인·복원 화면을 연결해 변경 이후에도 자료를 확인하고 복구할 수 있도록 했습니다.\n10 / 19 · 핵심 기능\nminsabin1108@gmail.com",
+          "width": 1122.515625,
+          "height": 793.6875,
+          "pdfStartPage": 10
+        },
+        {
+          "id": "case-13",
+          "title": "나뉘거나 합쳐져 도착하는 SSE 데이터를 처리하는 문제",
+          "kind": "case",
+          "visual": "/media/moa-workspace.png",
+          "image": "/documents/voltaon/page-11.webp",
+          "html": "<section class=\"sheet legacy-sheet legacy-case legacy-blue layout-case\" data-page-id=\"case-13\"><header><span>민사빈 <b>/</b> Front-End Developer</span><span>Project_Moa</span></header><div class=\"page-content\"><div class=\"legacy-wide-content\"><div class=\"legacy-heading\"><div class=\"legacy-eyebrow\">트러블슈팅</div><h1>나뉘거나 합쳐져 도착하는 SSE 데이터를 처리하는 문제</h1></div><div class=\"body\"><div class=\"editorial-grid\"><div class=\"legacy-case-column\"><section class=\"legacy-case-context\"><p>네트워크에서 받은 조각을 바로 이벤트로 취급하지 않고, 완성된 이벤트를 구분해 처리했습니다.</p><p><strong>문제</strong></p><p>스트리밍 응답의 한 이벤트가 여러 번에 나뉘어 도착하거나, 여러 이벤트가 한 번에 도착할 수 있습니다. 한 번 읽은 데이터를 한 이벤트라고 가정하면 본문을 잘못 해석하거나 완료·오류 처리를 놓칠 수 있었습니다.</p></section><article class=\"legacy-item\"><h3>고민과 선택</h3><div>조각을 받을 때마다 바로 JSON으로 해석하는 대신 <strong>수신 버퍼와 SSE 파서</strong>를 뒀습니다. 전송 형식 해석과 대화 상태 변경을 나눠, 불완전한 데이터가 화면 상태에 직접 들어가지 않게 했습니다.</div></article><figure class=\"portfolio-visual visual-stream\" data-visual=\"case-13\"><figcaption class=\"diagram-caption\">수신 조각과 완성된 이벤트 구분</figcaption><div class=\"diagram-canvas\"><div class=\"diagram-flow\"><div class=\"diagram-node \">나뉜 데이터</div><span class=\"diagram-arrow\" aria-hidden=\"true\">→</span><div class=\"diagram-node \">수신 버퍼</div><span class=\"diagram-arrow\" aria-hidden=\"true\">→</span><div class=\"diagram-node \">완성 이벤트</div></div><div class=\"diagram-flow\"><div class=\"diagram-node \">형식·순서 확인</div><span class=\"diagram-arrow\" aria-hidden=\"true\">→</span><div class=\"diagram-node \">본문·완료·오류</div><span class=\"diagram-arrow\" aria-hidden=\"true\">→</span><div class=\"diagram-node \">상태 반영</div></div><div class=\"diagram-note\">완성되지 않은 조각은 다음 수신까지 보관</div></div></figure></div><div class=\"legacy-case-column\"><article class=\"legacy-item\"><h3>해결 흐름</h3><div>받은 문자열을 버퍼에 붙이고 이벤트 구분자가 완성된 부분만 꺼냅니다. 남은 조각은 다음 수신까지 보관합니다. 완성된 이벤트의 형식·요청 세대·순서를 확인한 뒤 본문, 완료, 오류에 맞는 상태 변경을 수행합니다.</div></article><article class=\"legacy-item\"><h3>검증</h3><div>이벤트가 분할되거나 여러 개 합쳐진 입력, 완료·오류·취소 경로를 합성 스트림으로 검사했습니다. 파싱한 본문이 실제 표시 흐름까지 이어지는지도 관련 브라우저 검사로 확인했습니다.</div></article><article class=\"legacy-item legacy-result\"><h3>결과</h3><div>네트워크 수신 단위와 앱의 이벤트 단위를 구분했습니다. 수신 형식이 달라져도 완성된 이벤트만 상태에 적용하고, 본문 표시와 전송 오류 처리를 각각 추적할 수 있게 했습니다.</div></article></div></div></div></div></div><footer><span>11 <b>/</b> 19 · 트러블슈팅</span><span>minsabin1108@gmail.com</span></footer></section>",
+          "text": "민사빈 / Front-End Developer\nProject_Moa\n트러블슈팅\n나뉘거나 합쳐져 도착하는 SSE 데이터를 처리하는 문제\n\n네트워크에서 받은 조각을 바로 이벤트로 취급하지 않고, 완성된 이벤트를 구분해 처리했습니다.\n\n문제\n\n스트리밍 응답의 한 이벤트가 여러 번에 나뉘어 도착하거나, 여러 이벤트가 한 번에 도착할 수 있습니다. 한 번 읽은 데이터를 한 이벤트라고 가정하면 본문을 잘못 해석하거나 완료·오류 처리를 놓칠 수 있었습니다.\n\n고민과 선택\n조각을 받을 때마다 바로 JSON으로 해석하는 대신 수신 버퍼와 SSE 파서를 뒀습니다. 전송 형식 해석과 대화 상태 변경을 나눠, 불완전한 데이터가 화면 상태에 직접 들어가지 않게 했습니다.\n수신 조각과 완성된 이벤트 구분\n나뉜 데이터\n→\n수신 버퍼\n→\n완성 이벤트\n형식·순서 확인\n→\n본문·완료·오류\n→\n상태 반영\n완성되지 않은 조각은 다음 수신까지 보관\n해결 흐름\n받은 문자열을 버퍼에 붙이고 이벤트 구분자가 완성된 부분만 꺼냅니다. 남은 조각은 다음 수신까지 보관합니다. 완성된 이벤트의 형식·요청 세대·순서를 확인한 뒤 본문, 완료, 오류에 맞는 상태 변경을 수행합니다.\n검증\n이벤트가 분할되거나 여러 개 합쳐진 입력, 완료·오류·취소 경로를 합성 스트림으로 검사했습니다. 파싱한 본문이 실제 표시 흐름까지 이어지는지도 관련 브라우저 검사로 확인했습니다.\n결과\n네트워크 수신 단위와 앱의 이벤트 단위를 구분했습니다. 수신 형식이 달라져도 완성된 이벤트만 상태에 적용하고, 본문 표시와 전송 오류 처리를 각각 추적할 수 있게 했습니다.\n11 / 19 · 트러블슈팅\nminsabin1108@gmail.com",
+          "width": 1122.515625,
+          "height": 793.6875,
+          "pdfStartPage": 11
+        },
+        {
+          "id": "case-12",
+          "title": "응답 완료 시 남은 글자가 한꺼번에 표시되는 문제",
+          "kind": "case",
+          "visual": "/media/moa-workspace.png",
+          "image": "/documents/voltaon/page-12.webp",
+          "html": "<section class=\"sheet legacy-sheet legacy-case legacy-blue layout-case\" data-page-id=\"case-12\"><header><span>민사빈 <b>/</b> Front-End Developer</span><span>Project_Moa</span></header><div class=\"page-content\"><div class=\"legacy-wide-content\"><div class=\"legacy-heading\"><div class=\"legacy-eyebrow\">트러블슈팅</div><h1>응답 완료 시 남은 글자가 한꺼번에 표시되는 문제</h1></div><div class=\"body\"><div class=\"editorial-grid\"><div class=\"legacy-case-column\"><section class=\"legacy-case-context\"><p>서버 응답이 끝난 시점과, 사용자가 답변을 모두 본 시점을 구분했습니다.</p><p><strong>문제</strong></p><p>챗봇 장문의 답변을 순차적으로 표시하는 것이 아닌, 3~4줄 정도의 내용을 한꺼번에 나타나는 현상을 발견했습니다. 이는 내용이 애매하게 많은 내용을 한번에 보내게 되면 사용자가 사용하는데 있어 어색함과 불편함을 가지게 될거라 판단하여, 서버의 응답 수신이 끝나더라도 남은 내용을 순차적으로 표시하도록 수정했습니다.</p><p>측정 조건: 2026-11-09, 합성 HTTP SSE 480자 응답 1회의 기존 UI 관측 기록. 첫 토큰 지연이나 실제 모델 응답 시간의 전후 비교는 아닙니다.</p></section><article class=\"legacy-item\"><h3>고민과 선택</h3><div>한번에 모든 정보를 쏟는 방식이 정보의 과부화와 사용성에 저하를 주게 됩니다. <strong>받은 본문과 화면에 공개한 길이를 분리</strong>하고, 완료 이벤트 뒤에도 남은 내용을 화면 갱신 주기에 맞춰 이어서 표시하도록 했습니다.</div></article></div><div class=\"legacy-case-column\"><article class=\"legacy-item\"><h3>해결 흐름</h3><div>텍스트를 받으면 수신 본문에 누적합니다. requestAnimationFrame에 맞춰 표시 길이를 늘리고, 수신이 끝나도 표시가 전체 길이를 따라잡을 때까지 공개를 계속합니다. 중지·오류·계정 변경에는 남은 표시 작업을 정리합니다.</div></article><article class=\"legacy-item legacy-result\"><h3>결과</h3><div>완료 이벤트가 와도 남은 본문이 한꺼번에 나타나는 흐름을 줄였습니다. 사용자가 웹을 이용하면서 필요한 결과를 한번에 받는 것과 순차적으로 글이 작성되는 효과와 글이 배열되는 효과를 보여주는 것에 UX 적 차이가 크다는 것을 확인하게 되었습니다.</div></article><figure class=\"portfolio-visual visual-stream\" data-visual=\"case-12\"><figcaption class=\"diagram-caption\">수신 완료와 화면 표시 완료 분리</figcaption><div class=\"diagram-canvas\"><div class=\"diagram-flow\"><div class=\"diagram-node \">수신한 본문</div><span class=\"diagram-arrow\" aria-hidden=\"true\">→</span><div class=\"diagram-node \">표시 길이 관리</div><span class=\"diagram-arrow\" aria-hidden=\"true\">→</span><div class=\"diagram-node \">순차 표시</div></div><div class=\"diagram-note\">완료 이벤트 뒤에도 남은 본문을 이어서 표시</div><div class=\"diagram-flow\"><div class=\"diagram-node \">중지·오류</div><span class=\"diagram-arrow\" aria-hidden=\"true\">→</span><div class=\"diagram-node \">남은 표시 작업 정리</div></div></div></figure></div></div></div></div></div><footer><span>12 <b>/</b> 19 · 트러블슈팅</span><span>minsabin1108@gmail.com</span></footer></section>",
+          "text": "민사빈 / Front-End Developer\nProject_Moa\n트러블슈팅\n응답 완료 시 남은 글자가 한꺼번에 표시되는 문제\n\n서버 응답이 끝난 시점과, 사용자가 답변을 모두 본 시점을 구분했습니다.\n\n문제\n\n챗봇 장문의 답변을 순차적으로 표시하는 것이 아닌, 3~4줄 정도의 내용을 한꺼번에 나타나는 현상을 발견했습니다. 이는 내용이 애매하게 많은 내용을 한번에 보내게 되면 사용자가 사용하는데 있어 어색함과 불편함을 가지게 될거라 판단하여, 서버의 응답 수신이 끝나더라도 남은 내용을 순차적으로 표시하도록 수정했습니다.\n\n측정 조건: 2026-11-09, 합성 HTTP SSE 480자 응답 1회의 기존 UI 관측 기록. 첫 토큰 지연이나 실제 모델 응답 시간의 전후 비교는 아닙니다.\n\n고민과 선택\n한번에 모든 정보를 쏟는 방식이 정보의 과부화와 사용성에 저하를 주게 됩니다. 받은 본문과 화면에 공개한 길이를 분리하고, 완료 이벤트 뒤에도 남은 내용을 화면 갱신 주기에 맞춰 이어서 표시하도록 했습니다.\n해결 흐름\n텍스트를 받으면 수신 본문에 누적합니다. requestAnimationFrame에 맞춰 표시 길이를 늘리고, 수신이 끝나도 표시가 전체 길이를 따라잡을 때까지 공개를 계속합니다. 중지·오류·계정 변경에는 남은 표시 작업을 정리합니다.\n결과\n완료 이벤트가 와도 남은 본문이 한꺼번에 나타나는 흐름을 줄였습니다. 사용자가 웹을 이용하면서 필요한 결과를 한번에 받는 것과 순차적으로 글이 작성되는 효과와 글이 배열되는 효과를 보여주는 것에 UX 적 차이가 크다는 것을 확인하게 되었습니다.\n수신 완료와 화면 표시 완료 분리\n수신한 본문\n→\n표시 길이 관리\n→\n순차 표시\n완료 이벤트 뒤에도 남은 본문을 이어서 표시\n중지·오류\n→\n남은 표시 작업 정리\n12 / 19 · 트러블슈팅\nminsabin1108@gmail.com",
+          "width": 1122.515625,
+          "height": 793.6875,
+          "pdfStartPage": 12
+        },
+        {
+          "id": "case-14",
+          "title": "취소한 요청의 늦은 결과가 현재 화면을 바꾸는 문제",
+          "kind": "case",
+          "visual": "/media/moa-workspace.png",
+          "image": "/documents/voltaon/page-13.webp",
+          "html": "<section class=\"sheet legacy-sheet legacy-case legacy-blue layout-case\" data-page-id=\"case-14\"><header><span>민사빈 <b>/</b> Front-End Developer</span><span>Project_Moa</span></header><div class=\"page-content\"><div class=\"legacy-wide-content\"><div class=\"legacy-heading\"><div class=\"legacy-eyebrow\">트러블슈팅</div><h1>취소한 요청의 늦은 결과가 현재 화면을 바꾸는 문제</h1></div><div class=\"body\"><div class=\"editorial-grid\"><div class=\"legacy-case-column\"><section class=\"legacy-case-context\"><p>취소를 요청하는 것과, 돌아온 결과를 적용해도 되는지 확인하는 일을 함께 처리했습니다.</p><p><strong>문제</strong></p><p>작업을 취소한 뒤에도 늦게 도착한 결과 때문에 화면이 완료 상태로 바뀔 수 있었습니다. 결과를 반영하기 전에 취소 여부를 다시 확인해, 중지한 작업의 결과가 화면에 표시되지 않도록 했습니다.</p></section><article class=\"legacy-item\"><h3>고민과 선택</h3><div><strong>AbortController로 취소를 요청한 뒤에도, 결과가 돌아오면 취소 여부와 현재 진행 중인 요청이 맞는지 다시 확인했습니다.</strong> 화면에 반영하거나 저장하기 직전에도 같은 검사를 수행해, 취소한 요청이나 이전 요청의 결과가 적용되지 않도록 했습니다.</div></article><figure class=\"portfolio-visual visual-request\" data-visual=\"case-14\"><figcaption class=\"diagram-caption\">취소 뒤 도착한 결과의 반영 차단</figcaption><div class=\"diagram-canvas\"><div class=\"request-timeline\"><svg viewBox=\"0 0 440 24\" aria-hidden=\"true\"><path d=\"M24 12H220\"></path><path d=\"M220 12H416\" stroke-dasharray=\"5 5\"></path><circle cx=\"24\" cy=\"12\" r=\"5\"></circle><circle cx=\"220\" cy=\"12\" r=\"5\"></circle><circle cx=\"416\" cy=\"12\" r=\"5\"></circle></svg><div class=\"timeline-labels\"><span>요청 시작</span><span>취소 요청</span><span>늦은 결과</span></div></div><div class=\"request-check\"><div class=\"diagram-node \">취소 여부 · 현재 요청 확인</div><span class=\"diagram-arrow\" aria-hidden=\"true\">→</span><div class=\"diagram-node is-stop\">화면·저장 반영 차단</div></div><div class=\"diagram-note\">비동기 대기 뒤 · 저장 직전에도 재확인</div></div></figure></div><div class=\"legacy-case-column\"><article class=\"legacy-item\"><h3>해결 흐름</h3><div>요청 시작 시 현재 작업을 기록합니다. 비동기 대기 뒤와 저장 직전·완료 후에 중단 여부와 현재 작업을 재확인합니다. 취소된 작업은 새 진행·완료 표시를 게시하지 않고, 저장 전에 취소됐다면 새 쓰기도 막습니다.</div></article><article class=\"legacy-item\"><h3>검증</h3><div>저장 직전 취소, 정상 저장 직후 취소, 마지막 준비 단계에서 취소하는 반례를 나눠 확인했습니다. 늦은 결과가 화면에 적용되지 않고, 취소 전에 완료된 정상 캐시는 보존되는지도 검사했습니다.</div></article><article class=\"legacy-item legacy-result\"><h3>결과</h3><div>취소 뒤 이전 요청이 현재 작업처럼 보이는 문제를 막았습니다. 실제 처리하는 비용과 UX 적인 측면을 봤을때 처리하는 비용보다 사용성 저하가 더 큰 문제가 된다는 점을 확인했습니다.</div></article></div></div></div></div></div><footer><span>13 <b>/</b> 19 · 트러블슈팅</span><span>minsabin1108@gmail.com</span></footer></section>",
+          "text": "민사빈 / Front-End Developer\nProject_Moa\n트러블슈팅\n취소한 요청의 늦은 결과가 현재 화면을 바꾸는 문제\n\n취소를 요청하는 것과, 돌아온 결과를 적용해도 되는지 확인하는 일을 함께 처리했습니다.\n\n문제\n\n작업을 취소한 뒤에도 늦게 도착한 결과 때문에 화면이 완료 상태로 바뀔 수 있었습니다. 결과를 반영하기 전에 취소 여부를 다시 확인해, 중지한 작업의 결과가 화면에 표시되지 않도록 했습니다.\n\n고민과 선택\nAbortController로 취소를 요청한 뒤에도, 결과가 돌아오면 취소 여부와 현재 진행 중인 요청이 맞는지 다시 확인했습니다. 화면에 반영하거나 저장하기 직전에도 같은 검사를 수행해, 취소한 요청이나 이전 요청의 결과가 적용되지 않도록 했습니다.\n취소 뒤 도착한 결과의 반영 차단\n요청 시작\n취소 요청\n늦은 결과\n취소 여부 · 현재 요청 확인\n→\n화면·저장 반영 차단\n비동기 대기 뒤 · 저장 직전에도 재확인\n해결 흐름\n요청 시작 시 현재 작업을 기록합니다. 비동기 대기 뒤와 저장 직전·완료 후에 중단 여부와 현재 작업을 재확인합니다. 취소된 작업은 새 진행·완료 표시를 게시하지 않고, 저장 전에 취소됐다면 새 쓰기도 막습니다.\n검증\n저장 직전 취소, 정상 저장 직후 취소, 마지막 준비 단계에서 취소하는 반례를 나눠 확인했습니다. 늦은 결과가 화면에 적용되지 않고, 취소 전에 완료된 정상 캐시는 보존되는지도 검사했습니다.\n결과\n취소 뒤 이전 요청이 현재 작업처럼 보이는 문제를 막았습니다. 실제 처리하는 비용과 UX 적인 측면을 봤을때 처리하는 비용보다 사용성 저하가 더 큰 문제가 된다는 점을 확인했습니다.\n13 / 19 · 트러블슈팅\nminsabin1108@gmail.com",
+          "width": 1122.515625,
+          "height": 793.6875,
+          "pdfStartPage": 13
+        },
+        {
+          "id": "case-2",
+          "title": "폴더 이동 중 입력창과 목록이 깜빡이는 문제",
+          "kind": "case",
+          "visual": "/media/moa-workspace.png",
+          "image": "/documents/voltaon/page-14.webp",
+          "html": "<section class=\"sheet legacy-sheet legacy-case legacy-blue layout-case\" data-page-id=\"case-2\"><header><span>민사빈 <b>/</b> Front-End Developer</span><span>Project_Moa</span></header><div class=\"page-content\"><div class=\"legacy-wide-content\"><div class=\"legacy-heading\"><div class=\"legacy-eyebrow\">트러블슈팅</div><h1>폴더 이동 중 입력창과 목록이 깜빡이는 문제</h1></div><div class=\"body\"><div class=\"editorial-grid\"><div class=\"legacy-case-column\"><section class=\"legacy-case-context\"><p>새 데이터를 기다리는 동안 화면 전체를 교체하지 않고, 조작하던 영역을 유지했습니다.</p><p><strong>문제</strong></p><p>목적지 폴더를 이동할 때 기존 목록을 먼저 비우고 탐색 화면을 다시 여는 방식으로 진행했습니다. 그러다 보니 경로가 바뀔 때 입력창도 새로 만들어져 화면이 깜빡 거리거나 화면 위치와 입력 대상이 흔들려 사용성에 저하가 발생했습니다.</p></section><article class=\"legacy-item\"><h3>고민과 선택</h3><div>폴더를 옮기 때 화면을 지웠다가 다시 만들지 않고 기존 화면을 유지하면서 필드 안에 내용만 교체하는 방향으로 수정하였습니다.</div></article><figure class=\"portfolio-visual visual-flicker\" data-visual=\"case-2\"><figcaption class=\"diagram-caption\">폴더 이동 시 조작하던 화면 유지</figcaption><div class=\"diagram-canvas\"><div class=\"window-comparison\"><div class=\"mini-window before-window\"><b>기존</b><div class=\"wire-input\">경로 변경</div><div class=\"wire-list is-empty\">기존 목록 제거</div></div><div class=\"mini-window after-window\"><b>개선</b><div class=\"wire-input\">입력창 유지</div><div class=\"wire-list\"><i aria-hidden=\"true\"></i><span>기존 목록 유지</span></div></div></div><div class=\"diagram-note\">읽는 중 표시 → 새 목록 준비 후 내용 교체</div></div></figure></div><div class=\"legacy-case-column\"><article class=\"legacy-item\"><h3>해결 흐름</h3><div>이동을 요청하면 기존 목록 위에 읽는 중 상태를 표시합니다. 새 목록이 준비되면 내용을 바꾸고, 읽는 중에는 목적지 확정과 생성을 막습니다. 일반 읽기 실패 시에는 이전 목록과 실패한 요청 경로를 구분해 보여줍니다.</div></article><article class=\"legacy-item proof-card\"><h3>검증<span class=\"proof-badge\">입력 DOM 제거 0회</span></h3><div>14개 상호작용을 각각 350ms 관측한 기록에서 입력 DOM 제거는 0회였습니다. 관련 화면 안정화 수정 후 검사 단계 상단의 이동은 <strong>76.27px → 0px</strong>로 화면의 떨림, 깜빡이를 해결하였습니다.</div></article><article class=\"legacy-item legacy-result\"><h3>결과</h3><div>폴더를 이동할 때 화면이 깜빡이거나 흔들리는 현상을 수정하였습니다. 혹시 모르는 로딩 중에 버튼을 중복으로 누르거나 잘못 누르는 부분을 선택 확정 버튼을 사용할 수 없게 막아두었습니다.</div></article></div></div></div></div></div><footer><span>14 <b>/</b> 19 · 트러블슈팅</span><span>minsabin1108@gmail.com</span></footer></section>",
+          "text": "민사빈 / Front-End Developer\nProject_Moa\n트러블슈팅\n폴더 이동 중 입력창과 목록이 깜빡이는 문제\n\n새 데이터를 기다리는 동안 화면 전체를 교체하지 않고, 조작하던 영역을 유지했습니다.\n\n문제\n\n목적지 폴더를 이동할 때 기존 목록을 먼저 비우고 탐색 화면을 다시 여는 방식으로 진행했습니다. 그러다 보니 경로가 바뀔 때 입력창도 새로 만들어져 화면이 깜빡 거리거나 화면 위치와 입력 대상이 흔들려 사용성에 저하가 발생했습니다.\n\n고민과 선택\n폴더를 옮기 때 화면을 지웠다가 다시 만들지 않고 기존 화면을 유지하면서 필드 안에 내용만 교체하는 방향으로 수정하였습니다.\n폴더 이동 시 조작하던 화면 유지\n기존\n경로 변경\n기존 목록 제거\n개선\n입력창 유지\n기존 목록 유지\n읽는 중 표시 → 새 목록 준비 후 내용 교체\n해결 흐름\n이동을 요청하면 기존 목록 위에 읽는 중 상태를 표시합니다. 새 목록이 준비되면 내용을 바꾸고, 읽는 중에는 목적지 확정과 생성을 막습니다. 일반 읽기 실패 시에는 이전 목록과 실패한 요청 경로를 구분해 보여줍니다.\n검증\n입력 DOM 제거 0회\n14개 상호작용을 각각 350ms 관측한 기록에서 입력 DOM 제거는 0회였습니다. 관련 화면 안정화 수정 후 검사 단계 상단의 이동은 76.27px → 0px로 화면의 떨림, 깜빡이를 해결하였습니다.\n결과\n폴더를 이동할 때 화면이 깜빡이거나 흔들리는 현상을 수정하였습니다. 혹시 모르는 로딩 중에 버튼을 중복으로 누르거나 잘못 누르는 부분을 선택 확정 버튼을 사용할 수 없게 막아두었습니다.\n14 / 19 · 트러블슈팅\nminsabin1108@gmail.com",
+          "width": 1122.515625,
+          "height": 793.6875,
+          "pdfStartPage": 14
+        },
+        {
+          "id": "case-28",
+          "title": "파일 구조가 재사용성과 유지보수에 어려운 점을 보고 개선한 문제",
+          "kind": "case",
+          "visual": "/media/moa-workspace.png",
+          "image": "/documents/voltaon/page-15.webp",
+          "html": "<section class=\"sheet legacy-sheet legacy-case legacy-blue layout-case\" data-page-id=\"case-28\"><header><span>민사빈 <b>/</b> Front-End Developer</span><span>Project_Moa</span></header><div class=\"page-content\"><div class=\"legacy-wide-content\"><div class=\"legacy-heading\"><div class=\"legacy-eyebrow\">트러블슈팅</div><h1>파일 구조가 재사용성과 유지보수에 어려운 점을 보고 개선한 문제</h1></div><div class=\"body\"><div class=\"editorial-grid\"><div class=\"legacy-case-column\"><section class=\"legacy-case-context\"><p>부품은 재사용하되, 한 기능의 흐름은 가까운 곳에서 읽을 수 있도록 구조를 정리했습니다.</p><p><strong>문제</strong></p><p>기능이 늘면서 화면·상태·규칙·파일 접근 코드가 여러 폴더에 나뉘어져 재사용 하거나 기능을 유지보수 할때 파일을 찾아야 하거나 위치를 찾아야 하거나 하는 불편한 점이 생겼습니다. 또한 기능을 제작하면서 공통된 기능이 생겨 기존 기능에서 공통 컴포넌트로 변경하는 과정에서도 유지보수가 어려웠습니다. </p></section><article class=\"legacy-item\"><h3>고민과 선택</h3><div>아토믹 디자인처럼 화면을 부품으로 나누어 재사용 가능한 컴포넌트로 나누고, 필요한 부품을 조합해 기능을 구현했습니다. 폴더 탐색창과 입력 폼은 공통으로 사용하고, 충돌 처리와 원본 보존처럼 작업마다 다른 규칙은 각 작업에서 관리했습니다.</div></article></div><div class=\"legacy-case-column\"><article class=\"legacy-item\"><h3>해결 흐름</h3><div>폴더 연결·검색·복구 등 <strong>기능별로 관련 코드를 모아, 수정할 코드를 쉽게 찾을 수 있도록 정리했습니다.</strong> app 폴더는 페이지를 구성하고 필요한 기능을 연결하는 역할을 맡겼습니다. 여러 기능에서 함께 사용하는 컴포넌트는 재사용하고, 각 기능에는 필요한 데이터와 동작만 전달하도록 했습니다.</div></article><article class=\"legacy-item legacy-result\"><h3>결과</h3><div>기능별로 관련 코드를 모아, 유지보수 할 파일과 공통으로 처리한 자료를 쉽게 찾을 수 있도록 정리했습니다. 공통 컴포넌트는 여러 기능에서 재사용하고, 충돌 처리와 원본 보존처럼 작업마다 다른 규칙은 각 작업에서 관리했습니다.</div></article><figure class=\"portfolio-visual visual-modules\" data-visual=\"case-28\"><figcaption class=\"diagram-caption\">기능별 코드와 공통 부품의 책임 분리</figcaption><div class=\"diagram-canvas\"><div class=\"module-map\"><div class=\"diagram-node module-app\">app · 페이지 구성과 기능 연결</div><span class=\"diagram-down\" aria-hidden=\"true\">↓</span><div class=\"module-features\"><div class=\"diagram-node \">폴더 연결</div><div class=\"diagram-node \">검색</div><div class=\"diagram-node \">복구</div></div><div class=\"module-parts\"><div><span>공통으로 조합</span><div class=\"diagram-node \">탐색창 · 입력 폼</div></div><div><span>각 작업에서 관리</span><div class=\"diagram-node \">충돌 처리 · 원본 보존</div></div></div></div></div></figure></div></div></div></div></div><footer><span>15 <b>/</b> 19 · 트러블슈팅</span><span>minsabin1108@gmail.com</span></footer></section>",
+          "text": "민사빈 / Front-End Developer\nProject_Moa\n트러블슈팅\n파일 구조가 재사용성과 유지보수에 어려운 점을 보고 개선한 문제\n\n부품은 재사용하되, 한 기능의 흐름은 가까운 곳에서 읽을 수 있도록 구조를 정리했습니다.\n\n문제\n\n기능이 늘면서 화면·상태·규칙·파일 접근 코드가 여러 폴더에 나뉘어져 재사용 하거나 기능을 유지보수 할때 파일을 찾아야 하거나 위치를 찾아야 하거나 하는 불편한 점이 생겼습니다. 또한 기능을 제작하면서 공통된 기능이 생겨 기존 기능에서 공통 컴포넌트로 변경하는 과정에서도 유지보수가 어려웠습니다.\n\n고민과 선택\n아토믹 디자인처럼 화면을 부품으로 나누어 재사용 가능한 컴포넌트로 나누고, 필요한 부품을 조합해 기능을 구현했습니다. 폴더 탐색창과 입력 폼은 공통으로 사용하고, 충돌 처리와 원본 보존처럼 작업마다 다른 규칙은 각 작업에서 관리했습니다.\n해결 흐름\n폴더 연결·검색·복구 등 기능별로 관련 코드를 모아, 수정할 코드를 쉽게 찾을 수 있도록 정리했습니다. app 폴더는 페이지를 구성하고 필요한 기능을 연결하는 역할을 맡겼습니다. 여러 기능에서 함께 사용하는 컴포넌트는 재사용하고, 각 기능에는 필요한 데이터와 동작만 전달하도록 했습니다.\n결과\n기능별로 관련 코드를 모아, 유지보수 할 파일과 공통으로 처리한 자료를 쉽게 찾을 수 있도록 정리했습니다. 공통 컴포넌트는 여러 기능에서 재사용하고, 충돌 처리와 원본 보존처럼 작업마다 다른 규칙은 각 작업에서 관리했습니다.\n기능별 코드와 공통 부품의 책임 분리\napp · 페이지 구성과 기능 연결\n폴더 연결\n검색\n복구\n공통으로 조합\n탐색창 · 입력 폼\n각 작업에서 관리\n충돌 처리 · 원본 보존\n15 / 19 · 트러블슈팅\nminsabin1108@gmail.com",
+          "width": 1122.515625,
+          "height": 793.6875,
+          "pdfStartPage": 15
+        },
+        {
+          "id": "case-28-file-tree",
+          "title": "파일 구조",
+          "kind": "diagram",
+          "visual": "/media/moa-workspace.png",
+          "image": "/documents/voltaon/page-16.webp",
+          "html": "<section class=\"sheet legacy-sheet legacy-diagram legacy-blue layout-diagram\" data-page-id=\"case-28-file-tree\"><header><span>민사빈 <b>/</b> Front-End Developer</span><span>Project_Moa</span></header><div class=\"page-content\"><div class=\"legacy-wide-content\"><div class=\"legacy-heading\"><div class=\"legacy-eyebrow\">트러블슈팅</div><h1>파일 구조</h1></div><div class=\"body\"><div class=\"tree-diagram\"><ul class=\"folder-tree\"><li><div class=\"tree-row\" style=\"--depth:0\"><span class=\"tree-name\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z\"></path></svg><span>src/</span></span><span class=\"tree-description\">프론트엔드 소스</span></div><ul class=\"tree-children\"><li><div class=\"tree-row\" style=\"--depth:1\"><span class=\"tree-name\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z\"></path></svg><span>app/</span></span><span class=\"tree-description\">페이지 구성 · 기능 연결</span></div></li><li><div class=\"tree-row\" style=\"--depth:1\"><span class=\"tree-name\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z\"></path></svg><span>features/</span></span><span class=\"tree-description\">기능별 구현</span></div><ul class=\"tree-children\"><li><div class=\"tree-row\" style=\"--depth:2\"><span class=\"tree-name\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z\"></path></svg><span>local-folders/</span></span><span class=\"tree-description\">로컬 파일·폴더 기능</span></div><ul class=\"tree-children\"><li><div class=\"tree-row\" style=\"--depth:3\"><span class=\"tree-name\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z\"></path></svg><span>destination-picker/</span></span><span class=\"tree-description\">폴더 선택 부품</span></div></li><li><div class=\"tree-row\" style=\"--depth:3\"><span class=\"tree-name\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z\"></path></svg><span>creation/</span></span><span class=\"tree-description\">새 파일·폴더 생성 부품</span></div></li><li class=\"tree-ellipsis\"><div class=\"tree-row\" style=\"--depth:3\"><span class=\"tree-name\" aria-label=\"일부 폴더와 파일 생략\">…</span></div></li></ul></li><li class=\"tree-ellipsis\"><div class=\"tree-row\" style=\"--depth:2\"><span class=\"tree-name\" aria-label=\"일부 폴더와 파일 생략\">…</span></div></li></ul></li><li><div class=\"tree-row\" style=\"--depth:1\"><span class=\"tree-name\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z\"></path></svg><span>components/ui/</span></span><span class=\"tree-description\">여러 기능에서 쓰는 공통 부품</span></div><ul class=\"tree-children\"><li><div class=\"tree-row\" style=\"--depth:2\"><span class=\"tree-name\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M6 3h8l4 4v14H6V3Zm8 0v5h4M9 12h6m-6 4h6\"></path></svg><span>WorkflowStepper.tsx</span></span><span class=\"tree-description\">진행 단계 표시</span></div></li><li><div class=\"tree-row\" style=\"--depth:2\"><span class=\"tree-name\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z\"></path></svg><span>feedback/</span></span><span class=\"tree-description\"></span></div><ul class=\"tree-children\"><li><div class=\"tree-row\" style=\"--depth:3\"><span class=\"tree-name\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M6 3h8l4 4v14H6V3Zm8 0v5h4M9 12h6m-6 4h6\"></path></svg><span>StatusNotice.tsx</span></span><span class=\"tree-description\">오류·상태 안내</span></div></li></ul></li><li class=\"tree-ellipsis\"><div class=\"tree-row\" style=\"--depth:2\"><span class=\"tree-name\" aria-label=\"일부 폴더와 파일 생략\">…</span></div></li></ul></li><li><div class=\"tree-row\" style=\"--depth:1\"><span class=\"tree-name\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z\"></path></svg><span>server/</span></span><span class=\"tree-description\">인증·API 등 서버 처리</span></div></li><li><div class=\"tree-row\" style=\"--depth:1\"><span class=\"tree-name\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z\"></path></svg><span>shared/</span></span><span class=\"tree-description\">여러 기능이 공유하는 코드</span></div></li></ul></li></ul></div><div class=\"tree-omission-note\">… 일부 폴더와 파일 생략</div></div></div></div><footer><span>16 <b>/</b> 19 · 트러블슈팅</span><span>minsabin1108@gmail.com</span></footer></section>",
+          "text": "민사빈 / Front-End Developer\nProject_Moa\n트러블슈팅\n파일 구조\nsrc/\n프론트엔드 소스\napp/\n페이지 구성 · 기능 연결\nfeatures/\n기능별 구현\nlocal-folders/\n로컬 파일·폴더 기능\ndestination-picker/\n폴더 선택 부품\ncreation/\n새 파일·폴더 생성 부품\n…\n…\ncomponents/ui/\n여러 기능에서 쓰는 공통 부품\nWorkflowStepper.tsx\n진행 단계 표시\nfeedback/\nStatusNotice.tsx\n오류·상태 안내\n…\nserver/\n인증·API 등 서버 처리\nshared/\n여러 기능이 공유하는 코드\n… 일부 폴더와 파일 생략\n16 / 19 · 트러블슈팅\nminsabin1108@gmail.com",
+          "width": 1122.515625,
+          "height": 793.6875,
+          "pdfStartPage": 16
+        },
+        {
+          "id": "case-3",
+          "title": "공통 폼의 식별값 충돌로 경로 입력이 잘못 연결되는 문제",
+          "kind": "case",
+          "visual": "/media/moa-workspace.png",
+          "image": "/documents/voltaon/page-17.webp",
+          "html": "<section class=\"sheet legacy-sheet legacy-case legacy-blue layout-case\" data-page-id=\"case-3\"><header><span>민사빈 <b>/</b> Front-End Developer</span><span>Project_Moa</span></header><div class=\"page-content\"><div class=\"legacy-wide-content\"><div class=\"legacy-heading\"><div class=\"legacy-eyebrow\">트러블슈팅</div><h1>공통 폼의 식별값 충돌로 경로 입력이 잘못 연결되는 문제</h1></div><div class=\"body\"><div class=\"editorial-grid\"><div class=\"legacy-case-column\"><section class=\"legacy-case-context\"><p>폴더를 찾아가는 입력창과 새 항목을 만드는 입력창을 서로 구분하도록 수정했습니다.</p><p><strong>문제</strong></p><p>목적지 선택 화면에는 <strong>기존 폴더를 찾아가기 위한 경로 입력창</strong>과 <strong>새 파일·폴더의 이름을 입력하는 생성 폼</strong>이 있었습니다. 두 폼을 배치하는 상위 화면에서 현재 폴더 경로만 React key로 지정해, 역할이 다른 두 폼에 같은 값이 들어갔습니다.<br>React key는 화면의 부품을 구분하는 이름표입니다. 이 이름표가 겹친 상태에서 하위 폴더로 이동하면 입력창이 정상적으로 표시되지 않는 오류가 발생했습니다.</p></section><article class=\"legacy-item\"><h3>고민과 선택</h3><div>두 폼은 같은 폴더 위치를 사용하지만, 하나는 <strong>기존 위치로 이동</strong>하고 다른 하나는 <strong>새 항목을 생성</strong>합니다. 현재 경로만으로는 서로 다른 두 폼을 구분할 수 없으므로, key에 각 폼의 역할도 포함해야 한다고 판단했습니다.</div></article></div><div class=\"legacy-case-column\"><article class=\"legacy-item\"><h3>해결 흐름</h3><div>기존 경로값 앞에 <strong>경로 입력용·새 항목 생성용이라는 역할을 추가</strong>해 서로 다른 key를 지정했습니다. 같은 폴더를 사용하더라도 두 폼의 이름표는 겹치지 않도록 수정했습니다.</div></article><article class=\"legacy-item proof-card\"><h3>검증<span class=\"proof-badge\">20회 왕복 · 40차례 확인</span></h3><div>실제 브라우저에서 하위 폴더에 처음 들어갈 때 입력창 개수 검사가 실패하는 것을 확인했습니다. 수정 후 <strong>폴더 왕복 20회 동안 총 40차례</strong> 입력창 개수와 표시 경로를 검사했습니다.</div></article><article class=\"legacy-item legacy-result\"><h3>결과</h3><div>검사한 모든 위치에서 각 폼이 의도한 경로가 맞는지 확인했습니다. 공통 부품을 사용할 때는 사용하는 데이터뿐 아니라 <strong>화면 안에서 맡은 역할도 구분해야 한다는 점</strong>을 확인했습니다.</div></article><figure class=\"portfolio-visual visual-roles\" data-visual=\"case-3\"><figcaption class=\"diagram-caption\">같은 경로라도 폼의 역할을 구분</figcaption><div class=\"diagram-canvas\"><div class=\"role-fork\"><div class=\"diagram-node role-origin\">현재 경로</div><div class=\"role-branches\"><div class=\"role-branch\"><b>경로 입력</b><span>경로 + 입력 역할</span></div><div class=\"role-branch\"><b>새 항목 생성</b><span>경로 + 생성 역할</span></div></div></div></div></figure></div></div></div></div></div><footer><span>17 <b>/</b> 19 · 트러블슈팅</span><span>minsabin1108@gmail.com</span></footer></section>",
+          "text": "민사빈 / Front-End Developer\nProject_Moa\n트러블슈팅\n공통 폼의 식별값 충돌로 경로 입력이 잘못 연결되는 문제\n\n폴더를 찾아가는 입력창과 새 항목을 만드는 입력창을 서로 구분하도록 수정했습니다.\n\n문제\n\n목적지 선택 화면에는 기존 폴더를 찾아가기 위한 경로 입력창과 새 파일·폴더의 이름을 입력하는 생성 폼이 있었습니다. 두 폼을 배치하는 상위 화면에서 현재 폴더 경로만 React key로 지정해, 역할이 다른 두 폼에 같은 값이 들어갔습니다.\nReact key는 화면의 부품을 구분하는 이름표입니다. 이 이름표가 겹친 상태에서 하위 폴더로 이동하면 입력창이 정상적으로 표시되지 않는 오류가 발생했습니다.\n\n고민과 선택\n두 폼은 같은 폴더 위치를 사용하지만, 하나는 기존 위치로 이동하고 다른 하나는 새 항목을 생성합니다. 현재 경로만으로는 서로 다른 두 폼을 구분할 수 없으므로, key에 각 폼의 역할도 포함해야 한다고 판단했습니다.\n해결 흐름\n기존 경로값 앞에 경로 입력용·새 항목 생성용이라는 역할을 추가해 서로 다른 key를 지정했습니다. 같은 폴더를 사용하더라도 두 폼의 이름표는 겹치지 않도록 수정했습니다.\n검증\n20회 왕복 · 40차례 확인\n실제 브라우저에서 하위 폴더에 처음 들어갈 때 입력창 개수 검사가 실패하는 것을 확인했습니다. 수정 후 폴더 왕복 20회 동안 총 40차례 입력창 개수와 표시 경로를 검사했습니다.\n결과\n검사한 모든 위치에서 각 폼이 의도한 경로가 맞는지 확인했습니다. 공통 부품을 사용할 때는 사용하는 데이터뿐 아니라 화면 안에서 맡은 역할도 구분해야 한다는 점을 확인했습니다.\n같은 경로라도 폼의 역할을 구분\n현재 경로\n경로 입력\n경로 + 입력 역할\n새 항목 생성\n경로 + 생성 역할\n17 / 19 · 트러블슈팅\nminsabin1108@gmail.com",
+          "width": 1122.515625,
+          "height": 793.6875,
+          "pdfStartPage": 17
+        },
+        {
+          "id": "case-6",
+          "title": "캐시가 있어도 PDF 본문을 매번 다시 추출하는 문제",
+          "kind": "case",
+          "visual": "/media/moa-workspace.png",
+          "image": "/documents/voltaon/page-18.webp",
+          "html": "<section class=\"sheet legacy-sheet legacy-case legacy-blue layout-case\" data-page-id=\"case-6\"><header><span>민사빈 <b>/</b> Front-End Developer</span><span>Project_Moa</span></header><div class=\"page-content\"><div class=\"legacy-wide-content\"><div class=\"legacy-heading\"><div class=\"legacy-eyebrow\">트러블슈팅</div><h1>캐시가 있어도 PDF 본문을 매번 다시 추출하는 문제</h1></div><div class=\"body\"><div class=\"editorial-grid\"><div class=\"legacy-case-column\"><section class=\"legacy-case-context\"><p><strong>문제</strong></p><p>같은 PDF를 다시 사용할 때 본문을 매번 추출하는 문제를 발견했습니다. 파일 내용이 이전과 같은지 먼저 확인하고, 저장된 본문이 있으면 다시 추출하지 않고 재사용하도록 처리 순서를 변경했습니다.</p></section><article class=\"legacy-item\"><h3>고민과 선택</h3><div>같은 PDF를 반복해서 사용할 때는 파일 내용이 바뀌었는지 먼저 확인했습니다. 이전과 같으면 브라우저에 저장해 둔 본문을 재사용하고, 달라졌으면 다시 추출하도록 했습니다.</div></article><figure class=\"portfolio-visual visual-stream\" data-visual=\"case-6\"><figcaption class=\"diagram-caption\">추출 전에 재사용 여부 확인</figcaption><div class=\"diagram-canvas\"><div class=\"diagram-flow\"><div class=\"diagram-node \">현재 원본 확인</div><span class=\"diagram-arrow\" aria-hidden=\"true\">→</span><div class=\"diagram-node \">내용·추출 조건 비교</div><span class=\"diagram-arrow\" aria-hidden=\"true\">→</span><div class=\"diagram-node \">본문 캐시 조회</div></div><div class=\"diagram-flow\"><div class=\"diagram-node \">같으면 본문 재사용</div><span class=\"diagram-arrow\" aria-hidden=\"true\">→</span><div class=\"diagram-node \">다르면 다시 추출</div></div><div class=\"diagram-note\">원본 미변경 · Worker 재사용 조건의 반복 처리 비교</div></div></figure></div><div class=\"legacy-case-column\"><article class=\"legacy-item\"><h3>해결 흐름</h3><div>파일 내용과 본문을 추출하는 방식이 이전과 같은지 먼저 확인했습니다. 같으면 저장된 본문을 재사용하고, 달라졌거나 저장된 본문이 없으면 다시 추출했습니다. 재사용한 본문을 중복 저장하지 않고, 사용자의 질문에 필요한 부분만 골라 답변 자료로 준비했습니다.</div></article><article class=\"legacy-item proof-card\"><h3>검증</h3><div><div class=\"pdf-metric-condition\">원본 미변경·상위 Worker 재사용 조건에서 </div><div class=\"pdf-metric-row\"><span>1쪽 PDF 중앙값은 </span><div><strong>82.95ms → 1.05ms</strong><span>, </span></div></div><div class=\"pdf-metric-row\"><span>24쪽은 </span><div><strong>103.75ms → 1.25ms</strong><span>였습니다.</span></div></div></div></article><article class=\"legacy-item legacy-result\"><h3>결과</h3><div>PDF처럼 추출 비용이 큰 자료의 반복 사용에서 이득을 확인했습니다.</div></article></div></div></div></div></div><footer><span>18 <b>/</b> 19 · 트러블슈팅</span><span>minsabin1108@gmail.com</span></footer></section>",
+          "text": "민사빈 / Front-End Developer\nProject_Moa\n트러블슈팅\n캐시가 있어도 PDF 본문을 매번 다시 추출하는 문제\n\n문제\n\n같은 PDF를 다시 사용할 때 본문을 매번 추출하는 문제를 발견했습니다. 파일 내용이 이전과 같은지 먼저 확인하고, 저장된 본문이 있으면 다시 추출하지 않고 재사용하도록 처리 순서를 변경했습니다.\n\n고민과 선택\n같은 PDF를 반복해서 사용할 때는 파일 내용이 바뀌었는지 먼저 확인했습니다. 이전과 같으면 브라우저에 저장해 둔 본문을 재사용하고, 달라졌으면 다시 추출하도록 했습니다.\n추출 전에 재사용 여부 확인\n현재 원본 확인\n→\n내용·추출 조건 비교\n→\n본문 캐시 조회\n같으면 본문 재사용\n→\n다르면 다시 추출\n원본 미변경 · Worker 재사용 조건의 반복 처리 비교\n해결 흐름\n파일 내용과 본문을 추출하는 방식이 이전과 같은지 먼저 확인했습니다. 같으면 저장된 본문을 재사용하고, 달라졌거나 저장된 본문이 없으면 다시 추출했습니다. 재사용한 본문을 중복 저장하지 않고, 사용자의 질문에 필요한 부분만 골라 답변 자료로 준비했습니다.\n검증\n원본 미변경·상위 Worker 재사용 조건에서\n1쪽 PDF 중앙값은\n82.95ms → 1.05ms,\n24쪽은\n103.75ms → 1.25ms였습니다.\n결과\nPDF처럼 추출 비용이 큰 자료의 반복 사용에서 이득을 확인했습니다.\n18 / 19 · 트러블슈팅\nminsabin1108@gmail.com",
+          "width": 1122.515625,
+          "height": 793.6875,
+          "pdfStartPage": 18
+        },
+        {
+          "id": "case-27",
+          "title": "길게 누른 뒤 목록이 바뀌어 다른 파일이 열리는 문제",
+          "kind": "case",
+          "visual": "/media/moa-workspace.png",
+          "image": "/documents/voltaon/page-19.webp",
+          "html": "<section class=\"sheet legacy-sheet legacy-case legacy-blue layout-case\" data-page-id=\"case-27\"><header><span>민사빈 <b>/</b> Front-End Developer</span><span>Project_Moa</span></header><div class=\"page-content\"><div class=\"legacy-wide-content\"><div class=\"legacy-heading\"><div class=\"legacy-eyebrow\">트러블슈팅</div><h1>길게 누른 뒤 목록이 바뀌어 다른 파일이 열리는 문제</h1></div><div class=\"body\"><div class=\"editorial-grid\"><div class=\"legacy-case-column\"><section class=\"legacy-case-context\"><p><strong>문제</strong></p><p>파일을 길게 눌러 선택했을 때 다른 파일이 열리는 문제를 발견했습니다. </p></section><article class=\"legacy-item\"><h3>고민과 선택</h3><div>파일을 길게 누르면 선택 모드로 바뀌면서 목록이 밀렸고, 손을 떼는 순간 다른 파일이 열리는 문제가 발생했습니다. 이를 해결하기 위해 <strong>선택 모드로 전환된 직후 발생하는 클릭을 한 번 차단</strong>하고, 선택 표시가 나타나도 목록이 밀리지 않도록 행 높이를 유지했습니다.</div></article><figure class=\"portfolio-visual visual-press\" data-visual=\"case-27\"><figcaption class=\"diagram-caption\">길게 누르기와 파일 열기를 분리</figcaption><div class=\"diagram-canvas\"><div class=\"press-flow\"><div><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M9 13V5a2 2 0 0 1 4 0v7l2-1 4 3-1 6H9l-5-6 2-2 3 3\"></path></svg><span>길게 누르기</span></div><span class=\"diagram-arrow\" aria-hidden=\"true\">→</span><div><span class=\"press-symbol\" aria-hidden=\"true\">✓</span><span>선택 모드</span></div><span class=\"diagram-arrow\" aria-hidden=\"true\">→</span><div><span class=\"press-symbol\" aria-hidden=\"true\">×</span><span>후속 클릭 차단</span></div></div><div class=\"stable-rows\"><span>전환 전</span><i></i><span>전환 후</span><i></i><b>행 높이 유지</b></div><div class=\"diagram-note\">이동·스크롤하면 누르기 취소</div></div></figure></div><div class=\"legacy-case-column\"><article class=\"legacy-item\"><h3>해결 흐름</h3><div>파일을 길게 누르면 선택 모드로 전환하고, 손을 떼는 동작이 파일을 여는 클릭으로 처리되지 않도록 막았습니다. 선택 문구는 기존 파일 종류 표시 영역에 넣어 목록이 밀리지 않게 했습니다. 누르는 도중 손가락을 움직이거나 스크롤하면 선택 동작을 취소하고, 키보드로도 항목을 선택할 수 있도록 했습니다.</div></article><article class=\"legacy-item proof-card\"><h3>검증<span class=\"proof-badge\">선택·해제 20회</span></h3><div>선택 모드 전환 뒤 다른 파일이 열리지 않는지 확인했습니다. 화면 안정화에서는 <strong>20회 선택·해제의 행 위치와 높이 유지</strong>, Escape와 숨겨진 도구의 초점 복귀를 확인했습니다.</div></article><article class=\"legacy-item legacy-result\"><h3>결과</h3><div>길게 누르기를 선택과 파일 열기라는 두 동작으로 중복 처리하지 않게 했습니다. 목록의 시각적 변화와 포인터 이벤트를 함께 다뤄 사용자가 의도한 항목을 유지했습니다.</div></article></div></div></div></div></div><footer><span>19 <b>/</b> 19 · 트러블슈팅</span><span>minsabin1108@gmail.com</span></footer></section>",
+          "text": "민사빈 / Front-End Developer\nProject_Moa\n트러블슈팅\n길게 누른 뒤 목록이 바뀌어 다른 파일이 열리는 문제\n\n문제\n\n파일을 길게 눌러 선택했을 때 다른 파일이 열리는 문제를 발견했습니다.\n\n고민과 선택\n파일을 길게 누르면 선택 모드로 바뀌면서 목록이 밀렸고, 손을 떼는 순간 다른 파일이 열리는 문제가 발생했습니다. 이를 해결하기 위해 선택 모드로 전환된 직후 발생하는 클릭을 한 번 차단하고, 선택 표시가 나타나도 목록이 밀리지 않도록 행 높이를 유지했습니다.\n길게 누르기와 파일 열기를 분리\n길게 누르기\n→\n✓\n선택 모드\n→\n×\n후속 클릭 차단\n전환 전\n전환 후\n행 높이 유지\n이동·스크롤하면 누르기 취소\n해결 흐름\n파일을 길게 누르면 선택 모드로 전환하고, 손을 떼는 동작이 파일을 여는 클릭으로 처리되지 않도록 막았습니다. 선택 문구는 기존 파일 종류 표시 영역에 넣어 목록이 밀리지 않게 했습니다. 누르는 도중 손가락을 움직이거나 스크롤하면 선택 동작을 취소하고, 키보드로도 항목을 선택할 수 있도록 했습니다.\n검증\n선택·해제 20회\n선택 모드 전환 뒤 다른 파일이 열리지 않는지 확인했습니다. 화면 안정화에서는 20회 선택·해제의 행 위치와 높이 유지, Escape와 숨겨진 도구의 초점 복귀를 확인했습니다.\n결과\n길게 누르기를 선택과 파일 열기라는 두 동작으로 중복 처리하지 않게 했습니다. 목록의 시각적 변화와 포인터 이벤트를 함께 다뤄 사용자가 의도한 항목을 유지했습니다.\n19 / 19 · 트러블슈팅\nminsabin1108@gmail.com",
+          "width": 1122.515625,
+          "height": 793.6875,
+          "pdfStartPage": 19
+        }
+      ],
+      "pdfPageCount": 19,
+      "pdfPages": [
+        {
+          "image": "/documents/voltaon/page-01.webp",
+          "width": 1684,
+          "height": 1190
+        },
+        {
+          "image": "/documents/voltaon/page-02.webp",
+          "width": 1684,
+          "height": 1190
+        },
+        {
+          "image": "/documents/voltaon/page-03.webp",
+          "width": 1684,
+          "height": 1190
+        },
+        {
+          "image": "/documents/voltaon/page-04.webp",
+          "width": 1684,
+          "height": 1190
+        },
+        {
+          "image": "/documents/voltaon/page-05.webp",
+          "width": 1684,
+          "height": 1190
+        },
+        {
+          "image": "/documents/voltaon/page-06.webp",
+          "width": 1684,
+          "height": 1190
+        },
+        {
+          "image": "/documents/voltaon/page-07.webp",
+          "width": 1684,
+          "height": 1190
+        },
+        {
+          "image": "/documents/voltaon/page-08.webp",
+          "width": 1684,
+          "height": 1190
+        },
+        {
+          "image": "/documents/voltaon/page-09.webp",
+          "width": 1684,
+          "height": 1190
+        },
+        {
+          "image": "/documents/voltaon/page-10.webp",
+          "width": 1684,
+          "height": 1190
+        },
+        {
+          "image": "/documents/voltaon/page-11.webp",
+          "width": 1684,
+          "height": 1190
+        },
+        {
+          "image": "/documents/voltaon/page-12.webp",
+          "width": 1684,
+          "height": 1190
+        },
+        {
+          "image": "/documents/voltaon/page-13.webp",
+          "width": 1684,
+          "height": 1190
+        },
+        {
+          "image": "/documents/voltaon/page-14.webp",
+          "width": 1684,
+          "height": 1190
+        },
+        {
+          "image": "/documents/voltaon/page-15.webp",
+          "width": 1684,
+          "height": 1190
+        },
+        {
+          "image": "/documents/voltaon/page-16.webp",
+          "width": 1684,
+          "height": 1190
+        },
+        {
+          "image": "/documents/voltaon/page-17.webp",
+          "width": 1684,
+          "height": 1190
+        },
+        {
+          "image": "/documents/voltaon/page-18.webp",
+          "width": 1684,
+          "height": 1190
+        },
+        {
+          "image": "/documents/voltaon/page-19.webp",
+          "width": 1684,
+          "height": 1190
+        }
+      ]
+    },
+    "voltaonResume": {
+      "id": "voltaonResume",
+      "title": "볼타온 이력서",
+      "pdf": "/documents/voltaon-resume.pdf",
+      "pages": [
+        {
+          "id": "resume-profile",
+          "title": "프로필 · 지원동기 · 프로젝트 경험",
+          "kind": "resume",
+          "visual": "/media/moa-workspace.png",
+          "image": "/documents/voltaonResume/page-01.webp",
+          "html": "<section class=\"sheet resume bin-classic-page voltaon-resume\" data-page-id=\"resume-profile\"><div class=\"page-content\"><div class=\"body bin-classic-resume\"><div class=\"bin-classic-header\"><div class=\"bin-classic-identity\"><h1>민사빈</h1><p class=\"bin-classic-role\">Front-End Developer</p></div><div class=\"bin-classic-contact\"><a href=\"mailto:minsabin1108@gmail.com\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"2\"></rect><path d=\"m3 6 9 7 9-7\"></path></svg>minsabin1108@gmail.com</a><a href=\"https://github.com/sabin1108\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M9 19c-4.3 1.3-4.3-2.2-6-2.7M15 22v-3.9c0-1.1-.1-1.5-.6-2 3.3-.4 6.6-1.6 6.6-7.3a5.8 5.8 0 0 0-1.6-4 5.2 5.2 0 0 0-.1-4s-1.3-.4-4.2 1.6a14.4 14.4 0 0 0-7.6 0C4.6.4 3.3.8 3.3.8a5.2 5.2 0 0 0-.1 4 5.8 5.8 0 0 0-1.6 4c0 5.7 3.3 6.9 6.6 7.3-.4.4-.6 1-.6 2V22\"></path></svg>https://github.com/sabin1108</a><a href=\"https://www.binportfolio.site/VoltaON\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M14 3h7v7M10 14 21 3M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5\"></path></svg>포트폴리오</a></div><img class=\"bin-classic-photo portrait\" src=\"/media/portrait.jpg\" alt=\"민사빈\"></div><div class=\"bin-classic-summary\"><section class=\"bin-classic-section \"><h2>자기소개</h2><div class=\"bin-classic-intro\"><p>기술의 선택 이유와 구현 구조를 설명하며 신뢰를 쌓는 프론트엔드 개발자 민사빈입니다.<br>React SPA와 비교해 화면·인증·API를 함께 구성하기 유리한 Next.js를 선택했습니다.<br>인증 도구의 계정 연결 관리 방식을 비교해 Better Auth를 도입했습니다.<br>아토믹 디자인을 참고해 공통 UI를 부품으로 조합하고, 기능별 규칙과 책임을 분리했습니다.</p>\n</div></section><section class=\"bin-classic-section \"><h2>지원동기</h2><p class=\"bin-classic-motivation\">실시간 관제 화면의 안정성을 높이는 일에 관심을 갖고 볼타온에 지원했습니다.<br>모아에서 SSE 수신·파싱과 본문 표시를 분리했습니다.<br>요청 취소와 폴더 이동 중에도 사용자의 작업 맥락을 유지했습니다.<br>이 경험을 API 연동·데이터 갱신 성능 개선과 유지보수에 연결하겠습니다.</p></section></div><section class=\"bin-classic-section \"><h2>프로젝트 경험</h2><article class=\"bin-classic-project\"><div class=\"bin-classic-project-heading\"><div><h3>Project_Moa</h3></div><span>2026.09~2026.11 · 1인</span></div><div class=\"bin-classic-project-links\"><a href=\"https://github.com/sabin1108/file_moa\" target=\"_blank\" rel=\"noreferrer\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M9 19c-4.3 1.3-4.3-2.2-6-2.7M15 22v-3.9c0-1.1-.1-1.5-.6-2 3.3-.4 6.6-1.6 6.6-7.3a5.8 5.8 0 0 0-1.6-4 5.2 5.2 0 0 0-.1-4s-1.3-.4-4.2 1.6a14.4 14.4 0 0 0-7.6 0C4.6.4 3.3.8 3.3.8a5.2 5.2 0 0 0-.1 4 5.8 5.8 0 0 0-1.6 4c0 5.7 3.3 6.9 6.6 7.3-.4.4-.6 1-.6 2V22\"></path></svg>프로젝트 GitHub</a><a href=\"https://web-eight-rho-72.vercel.app/demo/access/mfxu_c866qhA9f4qsigenuyliEzVKH0ZY8ByEzSfr78\" target=\"_blank\" rel=\"noreferrer\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M14 3h7v7M10 14 21 3M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5\"></path></svg>데모 체험</a></div><p class=\"bin-classic-role-line\">로컬 자료 탐색과 파일 정리를 대화부터 실행까지 연결한 웹 서비스입니다. 폴더 연결, 자료 탐색·질문, 계획 검토, 파일 작업 실행과 결과 확인까지 화면과 상태 흐름을 구현했습니다.</p><ul class=\"bin-classic-achievements\"><li data-case-id=\"case-13\"><h4>나뉘거나 합쳐져 도착하는 SSE 데이터를 처리하는 문제</h4><p><strong>수신 버퍼와 SSE 파서</strong>로 완성된 이벤트만 해석하고, 남은 조각은 다음 수신까지 보관했습니다. 형식·순서를 확인한 뒤 본문·완료·오류 상태에 반영했습니다.</p></li><li data-case-id=\"case-12\"><h4>응답 완료 시 남은 글자가 한꺼번에 표시되는 문제</h4><p><strong>수신 본문과 표시 길이를 분리</strong>해, 응답이 끝나도 requestAnimationFrame에 맞춰 남은 글자를 이어서 표시했습니다. 중지·오류 시 남은 표시 작업도 정리했습니다.</p></li></ul></article></section><div class=\"bin-classic-credentials\"><section class=\"bin-classic-section \"><h2>기술 역량</h2><dl class=\"bin-classic-skills\"><div class=\"bin-classic-skill-row\"><dt>Frontend:</dt><dd>React, TypeScript, Next.js</dd></div><div class=\"bin-classic-skill-row\"><dt>State/API:</dt><dd>Context API, Fetch API, Better Auth</dd></div><div class=\"bin-classic-skill-row\"><dt>Style/UI:</dt><dd>CSS Modules</dd></div><div class=\"bin-classic-skill-row\"><dt>Quality:</dt><dd>Vitest, ESLint, Lighthouse</dd></div></dl></section><section class=\"bin-classic-section \"><h2>학력 · 자격 · 교육</h2><div class=\"bin-classic-education\"><div><strong>한경국립대학교</strong><p>소프트웨어융합학과 · 졸업</p></div><div><p>2020.03 ~ 2026.02</p><p>3.87 / 4.5</p></div></div><div class=\"bin-classic-certificates\"><p><strong>정보처리기사</strong> · 한국산업인력공단 · 2025.09.12</p></div><div class=\"bin-classic-training\"><p><strong>LG CNS AM Inspire Camp 7기</strong> · 교육 중</p></div></section></div></div></div><footer><span>minsabin1108@gmail.com</span><span>1 / 2</span></footer></section>",
+          "text": "민사빈\n\nFront-End Developer\n\nminsabin1108@gmail.com\nhttps://github.com/sabin1108\n포트폴리오\n자기소개\n\n기술의 선택 이유와 구현 구조를 설명하며 신뢰를 쌓는 프론트엔드 개발자 민사빈입니다.\nReact SPA와 비교해 화면·인증·API를 함께 구성하기 유리한 Next.js를 선택했습니다.\n인증 도구의 계정 연결 관리 방식을 비교해 Better Auth를 도입했습니다.\n아토믹 디자인을 참고해 공통 UI를 부품으로 조합하고, 기능별 규칙과 책임을 분리했습니다.\n\n지원동기\n\n실시간 관제 화면의 안정성을 높이는 일에 관심을 갖고 볼타온에 지원했습니다.\n모아에서 SSE 수신·파싱과 본문 표시를 분리했습니다.\n요청 취소와 폴더 이동 중에도 사용자의 작업 맥락을 유지했습니다.\n이 경험을 API 연동·데이터 갱신 성능 개선과 유지보수에 연결하겠습니다.\n\n프로젝트 경험\nProject_Moa\n2026.09~2026.11 · 1인\n프로젝트 GitHub\n데모 체험\n\n로컬 자료 탐색과 파일 정리를 대화부터 실행까지 연결한 웹 서비스입니다. 폴더 연결, 자료 탐색·질문, 계획 검토, 파일 작업 실행과 결과 확인까지 화면과 상태 흐름을 구현했습니다.\n\n나뉘거나 합쳐져 도착하는 SSE 데이터를 처리하는 문제\n\n수신 버퍼와 SSE 파서로 완성된 이벤트만 해석하고, 남은 조각은 다음 수신까지 보관했습니다. 형식·순서를 확인한 뒤 본문·완료·오류 상태에 반영했습니다.\n\n응답 완료 시 남은 글자가 한꺼번에 표시되는 문제\n\n수신 본문과 표시 길이를 분리해, 응답이 끝나도 requestAnimationFrame에 맞춰 남은 글자를 이어서 표시했습니다. 중지·오류 시 남은 표시 작업도 정리했습니다.\n\n기술 역량\nFrontend:\nReact, TypeScript, Next.js\nState/API:\nContext API, Fetch API, Better Auth\nStyle/UI:\nCSS Modules\nQuality:\nVitest, ESLint, Lighthouse\n학력 · 자격 · 교육\n한경국립대학교\n\n소프트웨어융합학과 · 졸업\n\n2020.03 ~ 2026.02\n\n3.87 / 4.5\n\n정보처리기사 · 한국산업인력공단 · 2025.09.12\n\nLG CNS AM Inspire Camp 7기 · 교육 중\n\nminsabin1108@gmail.com\n1 / 2",
+          "width": 793.6875,
+          "height": 1122.515625,
+          "pdfStartPage": 1
+        },
+        {
+          "id": "resume-experience",
+          "title": "구현 경험 · 기술 · 교육 · 연구·수상",
+          "kind": "resume",
+          "visual": "/media/moa-workspace.png",
+          "image": "/documents/voltaonResume/page-02.webp",
+          "html": "<section class=\"sheet resume bin-classic-page voltaon-resume\" data-page-id=\"resume-experience\"><div class=\"page-content\"><div class=\"body bin-classic-resume\"><article class=\"bin-classic-project bin-classic-project-continuation\"><ul class=\"bin-classic-achievements\"><li data-case-id=\"case-14\"><h4>취소한 요청의 늦은 결과가 현재 화면을 바꾸는 문제</h4><p>작업을 취소한 뒤에도 늦게 도착한 결과 때문에 화면이 완료 상태로 바뀔 수 있었습니다. 취소 여부와 현재 진행 중인 요청이 맞는지 다시 확인했습니다. 화면 반영과 저장 직전에도 다시 검사해 이전 요청의 결과를 적용하지 않도록 했습니다.</p></li><li data-case-id=\"case-2\"><h4>폴더 이동 중 입력창과 목록이 깜빡이는 문제</h4><p>폴더 이동 시 입력창과 기존 목록을 유지하고 새 목록이 준비되면 내용만 교체했습니다. 로딩 중 확정·생성을 막았습니다. <strong>검사 단계 창의 상단 위치 변화는 76.27px → 0px</strong>로 줄었고, 입력 DOM도 더 이상 제거되지 않았습니다.</p><small class=\"bin-classic-measurement-note\">Chromium 실험 · 14개 상호작용을 각 350ms 프레임 관측</small></li><li data-case-id=\"case-28\"><h4>파일 구조가 재사용성과 유지보수에 어려운 점을 보고 개선한 문제</h4><p><strong>app</strong>에는 화면 조립, <strong>features</strong>에는 기능별 화면·상태·규칙, <strong>components/ui</strong>에는 공통 부품을 두었습니다. 목적지 탐색·경로 입력·생성 폼은 조합해 재사용하고, 충돌 처리와 원본 보존 규칙은 각 작업에서 관리했습니다.</p></li><li data-case-id=\"case-3\"><h4>공통 폼의 식별값 충돌로 경로 입력이 잘못 연결되는 문제</h4><p>목적지 선택 화면에는 <strong>기존 폴더를 찾아가기 위한 경로 입력창</strong>과 <strong>새 파일·폴더의 이름을 입력하는 생성 폼</strong>이 있었습니다. 두 폼을 배치하는 상위 화면에서 현재 폴더 경로만 React key로 지정해, 역할이 다른 두 폼에 같은 값이 들어갔습니다. 기존 경로값 앞에 <strong>경로 입력용·새 항목 생성용이라는 역할을 추가</strong>해 서로 다른 key를 지정했습니다.</p></li><li data-case-id=\"case-6\"><h4>캐시가 있어도 PDF 본문을 매번 다시 추출하는 문제</h4><p>파일 내용과 추출 조건을 먼저 확인하고, 같으면 <strong>IndexedDB의 PDF 본문을 재사용</strong>했습니다. 원본 미변경·Worker 재사용 조건에서 중앙값은 <strong>1쪽 82.95ms → 1.05ms, 24쪽 103.75ms → 1.25ms</strong>였습니다.</p><small class=\"bin-classic-measurement-note\">반복 추출 비교 · 원본 미변경 · 상위 Worker 재사용 · 최초 추출 비용과 구분</small></li><li data-case-id=\"case-27\"><h4>길게 누른 뒤 목록이 바뀌어 다른 파일이 열리는 문제</h4><p>파일을 길게 누르면 선택 모드로 바뀌면서 목록이 밀렸고, 손을 떼는 순간 다른 파일이 열리는 문제가 발생했습니다. 이를 해결하기 위해 <strong>선택 모드로 전환된 직후 발생하는 클릭을 한 번 차단</strong>하고, 선택 표시가 나타나도 목록이 밀리지 않도록 행 높이를 유지했습니다.</p></li></ul></article><section class=\"bin-classic-section \"><h2>연구 · 특허 · 수상</h2><ul class=\"bin-classic-records\"><li><span class=\"bin-classic-record-kind\">학술지 논문</span><div><h3><a href=\"https://doi.org/10.5573/ieie.2026.63.9.61\" target=\"_blank\" rel=\"noreferrer\">생성형 AI 기반 포트폴리오 요약 플랫폼 ↗</a></h3><p>대한전자공학회논문지 63권 9호 · 제1저자 · 2026.09</p></div></li><li><span class=\"bin-classic-record-kind\">특허 출원</span><div><h3>생성형 인공지능 기반 포트폴리오 요약 및 검증 시스템 및 그 방법</h3><p>공동 발명자 · 출원번호 10-2026-0186451 · 2026.09.30</p></div></li><li><span class=\"bin-classic-record-kind\">학술대회 발표</span><div><h3>학교 정보 접근성 향상을 위한 대화형 질의응답 시스템</h3><p>대한전자공학회 하계종합학술대회 · 포스터·논문 발표 · 2025.06</p></div></li><li><span class=\"bin-classic-record-kind\">수상</span><div><h3>BRIGHT MAKERS EXPO 2025 캡스톤디자인 경진대회 우수상</h3><p>한경국립대학교 · 2025.11.18</p></div></li></ul></section></div></div><footer><span>minsabin1108@gmail.com</span><span>2 / 2</span></footer></section>",
+          "text": "취소한 요청의 늦은 결과가 현재 화면을 바꾸는 문제\n\n작업을 취소한 뒤에도 늦게 도착한 결과 때문에 화면이 완료 상태로 바뀔 수 있었습니다. 취소 여부와 현재 진행 중인 요청이 맞는지 다시 확인했습니다. 화면 반영과 저장 직전에도 다시 검사해 이전 요청의 결과를 적용하지 않도록 했습니다.\n\n폴더 이동 중 입력창과 목록이 깜빡이는 문제\n\n폴더 이동 시 입력창과 기존 목록을 유지하고 새 목록이 준비되면 내용만 교체했습니다. 로딩 중 확정·생성을 막았습니다. 검사 단계 창의 상단 위치 변화는 76.27px → 0px로 줄었고, 입력 DOM도 더 이상 제거되지 않았습니다.\n\nChromium 실험 · 14개 상호작용을 각 350ms 프레임 관측\n파일 구조가 재사용성과 유지보수에 어려운 점을 보고 개선한 문제\n\napp에는 화면 조립, features에는 기능별 화면·상태·규칙, components/ui에는 공통 부품을 두었습니다. 목적지 탐색·경로 입력·생성 폼은 조합해 재사용하고, 충돌 처리와 원본 보존 규칙은 각 작업에서 관리했습니다.\n\n공통 폼의 식별값 충돌로 경로 입력이 잘못 연결되는 문제\n\n목적지 선택 화면에는 기존 폴더를 찾아가기 위한 경로 입력창과 새 파일·폴더의 이름을 입력하는 생성 폼이 있었습니다. 두 폼을 배치하는 상위 화면에서 현재 폴더 경로만 React key로 지정해, 역할이 다른 두 폼에 같은 값이 들어갔습니다. 기존 경로값 앞에 경로 입력용·새 항목 생성용이라는 역할을 추가해 서로 다른 key를 지정했습니다.\n\n캐시가 있어도 PDF 본문을 매번 다시 추출하는 문제\n\n파일 내용과 추출 조건을 먼저 확인하고, 같으면 IndexedDB의 PDF 본문을 재사용했습니다. 원본 미변경·Worker 재사용 조건에서 중앙값은 1쪽 82.95ms → 1.05ms, 24쪽 103.75ms → 1.25ms였습니다.\n\n반복 추출 비교 · 원본 미변경 · 상위 Worker 재사용 · 최초 추출 비용과 구분\n길게 누른 뒤 목록이 바뀌어 다른 파일이 열리는 문제\n\n파일을 길게 누르면 선택 모드로 바뀌면서 목록이 밀렸고, 손을 떼는 순간 다른 파일이 열리는 문제가 발생했습니다. 이를 해결하기 위해 선택 모드로 전환된 직후 발생하는 클릭을 한 번 차단하고, 선택 표시가 나타나도 목록이 밀리지 않도록 행 높이를 유지했습니다.\n\n연구 · 특허 · 수상\n학술지 논문\n생성형 AI 기반 포트폴리오 요약 플랫폼 ↗\n\n대한전자공학회논문지 63권 9호 · 제1저자 · 2026.09\n\n특허 출원\n생성형 인공지능 기반 포트폴리오 요약 및 검증 시스템 및 그 방법\n\n공동 발명자 · 출원번호 10-2026-0186451 · 2026.09.30\n\n학술대회 발표\n학교 정보 접근성 향상을 위한 대화형 질의응답 시스템\n\n대한전자공학회 하계종합학술대회 · 포스터·논문 발표 · 2025.06\n\n수상\nBRIGHT MAKERS EXPO 2025 캡스톤디자인 경진대회 우수상\n\n한경국립대학교 · 2025.11.18\n\nminsabin1108@gmail.com\n2 / 2",
+          "width": 793.6875,
+          "height": 1122.515625,
+          "pdfStartPage": 2
+        }
+      ],
+      "pdfPageCount": 2,
+      "pdfPages": [
+        {
+          "image": "/documents/voltaonResume/page-01.webp",
+          "width": 1191,
+          "height": 1684
+        },
+        {
+          "image": "/documents/voltaonResume/page-02.webp",
+          "width": 1191,
+          "height": 1684
+        }
+      ]
     }
   }
 }

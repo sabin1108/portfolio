@@ -8,7 +8,8 @@ import pypdfium2 as pdfium
 from pypdf import PdfReader
 
 root = Path(sys.argv[1])
-source = json.loads(Path(sys.argv[2]).read_text('utf-8'))['resume']
+source = json.loads(Path(sys.argv[2]).read_text('utf-8'))[sys.argv[5] if len(sys.argv) > 5 else 'resume']
+variant = sys.argv[4] if len(sys.argv) > 4 else 'gyeolsoft'
 previews = Path(sys.argv[3])
 previews.mkdir(parents=True, exist_ok=True)
 mm = 72 / 25.4
@@ -16,7 +17,7 @@ reports = []
 uris = []
 
 for paper, pages, width, height in [('A4', 2, 210, 297), ('A3', 1, 420, 297)]:
-    path = root / f'gyeolsoft-resume-{paper}.pdf'
+    path = root / f'{variant}-resume-{paper}.pdf'
     reader = PdfReader(path)
     assert len(reader.pages) == pages, (paper, 'Unexpected page count')
     actual = ''.join(''.join((page.extract_text() or '').split()) for page in reader.pages)

@@ -17,16 +17,22 @@ export function createLegacyPages(sourcePages, {renderTokens, lex, inline, folde
     const embedded = label ? null : content.match(/^\*\*([^*]+)\*\*<br\s*\/?>([\s\S]*)$/i);
     const title=embedded?.[1] || label;
     const verification=title==='검증'&&evidence;
+    const pdfMetric=verification&&evidence.id==='case-6';
     const metric=verification&&evidence.metric;
     const badges={'case-2':'입력 DOM 제거 0회','case-3':'20회 왕복 · 40차례 확인','case-27':'선택·해제 20회'};
     const badge=verification&&badges[evidence.id];
     let body=inline(embedded?.[2] ?? content);
+    if(pdfMetric){
+      const pattern=/^(.*?)(1쪽 PDF 중앙값은 )(<strong>.*?<\/strong>)(, )(24쪽은 )(<strong>.*?<\/strong>)(였습니다\.)$/;
+      assert(pattern.test(body),'PDF cache evidence must retain its source labels and measurements');
+      body=body.replace(pattern,(_,condition,firstLabel,firstMetric,comma,secondLabel,secondMetric,ending)=>`<div class="pdf-metric-condition">${condition}</div><div class="pdf-metric-row"><span>${firstLabel}</span><div>${firstMetric}<span>${comma}</span></div></div><div class="pdf-metric-row"><span>${secondLabel}</span><div>${secondMetric}<span>${ending}</span></div></div>`);
+    }
     if(metric){
       const pattern=/<strong>([\d.]+초)\s*→\s*([\d.]+초)<\/strong>(,\s*)(약\s*)([\d.]+%)(\s*줄었습니다\.)/;
       assert(pattern.test(body),'Recorded setting medians must remain in the verification sentence');
       body=body.replace(pattern,(_,before,after,comma,prefix,percent,suffix)=>`<div class="metric-range"><span class="metric-before">${before}</span><span class="metric-arrow">→</span><span class="metric-after">${after}</span><span class="metric-comma">${comma}</span></div><div class="metric-change">${prefix}<strong>${percent}</strong>${suffix}</div>`);
     }
-    return `<article class="legacy-item${result?' legacy-result':''}${verification&&(metric||badge)?' proof-card':''}${metric?' portfolio-visual metric-proof':''}"${metric?' data-visual="case-5" data-preserve-prose="true"':''}><h3${metric?' class="diagram-caption"':''}>${inline(title)}${badge?`<span class="proof-badge">${badge}</span>`:''}</h3><div>${body}</div>${metric?'<small class="evidence-condition">로컬 production · 반복 설정 진입 36표본<br>변경 전→후→후→전 순서 · 초기 준비 비용은 별도</small>':''}</article>`;
+    return `<article class="legacy-item${result?' legacy-result':''}${verification&&(metric||badge||pdfMetric)?' proof-card':''}${metric?' portfolio-visual metric-proof':''}"${metric?' data-visual="case-5" data-preserve-prose="true"':''}><h3${metric?' class="diagram-caption"':''}>${inline(title)}${badge?`<span class="proof-badge">${badge}</span>`:''}</h3><div>${body}</div>${metric?'<small class="evidence-condition">로컬 production · 반복 설정 진입 36표본<br>변경 전→후→후→전 순서 · 초기 준비 비용은 별도</small>':''}</article>`;
   };
   const cells = table => table.rows.flatMap((row, rowIndex) => row.map((cell, index) => cell.text.trim() ? {
     label: rowIndex === 0 ? table.header[index].text : '', text: cell.text,
@@ -94,7 +100,7 @@ export function createLegacyPages(sourcePages, {renderTokens, lex, inline, folde
     const caseTokens = tokens(entry);
     const table = caseTokens.find(token => token.type === 'table');
     assert(table?.rows.length >= 2 && table.header.length === 2, `Unexpected troubleshooting table: ${entry.id}`);
-    const rest = table.rows.slice(1).flatMap(row => row.map(cell => cell.text.trim()).filter(Boolean));
+    const rest = table.rows.slice(1).flatMap(row => row.map(cell => cell.text.trim()).filter(text=>text&&!/^\*\*검증\*\*<br\s*\/?>$/.test(text)));
     const visual = caseVisual(entry);
     add({id: entry.id, title: entry.title, chapter: 5, kind: 'case', layout: 'case', accent: 'blue',
       content: grid(`<div class="legacy-case-column"><section class="legacy-case-context">${html(caseTokens.filter(token => token.type !== 'table'), 'case')}</section>${item(table.header[0].text, table.rows[0][0].text)}${visual.side==='left'?visual.markup:''}</div><div class="legacy-case-column">${item(table.header[1].text, table.rows[0][1].text)}${rest.map(text => item('',text,text.startsWith('**결과**'),{id:entry.id,metric:visual.metric})).join('')}${visual.side==='right'?visual.markup:''}</div>`)});

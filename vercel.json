@@ -2,9 +2,11 @@
   "trailingSlash": false,
   "headers": [
     {"source":"/GYEOLSOFT","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow"}]},
+    {"source":"/VoltaON","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow"}]},
     {"source":"/documents/(.*)","headers":[{"key":"X-Robots-Tag","value":"noindex"}]}
   ],
   "rewrites": [
+    {"source":"/VoltaON","destination":"/index.html"},
     {
       "source": "/GYEOLSOFT",
       "destination": "/index.html"

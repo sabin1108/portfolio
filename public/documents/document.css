@@ -90,6 +90,12 @@
 .document-sheet .portfolio-visual .diagram-note{font-size: 11px; line-height: 1.5; color: rgb(89, 110, 103); text-align: center;}
 .document-sheet .portfolio-visual .diagram-flow{display: flex; align-items: center; justify-content: center; gap: 6px;}
 .document-sheet .portfolio-visual .diagram-flow .diagram-node{flex: 1 1 0%; padding: 6px 5px;}
+.document-sheet .portfolio-visual[data-visual="case-13"]{height: 160px;}
+.document-sheet .legacy-sheet[data-page-id="case-6"] .proof-card strong{display: inline; margin: 0px; font-size: 24px; line-height: 1.25; color: rgb(46, 102, 81);}
+.document-sheet .pdf-metric-row{display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 12px;}
+.document-sheet .pdf-metric-row > span{font-size: 15px; white-space: nowrap;}
+.document-sheet .pdf-metric-row > div{white-space: nowrap;}
+.document-sheet .pdf-metric-row > div > span{font-size: 14px;}
 .document-sheet .portfolio-visual .window-comparison{display: grid; grid-template-columns: 1fr 1fr; gap: 12px;}
 .document-sheet .portfolio-visual .mini-window{padding: 8px; border: 1px solid rgb(195, 206, 199); border-radius: 5px; background: rgb(248, 247, 242); min-width: 0px;}
 .document-sheet .portfolio-visual .mini-window > b{font-size: 12px; line-height: 1.4; display: block; margin-bottom: 5px; color: rgb(88, 110, 103);}
@@ -249,3 +255,7 @@
 .document-sheet .sheet.resume.paper-a3 .bin-classic-section > h2{margin-bottom: 9px;}
 .document-sheet .sheet.resume.paper-a3 .bin-classic-skill-row{grid-template-columns: 90px minmax(0px, 1fr); gap: 16px; padding: 3px 0px;}
 .document-sheet .sheet.resume.paper-a3 .bin-classic-records{gap: 8px;}
+.document-sheet .sheet.resume.voltaon-resume .bin-classic-header{padding: 12px 20px;}
+.document-sheet .sheet.resume.voltaon-resume .bin-classic-achievements li + li{margin-top: 14px;}
+.document-sheet .sheet.resume.paper-a3.voltaon-resume .bin-classic-a3-columns{grid-template-columns: 1fr 1fr;}
+.document-sheet .sheet.resume.paper-a3.voltaon-resume .bin-classic-credentials > .bin-classic-section{margin-top: 0px;}
