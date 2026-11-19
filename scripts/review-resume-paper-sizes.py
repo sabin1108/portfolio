@@ -14,9 +14,8 @@ previews = Path(sys.argv[3])
 previews.mkdir(parents=True, exist_ok=True)
 mm = 72 / 25.4
 reports = []
-uris = []
 
-for paper, pages, width, height in [('A4', 2, 210, 297), ('A3', 1, 420, 297)]:
+for paper, pages, width, height in [('A4', 2, 210, 297)]:
     path = root / f'{variant}-resume-{paper}.pdf'
     reader = PdfReader(path)
     assert len(reader.pages) == pages, (paper, 'Unexpected page count')
@@ -36,7 +35,6 @@ for paper, pages, width, height in [('A4', 2, 210, 297), ('A3', 1, 420, 297)]:
                 x0, y0, x1, y1 = map(float, annotation['/Rect'])
                 assert 0 <= x0 <= x1 <= width * mm + .5
                 assert 0 <= y0 <= y1 <= height * mm + .5
-    uris.append(sorted(paper_uris))
     font_sizes = Counter()
     with pdfplumber.open(path) as document:
         for page in document.pages:
@@ -56,6 +54,5 @@ for paper, pages, width, height in [('A4', 2, 210, 297), ('A3', 1, 420, 297)]:
     document.close()
     reports.append({'paper': paper, 'pages': pages, 'widthMm': width, 'heightMm': height, 'bodyPt': 12, 'sourceUnits': len(source['units']), 'missingText': 0, 'links': len(paper_uris), 'path': str(path)})
 
-assert uris[0] == uris[1], 'Paper layouts have different links'
 (previews / 'checks.json').write_text(json.dumps(reports, ensure_ascii=False, indent=2), 'utf-8')
 print(json.dumps(reports, ensure_ascii=False))

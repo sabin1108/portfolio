@@ -890,7 +890,7 @@
       "pages": [
         {
           "id": "resume-profile",
-          "title": "프로필 · 지원동기 · 프로젝트 경험",
+          "title": "프로필 · 지원동기 · 스트리밍 구현 · 기술·학력",
           "kind": "resume",
           "visual": "/media/moa-workspace.png",
           "image": "/documents/voltaonResume/page-01.webp",
@@ -902,7 +902,7 @@
         },
         {
           "id": "resume-experience",
-          "title": "구현 경험 · 기술 · 교육 · 연구·수상",
+          "title": "구현 경험 · 연구·특허·수상",
           "kind": "resume",
           "visual": "/media/moa-workspace.png",
           "image": "/documents/voltaonResume/page-02.webp",

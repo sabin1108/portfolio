@@ -28,4 +28,4 @@
 - 포트폴리오: content/voltaon.json, 갱신 명령 node scripts/import-voltaon-source.mjs
 - 이력서: content/voltaon-resume.json
 - 검토용 Markdown: drafts/voltaon-portfolio-20261119.md, drafts/voltaon-resume-20261119.md
-- 조판: 기존 디자인 공유, A4 이력서2쪽·A3 가로1쪽 두 단. 사진108×138px, 본문12pt 유지.
+- 조판: 기존 디자인 공유, A4 이력서2쪽. A3는 최신 사용자 지시에 따라 생성·검증에서 제외한다. 사진108×138px, 본문12pt 유지.

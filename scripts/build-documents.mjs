@@ -228,26 +228,8 @@ try{
     printChecks.push({document:doc.id,minimumBodyPx:Math.min(...printState.fonts),textPreserved:true});
     await page.pdf({path:path.join(output,doc.file),preferCSSPageSize:true,printBackground:true,tagged:true});
   }
-  for(const doc of documents.filter(doc=>doc.isResume)){
-  const [a3]=createResumeSheets(doc.sourceData,profile,doc.sourceResume,{inline,marked,escape,portraitUrl:pathToFileURL(path.join(root,'public/media/portrait.jpg')).href,paper:'A3',variant:doc.variant});
-  const a3HtmlPath=path.join(work,doc.id+'-a3.html');
-  await fs.writeFile(a3HtmlPath,`<!doctype html><html lang="ko"><meta charset="utf-8"><title>${profile.name} · ${doc.title} · A3</title><style>${css}@page{size:A3 landscape}</style><body>${a3.markup}</body></html>`);
-  await page.goto(pathToFileURL(a3HtmlPath).href);
-  await page.evaluate(async()=>{await document.fonts.ready;await Promise.all([...document.images].map(image=>image.decode()));});
-  await assertResumeLayout(doc.sourceData.selectedCases.length);
-  const a3State=await page.evaluate(()=>{
-    const sheet=document.querySelector('.sheet'),box=sheet.getBoundingClientRect(),content=sheet.querySelector('.page-content').getBoundingClientRect(),footer=sheet.querySelector('footer').getBoundingClientRect();
-    const columns=[...sheet.querySelectorAll('.bin-classic-a3-columns>main,.bin-classic-a3-columns>aside')].map(element=>({...element.getBoundingClientRect().toJSON(),sections:[...element.children].map(child=>({title:child.querySelector('h2,h1')?.textContent,height:child.getBoundingClientRect().height,bottom:child.getBoundingClientRect().bottom}))}));
-    return{bottom:content.bottom-box.top,footer:footer.top-box.top,overflow:content.bottom>footer.top-12,horizontal:sheet.scrollWidth>sheet.clientWidth+2,text:sheet.querySelector('.page-content').textContent,columns};
-  });
-  layout.push({document:doc.id+'-a3',pages:[a3State]});
-  assert(!a3State.overflow&&!a3State.horizontal,`A3 content overflow: ${JSON.stringify({...a3State,text:undefined})}`);
-  assert.equal(a3State.columns.length,2);assert(a3State.columns[0].right<a3State.columns[1].left,'A3 must use two separate columns');
-  for(const unit of baselineSources[doc.id].units)assert(a3State.text.replace(/\s+/g,'').includes(unit.replace(/\s+/g,'')),`A3 text missing: ${unit}`);
-  await page.pdf({path:path.join(work,doc.variant+'-resume-A3.pdf'),preferCSSPageSize:true,printBackground:true,tagged:true});
-  }
 }finally{await browser.close();await fs.writeFile(path.join(work,'layout-checks.json'),JSON.stringify(layout,null,2));}
-for(const [pdf,width,height] of documents.filter(doc=>doc.isResume).flatMap(doc=>[[path.join(output,doc.file),210,297],[path.join(work,doc.variant+'-resume-A3.pdf'),420,297]])){
+for(const [pdf,width,height] of documents.filter(doc=>doc.isResume).map(doc=>[path.join(output,doc.file),210,297])){
   const normalize=spawnSync(bundle+'/python/python.exe',['-X','utf8',path.join(root,'scripts/normalize-pdf-paper-box.py'),pdf,String(width),String(height)],{encoding:'utf8'});
   if(normalize.status!==0)throw Error(normalize.stderr||normalize.stdout);
 }
@@ -275,7 +257,6 @@ const paperSizes=[];
 for(const doc of documents.filter(doc=>doc.isResume)){
   const destination=doc.variant==='voltaon'?voltaExportPath:exportPath;
   await fs.copyFile(path.join(output,doc.file),path.join(destination,doc.variant+'-resume-A4.pdf'));
-  await fs.copyFile(path.join(work,doc.variant+'-resume-A3.pdf'),path.join(destination,doc.variant+'-resume-A3.pdf'));
   const paperReview=spawnSync(bundle+'/python/python.exe',['-X','utf8',path.join(root,'scripts/review-resume-paper-sizes.py'),destination,path.join(work,'pdf-source-text.json'),path.join(work,'paper-review',doc.variant),doc.variant,doc.id],{encoding:'utf8'});
   if(paperReview.status!==0)throw Error(paperReview.stderr||paperReview.stdout);
   paperSizes.push(...JSON.parse(paperReview.stdout));

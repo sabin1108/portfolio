@@ -47,8 +47,8 @@ export function createResumeSheets(data, profile, resume, {inline, marked, escap
   const page2=`<article class="bin-classic-project bin-classic-project-continuation">${achievements(cases.slice(split))}</article>`+(voltaon?'':credentials)+recordsSection;
   const a3Body=voltaon?`<main>${page1}</main><aside>${page2}</aside>`:`<main>${profileHeader}${section('프로젝트 경험',project(cases))}</main><aside>${summary}${skillsSection}${educationSection}${recordsSection}</aside>`;
   const pages=paper==='A3'?[{id:'resume-a3',title:`${companyName} 이력서 · A3 가로`,body:`<div class="bin-classic-a3-columns">${a3Body}</div>`}]:[
-    {id:'resume-profile',title:'프로필 · 지원동기 · 프로젝트 경험',body:page1},
-    {id:'resume-experience',title:'구현 경험 · 기술 · 교육 · 연구·수상',body:page2}
+    {id:'resume-profile',title:voltaon?'프로필 · 지원동기 · 스트리밍 구현 · 기술·학력':'프로필 · 지원동기 · 프로젝트 경험',body:page1},
+    {id:'resume-experience',title:voltaon?'구현 경험 · 연구·특허·수상':'구현 경험 · 기술 · 교육 · 연구·수상',body:page2}
   ];
   return pages.map((page,index)=>({id:page.id,title:page.title,kind:'resume',markup:`<section class="sheet resume bin-classic-page${voltaon?' voltaon-resume':''}${paper==='A3'?' paper-a3':''}" data-page-id="${page.id}"><div class="page-content"><div class="body bin-classic-resume">${page.body}</div></div><footer><span>${escape(profile.email)}</span><span>${index+1} / ${pages.length}</span></footer></section>`}));
 }
