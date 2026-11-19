@@ -216,7 +216,8 @@
 .document-sheet .sheet.resume .bin-classic-achievements li + li{margin-top: 16px;}
 .document-sheet .sheet.resume .bin-classic-achievements h4{font-size: 16px; line-height: 1.45; margin: 0px 0px 6px; font-weight: 600; color: rgb(43, 57, 69);}
 .document-sheet .sheet.resume .bin-classic-achievements p{font-size: 16px; line-height: 1.5; margin: 0px;}
-.document-sheet .sheet.resume .bin-classic-achievements [data-case-id="case-2"] strong,.document-sheet .sheet.resume .bin-classic-achievements [data-case-id="case-5"] strong:last-of-type{color: rgb(37, 76, 109); background: rgb(237, 243, 248); font-weight: 650;}
+.document-sheet .sheet.resume .bin-classic-achievements strong.bin-classic-metric{color: rgb(37, 76, 109); background: rgb(237, 243, 248); font-weight: 650;}
+.document-sheet .sheet.resume .bin-classic-achievements .bin-classic-metric-range{white-space: nowrap;}
 .document-sheet .sheet.resume .bin-classic-measurement-note{display: block; font-size: 12px; line-height: 1.45; color: rgb(105, 117, 128); margin-top: 5px;}
 .document-sheet .sheet.resume .bin-classic-project-continuation > .bin-classic-achievements{margin-top: 0px;}
 .document-sheet .sheet.resume .bin-classic-skills{margin: 0px;}
@@ -256,6 +257,9 @@
 .document-sheet .sheet.resume.paper-a3 .bin-classic-skill-row{grid-template-columns: 90px minmax(0px, 1fr); gap: 16px; padding: 3px 0px;}
 .document-sheet .sheet.resume.paper-a3 .bin-classic-records{gap: 8px;}
 .document-sheet .sheet.resume.voltaon-resume .bin-classic-header{padding: 12px 20px;}
-.document-sheet .sheet.resume.voltaon-resume .bin-classic-achievements li + li{margin-top: 14px;}
+.document-sheet .sheet.resume.voltaon-resume .bin-classic-achievements{display: grid; grid-template-columns: repeat(2, minmax(0px, 1fr)); gap: 20px 28px; align-items: start;}
+.document-sheet .sheet.resume.voltaon-resume .bin-classic-achievements li{padding-left: 12px;}
+.document-sheet .sheet.resume.voltaon-resume .bin-classic-achievements li + li{margin-top: 0px;}
+.document-sheet .sheet.resume.voltaon-resume .bin-classic-achievements p{line-height: 1.62;}
 .document-sheet .sheet.resume.paper-a3.voltaon-resume .bin-classic-a3-columns{grid-template-columns: 1fr 1fr;}
 .document-sheet .sheet.resume.paper-a3.voltaon-resume .bin-classic-credentials > .bin-classic-section{margin-top: 0px;}

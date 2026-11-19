@@ -17,7 +17,18 @@ export function createResumeSheets(data, profile, resume, {inline, marked, escap
   });
   assert.equal(cases.length,voltaon?8:6,'Unexpected selected manuscript cases');
   const icon=type=>`<svg viewBox="0 0 24 24" aria-hidden="true">${type==='mail'?'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/>':type==='github'?'<path d="M9 19c-4.3 1.3-4.3-2.2-6-2.7M15 22v-3.9c0-1.1-.1-1.5-.6-2 3.3-.4 6.6-1.6 6.6-7.3a5.8 5.8 0 0 0-1.6-4 5.2 5.2 0 0 0-.1-4s-1.3-.4-4.2 1.6a14.4 14.4 0 0 0-7.6 0C4.6.4 3.3.8 3.3.8a5.2 5.2 0 0 0-.1 4 5.8 5.8 0 0 0-1.6 4c0 5.7 3.3 6.9 6.6 7.3-.4.4-.6 1-.6 2V22"/>':'<path d="M14 3h7v7M10 14 21 3M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/>'}</svg>`;
-  const achievements=items=>`<ul class="bin-classic-achievements">${items.map(entry=>`<li data-case-id="${entry.id}"><h4>${escape(entry.title)}</h4><p>${inline(entry.text)}</p>${entry.note?`<small class="bin-classic-measurement-note">${escape(entry.note)}</small>`:''}</li>`).join('')}</ul>`;
+  const achievements=items=>{
+    const entries=items.map(entry=>{
+      const range=/(?:\d+쪽\s+)?\d+(?:[.,]\d+)*[a-z%가-힣]*\s*→\s*\d+(?:[.,]\d+)*[a-z%가-힣]*/gi;
+      const body=inline(entry.text).replace(/<strong>([^<]+)<\/strong>/g,(strong,value)=>{
+        const highlighted=value.replace(range,'<span class="bin-classic-metric-range">$&</span>');
+        return highlighted===value?strong:`<strong class="bin-classic-metric">${highlighted}</strong>`;
+      });
+      const note=entry.note?`<small class="bin-classic-measurement-note">${escape(entry.note)}</small>`:'';
+      return `<li data-case-id="${entry.id}"><h4>${escape(entry.title)}</h4><p>${body}</p>${note}</li>`;
+    });
+    return `<ul class="bin-classic-achievements">${entries.join('')}</ul>`;
+  };
   const section=(title,body,className='')=>`<section class="bin-classic-section ${className}"><h2>${title}</h2>${body}</section>`;
   const projectHeading=`<div class="bin-classic-project-heading"><div><h3>Project_Moa</h3></div><span>2026.09~2026.11 · 1인</span></div>${profile.project?`<div class="bin-classic-project-links"><a href="${escape(profile.project.github)}" target="_blank" rel="noreferrer">${icon('github')}프로젝트 GitHub</a><a href="${escape(profile.project.demo)}" target="_blank" rel="noreferrer">${icon('external')}데모 체험</a></div>`:''}`;
   const contacts=`<div class="bin-classic-contact"><a href="mailto:${escape(profile.email)}">${icon('mail')}${escape(profile.email)}</a><a href="${escape(profile.github)}">${icon('github')}${escape(profile.github)}</a><a href="https://www.binportfolio.site${companyRoute}">${icon('external')}포트폴리오</a></div>`;
@@ -42,13 +53,13 @@ export function createResumeSheets(data, profile, resume, {inline, marked, escap
   const educationSection=section('학력 · 자격 · 교육',education+`<div class="bin-classic-training">${training}</div>`);
   const recordsSection=section('연구 · 특허 · 수상',`<ul class="bin-classic-records">${records}</ul>`);
   const credentials=`<div class="bin-classic-credentials">${skillsSection}${educationSection}</div>`;
-  const split=voltaon?2:3;
-  const page1=profileHeader+summary+section('프로젝트 경험',project(cases.slice(0,split)))+(voltaon?credentials:'');
-  const page2=`<article class="bin-classic-project bin-classic-project-continuation">${achievements(cases.slice(split))}</article>`+(voltaon?'':credentials)+recordsSection;
+  const split=voltaon?4:3;
+  const page1=profileHeader+summary+section('프로젝트 경험',project(cases.slice(0,split)));
+  const page2=`<article class="bin-classic-project bin-classic-project-continuation">${achievements(cases.slice(split))}</article>`+credentials+recordsSection;
   const a3Body=voltaon?`<main>${page1}</main><aside>${page2}</aside>`:`<main>${profileHeader}${section('프로젝트 경험',project(cases))}</main><aside>${summary}${skillsSection}${educationSection}${recordsSection}</aside>`;
   const pages=paper==='A3'?[{id:'resume-a3',title:`${companyName} 이력서 · A3 가로`,body:`<div class="bin-classic-a3-columns">${a3Body}</div>`}]:[
-    {id:'resume-profile',title:voltaon?'프로필 · 지원동기 · 스트리밍 구현 · 기술·학력':'프로필 · 지원동기 · 프로젝트 경험',body:page1},
-    {id:'resume-experience',title:voltaon?'구현 경험 · 연구·특허·수상':'구현 경험 · 기술 · 교육 · 연구·수상',body:page2}
+    {id:'resume-profile',title:'프로필 · 지원동기 · 프로젝트 경험',body:page1},
+    {id:'resume-experience',title:'구현 경험 · 기술 · 교육 · 연구·수상',body:page2}
   ];
   return pages.map((page,index)=>({id:page.id,title:page.title,kind:'resume',markup:`<section class="sheet resume bin-classic-page${voltaon?' voltaon-resume':''}${paper==='A3'?' paper-a3':''}" data-page-id="${page.id}"><div class="page-content"><div class="body bin-classic-resume">${page.body}</div></div><footer><span>${escape(profile.email)}</span><span>${index+1} / ${pages.length}</span></footer></section>`}));
 }
@@ -92,7 +103,8 @@ export const legacyResumeCss = `
 .sheet.resume .bin-classic-achievements li+li{margin-top:16px}
 .sheet.resume .bin-classic-achievements h4{font-size:16px;line-height:1.45;margin:0 0 6px;font-weight:600;color:#2b3945}
 .sheet.resume .bin-classic-achievements p{font-size:16px;line-height:1.5;margin:0}
-.sheet.resume .bin-classic-achievements [data-case-id="case-2"] strong,.sheet.resume .bin-classic-achievements [data-case-id="case-5"] strong:last-of-type{color:#254c6d;background:#edf3f8;font-weight:650}
+.sheet.resume .bin-classic-achievements strong.bin-classic-metric{color:#254c6d;background:#edf3f8;font-weight:650}
+.sheet.resume .bin-classic-achievements .bin-classic-metric-range{white-space:nowrap}
 .sheet.resume .bin-classic-measurement-note{display:block;font-size:12px;line-height:1.45;color:#697580;margin-top:5px}
 .sheet.resume .bin-classic-project-continuation>.bin-classic-achievements{margin-top:0}
 .sheet.resume .bin-classic-skills{margin:0}
@@ -132,7 +144,10 @@ export const legacyResumeCss = `
 .sheet.resume.paper-a3 .bin-classic-skill-row{grid-template-columns:90px minmax(0,1fr);gap:16px;padding:3px 0}
 .sheet.resume.paper-a3 .bin-classic-records{gap:8px}
 .sheet.resume.voltaon-resume .bin-classic-header{padding:12px 20px}
-.sheet.resume.voltaon-resume .bin-classic-achievements li+li{margin-top:14px}
+.sheet.resume.voltaon-resume .bin-classic-achievements{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 28px;align-items:start}
+.sheet.resume.voltaon-resume .bin-classic-achievements li{padding-left:12px}
+.sheet.resume.voltaon-resume .bin-classic-achievements li+li{margin-top:0}
+.sheet.resume.voltaon-resume .bin-classic-achievements p{line-height:1.62}
 .sheet.resume.paper-a3.voltaon-resume .bin-classic-a3-columns{grid-template-columns:1fr 1fr}
 .sheet.resume.paper-a3.voltaon-resume .bin-classic-credentials>.bin-classic-section{margin-top:0}
 `;

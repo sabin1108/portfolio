@@ -31,6 +31,11 @@
 .slide-document .document-sheet .project-links a{font-size:15px;padding:9px 15px}
 .reading-surface .document-sheet .sheet.resume .body,.reading-surface .document-sheet .sheet.resume p,.reading-surface .document-sheet .sheet.resume .bin-classic-achievements p,.reading-surface .document-sheet .sheet.resume .bin-classic-skill-row dd,.reading-surface .document-sheet .sheet.resume .bin-classic-education p{font-size:18px;line-height:1.6}
 .reading-surface .document-sheet .sheet.resume .bin-classic-records p{font-size:16px;line-height:1.55}
+.reading-surface .document-sheet .sheet.voltaon-resume .bin-classic-achievements{gap:28px 32px}
+.reading-surface .document-sheet .sheet.voltaon-resume .bin-classic-achievements p{line-height:1.7}
+@media(max-width:900px){
+  .reading-surface .document-sheet .sheet.voltaon-resume .bin-classic-achievements{grid-template-columns:1fr;row-gap:22px}
+}
 .slide-document .document-sheet .legacy-cover-flow{margin:32px 0;padding-left:18px}
 .slide-document .document-sheet .metrics{gap:22px;padding-top:0;margin-top:32px}
 .slide-document .document-sheet .metrics>div{padding:22px;border:1px solid #c8d3c8;border-radius:7px;background:#faf9f3}

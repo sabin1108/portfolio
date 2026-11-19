@@ -14,7 +14,7 @@ export function caseVisual(entry) {
     case 'case-12':
       return {side:'right',markup:figure(entry.id,'수신 완료와 화면 표시 완료 분리',`${flow(['수신한 본문','표시 길이 관리','순차 표시'])}<div class="diagram-note">완료 이벤트 뒤에도 남은 본문을 이어서 표시</div>${flow(['중지·오류','남은 표시 작업 정리'])}`,'visual-stream')};
     case 'case-6':
-      return {side:'left',markup:figure(entry.id,'추출 전에 재사용 여부 확인',`${flow(['현재 원본 확인','내용·추출 조건 비교','본문 캐시 조회'])}${flow(['같으면 본문 재사용','다르면 다시 추출'])}<div class="diagram-note">원본 미변경 · Worker 재사용 조건의 반복 처리 비교</div>`,'visual-stream')};
+      return {side:'left',markup:figure(entry.id,'추출 전에 재사용 여부 확인',`${flow(['현재 원본 확인','내용·추출 조건 비교','본문 캐시 조회'])}${flow(['같으면 본문 재사용','다르면 다시 추출'])}<div class="diagram-note">두 방식 모두 기존 Worker 사용 · 첫 실행 제외</div>`,'visual-stream')};
     case 'case-2':
       return {side:'left', markup:figure(entry.id, '폴더 이동 시 조작하던 화면 유지', `<div class="window-comparison"><div class="mini-window before-window"><b>기존</b><div class="wire-input">경로 변경</div><div class="wire-list is-empty">기존 목록 제거</div></div><div class="mini-window after-window"><b>개선</b><div class="wire-input">입력창 유지</div><div class="wire-list"><i aria-hidden="true"></i><span>기존 목록 유지</span></div></div></div><div class="diagram-note">읽는 중 표시 → 새 목록 준비 후 내용 교체</div>`, 'visual-flicker')};
     case 'case-14':

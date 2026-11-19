@@ -20,7 +20,10 @@ const cases=selectedCases.map(number=>{
   const heading=headings[index];
   const markdown=source.slice(heading.index+heading[0].length,headings[index+1]?.index??source.length).split(/^# 여기부터는/m)[0].replace(/(?:\n---\s*)+$/,'').trim();
   assert(markdown.length>100&&!/```/.test(markdown));assert(source.includes(markdown));
-  return{id:`case-${number}`,kind:'case',sourceCase:number,title:heading[2].trim(),markdown};
+  const publishedMarkdown=number===6
+    ? markdown.replace('원본 미변경·상위 Worker 재사용 조건에서 ', '같은 PDF를 다시 읽을 때 ')
+    : markdown;
+  return{id:`case-${number}`,kind:'case',sourceCase:number,title:heading[2].trim(),markdown:publishedMarkdown};
 });
 const data={schemaVersion:1,source:{path:sourcePath,sha256:createHash('sha256').update(raw).digest('hex')},selectedCases,images:structuredClone(final.images),common:structuredClone(final.common),voltaon:[...structuredClone(final.common),...cases]};
 for(const number of sharedCases)assert.deepEqual(cases.find(page=>page.sourceCase===number),final.gyeol.find(page=>page.sourceCase===number));
