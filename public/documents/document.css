@@ -38,6 +38,15 @@
 .document-sheet .legacy-sheet .legacy-item h3{font-size: 15px; color: var(--legacy-accent); margin: 0px 0px 12px; line-height: 1.5;}
 .document-sheet .legacy-sheet .legacy-item h3:empty{display: none;}
 .document-sheet .legacy-sheet .legacy-result{padding: 16px 18px; border-top-color: var(--legacy-accent); background: var(--legacy-panel);}
+.document-sheet .legacy-sheet.layout-retrospective .legacy-heading{margin-bottom: 20px;}
+.document-sheet .legacy-sheet.layout-retrospective .editorial-grid{grid-template-columns: minmax(0px, 2.25fr) minmax(0px, 1fr);}
+.document-sheet .legacy-sheet.layout-retrospective .legacy-case-column > .legacy-item{padding-top: 8px;}
+.document-sheet .legacy-sheet.layout-retrospective .legacy-case-column h3{margin-bottom: 8px;}
+.document-sheet .legacy-sheet.layout-retrospective .legacy-case-column > .legacy-item + .legacy-item{margin-top: 14px;}
+.document-sheet .legacy-sheet.layout-retrospective .legacy-case-column p{line-height: 1.48;}
+.document-sheet .legacy-sheet.layout-retrospective .legacy-item p + p{margin-top: 7px;}
+.document-sheet .legacy-sheet.layout-retrospective .retrospective-summary{align-self: center; padding: 24px 26px; border-radius: 0px 0px 6px 6px;}
+.document-sheet .legacy-sheet.layout-retrospective .retrospective-summary p{font-size: 22px; line-height: 1.55; font-weight: 650; color: var(--legacy-text); margin: 0px;}
 .document-sheet .legacy-sheet .legacy-picture{min-width: 0px; margin: 0px;}
 .document-sheet .legacy-sheet .legacy-picture img{display: block; width: 100%; height: 220px; object-fit: contain; background: var(--legacy-panel); border: 1px solid rgb(187, 201, 191); border-radius: 6px;}
 .document-sheet .legacy-sheet .legacy-picture figcaption{font-size: 11px; line-height: 1.5; color: var(--legacy-muted); margin-top: 7px;}
@@ -91,6 +100,7 @@
 .document-sheet .portfolio-visual .diagram-flow{display: flex; align-items: center; justify-content: center; gap: 6px;}
 .document-sheet .portfolio-visual .diagram-flow .diagram-node{flex: 1 1 0%; padding: 6px 5px;}
 .document-sheet .portfolio-visual[data-visual="case-13"]{height: 160px;}
+.document-sheet .portfolio-visual.visual-application-flow{height: auto; min-height: 94px;}
 .document-sheet .legacy-sheet[data-page-id="case-6"] .proof-card strong{display: inline; margin: 0px; font-size: 24px; line-height: 1.25; color: rgb(46, 102, 81);}
 .document-sheet .pdf-metric-row{display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 12px;}
 .document-sheet .pdf-metric-row > span{font-size: 15px; white-space: nowrap;}

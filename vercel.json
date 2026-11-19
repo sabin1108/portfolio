@@ -1,11 +1,13 @@
 {
   "trailingSlash": false,
   "headers": [
+    {"source":"/InfraChip","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow"}]},
     {"source":"/GYEOLSOFT","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow"}]},
     {"source":"/VoltaON","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow"}]},
     {"source":"/documents/(.*)","headers":[{"key":"X-Robots-Tag","value":"noindex"}]}
   ],
   "rewrites": [
+    {"source":"/InfraChip","destination":"/index.html"},
     {"source":"/VoltaON","destination":"/index.html"},
     {
       "source": "/GYEOLSOFT",
