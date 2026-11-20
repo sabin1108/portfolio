@@ -22,7 +22,7 @@ function isDocument(value: unknown): value is PortfolioDocument {
     && value.pages.every(page => page && typeof page.html === 'string' && page.html.length && page.width > 0 && page.height > 0);
 }
 
-function DocumentSurface({page, magnification = 1, fixed = false}: {page: DocumentPage; magnification?: number; fixed?: boolean}) {
+function DocumentSurface({page, magnification = 1, fixed = false, fitSlide = false}: {page: DocumentPage; magnification?: number; fixed?: boolean; fitSlide?: boolean}) {
   const frame = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(page.width);
   useLayoutEffect(() => {
@@ -35,7 +35,27 @@ function DocumentSurface({page, magnification = 1, fixed = false}: {page: Docume
     observer.observe(element);
     return () => observer.disconnect();
   }, [fixed]);
-  if (!fixed) return <div className="document-surface reading-surface"><div className="document-sheet" dangerouslySetInnerHTML={{__html: page.html}} /></div>;
+  useLayoutEffect(() => {
+    const surface = frame.current;
+    const reader = surface?.parentElement;
+    const sheet = surface?.firstElementChild;
+    if (!fitSlide || !surface || !reader || !(sheet instanceof HTMLElement)) return;
+
+    const fit = () => {
+      surface.style.setProperty('--slide-width', `${surface.clientWidth}px`);
+      surface.style.setProperty('--slide-scale', '1');
+      const height = Math.max(sheet.offsetHeight, sheet.scrollHeight);
+      const scale = Math.min(1, (reader.clientHeight - 1) / Math.max(1, height));
+      // Keep the original text size when the window would require heavy scaling.
+      surface.style.setProperty('--slide-scale', String(scale >= .8 ? scale : 1));
+    };
+    fit();
+    const observer = new ResizeObserver(fit);
+    observer.observe(reader);
+    observer.observe(sheet);
+    return () => observer.disconnect();
+  }, [fitSlide]);
+  if (!fixed) return <div ref={frame} className="document-surface reading-surface"><div className="document-sheet" dangerouslySetInnerHTML={{__html: page.html}} /></div>;
   const scale = width / page.width * magnification;
   return <div ref={frame} className="document-surface">
     <div className="document-size" style={{width: width * magnification, height: page.height * scale}}>
@@ -214,7 +234,7 @@ function Viewer({documents, company}: {documents: ViewerDocuments; company: Comp
   }
   function renderPage(page: DocumentPage, index: number) {
     return <section key={page.id} id={`${doc.id}-${index}`} className={`document-page ${resume ? 'resume-page' : 'slide-reader'}`} data-page={index} aria-label={page.title}>
-      <DocumentSurface page={page}/>
+      <DocumentSurface page={page} fitSlide={!resume}/>
       {resume && <div className="page-caption"><span>{page.title}</span><div className="page-caption-actions"><span>{index + 1} / {doc.pages.length}</span><button className="page-zoom-button" type="button" onClick={() => setExpanded(page)} aria-label={`${index + 1}페이지 ${page.title} 확대 보기`}><ZoomIn size={14}/>확대</button></div></div>}
     </section>;
   }

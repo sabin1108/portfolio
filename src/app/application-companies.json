@@ -2,5 +2,9 @@
   "infrachip": {
     "path": "/InfraChip",
     "name": "(주)인프라칩"
+  },
+  "itp": {
+    "path": "/ITP",
+    "name": "(주)잇피"
   }
 }

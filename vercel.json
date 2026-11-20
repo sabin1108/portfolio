@@ -1,12 +1,14 @@
 {
   "trailingSlash": false,
   "headers": [
+    {"source":"/ITP","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow"}]},
     {"source":"/InfraChip","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow"}]},
     {"source":"/GYEOLSOFT","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow"}]},
     {"source":"/VoltaON","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow"}]},
     {"source":"/documents/(.*)","headers":[{"key":"X-Robots-Tag","value":"noindex"}]}
   ],
   "rewrites": [
+    {"source":"/ITP","destination":"/index.html"},
     {"source":"/InfraChip","destination":"/index.html"},
     {"source":"/VoltaON","destination":"/index.html"},
     {
