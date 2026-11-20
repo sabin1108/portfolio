@@ -6,5 +6,9 @@
   "itp": {
     "path": "/ITP",
     "name": "(주)잇피"
+  },
+  "brainzcompany": {
+    "path": "/BrainzCompany",
+    "name": "브레인즈컴퍼니(주)"
   }
 }
