@@ -1,6 +1,7 @@
 {
   "trailingSlash": false,
   "headers": [
+    {"source":"/CIMON","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow"}]},
     {"source":"/BrainzCompany","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow"}]},
     {"source":"/ITP","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow"}]},
     {"source":"/InfraChip","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow"}]},
@@ -9,6 +10,7 @@
     {"source":"/documents/(.*)","headers":[{"key":"X-Robots-Tag","value":"noindex"}]}
   ],
   "rewrites": [
+    {"source":"/CIMON","destination":"/index.html"},
     {"source":"/BrainzCompany","destination":"/index.html"},
     {"source":"/ITP","destination":"/index.html"},
     {"source":"/InfraChip","destination":"/index.html"},
