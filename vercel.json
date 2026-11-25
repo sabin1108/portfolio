@@ -1,6 +1,7 @@
 {
   "trailingSlash": false,
   "headers": [
+    {"source":"/Newzest","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow"}]},
     {"source":"/Inogisoft","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow"}]},
     {"source":"/CIMON","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow"}]},
     {"source":"/BrainzCompany","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow"}]},
@@ -11,6 +12,7 @@
     {"source":"/documents/(.*)","headers":[{"key":"X-Robots-Tag","value":"noindex"}]}
   ],
   "rewrites": [
+    {"source":"/Newzest","destination":"/index.html"},
     {"source":"/Inogisoft","destination":"/index.html"},
     {"source":"/CIMON","destination":"/index.html"},
     {"source":"/BrainzCompany","destination":"/index.html"},
